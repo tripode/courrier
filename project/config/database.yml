@@ -7,7 +7,7 @@ development:
   adapter: postgresql
   database: currier_db
   username: postgres
-  userpassword: postgres
+  password: postgres
   pool: 5
   timeout: 5000
 
@@ -18,7 +18,7 @@ test:
   adapter: postgresql
   database: currier_test_db
   username: postgres
-  userpassword: postgres
+  password: postgres
   pool: 5
   timeout: 5000
 
@@ -26,6 +26,6 @@ production:
   adapter: postgresql
   database: currier_production_db
   username: postgres
-  userpassword: postgres
+  password: postgres
   pool: 5
   timeout: 5000
