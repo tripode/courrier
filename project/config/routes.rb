@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+  resources :employees
+
   resources :customers
 
   # The priority is based upon order of creation:

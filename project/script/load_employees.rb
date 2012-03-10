@@ -24,10 +24,10 @@ Employee.transaction do
         :address=>"Quiteria",
         :admission_date=>date,
         :birthday=>date,
-        :salary=>1000000,
-        :mobile_number=>"(09xx)00000#{t}",
-        :phone_number=>"(071)00000#{t}",
-        :function_type_id=>3
+        :salary=>10000000,
+        :mobile_number=>"(0975)603978",
+        :phone_number=>"(071)207157",
+        :function_type_id=>1
       )
 
 end
