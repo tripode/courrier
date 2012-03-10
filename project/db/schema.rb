@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120310182451) do
+ActiveRecord::Schema.define(:version => 20120310191637) do
 
   create_table "customer_types", :force => true do |t|
     t.string "type_name", :limit => 30
@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(:version => 20120310182451) do
     t.string  "phone_number",     :limit => 20
     t.string  "email",            :limit => 60
     t.integer "customer_type_id"
+  end
+
+  create_table "function_types", :force => true do |t|
+    t.string   "description", :limit => 30, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
