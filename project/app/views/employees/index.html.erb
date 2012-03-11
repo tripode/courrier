@@ -29,13 +29,13 @@
 			<td><%= employee.function_type_id %></td>
 			<td><div><%= link_to 'Mostrar',  employee %></div></td>
 			<td>
-				<div class="editar">
-					<%= link_to 'Editar', edit_employee_path(employee) %>
+				<div>
+					<%= link_to image_tag('editar.gif'), edit_employee_path(employee) %>
 				</div>
 			</td>
 			<td>
-				<div class="borrar">
-					<%= link_to 'Borrar', employee, confirm: 'Are you sure?', method: :delete %>
+				<div>
+					<%= link_to image_tag('borrar2.gif'), employee, confirm: 'Are you sure?', method: :delete %>
 				</div>
 			</td>
 		</tr>

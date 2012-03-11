@@ -154,7 +154,7 @@ fieldset legend {
 	border:1px solid #3a4f54 !important; 
 	background-color:#ccc !important; 
 }	
-#container input[type="submit"]:hover, 
+#container  input[type="submit"]:hover, 
 #container  fieldset  input.agregar:hover { border:1px solid #13455b }
 #container input[type="submit"]:active, 
 #container  fieldset  input.agregar:hover { 
@@ -175,20 +175,13 @@ fieldset legend {
 }
 #container  fieldset  input.search:hover, div fieldset  input.search:hover, #container  table input.search:hover { border:0 !important; }
 
-/*Buttom Borrar*/
-#container div.borrar {
-	background:url(borrar2.gif) no-repeat !important;
+/*Buttom Borrar editar mostrar de las tablas*/
+#container table div a img {
 	width: 30px;
 	height: 30px;
-	font-size: 0px;
 	cursor: pointer;
-}
-#container div.editar {
-	background:url(editar.gif) no-repeat !important;
-	width: 30px;
-	height: 30px;
-	font-size: 0px;
-	cursor: pointer;
+	background-repeat: no-repeat;
+	
 }
 
 
