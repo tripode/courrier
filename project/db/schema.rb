@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120310214329) do
+ActiveRecord::Schema.define(:version => 20120311013300) do
 
   create_table "customer_types", :force => true do |t|
     t.string "type_name", :limit => 30
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(:version => 20120310214329) do
     t.string  "mobile_number",    :limit => 20
     t.string  "phone_number",     :limit => 20
     t.integer "function_type_id"
+  end
+
+  create_table "foreign_companies", :force => true do |t|
+    t.string "company_name"
+    t.string "mobile_number"
+    t.string "email"
+    t.string "ruc"
+    t.string "address"
+    t.string "phone_number"
   end
 
   create_table "function_types", :force => true do |t|
