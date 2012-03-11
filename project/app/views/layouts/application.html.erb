@@ -1,14 +1,81 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Project</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+		<title>Project</title>
+		<%= stylesheet_link_tag "reset" %>
+		<%= stylesheet_link_tag "default" %>
+		<%= stylesheet_link_tag "jqueryslidemenu" %>
+		<%= stylesheet_link_tag "jquery-ui" %>
+		<%= stylesheet_link_tag "demo_table" %>
+		<%= javascript_include_tag "jquery"%>
+		<%= javascript_include_tag "jqueryslidemenu"%>
+		<%= javascript_include_tag "jquery.dataTables"%>
+		<%= javascript_include_tag "application", :media => "all" %>
+		<%= csrf_meta_tags %>
+		<script charset="utf-8" type="text/javascript">
+			$(document).ready(function() {
+				$('table[class*=tablaIndex]').dataTable({
+					"bScrollCollapse": true,					
+					"sPaginationType": "full_numbers",
+					"aLengthMenu": [[5,10,25, 50, -1], [5,10,25,50, "All"]],						
+				});
+			});
 
-<%= yield %>
-
-</body>
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<div class="wrapper">
+				<div id="myslidemenu" class="jqueryslidemenu">
+					<ul>
+						<li>
+							<a>Clientes</a>
+						</li>
+						<li>
+							<a>Empleado</a>
+						</li>
+						<li>
+							<a>Notas</a>
+							<ul>
+								<li>
+									<a>Nota de Retiro</a>
+								</li>
+								<li>
+									<a>Guia de Transporte</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a>Hoja de Ruta</a>
+							<ul>
+								<li>
+									<a>Paquetes</a>
+								</li>
+								<li>
+									<a>Guia de Transporte</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a>Informes</a>
+						</li>
+						<li>
+							<a>Perfiles</a>
+						</li>
+						<li>
+							<a>Salir</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="container">
+			<div class="wrapper">
+				<%= yield %>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="wrapper"></div>
+		</div>
+	</body>
 </html>
