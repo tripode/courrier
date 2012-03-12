@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @retire_note.id %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%= @retire_note.employee_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @retire_note.date %>
+</p>
+
+<p>
+  <b>Service type:</b>
+  <%= @retire_note.service_type_id %>
+</p>
+
+<p>
+  <b>Customer:</b>
+  <%= @retire_note.customer_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_retire_note_path(@retire_note) %> |
+<%= link_to 'Back', retire_notes_path %>

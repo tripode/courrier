@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120311023047) do
+ActiveRecord::Schema.define(:version => 20120311143917) do
 
   create_table "customer_types", :force => true do |t|
     t.string "type_name", :limit => 30
@@ -59,6 +59,13 @@ ActiveRecord::Schema.define(:version => 20120311023047) do
     t.datetime "updated_at",                :null => false
   end
 
+  create_table "retire_notes", :force => true do |t|
+    t.integer  "employee_id"
+    t.datetime "date"
+    t.integer  "service_type_id"
+    t.integer  "customer_id"
+  end
+
   create_table "service_types", :force => true do |t|
     t.string "description"
   end
@@ -66,5 +73,9 @@ ActiveRecord::Schema.define(:version => 20120311023047) do
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
+
+  add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
+  add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
+  add_foreign_key "retire_notes", "service_types", :name => "retire_notes_service_type_id_fk"
 
 end

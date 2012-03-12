@@ -1,0 +1,31 @@
+<h1>Lista Notas de Retiro</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Funcionario</th>
+    <th>Fecha</th>
+    <th>Tipo de Servicio</th>
+    <th>Cliente</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @retire_notes.each do |retire_note| %>
+  <tr>
+    <td><%= retire_note.id %></td>
+    <td><%= retire_note.employee_id %></td>
+    <td><%= retire_note.date %></td>
+    <td><%= retire_note.service_type_id %></td>
+    <td><%= retire_note.customer_id %></td>
+    <td><%= link_to 'Ver', retire_note %></td>
+    <td><%= link_to 'Editar', edit_retire_note_path(retire_note) %></td>
+    <td><%= link_to 'Borrar', retire_note, confirm: 'Estas seguro?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Retire note', new_retire_note_path %>
