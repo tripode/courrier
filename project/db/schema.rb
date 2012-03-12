@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120311191722) do
+ActiveRecord::Schema.define(:version => 20120312131801) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 20, :null => false
@@ -62,6 +62,11 @@ ActiveRecord::Schema.define(:version => 20120311191722) do
     t.string   "description", :limit => 30, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+  end
+
+  create_table "package_states", :force => true do |t|
+    t.string "state_name",  :limit => 20, :null => false
+    t.string "description", :limit => 80
   end
 
   create_table "service_types", :force => true do |t|
