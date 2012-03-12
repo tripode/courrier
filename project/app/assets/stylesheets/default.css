@@ -195,7 +195,10 @@ fieldset legend {
 
 #container  fieldset  input.agregar:hover { border:0 !important; }
 */
-#lista_items { width: none !important;}
+#lista_items { 
+	width: 0 !important;
+}
+	
 
 #container  fieldset ul li label, div fieldset ul li label{
 	margin-right: 5px !important;

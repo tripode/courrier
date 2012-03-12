@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+  resources :transport_guides
+
   resources :employees
 
   resources :customers
