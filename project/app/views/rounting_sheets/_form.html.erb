@@ -1,0 +1,33 @@
+<%= form_for(@rounting_sheet) do |f| %>
+  <% if @rounting_sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@rounting_sheet.errors.count, "error") %> prohibited this rounting_sheet from being saved:</h2>
+
+      <ul>
+      <% @rounting_sheet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :area_id %><br />
+    <%= f.number_field :area_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br />
+    <%= f.number_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :total_amount %><br />
+    <%= f.number_field :total_amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

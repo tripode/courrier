@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312140436) do
+ActiveRecord::Schema.define(:version => 20120312143958) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 20, :null => false
@@ -74,7 +74,14 @@ ActiveRecord::Schema.define(:version => 20120312140436) do
   end
 
   create_table "reasons", :force => true do |t|
-    t.string "description", :limit => 50, :null => false
+    t.string "description", :limit => 100, :null => false
+  end
+
+  create_table "rounting_sheets", :force => true do |t|
+    t.integer "area_id",      :null => false
+    t.integer "employee_id",  :null => false
+    t.date    "date"
+    t.integer "total_amount"
   end
 
   create_table "service_types", :force => true do |t|
@@ -94,6 +101,9 @@ ActiveRecord::Schema.define(:version => 20120312140436) do
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
+
+  add_foreign_key "rounting_sheets", "areas", :name => "rounting_sheets_area_id_fk"
+  add_foreign_key "rounting_sheets", "employees", :name => "rounting_sheets_employee_id_fk"
 
   add_foreign_key "transport_guides", "areas", :name => "transport_guides_area_id_fk"
   add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"

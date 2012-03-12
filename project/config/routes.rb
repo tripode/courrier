@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+  resources :rounting_sheets
+
   resources :transport_guides
 
   resources :employees
