@@ -94,7 +94,7 @@ fieldset legend {
 		
 	/* CSS3 spicing */
 	-moz-border-radius:4px !important;
-	-webkit-border-radius:4px !important;
+	-webkit-border-radius:4px !important; 
 }
 #container fieldset  input, table input, div fieldset  input, div table input{
 	margin:5px 5px !important;
@@ -118,10 +118,8 @@ fieldset legend {
 
 #container table td { font-style:normal; color: #000000; padding:0 5px; }
 
-#container fieldset  input:focus , div fieldset  input:focus { border:1px solid #3a4f54 !important; background-color:#ccc !important; }
-#container fieldset  input:active , div fieldset  input:active 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
-#container table  input:focus 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
-#container table  input:active 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
+#container input:focus 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
+#container input:active 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
 
 
 .dataTables_length, .dataTables_filter,.dataTables_info{
@@ -133,8 +131,11 @@ fieldset legend {
 .lista_items thead th.sorting	{ text-align:left; font:bold 11px/18px Arial !important; }
 .lista_detalle thead th{ text-align:left; font:bold 11px/18px Arial !important; }
 
-#container  fieldset input[type="submit"], table input[type="submit"]  { 
-	background:url(../images/button-grad.png) repeat-x !important;
+/* Buttom general de todo el sistema*/
+#container fieldset input[type="submit"], 
+#container table input[type="submit"], 
+#container input[type="submit"]  { 
+	background:url(button-grad.png) repeat-x !important;
 	border:none; 
 	color: #fff; 
 	font-weight: bold; 
@@ -149,18 +150,41 @@ fieldset legend {
 	margin-left: 4px;
 
 }
+#container input:focus 	{ 
+	border:1px solid #3a4f54 !important; 
+	background-color:#ccc !important; 
+}	
+#container  input[type="submit"]:hover, 
+#container  fieldset  input.agregar:hover { border:1px solid #13455b }
+#container input[type="submit"]:active, 
+#container  fieldset  input.agregar:hover { 
+	background:url(button-grad-active.png) repeat-x !important; 
+}
 
+
+/*Buttom buscar*/
 #container  fieldset input.search, #container  table input.search{
 	background-color:#0B3861 !important;
 	border:none;
 	background:url(../images/zoom.png) no-repeat !important;
 	width:16px !important;
-	heigth:16px !important;
+	height:16px !important;
 	-moz-border-radius:0 !important;
 	-webkit-border-radius:0 !important;
 	padding:0 !important; 
 }
 #container  fieldset  input.search:hover, div fieldset  input.search:hover, #container  table input.search:hover { border:0 !important; }
+
+/*Buttom Borrar editar mostrar de las tablas*/
+#container table div a img {
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	
+}
+
+
 /*
 #container  fieldset input.agregar {
 	padding-left:16px !important;
@@ -171,7 +195,10 @@ fieldset legend {
 
 #container  fieldset  input.agregar:hover { border:0 !important; }
 */
-#lista_items { width: none !important;}
+#lista_items { 
+	width: 0 !important;
+}
+	
 
 #container  fieldset ul li label, div fieldset ul li label{
 	margin-right: 5px !important;
@@ -224,7 +251,7 @@ button.ui-datepicker-trigger{
 	border:none;
 	background:url(../images/calendar.png) no-repeat !important;
 	width:16px !important;
-	heigth:16px !important;
+	height:16px !important;
 	-moz-border-radius:0 !important;
 	-webkit-border-radius:0 !important;
 	padding:0 !important; 

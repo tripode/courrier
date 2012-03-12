@@ -1,7 +1,13 @@
 Project::Application.routes.draw do
+
   resources :retire_notes
 
   resources :foreign_companies
+
+  resources :rounting_sheets
+
+  resources :transport_guides
+
 
   resources :employees
 
