@@ -1,4 +1,8 @@
 Project::Application.routes.draw do
+  resources :retire_notes
+
+  resources :foreign_companies
+
   resources :employees
 
   resources :customers
@@ -52,7 +56,7 @@ Project::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'customers#index'
+   root :to => 'retire_notes#index'
 
   # See how all your routes lay out with "rake routes"
 
