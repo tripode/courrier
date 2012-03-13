@@ -11,16 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-
 ActiveRecord::Schema.define(:version => 20120312143958) do
 
   create_table "areas", :force => true do |t|
-    t.string "area_name",   :limit => 20, :null => false
-    t.string "description", :limit => 50
+    t.string "area_name",   :limit => 50,  :null => false
+    t.string "description", :limit => 100
   end
-
-
 
   create_table "customer_types", :force => true do |t|
     t.string "type_name", :limit => 30
@@ -68,13 +64,6 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.datetime "updated_at",                :null => false
   end
 
-
-  create_table "retire_notes", :force => true do |t|
-    t.integer  "employee_id"
-    t.datetime "date"
-    t.integer  "service_type_id"
-    t.integer  "customer_id"
-
   create_table "package_states", :force => true do |t|
     t.string "state_name",  :limit => 20,  :null => false
     t.string "description", :limit => 100
@@ -88,12 +77,18 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.string "description", :limit => 100, :null => false
   end
 
+  create_table "retire_notes", :force => true do |t|
+    t.integer  "employee_id"
+    t.datetime "date"
+    t.integer  "service_type_id"
+    t.integer  "customer_id"
+  end
+
   create_table "rounting_sheets", :force => true do |t|
     t.integer "area_id",      :null => false
     t.integer "employee_id",  :null => false
     t.date    "date"
     t.integer "total_amount"
-
   end
 
   create_table "service_types", :force => true do |t|
@@ -114,7 +109,6 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
 
-
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
   add_foreign_key "retire_notes", "service_types", :name => "retire_notes_service_type_id_fk"
@@ -127,6 +121,5 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
   add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
   add_foreign_key "transport_guides", "foreign_companies", :name => "transport_guides_foreign_company_id_fk"
   add_foreign_key "transport_guides", "service_types", :name => "transport_guides_service_type_id_fk"
-
 
 end
