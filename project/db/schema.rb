@@ -11,16 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-
-ActiveRecord::Schema.define(:version => 20120312143958) do
+ActiveRecord::Schema.define(:version => 20120313001647) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 20, :null => false
     t.string "description", :limit => 50
   end
-
-
 
   create_table "customer_types", :force => true do |t|
     t.string "type_name", :limit => 30
@@ -68,13 +64,6 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.datetime "updated_at",                :null => false
   end
 
-
-  create_table "retire_notes", :force => true do |t|
-    t.integer  "employee_id"
-    t.datetime "date"
-    t.integer  "service_type_id"
-    t.integer  "customer_id"
-
   create_table "package_states", :force => true do |t|
     t.string "state_name",  :limit => 20,  :null => false
     t.string "description", :limit => 100
@@ -84,8 +73,31 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.string "description", :limit => 30, :null => false
   end
 
+  create_table "packages", :force => true do |t|
+    t.integer  "num_code",                        :null => false
+    t.string   "description",      :limit => 100
+    t.integer  "package_type_id",                 :null => false
+    t.integer  "retire_note_id",                  :null => false
+    t.integer  "employee_id",                     :null => false
+    t.string   "remitter",         :limit => 100
+    t.string   "address",          :limit => 100
+    t.integer  "customer_id",                     :null => false
+    t.string   "fragile",          :limit => 5,   :null => false
+    t.integer  "package_state_id",                :null => false
+    t.date     "admission_date"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
   create_table "reasons", :force => true do |t|
     t.string "description", :limit => 100, :null => false
+  end
+
+  create_table "retire_notes", :force => true do |t|
+    t.integer  "employee_id"
+    t.datetime "date"
+    t.integer  "service_type_id"
+    t.integer  "customer_id"
   end
 
   create_table "rounting_sheets", :force => true do |t|
@@ -93,7 +105,6 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.integer "employee_id",  :null => false
     t.date    "date"
     t.integer "total_amount"
-
   end
 
   create_table "service_types", :force => true do |t|
@@ -114,6 +125,11 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
 
+  add_foreign_key "packages", "customers", :name => "packages_customer_id_fk"
+  add_foreign_key "packages", "employees", :name => "packages_employee_id_fk"
+  add_foreign_key "packages", "package_states", :name => "packages_package_state_id_fk"
+  add_foreign_key "packages", "package_types", :name => "packages_package_type_id_fk"
+  add_foreign_key "packages", "retire_notes", :name => "packages_retire_note_id_fk"
 
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
@@ -127,6 +143,5 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
   add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
   add_foreign_key "transport_guides", "foreign_companies", :name => "transport_guides_foreign_company_id_fk"
   add_foreign_key "transport_guides", "service_types", :name => "transport_guides_service_type_id_fk"
-
 
 end
