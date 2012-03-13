@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  transport_guide_id: 1
+  package_id: 1
+  amount: 1
+
+two:
+  transport_guide_id: 1
+  package_id: 1
+  amount: 1
