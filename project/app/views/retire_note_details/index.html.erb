@@ -1,0 +1,29 @@
+<h1>Listing retire_note_details</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Retire note</th>
+    <th>Package type</th>
+    <th>Amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @retire_note_details.each do |retire_note_detail| %>
+  <tr>
+    <td><%= retire_note_detail.id %></td>
+    <td><%= retire_note_detail.retire_note_id %></td>
+    <td><%= retire_note_detail.package_type_id %></td>
+    <td><%= retire_note_detail.amount %></td>
+    <td><%= link_to 'Show', retire_note_detail %></td>
+    <td><%= link_to 'Edit', edit_retire_note_detail_path(retire_note_detail) %></td>
+    <td><%= link_to 'Destroy', retire_note_detail, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Retire note detail', new_retire_note_detail_path %>

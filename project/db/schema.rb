@@ -11,9 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20120313001647) do
-
+ActiveRecord::Schema.define(:version => 20120313012635) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 50,  :null => false
@@ -95,6 +93,12 @@ ActiveRecord::Schema.define(:version => 20120313001647) do
     t.string "description", :limit => 100, :null => false
   end
 
+  create_table "retire_note_details", :force => true do |t|
+    t.integer "retire_note_id"
+    t.integer "package_type_id"
+    t.integer "amount"
+  end
+
   create_table "retire_notes", :force => true do |t|
     t.integer  "employee_id"
     t.datetime "date"
@@ -127,14 +131,14 @@ ActiveRecord::Schema.define(:version => 20120313001647) do
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
 
-
-
   add_foreign_key "packages", "customers", :name => "packages_customer_id_fk"
   add_foreign_key "packages", "employees", :name => "packages_employee_id_fk"
   add_foreign_key "packages", "package_states", :name => "packages_package_state_id_fk"
   add_foreign_key "packages", "package_types", :name => "packages_package_type_id_fk"
   add_foreign_key "packages", "retire_notes", :name => "packages_retire_note_id_fk"
 
+  add_foreign_key "retire_note_details", "package_types", :name => "retire_note_details_package_type_id_fk"
+  add_foreign_key "retire_note_details", "retire_notes", :name => "retire_note_details_retire_note_id_fk"
 
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"

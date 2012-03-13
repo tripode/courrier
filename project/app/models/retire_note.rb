@@ -3,4 +3,5 @@ class RetireNote < ActiveRecord::Base
   belongs_to :employee
   belongs_to :service_type
   has_many :packages
+  has_many :retire_note_details
 end
