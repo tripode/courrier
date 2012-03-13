@@ -11,7 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312143958) do
+
+ActiveRecord::Schema.define(:version => 20120313001647) do
+
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 50,  :null => false
@@ -73,6 +75,22 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
     t.string "description", :limit => 30, :null => false
   end
 
+  create_table "packages", :force => true do |t|
+    t.integer  "num_code",                        :null => false
+    t.string   "description",      :limit => 100
+    t.integer  "package_type_id",                 :null => false
+    t.integer  "retire_note_id",                  :null => false
+    t.integer  "employee_id",                     :null => false
+    t.string   "remitter",         :limit => 100
+    t.string   "address",          :limit => 100
+    t.integer  "customer_id",                     :null => false
+    t.string   "fragile",          :limit => 5,   :null => false
+    t.integer  "package_state_id",                :null => false
+    t.date     "admission_date"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
   create_table "reasons", :force => true do |t|
     t.string "description", :limit => 100, :null => false
   end
@@ -108,6 +126,15 @@ ActiveRecord::Schema.define(:version => 20120312143958) do
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
+
+
+
+  add_foreign_key "packages", "customers", :name => "packages_customer_id_fk"
+  add_foreign_key "packages", "employees", :name => "packages_employee_id_fk"
+  add_foreign_key "packages", "package_states", :name => "packages_package_state_id_fk"
+  add_foreign_key "packages", "package_types", :name => "packages_package_type_id_fk"
+  add_foreign_key "packages", "retire_notes", :name => "packages_retire_note_id_fk"
+
 
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"

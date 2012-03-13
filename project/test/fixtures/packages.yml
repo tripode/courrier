@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  num_code: 1
+  description: MyString
+  package_type_id: 1
+  retire_note_id: 1
+  employee_id: 1
+  remitter: MyString
+  address: MyString
+  customer_id: 1
+  fragile: MyString
+  package_state_id: 1
+  admission_date: 2012-03-12
+
+two:
+  num_code: 1
+  description: MyString
+  package_type_id: 1
+  retire_note_id: 1
+  employee_id: 1
+  remitter: MyString
+  address: MyString
+  customer_id: 1
+  fragile: MyString
+  package_state_id: 1
+  admission_date: 2012-03-12

@@ -1,5 +1,7 @@
 Project::Application.routes.draw do
 
+  resources :packages
+
   resources :retire_notes
 
   resources :foreign_companies
