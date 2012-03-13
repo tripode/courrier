@@ -29,31 +29,29 @@
 				<div id="myslidemenu" class="jqueryslidemenu">
 					<ul>
 						<li>
-							<a>Clientes</a>
+							<%= link_to 'Clientes', customers_path %>
 						</li>
 						<li>
-							<a>Empleado</a>
+							<%= link_to 'Empleado', employees_path %>
 						</li>
 						<li>
 							<a>Notas</a>
 							<ul>
 								<li>
-									<a>Nota de Retiro</a>
+									<%= link_to 'Nota de Retiro', retire_notes_path %>
 								</li>
 								<li>
-									<a>Guia de Transporte</a>
+									<%= link_to 'Guia de Tranporte', transport_guides_path %>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a>Hoja de Ruta</a>
+							<%= link_to 'Hoja de Ruta', rounting_sheets_path %>
 							<ul>
 								<li>
-									<a>Paquetes</a>
+									<%= link_to 'Paquetes', packages_path %>
 								</li>
-								<li>
-									<a>Guia de Transporte</a>
-								</li>
+
 							</ul>
 						</li>
 						<li>

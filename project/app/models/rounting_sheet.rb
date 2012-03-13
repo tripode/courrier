@@ -1,4 +1,4 @@
 class RountingSheet < ActiveRecord::Base
-  belong_id :areas
-  belong_id :employees
+  belongs_to :areas
+  belongs_to :employees
 end
