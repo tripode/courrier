@@ -23,42 +23,43 @@ fieldset legend {
 
 
 #header { height: 30px; background-color:#414141 !important; }
-#container { margin-top: 10px; }
-#footer { margin-top: 10px; color: #444; font-size:12px; }
 
-.wrapper { width: 897px; margin:0 auto; }
+#footer { margin-top: 10px; color: #444; font-size:12px; }
+#content{ margin-top: 10px; background: none repeat scroll 0 0 #FFFFFF;}
+
+/*.wrapper { width: 897px; margin:0 auto; }*/
 
 /* CREANDO LOS SUBTITULOS*/
-#container h2		{ font:bold 20px/40px Arial; padding-left:10px; background-color:#0B3861; color:#FFF; }
-#container h3		{ font:bold 12px/24px Arial Black ; padding-left:10px; background-color:#0B3861; color:#FFF; }
+#content h2		{ font:bold 20px/40px Arial; padding-left:10px; background-color:#0B3861; color:#FFF; }
+#content h3		{ font:bold 12px/24px Arial Black ; padding-left:10px; background-color:#0B3861; color:#FFF; }
 
-#container ul li{
+#content ul li{
 	margin-left: 20px;
 	float:left;
 	width:45%;
 }
 
-#container ul li.max-width{
+#content ul li.max-width{
 	margin-bottom: 5px;
 	margin-left: 20px;
 	width:90%;
 	text-align:center !important;
 }
-#container .max-heigth{
+#content .max-heigth{
 	margin-bottom: 5px;
 	margin-left: 20px;
 	margin-top:100px;
 	height: 500px;
 	text-align:center !important;
 }
-#container .min-heigth{
+#content .min-heigth{
 	margin-bottom: 5px;
 	margin-left: 20px;
 	margin-top:20px;
 	height: 250px;
 	text-align:center !important;
 }
-#container ul li.max-width-right{
+#content ul li.max-width-right{
 	margin-left: 20px;
 	width:90%;
 	text-align:right !important;
@@ -72,17 +73,17 @@ fieldset legend {
 	display:none !important;
 }
 
-#container form		{ 
+#content form{ 
 	border:1px solid #888;
 	padding:10px 15px; 
 	background-color:#EFEFFB !important;
 	min-height:520px;
  }
-#container table 	{ margin:0 auto; }
-#container form	{ font: bold 14px/28px Arial;}
+#content table 	{ margin:0 auto; }
+#content form	{ font: bold 14px/28px Arial;}
 
-#container  fieldset input[type="text"], table input[type="text"], .dataTables_filter input[type="text"], div textarea,fieldset input[type="text"], div table input[type="text"],
-#container  fieldset input[type="password"], #container  table input[type="password"]
+#content  fieldset input[type="text"], table input[type="text"], .dataTables_filter input[type="text"], div textarea,fieldset input[type="text"], div table input[type="text"],
+#content  fieldset input[type="password"], #content  table input[type="password"]
 {
 	border:1px solid #8A084B !important;
 	background-color:#FFFFFF !important;
@@ -96,14 +97,14 @@ fieldset legend {
 	-moz-border-radius:4px !important;
 	-webkit-border-radius:4px !important; 
 }
-#container fieldset  input, table input, div fieldset  input, div table input{
+#content fieldset  input, table input, div fieldset  input, div table input{
 	margin:5px 5px !important;
 }
-#container fieldset  input.disable,  div fieldset  input.disable{
+#content fieldset  input.disable,  div fieldset  input.disable{
 	background: #cecece !important;
 }
 
-#container fieldset  select, table select, div fieldset  select {
+#content fieldset  select, table select, div fieldset  select {
 	border:1px solid #8A084B;
 	background-color:#FFFFFF;
 	padding:3px 5px;
@@ -116,10 +117,10 @@ fieldset legend {
 	-webkit-border-radius:4px;
 }
 
-#container table td { font-style:normal; color: #000000; padding:0 5px; }
+#content table td { font-style:normal; color: #000000; padding:0 5px; }
 
-#container input:focus 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
-#container input:active 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
+#content input:focus 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
+#content input:active 	{ border:1px solid #3a4f54 !important; background-color:#ccc !important; }
 
 
 .dataTables_length, .dataTables_filter,.dataTables_info{
@@ -132,9 +133,9 @@ fieldset legend {
 .lista_detalle thead th{ text-align:left; font:bold 11px/18px Arial !important; }
 
 /* Buttom general de todo el sistema*/
-#container fieldset input[type="submit"], 
-#container table input[type="submit"], 
-#container input[type="submit"]  { 
+#content fieldset input[type="submit"], 
+#content table input[type="submit"], 
+#content input[type="submit"]  { 
 	background:url(button-grad.png) repeat-x !important;
 	border:none; 
 	color: #fff; 
@@ -150,20 +151,20 @@ fieldset legend {
 	margin-left: 4px;
 
 }
-#container input:focus 	{ 
+#content input:focus 	{ 
 	border:1px solid #3a4f54 !important; 
 	background-color:#ccc !important; 
 }	
-#container  input[type="submit"]:hover, 
-#container  fieldset  input.agregar:hover { border:1px solid #13455b }
-#container input[type="submit"]:active, 
-#container  fieldset  input.agregar:hover { 
+#content  input[type="submit"]:hover, 
+#content  fieldset  input.agregar:hover { border:1px solid #13455b }
+#content input[type="submit"]:active, 
+#content  fieldset  input.agregar:hover { 
 	background:url(button-grad-active.png) repeat-x !important; 
 }
 
 
 /*Buttom buscar*/
-#container  fieldset input.search, #container  table input.search{
+#content  fieldset input.search, #content  table input.search{
 	background-color:#0B3861 !important;
 	border:none;
 	background:url(../images/zoom.png) no-repeat !important;
@@ -173,10 +174,10 @@ fieldset legend {
 	-webkit-border-radius:0 !important;
 	padding:0 !important; 
 }
-#container  fieldset  input.search:hover, div fieldset  input.search:hover, #container  table input.search:hover { border:0 !important; }
+#content  fieldset  input.search:hover, div fieldset  input.search:hover, #content  table input.search:hover { border:0 !important; }
 
 /*Buttom Borrar editar mostrar de las tablas*/
-#container table div a img {
+#content table div a img {
 	width: 30px;
 	height: 30px;
 	cursor: pointer;
@@ -186,64 +187,64 @@ fieldset legend {
 
 
 /*
-#container  fieldset input.agregar {
+#content  fieldset input.agregar {
 	padding-left:16px !important;
 	background:url(../images/add.png) no-repeat !important;
 	border:0 !important;
 	
 }
 
-#container  fieldset  input.agregar:hover { border:0 !important; }
+#content  fieldset  input.agregar:hover { border:0 !important; }
 */
 #lista_items { 
 	width: 0 !important;
 }
 	
 
-#container  fieldset ul li label, div fieldset ul li label{
+#content  fieldset ul li label, div fieldset ul li label{
 	margin-right: 5px !important;
 	text-align:right !important;
 	width:100px !important;
 	display:inline-block !important;
 	font-size:12px;
 }
-#container  fieldset ul li label.especial{
+#content  fieldset ul li label.especial{
 	margin-right: 5px !important;
 	text-align:right !important;
 	width:97px !important;
 	display:inline-block !important;
 	font-size:12px;
 }
-#container  fieldset ul li label.titulo{
+#content  fieldset ul li label.titulo{
 	margin-right: 5px !important;
 	text-align:center !important;
 	display:inline-block !important;
 	width:350px !important;
 }
-#container  fieldset ul li label.titulo2{
+#content  fieldset ul li label.titulo2{
 	margin-right: 5px !important;
 	display:inline-block !important;
 	width:350px !important;
 }
 
 
-#container  fieldset  input[type="submit"]:hover, #container  fieldset  input.agregar:hover 
+#content  fieldset  input[type="submit"]:hover, #content  fieldset  input.agregar:hover 
 { border:1px solid #13455b }
-#container  fieldset  input[type="submit"]:active, #container  fieldset  input.agregar:hover 
+#content  fieldset  input[type="submit"]:active, #content  fieldset  input.agregar:hover 
 { background:url(../images/button-grad-active.png) repeat-x !important; }
-#container  table  input[type="submit"]:hover, #container  fieldset  input.agregar:hover 
+#content  table  input[type="submit"]:hover, #content  fieldset  input.agregar:hover 
  { border:1px solid #13455b }
-#container  table  input[type="submit"]:active, #container  fieldset  input.agregar:hover 
+#content  table  input[type="submit"]:active, #content  fieldset  input.agregar:hover 
  { background:url(../images/button-grad-active.png) repeat-x !important; }
  
 /*para las popup que se abren*/
-#container div  fieldset  input[type="submit"]:hover
+#content div  fieldset  input[type="submit"]:hover
 { border:1px solid #13455b }
-#container  div fieldset  input[type="submit"]:active
+#content  div fieldset  input[type="submit"]:active
 { background:url(../images/button-grad-active.png) repeat-x !important; }
-#container  div table  input[type="submit"]:hover
+#content  div table  input[type="submit"]:hover
  { border:1px solid #13455b }
-#container  div table  input[type="submit"]:active
+#content  div table  input[type="submit"]:active
  { background:url(../images/button-grad-active.png) repeat-x !important; }
 
 button.ui-datepicker-trigger{
