@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120313012635) do
+ActiveRecord::Schema.define(:version => 20120314014100) do
 
   create_table "areas", :force => true do |t|
-    t.string "area_name",   :limit => 50,  :null => false
-    t.string "description", :limit => 100
+    t.string "area_name",   :limit => 20, :null => false
+    t.string "description", :limit => 50
   end
 
   create_table "customer_types", :force => true do |t|
@@ -106,15 +106,14 @@ ActiveRecord::Schema.define(:version => 20120313012635) do
     t.integer  "customer_id"
   end
 
-  create_table "rounting_sheets", :force => true do |t|
-    t.integer "area_id",      :null => false
-    t.integer "employee_id",  :null => false
-    t.date    "date"
-    t.integer "total_amount"
-  end
-
   create_table "service_types", :force => true do |t|
     t.string "description"
+  end
+
+  create_table "transport_guide_details", :force => true do |t|
+    t.integer "transport_guide_id", :null => false
+    t.integer "package_id",         :null => false
+    t.integer "amount",             :null => false
   end
 
   create_table "transport_guides", :force => true do |t|
@@ -144,8 +143,8 @@ ActiveRecord::Schema.define(:version => 20120313012635) do
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
   add_foreign_key "retire_notes", "service_types", :name => "retire_notes_service_type_id_fk"
 
-  add_foreign_key "rounting_sheets", "areas", :name => "rounting_sheets_area_id_fk"
-  add_foreign_key "rounting_sheets", "employees", :name => "rounting_sheets_employee_id_fk"
+  add_foreign_key "transport_guide_details", "packages", :name => "transport_guide_details_package_id_fk"
+  add_foreign_key "transport_guide_details", "transport_guides", :name => "transport_guide_details_transport_guide_id_fk"
 
   add_foreign_key "transport_guides", "areas", :name => "transport_guides_area_id_fk"
   add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"
