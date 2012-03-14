@@ -1,5 +1,7 @@
 Project::Application.routes.draw do
 
+  resources :routing_sheets
+
   resources :retire_note_details
 
   resources :packages

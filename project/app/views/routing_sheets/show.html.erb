@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Area:</b>
+  <%= @routing_sheet.area_id %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%= @routing_sheet.employee_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @routing_sheet.date %>
+</p>
+
+<p>
+  <b>Total amount:</b>
+  <%= @routing_sheet.total_amount %>
+</p>
+
+<p>
+  <b>Routing sheet state:</b>
+  <%= @routing_sheet.routing_sheet_state_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_routing_sheet_path(@routing_sheet) %> |
+<%= link_to 'Back', routing_sheets_path %>

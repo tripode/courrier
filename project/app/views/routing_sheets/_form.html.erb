@@ -1,10 +1,10 @@
-<%= form_for(@rounting_sheet) do |f| %>
-  <% if @rounting_sheet.errors.any? %>
+<%= form_for(@routing_sheet) do |f| %>
+  <% if @routing_sheet.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@rounting_sheet.errors.count, "error") %> prohibited this rounting_sheet from being saved:</h2>
+      <h2><%= pluralize(@routing_sheet.errors.count, "error") %> prohibited this routing_sheet from being saved:</h2>
 
       <ul>
-      <% @rounting_sheet.errors.full_messages.each do |msg| %>
+      <% @routing_sheet.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -26,6 +26,10 @@
   <div class="field">
     <%= f.label :total_amount %><br />
     <%= f.number_field :total_amount %>
+  </div>
+  <div class="field">
+    <%= f.label :routing_sheet_state_id %><br />
+    <%= f.number_field :routing_sheet_state_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

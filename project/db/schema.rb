@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314014100) do
+ActiveRecord::Schema.define(:version => 20120314020515) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 20, :null => false
@@ -106,6 +106,19 @@ ActiveRecord::Schema.define(:version => 20120314014100) do
     t.integer  "customer_id"
   end
 
+  create_table "routing_sheet_states", :force => true do |t|
+    t.string "state_name",  :limit => 50,  :null => false
+    t.string "description", :limit => 100
+  end
+
+  create_table "routing_sheets", :force => true do |t|
+    t.integer "area_id",                :null => false
+    t.integer "employee_id",            :null => false
+    t.date    "date"
+    t.integer "total_amount"
+    t.integer "routing_sheet_state_id", :null => false
+  end
+
   create_table "service_types", :force => true do |t|
     t.string "description"
   end
@@ -142,6 +155,10 @@ ActiveRecord::Schema.define(:version => 20120314014100) do
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
   add_foreign_key "retire_notes", "service_types", :name => "retire_notes_service_type_id_fk"
+
+  add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
+  add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
+  add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
 
   add_foreign_key "transport_guide_details", "packages", :name => "transport_guide_details_package_id_fk"
   add_foreign_key "transport_guide_details", "transport_guides", :name => "transport_guide_details_transport_guide_id_fk"
