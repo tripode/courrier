@@ -6,8 +6,7 @@
 		<%= stylesheet_link_tag "bp/reset" %>
 		<%= stylesheet_link_tag "bp/forms" %>
 		<%= stylesheet_link_tag "bp/grid" %>
-		<%= stylesheet_link_tag "bp/ie" %> 
-		<!-- 		<%= stylesheet_link_tag "bp/print" %> -->
+		<%= stylesheet_link_tag "bp/ie" %> <!-- 		<%= stylesheet_link_tag "bp/print" %> -->
 		<%= stylesheet_link_tag "bp/typography" %>
 		<%= stylesheet_link_tag "bp/screen" %>
 
@@ -33,44 +32,46 @@
 	</head>
 	<body>
 		<div id="header">
-			<div class="container">
-				<div id="myslidemenu" class="jqueryslidemenu">
-					<ul>
-						<li>
-							<%= link_to 'Clientes', customers_path %>
-						</li>
-						<li>
-							<%= link_to 'Empleado', employees_path %>
-						</li>
-						<li>
-							<a>Notas</a>
-							<ul>
-								<li>
-									<%= link_to 'Nota de Retiro', retire_notes_path %>
-								</li>
-								<li>
-									<%= link_to 'Guia de Tranporte', transport_guides_path %>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<%= link_to 'Hoja de Ruta', routing_sheets_path %>
-							<ul>
-								<li>
-									<%= link_to 'Paquetes', packages_path %>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a>Informes</a>
-						</li>
-						<li>
-							<a>Perfiles</a>
-						</li>
-						<li>
-							<a>Salir</a>
-						</li>
-					</ul>
+			<div class="navigation">
+				<div class="container">
+					<div id="myslidemenu" class="jqueryslidemenu">
+						<ul>
+							<li>
+								<%= link_to 'Clientes', customers_path %>
+							</li>
+							<li>
+								<%= link_to 'Empleado', employees_path %>
+							</li>
+							<li>
+								<a>Notas</a>
+								<ul>
+									<li>
+										<%= link_to 'Nota de Retiro', retire_notes_path %>
+									</li>
+									<li>
+										<%= link_to 'Guia de Tranporte', transport_guides_path %>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<%= link_to 'Hoja de Ruta', routing_sheets_path %>
+								<ul>
+									<li>
+										<%= link_to 'Paquetes', packages_path %>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a>Informes</a>
+							</li>
+							<li>
+								<a>Perfiles</a>
+							</li>
+							<li>
+								<a>Salir</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

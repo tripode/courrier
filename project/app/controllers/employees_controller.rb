@@ -3,7 +3,7 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     @employees = Employee.all
-
+    puts "aca1"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @employees }
@@ -14,7 +14,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1.json
   def show
     @employee = Employee.find(params[:id])
-
+    puts "aca2"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @employee }
@@ -25,7 +25,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new.json
   def new
     @employee = Employee.new
-
+    puts "aca3"
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @employee }
@@ -35,6 +35,12 @@ class EmployeesController < ApplicationController
   # GET /employees/1/edit
   def edit
     @employee = Employee.find(params[:id])
+    @employees = Employee.all
+    puts "aca edito"
+    respond_to do |format|
+      format.html { render action: "index" }
+      format.json { render json: @employee }
+    end
   end
 
   # POST /employees
