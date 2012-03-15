@@ -29,7 +29,7 @@
 			<td><%= employee.num_identity %></td>	
 			<td><%= employee.mobile_number %></td>
 			<td><%= employee.phone_number %></td>
-			<td><%= employee.function_type_id %></td>
+			<td><%=employee.function_type.blank? ? "-" : employee.function_type.description %></td>
 			<td><div><%= link_to 'Mostrar',  employee %></div></td>
 			<td>
 				<div>
@@ -38,7 +38,7 @@
 			</td>
 			<td>
 				<div>
-					<%= link_to image_tag('borrar2.gif'), employee, confirm: 'Are you sure?', method: :delete %>
+					<%= link_to image_tag('borrar2.gif'), employee, confirm: 'Deseas eliminar el empleado?', method: :delete %>
 				</div>
 			</td>
 		</tr>

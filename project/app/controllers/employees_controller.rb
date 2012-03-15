@@ -36,7 +36,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1/edit
   def edit
     @employee = Employee.find(params[:id])
-    @employees = Employee.all
+    # @employees = Employee.all
     puts "aca edito"
     respond_to do |format|
       # format.html { render action: "index" }

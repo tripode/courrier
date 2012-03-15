@@ -1,6 +1,6 @@
 <fieldset>
 	<legend>
-		<%= :titutlo%>
+		Registrar Funcionario
 	</legend>
 	<%= form_for(@employee) do |f| %>
 
@@ -34,15 +34,7 @@
 			<%= f.label :direccion %>
 			<%= f.text_field :address %>
 		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :fecha_de_ingreso %>
-			<%= f.text_field :admission_date %>
-		</li>
-		<li>
-			<%= f.label :fecha_de_nacimiento %>
-			<%= f.date_select :birthday %>
-		</li>
+		
 		<div class="clear"></div>
 		<li>
 			<%= f.label :salario %>
@@ -63,16 +55,47 @@
 			<%= f.label :email %>
 			<%= f.text_field :email %>
 		</li>
+		
 		<div class="clear"></div>
 		<li>
-			<%= f.label :cargo %>
-
-			<%= f.number_field :function_type_id %>
+			<%= f.label :tipo_de_funcion %>
+			<%= f.text_field :function_type_id %>
 		</li>
 		<div class="clear"></div>
 		<li>
+			<%= f.label :fecha_de_ingreso %>
+			<%= f.text_field :admission_date, class:'i_fecha' %>
+		</li>
+		<li>
+			<%= f.label :fecha_de_nacimiento %>
+			<%= f.text_field :birthday, class:'i_fecha' %>
+		</li>
+		<div class="clear"></div>
+	
+		<li>
 			<%= f.submit %>
+			<%= link_to 'Limpiar','#', class: 'limpiar'%>
 		</li>
 	</ul>
 	<% end %>
 </fieldset>
+<script>
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
+	$("input[class*=i_fecha]").datepicker({ 
+					   altField: '#actualDate',
+					   appendText: '(dd-mm-yyyy)',
+					   changeMonth: true,
+					   changeYear: true,  
+					   dateFormat: 'dd-mm-yy',
+					   dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+					   gotoCurrent: true,
+					   yearRange: '1900:2012',
+					   showOn: "button"
+							  
+			});
+
+</script>

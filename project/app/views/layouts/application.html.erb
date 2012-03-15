@@ -26,6 +26,20 @@
 					"sPaginationType" : "full_numbers",
 					"aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
 				});
+				$("input[class*=i_fecha]").datepicker({ 
+					   altField: '#actualDate',
+					   appendText: '(dd-mm-yyyy)',
+					   changeMonth: true,
+					   changeYear: true,  
+					   dateFormat: 'dd-mm-yy',
+					   dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+					   gotoCurrent: true,
+					   yearRange: '1900:2012',
+					   showOn: "button"
+							  
+			});
+				
+				
 			});
 
 		</script>
