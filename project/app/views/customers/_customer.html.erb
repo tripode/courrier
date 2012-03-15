@@ -1,0 +1,67 @@
+<% if @customer == nil %>
+	<% @customer= Customer.new%>
+	<%puts "se crea un nuevo cliente"%>
+<% end %>
+<%= form_for(@customer) do |f| %>
+  <% if @customer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+      <% @customer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<ul>
+	<li>
+		<%= f.label :tipo_cliente %>
+    	<%= f.number_field :customer_type_id %>	
+	</li>
+	<li>
+		<%= f.label :nombre %>
+    	<%= f.text_field :name %>	
+	</li>
+	<div class="clear"></div>
+	<li>
+		<%= f.label :apellido %>
+    	<%= f.text_field :last_name %>	
+	</li>
+	<li>
+		<%= f.label :empresa %>
+    	<%= f.text_field :company_name %>	
+	</li>
+	<div class="clear"></div>
+	<li>
+		<%= f.label :ruc %>
+    	<%= f.text_field :ruc %>	
+	</li>
+	<li>
+		<%= f.label :direccion %>
+    	<%= f.text_field :address %>	
+	</li>
+	<div class="clear"></div>
+	<li>
+		<%= f.label :nro_identificacion %>
+    	<%= f.number_field :num_identify %>	
+	</li>
+	<li>
+		<%= f.label :celular %>
+    	<%= f.text_field :mobile_number %>	
+	</li>
+	<div class="clear"></div>
+	<li>
+		<%= f.label :telefono %>
+    	<%= f.text_field :phone_number %>	
+	</li>
+	<li>
+		<%= f.label :email %>
+    	<%= f.text_field :email %>	
+	</li>
+	<div class="clear"></div>
+	<li>
+		<%= f.submit :Actualizar%>	
+	</li>
+</ul>
+<% end %>

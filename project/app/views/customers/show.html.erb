@@ -50,6 +50,10 @@
   <%= @customer.email %>
 </p>
 
+<p>
+  <b>Tipo de Cliente:</b>
+  <%= @customer.customer_type_id %>
+</p>
 
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+<%= link_to 'Editar', edit_customer_path(@customer) %> |
+<%= link_to 'Regresar', customers_path %>
