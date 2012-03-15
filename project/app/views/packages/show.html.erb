@@ -21,11 +21,6 @@
 </p>
 
 <p>
-  <b>Employee:</b>
-  <%= @package.employee_id %>
-</p>
-
-<p>
   <b>Remitter:</b>
   <%= @package.remitter %>
 </p>
@@ -50,10 +45,7 @@
   <%= @package.package_state_id %>
 </p>
 
-<p>
-  <b>Admission date:</b>
-  <%= @package.admission_date %>
-</p>
+
 
 
 <%= link_to 'Edit', edit_package_path(@package) %> |

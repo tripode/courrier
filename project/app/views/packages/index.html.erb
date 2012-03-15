@@ -6,13 +6,11 @@
     <th>Description</th>
     <th>Package type</th>
     <th>Retire note</th>
-    <th>Employee</th>
     <th>Remitter</th>
     <th>Address</th>
     <th>Customer</th>
     <th>Fragile</th>
     <th>Package state</th>
-    <th>Admission date</th>
     <th></th>
     <th></th>
     <th></th>
@@ -24,13 +22,11 @@
     <td><%= package.description %></td>
     <td><%= package.package_type_id %></td>
     <td><%= package.retire_note_id %></td>
-    <td><%= package.employee_id %></td>
     <td><%= package.remitter %></td>
     <td><%= package.address %></td>
     <td><%= package.customer_id %></td>
     <td><%= package.fragile %></td>
     <td><%= package.package_state_id %></td>
-    <td><%= package.admission_date %></td>
     <td><%= link_to 'Show', package %></td>
     <td><%= link_to 'Edit', edit_package_path(package) %></td>
     <td><%= link_to 'Destroy', package, confirm: 'Are you sure?', method: :delete %></td>
