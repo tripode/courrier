@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314020515) do
+ActiveRecord::Schema.define(:version => 20120314233930) do
 
   create_table "areas", :force => true do |t|
-    t.string "area_name",   :limit => 20, :null => false
-    t.string "description", :limit => 50
+    t.string "area_name",   :limit => 50,  :null => false
+    t.string "description", :limit => 100
   end
 
   create_table "customer_types", :force => true do |t|
@@ -78,13 +78,11 @@ ActiveRecord::Schema.define(:version => 20120314020515) do
     t.string   "description",      :limit => 100
     t.integer  "package_type_id",                 :null => false
     t.integer  "retire_note_id",                  :null => false
-    t.integer  "employee_id",                     :null => false
     t.string   "remitter",         :limit => 100
     t.string   "address",          :limit => 100
     t.integer  "customer_id",                     :null => false
     t.string   "fragile",          :limit => 5,   :null => false
     t.integer  "package_state_id",                :null => false
-    t.date     "admission_date"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
@@ -117,6 +115,7 @@ ActiveRecord::Schema.define(:version => 20120314020515) do
     t.date    "date"
     t.integer "total_amount"
     t.integer "routing_sheet_state_id", :null => false
+    t.integer "package_type_id"
   end
 
   create_table "service_types", :force => true do |t|
@@ -144,7 +143,6 @@ ActiveRecord::Schema.define(:version => 20120314020515) do
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
 
   add_foreign_key "packages", "customers", :name => "packages_customer_id_fk"
-  add_foreign_key "packages", "employees", :name => "packages_employee_id_fk"
   add_foreign_key "packages", "package_states", :name => "packages_package_state_id_fk"
   add_foreign_key "packages", "package_types", :name => "packages_package_type_id_fk"
   add_foreign_key "packages", "retire_notes", :name => "packages_retire_note_id_fk"
@@ -158,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20120314020515) do
 
   add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
+  add_foreign_key "routing_sheets", "package_types", :name => "routing_sheets_package_type_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
 
   add_foreign_key "transport_guide_details", "packages", :name => "transport_guide_details_package_id_fk"
