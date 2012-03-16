@@ -58,8 +58,8 @@
 		
 		<div class="clear"></div>
 		<li>
-			<%= f.label :tipo_de_funcion %>
-			<%= f.text_field :function_type_id %>
+			<%= f.label :cargo %>
+			<%= f.select :function_type_id, FunctionType.all.collect{|tp|[tp.description, tp.id]}, prompt: "-- Seleccionar--"%>
 		</li>
 		<div class="clear"></div>
 		<li>
