@@ -18,9 +18,9 @@
 		<li>
 			<%= f.label :tipo_cliente %>	
 			<%= f.collection_select :customer_type_id, @customer_types, :id, :type_name,:prompt => "-- Seleccionar--"%> 
-	    	
 		</li>
 		<li>
+			
 			<%= f.label :nombre %>
 	    	<%= f.text_field :name %>	
 		</li>

@@ -36,7 +36,7 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find(params[:id])
-    @customers = Customer.all
+    #@customers = Customer.all
     @customer_types = CustomerType.all
     respond_to do |format|
       # format.html { render action: "index" }
