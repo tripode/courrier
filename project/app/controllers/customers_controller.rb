@@ -3,6 +3,8 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @customers = Customer.all
+    @customer = Customer.new
+    @customer_types = CustomerType.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @customers }
@@ -13,7 +15,7 @@ class CustomersController < ApplicationController
   # GET /customers/1.json
   def show
     @customer = Customer.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @customer }
@@ -24,7 +26,7 @@ class CustomersController < ApplicationController
   # GET /customers/new.json
   def new
     @customer = Customer.new
-
+    @customer_types = CustomerType.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer }
@@ -34,6 +36,13 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find(params[:id])
+    @customers = Customer.all
+    @customer_types = CustomerType.all
+    respond_to do |format|
+      # format.html { render action: "index" }
+      format.js
+      # format.json { render json: @customer }
+    end
   end
 
   # POST /customers

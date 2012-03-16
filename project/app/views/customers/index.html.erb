@@ -1,12 +1,6 @@
 
-<div>
-	<fieldset>
-		<legend>
-			Registrar Cliente
-		</legend>
-		<%=render 'customer' %>
-	</fieldset>
-	
+<div id='form_customer'>
+	<%=render 'customer'%>
 </div>
 <br />
 
@@ -20,13 +14,10 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Empresa</th>
-            <th>Ruc</th>
             <th>Direccion</th>
             <th>Nro Iden</th>
-            <th>Celular</th>
             <th>Telefono</th>
             <th>Email</th>
-            <th>Tipo de Cliente</th>
             <th></th>
             <th></th>
             <th></th>
@@ -39,17 +30,13 @@
             <td><%= customer.name %></td>
             <td><%= customer.last_name %></td>
             <td><%= customer.company_name %></td>
-            <td><%= customer.ruc %></td>
             <td><%= customer.address %></td>
-            <td><%= customer.num_identify %></td>
-            <td><%= customer.mobile_number %></td>
             <td><%= customer.phone_number %></td>
             <td><%= customer.email %></td>
-            <td><%= if customer.customer_type.type_name != nil then customer.customer_type.type_name end %></td>
             <td><%= link_to 'Mostrar', customer %></td>
             <td>
             	<div>
-            	<%= link_to image_tag('editar.gif'), edit_customer_path(customer) %>
+            	<%= link_to image_tag('editar.gif'), edit_customer_path(customer), remote: true %>
             	</div>
             </td>
             <td>
@@ -65,4 +52,3 @@
 <br />
 <br /> 
 
-<%= link_to 'Nuevo Cliente', new_customer_path %>

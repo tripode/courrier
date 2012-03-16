@@ -52,7 +52,7 @@
 
 <p>
   <b>Tipo de Cliente:</b>
-  <%= @customer.customer_type_id %>
+  <%= if @customer.customer_type.type_name != nil then @customer.customer_type.type_name end %>
 </p>
 
 <%= link_to 'Editar', edit_customer_path(@customer) %> |
