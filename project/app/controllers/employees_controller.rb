@@ -3,7 +3,8 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     @employees = Employee.all
-    puts "aca1"
+    @employee= Employee.new
+ 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @employees }
@@ -38,8 +39,9 @@ class EmployeesController < ApplicationController
     @employees = Employee.all
     puts "aca edito"
     respond_to do |format|
-      format.html { render action: "index" }
-      format.json { render json: @employee }
+      # format.html { render action: "index" }
+      format.js
+      # format.json { render json: @employee }
     end
   end
 

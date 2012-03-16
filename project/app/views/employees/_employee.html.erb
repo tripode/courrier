@@ -1,78 +1,78 @@
-<% if @employee == nil %>
-	<% @employee= Employee.new%>
-	<%puts "se crea un nuevo empleado"%>
-<% end %>
+<fieldset>
+	<legend>
+		<%= :titutlo%>
+	</legend>
+	<%= form_for(@employee) do |f| %>
 
-<%= form_for(@employee) do |f| %>
-
-<% if @employee.errors.any? %>
-<div id="error_explanation">
-	<h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+	<% if @employee.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+		<ul>
+			<% @employee.errors.full_messages.each do |msg| %>
+			<li>
+				<%= msg %>
+			</li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
 	<ul>
-		<% @employee.errors.full_messages.each do |msg| %>
 		<li>
-			<%= msg %>
+			<%= f.label :nombre %>
+			<%= f.text_field :name %>
 		</li>
-		<% end %>
+		<li>
+			<%= f.label :apellido%>
+			<%= f.text_field :last_name %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :numero_de_CI %>
+			<%= f.number_field :num_identity %>
+		</li>
+		<li>
+			<%= f.label :direccion %>
+			<%= f.text_field :address %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :fecha_de_ingreso %>
+			<%= f.text_field :admission_date %>
+		</li>
+		<li>
+			<%= f.label :fecha_de_nacimiento %>
+			<%= f.date_select :birthday %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :salario %>
+			<%= f.text_field :salary %>
+		</li>
+		<li>
+			<%= f.label :numero_de_celular%>
+
+			<%= f.text_field :mobile_number %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :numero_de_telefono%>
+
+			<%= f.text_field :phone_number %>
+		</li>
+		<li>
+			<%= f.label :email %>
+			<%= f.text_field :email %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :cargo %>
+
+			<%= f.number_field :function_type_id %>
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.submit %>
+		</li>
 	</ul>
-</div>
-<% end %>
-<ul>
-	<li>
-		<%= f.label :nombre %>
-		<%= f.text_field :name %>
-	</li>
-	<li>
-		<%= f.label :apellido%>
-		<%= f.text_field :last_name %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.label :numero_de_CI %>
-		<%= f.number_field :num_identity %>
-	</li>
-	<li>
-		<%= f.label :direccion %>
-		<%= f.text_field :address %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.label :fecha_de_ingreso %>
-		<%= f.text_field :admission_date %>
-	</li>
-	<li>
-		<%= f.label :fecha_de_nacimiento %>
-		<%= f.date_select :birthday %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.label :salario %>
-		<%= f.text_field :salary %>
-	</li>
-	<li>
-		<%= f.label :numero_de_celular%>
-
-		<%= f.text_field :mobile_number %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.label :numero_de_telefono%>
-
-		<%= f.text_field :phone_number %>
-	</li>
-	<li>
-		<%= f.label :email %>
-		<%= f.text_field :email %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.label :cargo %>
-
-		<%= f.number_field :function_type_id %>
-	</li>
-	<div class="clear"></div>
-	<li>
-		<%= f.submit :Actualizar %>
-	</li>
-</ul>
-<% end %> 
+	<% end %>
+</fieldset>
