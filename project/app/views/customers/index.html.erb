@@ -45,7 +45,7 @@
             <td><%= customer.mobile_number %></td>
             <td><%= customer.phone_number %></td>
             <td><%= customer.email %></td>
-            <td><%= customer.customer_type_id %></td>
+            <td><%= if customer.customer_type.type_name != nil then customer.customer_type.type_name end %></td>
             <td><%= link_to 'Mostrar', customer %></td>
             <td>
             	<div>
