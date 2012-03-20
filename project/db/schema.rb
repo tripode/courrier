@@ -120,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
     t.datetime "date"
     t.integer  "service_type_id"
     t.integer  "customer_id"
+    t.string   "state"
+    t.datetime "expiration_date"
   end
 
   create_table "routing_sheet_states", :force => true do |t|
@@ -139,22 +141,6 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
 
   create_table "service_types", :force => true do |t|
     t.string "description"
-  end
-
-  create_table "transport_guide_details", :force => true do |t|
-    t.integer "transport_guide_id", :null => false
-    t.integer "package_id",         :null => false
-    t.integer "amount",             :null => false
-  end
-
-  create_table "transport_guides", :force => true do |t|
-    t.integer "employee_id",                       :null => false
-    t.date    "date"
-    t.integer "service_type_id",                   :null => false
-    t.integer "customer_id",                       :null => false
-    t.integer "foreign_company_id",                :null => false
-    t.integer "area_id",                           :null => false
-    t.string  "description",        :limit => 100
   end
 
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
@@ -177,14 +163,5 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
   add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
-
-  add_foreign_key "transport_guide_details", "products", :name => "transport_guide_details_package_id_fk", :column => "package_id"
-  add_foreign_key "transport_guide_details", "transport_guides", :name => "transport_guide_details_transport_guide_id_fk"
-
-  add_foreign_key "transport_guides", "areas", :name => "transport_guides_area_id_fk"
-  add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"
-  add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
-  add_foreign_key "transport_guides", "foreign_companies", :name => "transport_guides_foreign_company_id_fk"
-  add_foreign_key "transport_guides", "service_types", :name => "transport_guides_service_type_id_fk"
 
 end
