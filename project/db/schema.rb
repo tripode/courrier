@@ -11,11 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314233930) do
+ActiveRecord::Schema.define(:version => 20120320025414) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 50,  :null => false
     t.string "description", :limit => 100
+  end
+
+  create_table "cities", :force => true do |t|
+    t.string   "name"
+    t.string   "department"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "customer_types", :force => true do |t|
@@ -64,25 +71,24 @@ ActiveRecord::Schema.define(:version => 20120314233930) do
     t.datetime "updated_at",                :null => false
   end
 
-  create_table "package_states", :force => true do |t|
+  create_table "product_states", :force => true do |t|
     t.string "state_name",  :limit => 20,  :null => false
     t.string "description", :limit => 100
   end
 
-  create_table "package_types", :force => true do |t|
+  create_table "product_types", :force => true do |t|
     t.string "description", :limit => 30, :null => false
   end
 
-  create_table "packages", :force => true do |t|
+  create_table "products", :force => true do |t|
     t.integer  "num_code",                        :null => false
     t.string   "description",      :limit => 100
-    t.integer  "package_type_id",                 :null => false
+    t.integer  "product_type_id",                 :null => false
     t.integer  "retire_note_id",                  :null => false
     t.string   "remitter",         :limit => 100
     t.string   "address",          :limit => 100
-    t.integer  "customer_id",                     :null => false
     t.string   "fragile",          :limit => 5,   :null => false
-    t.integer  "package_state_id",                :null => false
+    t.integer  "product_state_id",                :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
@@ -91,10 +97,22 @@ ActiveRecord::Schema.define(:version => 20120314233930) do
     t.string "description", :limit => 100, :null => false
   end
 
+  create_table "receivers", :force => true do |t|
+    t.string   "receiver_name"
+    t.string   "address"
+    t.integer  "city_id"
+    t.string   "document"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "retire_note_details", :force => true do |t|
     t.integer "retire_note_id"
     t.integer "package_type_id"
     t.integer "amount"
+    t.integer "city_id"
+    t.decimal "unit_price"
+    t.string  "description"
   end
 
   create_table "retire_notes", :force => true do |t|
@@ -115,7 +133,8 @@ ActiveRecord::Schema.define(:version => 20120314233930) do
     t.date    "date"
     t.integer "total_amount"
     t.integer "routing_sheet_state_id", :null => false
-    t.integer "package_type_id"
+    t.string  "commentary"
+    t.string  "state"
   end
 
   create_table "service_types", :force => true do |t|
@@ -142,12 +161,13 @@ ActiveRecord::Schema.define(:version => 20120314233930) do
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
 
-  add_foreign_key "packages", "customers", :name => "packages_customer_id_fk"
-  add_foreign_key "packages", "package_states", :name => "packages_package_state_id_fk"
-  add_foreign_key "packages", "package_types", :name => "packages_package_type_id_fk"
-  add_foreign_key "packages", "retire_notes", :name => "packages_retire_note_id_fk"
+  add_foreign_key "products", "product_states", :name => "packages_package_state_id_fk"
+  add_foreign_key "products", "product_types", :name => "packages_package_type_id_fk"
+  add_foreign_key "products", "retire_notes", :name => "packages_retire_note_id_fk"
 
-  add_foreign_key "retire_note_details", "package_types", :name => "retire_note_details_package_type_id_fk"
+  add_foreign_key "receivers", "cities", :name => "receivers_city_id_fk"
+
+  add_foreign_key "retire_note_details", "product_types", :name => "retire_note_details_package_type_id_fk", :column => "package_type_id"
   add_foreign_key "retire_note_details", "retire_notes", :name => "retire_note_details_retire_note_id_fk"
 
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
@@ -156,10 +176,9 @@ ActiveRecord::Schema.define(:version => 20120314233930) do
 
   add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
-  add_foreign_key "routing_sheets", "package_types", :name => "routing_sheets_package_type_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
 
-  add_foreign_key "transport_guide_details", "packages", :name => "transport_guide_details_package_id_fk"
+  add_foreign_key "transport_guide_details", "products", :name => "transport_guide_details_package_id_fk", :column => "package_id"
   add_foreign_key "transport_guide_details", "transport_guides", :name => "transport_guide_details_transport_guide_id_fk"
 
   add_foreign_key "transport_guides", "areas", :name => "transport_guides_area_id_fk"
