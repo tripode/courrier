@@ -31,7 +31,7 @@ VersionId,Version_ID,Copyright,Global_User_ID,Row_Time_Stamp
 
 Diagram
 DiagramId,Version_ID,VersionId,LastUpdate,CreateDate,ActiveModel,ActiveSubmodel,VSplitterPosition,X,Y,Width,Height,DiagramNameId,AuthorId,CompanyId,VersionNoId,CopyrightStringId,DefinitionId,UnificationOptionId,FileNameId,CopyrightYearStringId,DiagramName,CodePage,SignatureGUID,ReleaseName,Flags,Global_User_ID,Row_Time_Stamp
-1,1,750,03/20/2012 10:01:22G,03/03/2012 18:50:37G,1,1,180,0,0,0,0,67,68,69,70,69,0,71,67,0,modelado_corrier.dm1,1252,NULL,NULL,0,1,0
+1,1,750,03/20/2012 12:03:18G,03/03/2012 18:50:37G,1,1,180,0,0,0,0,67,68,69,70,69,0,71,67,0,modelado_corrier.dm1,1252,NULL,NULL,0,1,0
 
 Model
 DiagramId,ModelId,Model_ID,ModelType,PlatformId,NamePrefix,SpaceHandling,CaseHandling,GenPrimaryKey,GenAlternateKey,GenInversionEntry,GenForeignKey,Notation,ModelNameId,RowOverhead,TableOverhead,IndexOverhead,BlobOverhead,BlobBlockSize,Global_User_ID,Row_Time_Stamp
@@ -66,7 +66,7 @@ SubmodelLink_ID,Model_ID,Parent_ID,Child_ID,UltimateParent_ID,NodeLevel,IsBottom
 
 DiagramDisplay
 DiagramId,ModelId,SubmodelId,DiagramDisplay_ID,Submodel_ID,PlatformId,Animate,ZoomFactor,HviewSize,VviewSize,HorizontalScrollPosition,VerticalScrollPosition,PageOrientation,PageSize,DisplayFormat,EntityDisplayInfo,ViewDisplayFormat,ViewDisplayInfo,Shadow,CompleteRoleName,ShowVerbs,ShowCardinality,MethodologyId,StraightRelLine,PageBoundary,ShowViewRelationship,ShowView,HideTrigger,Global_User_ID,Row_Time_Stamp,ShowSchemaObjEdge,ShowSchemaObj,SchemaObjDisplayFormat,ShowRelationshipName,ShowLogicalRelationshipName,ShowTriggerLabel,ShowShape,ShowShapeEdge,ShowShapeName,ShowShapeEdgeName,ShowShapeEdgeVerbs
-1,1,1,1,1,0,0,9411,0,0,114,77,1,1,8,3264,1,0,1,0,1,1,0,0,0,0,0,1,23,0,1,6,7,0,0,0,0,0,1,0,0
+1,1,1,1,1,0,0,9411,0,0,-182,52,1,1,8,3264,1,0,1,0,1,1,0,0,0,0,0,1,23,0,1,6,7,0,0,0,0,0,1,0,0
 
 GridDisplay
 DiagramId,ModelId,SubmodelId,GridDisplay_ID,Submodel_ID,Show,Snap,HorizontalSpacing,VerticalSpacing,HorizontalGridsPerLine,VericalGridsPerLine,Units,Global_User_ID,Row_Time_Stamp
@@ -319,7 +319,7 @@ DiagramId,ModelId,EntityId,AttributeId,Attribute_ID,Entity_ID,UserDatatypeId,Rul
 1,1,19,2,46,19,0,0,0,0,12,89,0,0,89,89,11,0,-2,-1,N,0,0,2,0,0,1,1,1,0,0,0,0,0,0,0,0,0,329,0
 1,1,19,3,47,19,0,0,0,0,12,92,0,0,92,92,11,0,-2,-1,N,0,0,3,0,0,1,1,1,0,0,0,0,0,0,0,0,0,334,0
 1,1,10,1,18,10,0,0,0,0,12,12,0,0,0,0,11,0,-2,-1,N,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,198,0
-1,1,10,2,25,10,0,0,0,0,12,200,0,0,200,200,11,0,-2,-1,N,0,0,2,0,0,1,1,1,0,0,0,0,0,0,0,0,0,236,0
+1,1,10,2,25,10,0,0,0,0,12,213,0,0,213,213,11,0,-2,-1,N,0,0,2,0,0,1,1,1,0,0,0,0,0,0,0,0,0,236,0
 1,1,10,3,26,10,0,0,0,0,12,51,0,0,51,51,11,0,-2,-1,N,0,0,3,0,0,1,1,1,0,0,0,0,0,0,0,0,0,240,0
 1,1,10,4,59,10,0,0,0,0,104,104,0,0,0,0,103,1,-2,-1,N,1,1,4,0,0,1,0,0,0,0,0,0,0,0,0,0,0,350,0
 1,1,1,1,1,1,0,0,0,0,12,12,0,0,0,0,11,0,-2,-1,N,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,111,0
@@ -806,7 +806,6 @@ String_Id,Data,Overflow,ConstantString,Row_Time_Stamp
 198,zone,0,0,0
 24,P,0,0,0
 25,I,0,0,0
-200,zone_id,0,0,0
 26,retire_note_id,0,0,0
 201,weight,0,0,0
 202,state,0,0,0
@@ -821,6 +820,7 @@ String_Id,Data,Overflow,ConstantString,Row_Time_Stamp
 211,document,0,0,0
 212,area_name,0,0,0
 37,transport_guide_details,0,0,0
+213,area_id,0,0,0
 38,transport_guides,0,0,0
 39,transport_guide_id,0,0,0
 42,routing_sheets,0,0,0
@@ -1026,10 +1026,10 @@ StringUsage_Id,UniqueObject_Id,StringUsageType_Id,String_Id,Row_Time_Stamp
 75,224,1,49,0
 76,224,2,49,0
 77,229,14,12,0
-78,236,15,200,0
+78,236,15,213,0
 79,236,14,12,0
-80,236,11,200,0
-81,236,95,200,0
+80,236,11,213,0
+81,236,95,213,0
 82,240,15,51,0
 83,240,14,12,0
 84,240,11,51,0
@@ -1544,7 +1544,7 @@ Identity_Value_ID,Table_Name,Column_Name,Next_Valid_Value,Global_User_ID,Row_Tim
 13,Bound_Dictionary_Object,Bound_Dictionary_Object_ID,1,0,0
 14,CheckConstraints,CheckConstraints_ID,1,0,0
 15,Circular_Layout,Circular_Layout_ID,3,0,0
-16,ColorDefault,ColorDefault_ID,154,0,0
+16,ColorDefault,ColorDefault_ID,155,0,0
 17,Column_Usage,Column_Usage_ID,1,0,0
 18,Components_Layout,Components_Layout_ID,3,0,0
 19,Configuration_Option,Configuration_Option_ID,1,0,0
