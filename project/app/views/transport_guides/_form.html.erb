@@ -1,0 +1,45 @@
+<%= form_for(@transport_guide) do |f| %>
+  <% if @transport_guide.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@transport_guide.errors.count, "error") %> prohibited this transport_guide from being saved:</h2>
+
+      <ul>
+      <% @transport_guide.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :customer_id %><br />
+    <%= f.number_field :customer_id %>
+  </div>
+  <div class="field">
+    <%= f.label :foreign_company_id %><br />
+    <%= f.number_field :foreign_company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_id %><br />
+    <%= f.number_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :service_type_id %><br />
+    <%= f.number_field :service_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_method_id %><br />
+    <%= f.number_field :payment_method_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

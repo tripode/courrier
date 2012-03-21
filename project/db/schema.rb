@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120320025414) do
+ActiveRecord::Schema.define(:version => 20120321183019) do
 
   create_table "areas", :force => true do |t|
-    t.string "area_name",   :limit => 50,  :null => false
-    t.string "description", :limit => 100
+    t.string "area_name",   :limit => 20, :null => false
+    t.string "description", :limit => 50
   end
 
   create_table "cities", :force => true do |t|
@@ -69,6 +69,11 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
     t.string   "description", :limit => 30, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+  end
+
+  create_table "payment_methods", :force => true do |t|
+    t.string "name_payment", :limit => 20, :null => false
+    t.string "description",  :limit => 50
   end
 
   create_table "product_states", :force => true do |t|
@@ -143,6 +148,17 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
     t.string "description"
   end
 
+  create_table "transport_guides", :force => true do |t|
+    t.integer  "customer_id",                      :null => false
+    t.integer  "foreign_company_id",               :null => false
+    t.integer  "employee_id",                      :null => false
+    t.integer  "service_type_id",                  :null => false
+    t.string   "state",              :limit => 20
+    t.integer  "payment_method_id",                :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
 
   add_foreign_key "employees", "function_types", :name => "employees_function_type_id_fk"
@@ -163,5 +179,11 @@ ActiveRecord::Schema.define(:version => 20120320025414) do
   add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
+
+  add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"
+  add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
+  add_foreign_key "transport_guides", "foreign_companies", :name => "transport_guides_foreign_company_id_fk"
+  add_foreign_key "transport_guides", "payment_methods", :name => "transport_guides_payment_method_id_fk"
+  add_foreign_key "transport_guides", "service_types", :name => "transport_guides_service_type_id_fk"
 
 end

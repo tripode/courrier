@@ -1,5 +1,7 @@
 Project::Application.routes.draw do
 
+  resources :transport_guides
+
   resources :products
 
   resources :receivers
