@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Customer:</b>
+  <%= @transport_guide.customer_id %>
+</p>
+
+<p>
+  <b>Foreign company:</b>
+  <%= @transport_guide.foreign_company_id %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%= @transport_guide.employee_id %>
+</p>
+
+<p>
+  <b>Service type:</b>
+  <%= @transport_guide.service_type_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @transport_guide.date %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @transport_guide.state %>
+</p>
+
+<p>
+  <b>Payment method:</b>
+  <%= @transport_guide.payment_method_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_transport_guide_path(@transport_guide) %> |
+<%= link_to 'Back', transport_guides_path %>

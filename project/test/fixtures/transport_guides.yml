@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  customer_id: 1
+  foreign_company_id: 1
+  employee_id: 1
+  service_type_id: 1
+  date: 2012-03-21
+  state: MyString
+  payment_method_id: 1
+
+two:
+  customer_id: 1
+  foreign_company_id: 1
+  employee_id: 1
+  service_type_id: 1
+  date: 2012-03-21
+  state: MyString
+  payment_method_id: 1
