@@ -2,13 +2,8 @@
 
 
 <p>
-  <b>Nombre:</b>
-  <%= @customer.name %>
-</p>
-
-<p>
-  <b>Apellido:</b>
-  <%= @customer.last_name %>
+  <b>Empresa:</b>
+  <%= @customer.company_name %>
 </p>
 
 <p>
@@ -46,4 +41,4 @@
   <%= if @customer.customer_type.type_name != nil then @customer.customer_type.type_name end %>
 </p>
 
-<%= link_to 'Regresar', customers_path %>
+<%= link_to 'Regresar', customer_companies_path %>

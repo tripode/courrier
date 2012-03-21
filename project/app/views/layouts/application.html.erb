@@ -51,7 +51,15 @@
 					<div id="myslidemenu" class="jqueryslidemenu">
 						<ul>
 							<li>
-								<%= link_to 'Clientes', customers_path %>
+								<a>Clientes</a>
+								<ul>
+									<li>
+										<%= link_to 'Personal', customers_path %>	
+									</li>
+									<li>
+										<%= link_to 'Juridico', customer_companies_path %>	
+									</li>
+								</ul>
 							</li>
 							<li>
 								<%= link_to 'Empleado', employees_path %>
@@ -63,7 +71,7 @@
 										<%= link_to 'Nota de Retiro', retire_notes_path %>
 									</li>
 									<li>
-										<%= link_to 'Guia de Tranporte', transport_guides_path %>
+										<%= link_to 'Guia de Tranporte' %>
 									</li>
 								</ul>
 							</li>
@@ -71,7 +79,7 @@
 								<%= link_to 'Hoja de Ruta', routing_sheets_path %>
 								<ul>
 									<li>
-										<%= link_to 'Paquetes', packages_path %>
+										<%= link_to 'Productos', products_path %>
 									</li>
 								</ul>
 							</li>

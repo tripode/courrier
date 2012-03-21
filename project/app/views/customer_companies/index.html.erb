@@ -1,6 +1,6 @@
 
-<div id="form_customer">
-	<%=render 'customer'%>
+<div id="form_customer_company">
+	<%=render 'customer_company'%>
 </div>
 <br />
 
@@ -11,8 +11,8 @@
     border="1" class="tablaIndex display"  bgcolor="white">
     <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Empresa</th>
+            <th>Ruc</th>
             <th>Direccion</th>
             <th>Telefono</th>
             <th>Email</th>
@@ -24,20 +24,21 @@
     <tbody>
         <% @customers.each do |customer| %>
           <tr>
-            <td><%= customer.name %></td>
-            <td><%= customer.last_name %></td>
+            <td><%= customer.company_name %></td>
+            <td><%= customer.ruc %></td>
             <td><%= customer.address %></td>
             <td><%= customer.phone_number %></td>
             <td><%= customer.email %></td>
             <td><%= link_to 'Mostrar', customer %></td>
             <td>
             	<div>
-            	<%= link_to image_tag('editar.gif'), edit_customer_path(customer), remote: true %>
+            	<%= link_to image_tag('editar.gif'), edit_customer_company_path(customer), remote: true %>
             	</div>
             </td>
             <td>
             	<div>
             	<%= link_to image_tag('borrar2.gif'), customer, confirm: 'Estas seguro?', method: :delete %>
+            
             	</div>
             </td>
           </tr>

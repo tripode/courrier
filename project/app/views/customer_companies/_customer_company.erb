@@ -16,41 +16,41 @@
 	  <% end %>
 	<ul>
 		<li>
-			<%= f.label :nombre %>
-	    	<%= f.text_field :name %>	
+			<%= f.label :empresa %>
+	    	<%= f.text_field :company_name %>	
 		</li>
-		<li>
-			<%= f.label :apellido %>
-	    	<%= f.text_field :last_name %>	
-		</li>
-		<div class="clear"></div>
+		
+		
 		<li>
 			<%= f.label :ruc %>
 	    	<%= f.text_field :ruc %>	
 		</li>
+		<div class="clear"></div>
 		<li>
 			<%= f.label :direccion %>
 	    	<%= f.text_field :address %>	
 		</li>
-		<div class="clear"></div>
+		
 		<li>
 			<%= f.label :codigo %>
 	    	<%= f.number_field :num_identify %>	
 		</li>
+		<div class="clear"></div>
 		<li>
 			<%= f.label :celular %>
 	    	<%= f.text_field :mobile_number %>	
 		</li>
-		<div class="clear"></div>
+		
 		<li>
 			<%= f.label :telefono %>
 	    	<%= f.text_field :phone_number %>	
 		</li>
+		<div class="clear"></div>
 		<li>
 			<%= f.label :email %>
 	    	<%= f.text_field :email %>	
 		</li>
-		<div class="clear"></div>
+	   <div class="clear"></div>
 		<li >
 			<%= f.submit :guardar %>	
 		</li>

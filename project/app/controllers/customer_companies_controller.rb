@@ -1,8 +1,8 @@
-class CustomersController < ApplicationController
-  # GET /customers
-  # GET /customers.json
+class CustomerCompaniesController < ApplicationController
+# GET /customer_companies
+  # GET /customer_companies.json
   def index
-    @customers = Customer.find(:all, :conditions => "customer_type_id=2")
+    @customers = Customer.find(:all, :conditions => "customer_type_id=1")
     @customer = Customer.new
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +10,8 @@ class CustomersController < ApplicationController
     end
   end
 
-  # GET /customers/1
-  # GET /customers/1.json
+  # GET /customer_companies/1
+  # GET /customer_companies/1.json
   def show
     @customer = Customer.find(params[:id])
     
@@ -21,8 +21,8 @@ class CustomersController < ApplicationController
     end
   end
 
-  # GET /customers/new
-  # GET /customers/new.json
+  # GET /customer_companies/new
+  # GET /customer_companies/new.json
   def new
     @customer = Customer.new
     @customer_types = CustomerType.all
@@ -32,10 +32,9 @@ class CustomersController < ApplicationController
     end
   end
 
-  # GET /customers/1/edit
+  # GET /customer_companies/1/edit
   def edit
     @customer = Customer.find(params[:id])
-    #@customers = Customer.all
     @customer_types = CustomerType.all
     respond_to do |format|
       # format.html { render action: "index" }
@@ -48,7 +47,7 @@ class CustomersController < ApplicationController
   # POST /customers.json
   def create
     @customer = Customer.new(params[:customer])
-    @customer.customer_type_id=2
+    @customer.customer_type_id=1
     respond_to do |format|
       if @customer.save
         format.html { redirect_to @customer, notice: 'El cliente ha sido correctamente guardado' }
@@ -88,3 +87,4 @@ class CustomersController < ApplicationController
     end
   end
 end
+

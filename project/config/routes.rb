@@ -8,7 +8,6 @@ Project::Application.routes.draw do
 
   resources :retire_note_details
 
-  resources :packages
 
   resources :retire_notes
 
@@ -16,12 +15,11 @@ Project::Application.routes.draw do
 
   resources :rounting_sheets
 
-  resources :transport_guides
-
-
   resources :employees
 
   resources :customers
+  
+  resources :customer_companies
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
