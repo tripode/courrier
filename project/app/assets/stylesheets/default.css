@@ -22,6 +22,7 @@ fieldset, #bordeado {
 fieldset legend {
 	padding: 3px 10px;
 	border: 1px solid #0B3861;
+	background-color: #ffffff;
 	color: #222;
 	font: bold 13px /normal Arial;
 	margin-left: 10px;
@@ -68,6 +69,10 @@ fieldset legend {
 	margin-left: 20px;
 	float: left;
 	width: 45%;
+	
+}
+.center{
+	text-align: center;
 }
 #content ul li.max-width {
 	margin-bottom: 5px;
@@ -117,7 +122,14 @@ fieldset legend {
 #content form {
 	/*	font: bold 14px/28px Arial;*/
 }
-#content  fieldset input[type="text"], table input[type="text"], .dataTables_filter input[type="text"], div textarea, fieldset input, div table input[type="text"], #content  fieldset input[type="password"], #content  table input[type="password"] {
+#content  fieldset input[type="text"], 
+table input[type="text"], 
+.dataTables_filter input[type="text"], 
+div textarea, fieldset input, 
+div table input[type="text"],
+#content  fieldset input[type="password"], 
+#content  table input[type="password"]
+#content  fieldset ul li select {
 	border: 1px solid #8A084B !important;
 	background-color: #FFFFFF !important;
 	padding: 3px 5px !important;
@@ -134,7 +146,7 @@ fieldset legend {
 #content fieldset  input.disable, div fieldset  input.disable {
 	background: #cecece !important;
 }
-#content fieldset  select, table select, div fieldset  select {
+#content fieldset  select, table select {
 	border: 1px solid #8A084B;
 	background-color: #FFFFFF;
 	padding: 3px 5px;
@@ -172,20 +184,23 @@ fieldset legend {
 	font: bold 11px /18px Arial !important;
 }
 /* Buttom general de todo el sistema*/
-#content fieldset input[type="submit"], #content table input[type="submit"], #content input[type="submit"] {
+#content fieldset input[type="submit"],
+ #content table input[type="submit"], 
+ #content input[type="submit"], #content a.button {
 	background: url(button-grad.png) repeat-x !important;
-	border: none;
 	color: #fff;
 	font-weight: bold;
+	text-decoration: none;
 	padding: 3px 15px;
 	display: inline-block;
-	margin-bottom: 12px;
-	-moz-border-radius: 11px;
+	margin-bottom: 12px !important;
+	-moz-border-radius: 11px !important;
 	-webkit-border-radius: 11px;
 	cursor: pointer;
-	border: 1px solid #fff;
+	border: 1px solid #fff !important;
 	margin-top: 8px !important;
 	margin-left: 4px;
+	
 }
 #content input:focus {
 	border: 1px solid #3a4f54 !important;

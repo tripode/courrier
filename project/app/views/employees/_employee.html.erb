@@ -1,101 +1,106 @@
-<fieldset>
-	<legend>
-		Registrar Funcionario
-	</legend>
-	<%= form_for(@employee) do |f| %>
+<div class="span-24 last">
+	<fieldset>
+		<legend>
+			Registrar Funcionario
+		</legend>
+		<%= form_for(@employee) do |f| %>
 
-	<% if @employee.errors.any? %>
-	<div id="error_explanation">
-		<h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+		<% if @employee.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+			<ul>
+				<% @employee.errors.full_messages.each do |msg| %>
+				<li>
+					<%= msg %>
+				</li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
 		<ul>
-			<% @employee.errors.full_messages.each do |msg| %>
 			<li>
-				<%= msg %>
+				<label> Nº de CI</label>
+				<%= f.number_field :num_identity %>
 			</li>
-			<% end %>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :nombre %>
+				<%= f.text_field :name %>
+			</li>
+			<li>
+				<%= f.label :apellido%>
+				<%= f.text_field :last_name %>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :direccion %>
+				<%= f.text_field :address %>
+			</li>
+			<li>
+				<%= f.label :salario %>
+				<%= f.text_field :salary %>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :celular%>
+				<%= f.text_field :mobile_number %>
+			</li>
+			<li>
+				<%= f.label :telefono%>
+				<%= f.text_field :phone_number %>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :email %>
+				<%= f.text_field :email %>
+			</li>
+			<li>
+				<%= f.label :cargo %>
+				<%= f.select :function_type_id, @employee.buscarFunctionType, prompt: "-- Seleccionar--"%>
+			</li>
+			<div class="clear"></div>
+			<li style="width: 100%;">
+				<label>Nacimiento</label>
+				<%= f.text_field :birthday,{value: @employee.format_birthday, class:'i_fecha'} %>
+			</li>
+			
+			<li style="width: 100%;">
+				<label>Ingreso</label>
+				<%= f.text_field :admission_date, {value: @employee.format_admission_date, class:'i_fecha'} %>
+			</li>
+			
+			<div class="clear"></div>
+			
 		</ul>
+		
+				
+		
+		
+	</fieldset>
+	<div class="span-24 center last" >
+			<%= f.submit 'Guardar' %>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','#', class: 'limpiar button'%>
 	</div>
 	<% end %>
-	<ul>
-		<li>
-			<%= f.label :nombre %>
-			<%= f.text_field :name %>
-		</li>
-		<li>
-			<%= f.label :apellido%>
-			<%= f.text_field :last_name %>
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :numero_de_CI %>
-			<%= f.number_field :num_identity %>
-		</li>
-		<li>
-			<%= f.label :direccion %>
-			<%= f.text_field :address %>
-		</li>
-		
-		<div class="clear"></div>
-		<li>
-			<%= f.label :salario %>
-			<%= f.text_field :salary %>
-		</li>
-		<li>
-			<%= f.label :numero_de_celular%>
-
-			<%= f.text_field :mobile_number %>
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :numero_de_telefono%>
-
-			<%= f.text_field :phone_number %>
-		</li>
-		<li>
-			<%= f.label :email %>
-			<%= f.text_field :email %>
-		</li>
-		
-		<div class="clear"></div>
-		<li>
-			<%= f.label :cargo %>
-			<%= f.select :function_type_id, FunctionType.all.collect{|tp|[tp.description, tp.id]}, prompt: "-- Seleccionar--"%>
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :fecha_de_ingreso %>
-			<%= f.text_field :admission_date, class:'i_fecha' %>
-		</li>
-		<li>
-			<%= f.label :fecha_de_nacimiento %>
-			<%= f.text_field :birthday,{value: @employee.format_birthday, class:'i_fecha'} %>
-		</li>
-		<div class="clear"></div>
-	
-		<li>
-			<%= f.submit %>
-			<%= link_to 'Limpiar','#', class: 'limpiar'%>
-		</li>
-	</ul>
-	<% end %>
-</fieldset>
+</div>
 <script>
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
 
 	});
-	$("input[class*=i_fecha]").datepicker({ 
-					   altField: '#actualDate',
-					   appendText: '(dd-mm-yyyy)',
-					   changeMonth: true,
-					   changeYear: true,  
-					   dateFormat: 'dd-mm-yy',
-					   dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
-					   gotoCurrent: true,
-					   yearRange: '1900:2012',
-					   showOn: "button"
-							  
-			});
+	$("input[class*=i_fecha]").datepicker({
+		altField : '#actualDate',
+		appendText : '(dd-mm-yyyy)',
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd-mm-yy',
+		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+		gotoCurrent : true,
+		yearRange : '1900:2012',
+		showOn : "button"
+
+	});
 
 </script>
