@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321183019) do
+ActiveRecord::Schema.define(:version => 20120322033228) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 20, :null => false
@@ -148,15 +148,27 @@ ActiveRecord::Schema.define(:version => 20120321183019) do
     t.string "description"
   end
 
+  create_table "transport_guide_states", :force => true do |t|
+    t.string "name_state",  :limit => 40,  :null => false
+    t.string "description", :limit => 100
+  end
+
   create_table "transport_guides", :force => true do |t|
-    t.integer  "customer_id",                      :null => false
-    t.integer  "foreign_company_id",               :null => false
-    t.integer  "employee_id",                      :null => false
-    t.integer  "service_type_id",                  :null => false
-    t.string   "state",              :limit => 20
-    t.integer  "payment_method_id",                :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.string   "destination_person",       :limit => 60
+    t.string   "destination_address",      :limit => 100
+    t.string   "remitter_person",          :limit => 60
+    t.string   "remitter_address",         :limit => 100
+    t.integer  "num_guide",                               :null => false
+    t.integer  "customer_id",                             :null => false
+    t.integer  "foreign_company_id",                      :null => false
+    t.integer  "employee_id",                             :null => false
+    t.integer  "service_type_id",                         :null => false
+    t.integer  "transport_guide_state_id",                :null => false
+    t.integer  "payment_method_id",                       :null => false
+    t.integer  "destination_city_id",                     :null => false
+    t.integer  "origin_city_id",                          :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   add_foreign_key "customers", "customer_types", :name => "customers_customer_type_id_fk"
@@ -180,10 +192,13 @@ ActiveRecord::Schema.define(:version => 20120321183019) do
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
 
+  add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_destination_city_id", :column => "destination_city_id"
+  add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_origin_city_id", :column => "origin_city_id"
   add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"
   add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
   add_foreign_key "transport_guides", "foreign_companies", :name => "transport_guides_foreign_company_id_fk"
   add_foreign_key "transport_guides", "payment_methods", :name => "transport_guides_payment_method_id_fk"
   add_foreign_key "transport_guides", "service_types", :name => "transport_guides_service_type_id_fk"
+  add_foreign_key "transport_guides", "transport_guide_states", :name => "transport_guides_transport_guide_state_id_fk"
 
 end

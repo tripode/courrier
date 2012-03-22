@@ -12,6 +12,22 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :destination_person %><br />
+    <%= f.text_field :destination_person %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_address %><br />
+    <%= f.text_field :destination_address %>
+  </div>
+  <div class="field">
+    <%= f.label :remitter_person %><br />
+    <%= f.text_field :remitter_person %>
+  </div>
+  <div class="field">
+    <%= f.label :remitter_address %><br />
+    <%= f.text_field :remitter_address %>
+  </div>
+  <div class="field">
     <%= f.label :customer_id %><br />
     <%= f.number_field :customer_id %>
   </div>
@@ -28,16 +44,24 @@
     <%= f.number_field :service_type_id %>
   </div>
   <div class="field">
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
+    <%= f.label :transport_guide_state_id %><br />
+    <%= f.text_field :transport_guide_state_id %>
   </div>
   <div class="field">
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
+    <%= f.label :num_guide %><br />
+    <%= f.number_field :num_guide %>
   </div>
   <div class="field">
     <%= f.label :payment_method_id %><br />
     <%= f.number_field :payment_method_id %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_city_id %><br />
+    <%= f.number_field :destination_city_id %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_city_id %><br />
+    <%= f.number_field :origin_city_id %>
   </div>
   <div class="actions">
     <%= f.submit %>
