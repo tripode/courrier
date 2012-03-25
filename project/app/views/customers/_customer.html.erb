@@ -1,59 +1,86 @@
-<fieldset>
-	<legend>
-		<%= :titutlo%>
-	</legend>
-	<%= form_for(@customer) do |f| %>
-	  <% if @customer.errors.any? %>
-	    <div id="error_explanation">
-	      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+<div class="span-24 last">
+	<fieldset>
+		<legend>
+			<%= :titutlo%>
+		</legend>
+		<%= form_for(@customer) do |f| %>
+		  <% if @customer.errors.any? %>
+		    <div id="error_explanation">
+		      <h2><%= pluralize(@customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+		
+		      <ul>
+		      <% @customer.errors.full_messages.each do |msg| %>
+		        <li><%= msg %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+		<ul>
+			<li>
+				<%= f.label :nombre %>
+		    	<%= f.text_field :name %>	
+			</li>
+			<li>
+				<%= f.label :apellido %>
+		    	<%= f.text_field :last_name %>	
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :ruc %>
+		    	<%= f.text_field :ruc %>	
+			</li>
+			<li>
+				<%= f.label :direccion %>
+		    	<%= f.text_field :address %>	
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :CI %>
+		    	<%= f.number_field :num_identify%>	
+			</li>
+			<li>
+				<%= f.label :celular %>
+		    	<%= f.text_field :mobile_number %>	
+			</li>
+			<div class="clear"></div>
+			<li>
+				<%= f.label :telefono %>
+		    	<%= f.text_field :phone_number %>	
+			</li>
+			<li>
+				<%= f.label :email %>
+		    	<%= f.text_field :email %>	
+			</li>
+			<div class="clear"></div>
+			
+		</ul>
 	
-	      <ul>
-	      <% @customer.errors.full_messages.each do |msg| %>
-	        <li><%= msg %></li>
-	      <% end %>
-	      </ul>
-	    </div>
-	  <% end %>
-	<ul>
-		<li>
-			<%= f.label :nombre %>
-	    	<%= f.text_field :name %>	
-		</li>
-		<li>
-			<%= f.label :apellido %>
-	    	<%= f.text_field :last_name %>	
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :ruc %>
-	    	<%= f.text_field :ruc %>	
-		</li>
-		<li>
-			<%= f.label :direccion %>
-	    	<%= f.text_field :address %>	
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :CI %>
-	    	<%= f.number_field :num_identify, size: '30'%>	
-		</li>
-		<li>
-			<%= f.label :celular %>
-	    	<%= f.text_field :mobile_number %>	
-		</li>
-		<div class="clear"></div>
-		<li>
-			<%= f.label :telefono %>
-	    	<%= f.text_field :phone_number %>	
-		</li>
-		<li>
-			<%= f.label :email %>
-	    	<%= f.text_field :email %>	
-		</li>
-		<div class="clear"></div>
-		<li >
-			<%= f.submit %>	
-		</li>
-	</ul>
+	</fieldset>
+	<div class="span-24 center last" >
+			<%= f.submit 'Guardar' %>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','#', class: 'button'%>
+	</div>
 	<% end %>
-</fieldset>
+</div>
+<script>
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
+	$("input[class*=i_fecha]").datepicker({
+		altField : '#actualDate',
+		appendText : '(dd-mm-yyyy)',
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd-mm-yy',
+		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+		gotoCurrent : true,
+		yearRange : '1900:2012',
+		showOn : "button"
+
+	});
+
+</script>
+

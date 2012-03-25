@@ -3,42 +3,38 @@
 
 <p>
   <b>Empresa:</b>
-  <%= @customer.company_name %>
+  <%= @customer_company.company_name %>
 </p>
 
 <p>
   <b>Ruc:</b>
-  <%= @customer.ruc %>
+  <%= @customer_company.ruc %>
 </p>
 
 <p>
   <b>Direccion:</b>
-  <%= @customer.address %>
+  <%= @customer_company.address %>
 </p>
 
-<p>
-  <b>Codigo</b>
-  <%= @customer.num_identify %>
-</p>
 
 <p>
   <b>Celular:</b>
-  <%= @customer.mobile_number %>
+  <%= @customer_company.mobile_number %>
 </p>
 
 <p>
   <b>Telefono:</b>
-  <%= @customer.phone_number %>
+  <%= @customer_company.phone_number %>
 </p>
 
 <p>
   <b>Email:</b>
-  <%= @customer.email %>
+  <%= @customer_company.email %>
 </p>
 
 <p>
   <b>Tipo de Cliente:</b>
-  <%= if @customer.customer_type.type_name != nil then @customer.customer_type.type_name end %>
+  <%= if @customer_company.customer_type.type_name != nil then @customer_company.customer_type.type_name end %>
 </p>
 
 <%= link_to 'Regresar', customer_companies_path %>

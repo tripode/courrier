@@ -1,60 +1,60 @@
 class CustomerCompaniesController < ApplicationController
-# GET /customer_companies
+  # GET /customer_companies
   # GET /customer_companies.json
   def index
-    @customers = Customer.find(:all, :conditions => "customer_type_id = 1")
-    @customer = Customer.new
+    @customer_companies = Customer.find(:all, :conditions => "customer_type_id = 1")
+    @customer_company = Customer.new
+ 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @customers }
+      format.json { render json: @customer_companies }
     end
   end
 
   # GET /customer_companies/1
   # GET /customer_companies/1.json
   def show
-    @customer = Customer.find(params[:id])
-    
+    @customer_company = Customer.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @customer }
+      format.json { render json: @customer_company }
     end
   end
 
   # GET /customer_companies/new
   # GET /customer_companies/new.json
   def new
-    @customer = Customer.new
+    @customer_company = Customer.new
     @customer_types = Customer.find(:all, :conditions => "customer_type_id = 1")
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @customer }
+      format.json { render json: @customer_company }
     end
   end
 
   # GET /customer_companies/1/edit
   def edit
-    @customer = Customer.find(params[:id])
+    @customer_company = Customer.find(params[:id])
     @customer_types = CustomerType.all
     respond_to do |format|
       # format.html { render action: "index" }
-      format.js
-      # format.json { render json: @customer }
+       format.js 
+      # format.json { render json: @customer_company }
     end
   end
 
   # POST /customer_companies
   # POST /customer_companies.json
   def create
-    @customer = Customer.new(params[:customer])
-    @customer.customer_type_id = 1
+    @customer_company = Customer.new(params[:customer])
+    @customer_company.customer_type_id = 1
     respond_to do |format|
-      if @customer.save
-        format.html { redirect_to customer_company_path(@customer), notice: 'El cliente ha sido correctamente guardado' }
-        format.json { render json: @customer, status: :created, location: @customer }
+      if @customer_company.save
+        format.html { redirect_to :controller => "customer_companies", notice: 'El cliente ha sido correctamente guardado' }
+        format.json { render json: @customer_company, status: :created, location: @customer_company }
       else
-        format.html { render action: "new" }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+       format.html { redirect_to customer_company_path(@customer_company), notice: 'No se ha podido guardar el cliente' }
+        format.json { render json: @customer_company.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,14 +62,14 @@ class CustomerCompaniesController < ApplicationController
   # PUT /customer_companies/1
   # PUT /customer_companies/1.json
   def update
-    @customer = Customer.find(params[:id])
+    @customer_company = Customer.find(params[:id])
     respond_to do |format|
-      if @customer.update_attributes(params[:customer])
-        format.html { redirect_to customer_company_path(@customer), notice: 'El cliente ha sido actualizado.' }
+      if @customer_company.update_attributes(params[:customer])
+        format.html { redirect_to customer_company_path(@customer_company), notice: 'El cliente ha sido actualizado.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
+        format.json { render json: @customer_company.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -77,8 +77,8 @@ class CustomerCompaniesController < ApplicationController
   # DELETE /customer_companies/1
   # DELETE /customer_companies/1.json
   def destroy
-    @customer = Customer.find(params[:id])
-    @customer.destroy
+    @customer_company = Customer.find(params[:id])
+    @customer_company.destroy
 
     respond_to do |format|
       format.html { redirect_to customer_companies_url }

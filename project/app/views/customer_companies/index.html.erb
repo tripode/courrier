@@ -22,22 +22,22 @@
         </tr>
     </thead>
     <tbody>
-        <% @customers.each do |customer| %>
+        <% @customer_companies.each do |customer_company| %>
           <tr>
-            <td><%= customer.company_name %></td>
-            <td><%= customer.ruc %></td>
-            <td><%= customer.address %></td>
-            <td><%= customer.phone_number %></td>
-            <td><%= customer.email %></td>
-            <td><%= link_to 'Mostrar', customer_company_path(customer) %></td>
+            <td><%= customer_company.company_name %></td>
+            <td><%= customer_company.ruc %></td>
+            <td><%= customer_company.address %></td>
+            <td><%= customer_company.phone_number %></td>
+            <td><%= customer_company.email %></td>
+            <td><%= link_to 'Mostrar', customer_company_path(customer_company) %></td>
             <td>
             	<div>
-            	<%= link_to image_tag('editar.gif'), edit_customer_company_path(customer), remote: true %>
+            	<%= link_to image_tag('editar.gif'), edit_customer_company_path(customer_company), remote: true  %>
             	</div>
             </td>
             <td>
             	<div>
-            	<%= link_to image_tag('borrar2.gif'), customer_company_path(customer), confirm: 'Estas seguro?', method: :delete %>
+            	<%= link_to image_tag('borrar2.gif'), customer_company_path(customer_company), confirm: 'Estas seguro?', method: :delete %>
             	</div>
             </td>
           </tr>

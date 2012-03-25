@@ -1,0 +1,80 @@
+<div class="span-24 last">
+<fieldset>
+	<legend>
+		<%= :titutlo%>
+	</legend>
+	<%= form_for @customer_company, :url => customer_company_path(@customer_company) do |f| %>
+	  <% if @customer_company.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@customer_company.errors.count, "error") %> prohibited this customer from being saved:</h2>
+	
+	      <ul>
+	      <% @customer_company.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	<ul>
+		<li>
+			<%= f.label :empresa %>
+	    	<%= f.text_field :company_name %>	
+		</li>
+		
+		
+		<li>
+			<%= f.label :ruc %>
+	    	<%= f.text_field :ruc %>	
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :direccion %>
+	    	<%= f.text_field :address %>	
+		</li>
+		<li>
+			<%= f.label :email %>
+	    	<%= f.text_field :email %>	
+		</li>
+		<div class="clear"></div>
+		<li>
+			<%= f.label :celular %>
+	    	<%= f.text_field :mobile_number %>	
+		</li>
+		
+		<li>
+			<%= f.label :telefono %>
+	    	<%= f.text_field :phone_number %>	
+		</li>
+		<div class="clear"></div>
+	</ul>
+
+</fieldset>
+<div class="span-24 center last" >
+			<%= f.submit 'Actualizar' %>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','#', class: 'button'%>
+</div>
+<% end %>
+</div>
+<script>
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
+	$("input[class*=i_fecha]").datepicker({
+		altField : '#actualDate',
+		appendText : '(dd-mm-yyyy)',
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd-mm-yy',
+		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+		gotoCurrent : true,
+		yearRange : '1900:2012',
+		showOn : "button"
+
+	});
+	
+
+</script>
+

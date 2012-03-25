@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.find(:all, :conditions => "customer_type_id=2")
+    @customers = Customer.find(:all, :conditions => "customer_type_id = 2")
     @customer = Customer.new
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class CustomersController < ApplicationController
   # GET /customers/new.json
   def new
     @customer = Customer.new
-    @customer_types = CustomerType.all
+    @customer_types = Customer.find(:all, :conditions => "customer_type_id = 2")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer }
@@ -35,7 +35,6 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find(params[:id])
-    #@customers = Customer.all
     @customer_types = CustomerType.all
     respond_to do |format|
       # format.html { render action: "index" }
@@ -48,13 +47,13 @@ class CustomersController < ApplicationController
   # POST /customers.json
   def create
     @customer = Customer.new(params[:customer])
-    @customer.customer_type_id=2
+    @customer.customer_type_id = 2
     respond_to do |format|
       if @customer.save
         format.html { redirect_to @customer, notice: 'El cliente ha sido correctamente guardado' }
         format.json { render json: @customer, status: :created, location: @customer }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @customer, notice: 'No se pudo guardar el cliente' }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
@@ -67,11 +66,8 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
-        format.html { redirect_to @customer, notice: 'Customer was successfully updated.' }
+        format.html { redirect_to @customer, notice: 'El cliente ha sido actualizado' }
         format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end
   end
