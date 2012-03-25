@@ -1,5 +1,6 @@
 class CreateTransportGuides < ActiveRecord::Migration
   def change
+
     create_table :transport_guides do |t|
       t.string :destination_person, :limit=>60
       t.string :destination_address, :limit=>100

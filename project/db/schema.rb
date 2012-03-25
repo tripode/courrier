@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120322033228) do
+ActiveRecord::Schema.define(:version => 20120325021653) do
 
   create_table "areas", :force => true do |t|
-    t.string "area_name",   :limit => 20, :null => false
-    t.string "description", :limit => 50
+    t.string "area_name",   :limit => 50,  :null => false
+    t.string "description", :limit => 100
   end
 
   create_table "cities", :force => true do |t|
@@ -125,8 +125,11 @@ ActiveRecord::Schema.define(:version => 20120322033228) do
     t.datetime "date"
     t.integer  "service_type_id"
     t.integer  "customer_id"
-    t.string   "state"
-    t.datetime "expiration_date"
+    t.integer  "product_type_id"
+    t.integer  "city_id"
+    t.integer  "amount"
+    t.string   "description",     :limit => 50
+    t.decimal  "unit_price"
   end
 
   create_table "routing_sheet_states", :force => true do |t|
@@ -146,6 +149,13 @@ ActiveRecord::Schema.define(:version => 20120322033228) do
 
   create_table "service_types", :force => true do |t|
     t.string "description"
+  end
+
+  create_table "transport_guide_details", :force => true do |t|
+    t.integer "transport_guide_id", :null => false
+    t.integer "amount"
+    t.integer "product_type_id",    :null => false
+    t.decimal "weight"
   end
 
   create_table "transport_guide_states", :force => true do |t|
@@ -184,13 +194,18 @@ ActiveRecord::Schema.define(:version => 20120322033228) do
   add_foreign_key "retire_note_details", "product_types", :name => "retire_note_details_package_type_id_fk", :column => "package_type_id"
   add_foreign_key "retire_note_details", "retire_notes", :name => "retire_note_details_retire_note_id_fk"
 
+  add_foreign_key "retire_notes", "cities", :name => "retire_notes_city_id_fk"
   add_foreign_key "retire_notes", "customers", :name => "retire_notes_customer_id_fk"
   add_foreign_key "retire_notes", "employees", :name => "retire_notes_employee_id_fk"
+  add_foreign_key "retire_notes", "product_types", :name => "retire_notes_product_type_id_fk"
   add_foreign_key "retire_notes", "service_types", :name => "retire_notes_service_type_id_fk"
 
   add_foreign_key "routing_sheets", "areas", :name => "routing_sheets_area_id_fk"
   add_foreign_key "routing_sheets", "employees", :name => "routing_sheets_employee_id_fk"
   add_foreign_key "routing_sheets", "routing_sheet_states", :name => "routing_sheets_routing_sheet_state_id_fk"
+
+  add_foreign_key "transport_guide_details", "product_types", :name => "transport_guide_details_product_type_id_fk"
+  add_foreign_key "transport_guide_details", "transport_guides", :name => "transport_guide_details_transport_guide_id_fk"
 
   add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_destination_city_id", :column => "destination_city_id"
   add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_origin_city_id", :column => "origin_city_id"
