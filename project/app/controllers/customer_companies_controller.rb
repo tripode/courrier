@@ -50,7 +50,7 @@ class CustomerCompaniesController < ApplicationController
     @customer_company.customer_type_id = 1
     respond_to do |format|
       if @customer_company.save
-        format.html { redirect_to :controller => "customer_companies", notice: 'El cliente ha sido correctamente guardado' }
+        format.html { redirect_to customer_company_path(@customer_company), notice: 'El cliente ha sido correctamente guardado' }
         format.json { render json: @customer_company, status: :created, location: @customer_company }
       else
        format.html { redirect_to customer_company_path(@customer_company), notice: 'No se ha podido guardar el cliente' }
