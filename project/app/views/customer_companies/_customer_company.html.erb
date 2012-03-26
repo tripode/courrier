@@ -3,7 +3,7 @@
 	<legend>
 		<%= :titutlo%>
 	</legend>
-	<%= form_for @customer_company, :url => {:controller => "customer_companies"} do |f| %>
+	<%= form_for @customer_company, :url => customer_companies_path  do |f| %>
 	  <% if @customer_company.errors.any? %>
 	    <div id="error_explanation">
 	      <h2><%= pluralize(@customer_company.errors.count, "error") %> prohibited this customer from being saved:</h2>
