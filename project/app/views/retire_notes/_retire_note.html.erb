@@ -19,10 +19,11 @@
 		<ul>
 	      <li>
 		    <%= f.label :Nro %>
+		    <%= f.text_field :number%>
 		  </li>
 		  <li>
 		    <%= f.label :fecha %>
-		    <%= f.text_field :date %>
+		    <%= f.text_field :date, class:'i_fecha' %>
 		  </li>
 		  <div class="clear"></div>
 		  
@@ -37,7 +38,13 @@
 		  <div class="clear"></div>
 		 
 		</ul>
+		
 		<ul>
+			<li>
+				Detalle del Producto
+			</li>
+			<br />
+			<div class="clear"></div>
 			<li>
 		    	<%= f.label :tipo_de_producto %>
 		    	<%= f.select :product_type_id, @retire_note.getTipoProductos, prompt: "-- Seleccionar--"%>
@@ -45,29 +52,34 @@
 		  	<div class="clear"></div>
 		  	<li>
 		  		<%= f.label :ciudad %>
-		    	<%= f.number_field :city_id %>
+		    	<%= f.select :city_id, @retire_note.getCiudades, prompt: "-- Seleccionar--"%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
 		  		<%= f.label :cantidad %>
-		    	<%= f.number_field :amount %>
+		    	<%= f.text_field :amount %>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
 		  		<%= f.label :precio_unit %>
-		    	<%= f.number_field :unit_price%>
+		    	<%= f.text_field :unit_price%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
 		  		<%= f.label :descripcion %>
-		    	<%= f.number_field :description %>
+		    	<%= f.text_field :description %>
 		  	</li>
-		  	 <li>
-		    	<%= f.submit %>
-		  	</li>
+		  	<div class="clear"></div>
+		  	
 		</ul>
-		<% end %>
+		
 	</fieldset>
+	<div class="span-24 center last" >
+			<%= f.submit 'Guardar' %>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','#', class: 'button'%>
+	</div>
+	<% end %>
 </div>
 <script>
 	$('.limpiar').click(function() {
