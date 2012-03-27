@@ -1,0 +1,91 @@
+<div class="span-24 last">
+	
+	<fieldset>
+		<legend>
+			Nota de Retiro
+		</legend>
+		<%= form_for(@retire_note) do |f| %>
+		  <% if @retire_note.errors.any? %>
+		    <div id="error_explanation">
+		      <h2><%= pluralize(@retire_note.errors.count, "error") %> prohibited this retire_note from being saved:</h2>
+		
+		      <ul>
+		      <% @retire_note.errors.full_messages.each do |msg| %>
+		        <li><%= msg %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+		<ul>
+	      <li>
+		    <%= f.label :Nro %>
+		  </li>
+		  <li>
+		    <%= f.label :fecha %>
+		    <%= f.text_field :date %>
+		  </li>
+		  <div class="clear"></div>
+		  
+		  <li>
+		    <%= f.label :Cliente %>
+		    <%= f.select :customer_id, @retire_note.getClientes, prompt: "-- Seleccionar--"%>
+		  </li>
+		  <li>
+		    <%= f.label :Servicio %>
+		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--"%>
+		  </li>
+		  <div class="clear"></div>
+		 
+		</ul>
+		<ul>
+			<li>
+		    	<%= f.label :tipo_de_producto %>
+		    	<%= f.select :product_type_id, @retire_note.getTipoProductos, prompt: "-- Seleccionar--"%>
+		  	</li>
+		  	<div class="clear"></div>
+		  	<li>
+		  		<%= f.label :ciudad %>
+		    	<%= f.number_field :city_id %>
+		  	</li>
+		  	<div class="clear"></div>
+		  	<li>
+		  		<%= f.label :cantidad %>
+		    	<%= f.number_field :amount %>
+		  	</li>
+		  	<div class="clear"></div>
+		  	<li>
+		  		<%= f.label :precio_unit %>
+		    	<%= f.number_field :unit_price%>
+		  	</li>
+		  	<div class="clear"></div>
+		  	<li>
+		  		<%= f.label :descripcion %>
+		    	<%= f.number_field :description %>
+		  	</li>
+		  	 <li>
+		    	<%= f.submit %>
+		  	</li>
+		</ul>
+		<% end %>
+	</fieldset>
+</div>
+<script>
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
+	$("input[class*=i_fecha]").datepicker({
+		altField : '#actualDate',
+		appendText : '(dd-mm-yyyy)',
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd-mm-yy',
+		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+		gotoCurrent : true,
+		yearRange : '1900:2012',
+		showOn : "button"
+
+	});
+
+</script>

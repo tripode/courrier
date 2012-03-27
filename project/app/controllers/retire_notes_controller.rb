@@ -2,11 +2,11 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes
   # GET /retire_notes.json
   def index
-    @retire_notes = RetireNote.all
+    @retire_note = RetireNote.new
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @retire_notes }
+      format.json { render json: @retire_note }
     end
   end
 

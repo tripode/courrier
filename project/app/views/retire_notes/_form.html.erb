@@ -1,3 +1,4 @@
+
 <%= form_for(@retire_note) do |f| %>
   <% if @retire_note.errors.any? %>
     <div id="error_explanation">
@@ -12,23 +13,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :id %><br />
-    <%= f.number_field :id %>
-  </div>
-  <div class="field">
-    <%= f.label :employee_id %><br />
+    <%= f.label :Funcionario %><br />
     <%= f.number_field :employee_id %>
   </div>
   <div class="field">
-    <%= f.label :date %><br />
+    <%= f.label :fecha %><br />
     <%= f.datetime_select :date %>
   </div>
   <div class="field">
-    <%= f.label :service_type_id %><br />
+    <%= f.label :Servicio %><br />
     <%= f.number_field :service_type_id %>
   </div>
   <div class="field">
-    <%= f.label :customer_id %><br />
+    <%= f.label :Cliente %><br />
     <%= f.number_field :customer_id %>
   </div>
   <div class="actions">

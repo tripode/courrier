@@ -1,3 +1,3 @@
-class PackageState < ActiveRecord::Base
+class ProductState < ActiveRecord::Base
   has_many :products
 end
