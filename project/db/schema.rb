@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120325021653) do
+ActiveRecord::Schema.define(:version => 20120327025156) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 50,  :null => false
@@ -19,10 +19,8 @@ ActiveRecord::Schema.define(:version => 20120325021653) do
   end
 
   create_table "cities", :force => true do |t|
-    t.string   "name"
-    t.string   "department"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string "name"
+    t.string "department"
   end
 
   create_table "customer_types", :force => true do |t|
@@ -130,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20120325021653) do
     t.integer  "amount"
     t.string   "description",     :limit => 50
     t.decimal  "unit_price"
+    t.integer  "number"
   end
 
   create_table "routing_sheet_states", :force => true do |t|
