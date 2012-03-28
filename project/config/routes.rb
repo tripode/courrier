@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+ 
+  resources :transport_guide_details
 
   resources :transport_guides
 

@@ -68,7 +68,7 @@ fieldset legend {
 #content ul li {
 	margin-left: 20px;
 	float: left;
-/*	width: 45%;*/
+	width: 45%;
 	
 }
 .center{
@@ -108,8 +108,8 @@ fieldset legend {
 }
 #content form {
 	/*	border:1px solid #888;*/
-	padding: 10px 15px;
-	background-color: #EFEFFB !important;
+/*	padding: 10px 15px;
+	background-color: #EFEFFB !important;*/
 	/*	min-height:520px;*/
 
 }

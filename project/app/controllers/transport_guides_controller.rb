@@ -3,6 +3,11 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides.json
   def index
     @transport_guides = TransportGuide.all
+    @transport_guide = TransportGuide.new
+    @transport_guide_details = TransportGuideDetail.all#where(transport_guide_id: @transport_guide.id)
+    @transport_guide_detail=TransportGuideDetail.new
+    
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,6 +30,8 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides/new.json
   def new
     @transport_guide = TransportGuide.new
+    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,15 +42,34 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides/1/edit
   def edit
     @transport_guide = TransportGuide.find(params[:id])
+    # respond_to do |format|
+    # # format.html { render action: "index" }
+    # format.js
+    # # format.json { render json: @employee }
+    # end
   end
 
   # POST /transport_guides
   # POST /transport_guides.json
   def create
-    @transport_guide = TransportGuide.new(params[:transport_guide])
+     
+    puts "En el create"
+       
+    value=nil
+    # value = @transport_guide.save
+    TransportGuide.transaction do
+      @transport_guide = TransportGuide.new(params[:transport_guide])
+      value=@transport_guide.save
+      params[:lista].each do |k,v|
+        v[:transport_guide_id]=@transport_guide.id
+        @transport_guide_detail =TransportGuideDetail.new(v)
+        @transport_guide_detail.save
+  
+      end
+    end
 
     respond_to do |format|
-      if @transport_guide.save
+      if value
         format.html { redirect_to @transport_guide, notice: 'Transport guide was successfully created.' }
         format.json { render json: @transport_guide, status: :created, location: @transport_guide }
       else
