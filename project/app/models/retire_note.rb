@@ -3,7 +3,7 @@ class RetireNote < ActiveRecord::Base
   belongs_to :employee
   belongs_to :service_type
   belongs_to :city
-  belongs_to :product_types
+  belongs_to :product_type
   
   def getTipoServicios
     ServiceType.all.collect{|tp|[tp.description, tp.id]}

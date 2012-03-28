@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Id:</b>
-  <%= @retire_note.id %>
+  <b>Number:</b>
+  <%= @retire_note.number %>
 </p>
 
 <p>
@@ -25,6 +25,34 @@
   <%= @retire_note.customer_id %>
 </p>
 
+<p>
+  <b>Servicio:</b>
+  <%= if @retire_note.service_type_id != nil then @retire_note.service_type.description end %>
+</p>
 
-<%= link_to 'Edit', edit_retire_note_path(@retire_note) %> |
+<p>
+  <b>Tipo de Producto:</b>
+  <%= if @retire_note.product_type_id != nil then @retire_note.product_type.description end%>
+</p>
+
+<p>
+  <b>Ciudad:</b>
+  <%= if @retire_note.city_id != nil then @retire_note.city.name end%>
+</p>
+
+<p>
+  <b>Cantidad:</b>
+  <%= @retire_note.amount %>
+</p>
+
+<p>
+  <b>Precio Unitario:</b>
+  <%= @retire_note.unit_price %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%= @retire_note.description %>
+</p>
+
 <%= link_to 'Back', retire_notes_path %>
