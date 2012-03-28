@@ -15,7 +15,10 @@ class RetireNote < ActiveRecord::Base
   def getTipoProductos
     ProductType.all.collect{|tp|[tp.description, tp.id]}
   end
-  def getCiudades()
+  def getCiudades
     City.all.collect{|c|[c.name, c.id]}
+  end
+  def getFuncionarios
+    Employee.all.collect{|e|[e.last_name + " " + e.name, e.id]}
   end
 end

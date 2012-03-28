@@ -1,5 +1,4 @@
 <div class="span-24 last">
-	
 	<fieldset>
 		<legend>
 			Nota de Retiro
@@ -18,56 +17,58 @@
 		  <% end %>
 		<ul>
 	      <li>
-		    <%= f.label :Nro %>
-		    <%= f.text_field :number%>
+		    <label>Nro:</label>
+		    <%= f.text_field :number, style: 'width: 20%'%>
 		  </li>
 		  <li>
-		    <%= f.label :fecha %>
-		    <%= f.text_field :date, class:'i_fecha' %>
+		    <label>Fecha:</label>
+		    <%= f.text_field :date, style: 'width: 28%', class:'i_fecha' %>
 		  </li>
 		  <div class="clear"></div>
 		  
 		  <li>
-		    <%= f.label :Cliente %>
+		    <label>Cliente:</label>
 		    <%= f.select :customer_id, @retire_note.getClientes, prompt: "-- Seleccionar--"%>
 		  </li>
 		  <li>
-		    <%= f.label :Servicio %>
-		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--"%>
+		    <label>Funcionario:</label>
+		    <%= f.select :employee_id, @retire_note.getFuncionarios, prompt: "-- Seleccionar--"%>
 		  </li>
 		  <div class="clear"></div>
-		 
-		</ul>
-		
-		<ul>
-			<li>
-				Detalle del Producto
-			</li>
-			<br />
+		  <li>
+		    <label>Tipo de Servicio:</label>
+		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--"%>
+		  </li>
+		  <br />
 			<div class="clear"></div>
+	       <div>
+	         	<h4>Detalle del Producto</h4>
+	        </div>
+	        <div class="clear"></div>
+			<br />
 			<li>
-		    	<%= f.label :tipo_de_producto %>
+		    	<label>Tipo de Producto:</label>
 		    	<%= f.select :product_type_id, @retire_note.getTipoProductos, prompt: "-- Seleccionar--"%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
-		  		<%= f.label :ciudad %>
+		  		<label>Ciudad:</label>
 		    	<%= f.select :city_id, @retire_note.getCiudades, prompt: "-- Seleccionar--"%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
-		  		<%= f.label :cantidad %>
-		    	<%= f.text_field :amount %>
+		  		<label>Cantidad:</label>
+		    	<%= f.text_field :amount, style: 'width: 15%' %>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
-		  		<%= f.label :precio_unit %>
-		    	<%= f.text_field :unit_price%>
+		  		<label>Precio Unit: (Gs.)</label>
+		    	<%= f.text_field :unit_price, style: 'width: 15%'%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
-		  		<%= f.label :descripcion %>
-		    	<%= f.text_field :description %>
+		  		<label>Descripcion:</label>
+		    	<%= f.text_field :description,style: 'width: 65%'  %>
 		  	</li>
 		  	<div class="clear"></div>
 		  	

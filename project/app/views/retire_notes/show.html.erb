@@ -7,6 +7,8 @@
 
 <p>
   <b>Funcionario:</b>
+  <%= if @retire_note.employee_id != nil then @retire_note.employee.last_name + " " + @retire_note.employee.name   end %>
+  <b>Codigo:</b>
   <%= @retire_note.employee_id %>
 </p>
 
@@ -17,7 +19,7 @@
 
 <p>
   <b>Tipo de Servicio:</b>
-  <%= @retire_note.service_type_id %>
+  <%= if @retire_note.service_type_id != nil then @retire_note.service_type.description end %>
 </p>
 
 <p>
