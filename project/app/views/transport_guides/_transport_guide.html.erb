@@ -19,107 +19,138 @@
       <ul>
         <li>
           <label>N&#176;:</label>
-          <%= f.number_field :num_guide %>
+          <%= f.number_field :num_guide, maxlength: 6, size:6 %>
+          <input class="buscar" type="button"></input>
           <%= f.hidden_field :id, id: "transport_guide_id"%>
         </li>
         <li>
-          <label>Fecha</label>
-          <%= f.text_field :created_at %>
-        </li>
-        <li>
-          <%= f.label :employee_id %>
-          <%= f.number_field :employee_id %>
-        </li>
-        <div class="clear"></div>
-        <!--  Datos del Remitente primera seccion -->
-        <div>
-          <h4>Datos del Remitente</h4>
-        </div>
-        <div class="clear"></div>
+          <label>Fecha:</label>
+          <%= f.text_field :created_at, {value: @transport_guide.format_date, class:'i_fecha', maxlength: 12, size:12, disable: true} %>
+          </li>
+          <li>
+    <%#= f.label :employee_id %>
+            <%= f.hidden_field :employee_id %>
+          </li>
+          <div class="clear"></div>
+          <!--  Datos del Remitente primera seccion -->
+          <div class="subtitle">
+            <h4>Datos del Remitente</h4>
+          </div>
+          <div class="clear"></div>
 
-        <li>
-          <label>Origen: </label>
-          <%= f.number_field :origin_city_id %>
-        </li>
-        <li>
-          <label> Empresa:</label>
-          <%= f.number_field :customer_id %>
-        </li>
+          <li>
+            <label>Origen: </label>
+            <%= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+          </li>
+          <li>
+            <label> Empresa:</label>
+            <%= f.text_field :customer_id, size: 15 %>
+            <input class="buscar" type="button"></input>
+          </li>
 
-        <div class="clear"></div>
-        <li>
-          <label>Remitente: </label>
-          <%= f.text_field :remitter_person %>
-        </li>
-        <li>
-          <label>Dirección: </label>
-          <%= f.text_field :remitter_address %>
-        </li>
+          <div class="clear"></div>
+          <li>
 
+            <label>Remitente: </label>
 
-        <!-- Datos del Destinatario Segunda Sección -->
-        <div class="clear"></div>
-        <div>
-          <h4>Datos del Destinatorio</h4>
-        </div>
-        <div class="clear"></div>
+            <%= f.text_field :remitter_person,  maxlength: 30,size: 30 %>
+
+          </li>
+          <div class="clear"></div>
+          <li style="width: 100%">
+            <label>Dirección: </label>
+            <%= f.text_field :remitter_address, maxlength: 79,size: 88 %>
+          </li>
 
 
-        <li>
-          <label>Destino:</label>
-          <%= f.number_field :destination_city_id %>
-        </li>
-        <li>
-          <label>Empresa:</label>
-          <%= f.number_field :foreign_company_id %>
-        </li>
-        <div class="clear"></div>
-        <li>
-          <label>Destinatario:</label>
-          <%= f.text_field :destination_person %>
-        </li>
-        <li>
-          <label>Direccion:</label>
-          <%= f.text_field :destination_address %>
-        </li>
+          <!-- Datos del Destinatario Segunda Sección -->
+          <div class="clear"></div>
+          <div class="subtitle">
+            <h4>Datos del Destinatorio</h4>
+          </div>
+          <div class="clear"></div>
+          <li>
+            <label>Destino:</label>
+
+            <%= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+          </li>
+          <li>
+            <label>Empresa:</label>
+            <%= f.text_field :foreign_company_id, size: 15 %>
+            <input class="buscar" type="button"></input>
+          </li>
+          <div class="clear"></div>
+          <li>
+            <label>Destinatario:</label>
+            <%= f.text_field:destination_person, maxlength: 30, size: 30 %>
+          </li>
+          <div class="clear"></div>
+          <li style="width: 100%">
+            <label>Direccion:</label>
+            <%= f.text_field :destination_address, maxlength: 79,size: 88  %>
+          </li>
 
 
-        <!-- Datos del Destinatario Segunda Sección -->
-        <div class="clear"></div>
-        <div>
-          <h4>Condiciones Generales del Transporte</h4>
-        </div>
-        <div class="clear"></div>
+          <!-- Datos del Destinatario Segunda Sección -->
+          <div class="clear"></div>
+          <div class="subtitle">
+            <h4>Condiciones Generales del Transporte</h4>
+          </div>
+          <div class="clear"></div>
 
 
-        <li>
-          <label>Tipo de Servicio:</label>
-          <%= f.number_field :service_type_id %>
-        </li>
-        <li>
-          <label>Forma de Pago:</label>
-          <%= f.number_field :payment_method_id %>
-        </li>
-        <div class="clear"></div>
+          <li style="width:100%">
+            <label style="width: auto !important;">Tipo de Servicio:</label>
+            <%= f.select :service_type_id, @transport_guide.get_list_service_types, prompt: "-- Seleccionar--"  %>
 
-        <li>
-          <%= f.label :transport_guide_state_id %>
-          <%= f.text_field :transport_guide_state_id %>
-        </li>
-        <div class="clear"></div>
+            <label style="width:auto !important;">Forma de Pago:</label>
 
-      </ul>
-    </fieldset>
-    <div id="form_transport_guide_detail">
-      <%=render 'transport_guide_details/details'%>
-      <div class="span-24 center last" >
-        <%= f.submit 'Guardar' %>
-        <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-          <%= link_to 'Cancelar','#', class: 'button'%>
+            <%= f.select :payment_method_id, @transport_guide.get_list_payments_methods, prompt: "-- Seleccionar--"  %>
+
+            <label style="width:auto !important;">Estado:</label>
+
+            <%= f.select :transport_guide_state_id, @transport_guide.get_list_state, prompt: "-- Seleccionar--" %>
+          </li>
+          <div class="clear"></div>
+          <div class="subtitle">
+            <h4>Ingreso de Productos</h4>
+          </div>
+          <div class="clear"></div>
+
+        </ul>
+
+
+        <div id="form_transport_guide_detail">
+
+          <%=render 'transport_guide_details/details'%>
+          <div class="span-11 prepend-1 last">
+            <div class="span-10" style="height: 80px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tipo de Producto</th>
+                    <th>Cantidad</th>
+                    <th>Peso</th>
+                    <th><div style="width: 16px"></div></th>
+                  </tr>
+
+                </thead>
+                <tbody id="tbDetail">
+
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+          <div class="span-8 center prepend-top last" >
+            <%= f.submit 'Guardar' %>
+            <%= link_to 'Limpiar','#', class: 'limpiar button'%>
+              <%= link_to 'Cancelar','#', class: 'button'%>
+              </div>
+            </div>
+          </fieldset>
+
+        <% end %>
       </div>
-   </div>
-
-      <% end %>
-    </div>
 
 

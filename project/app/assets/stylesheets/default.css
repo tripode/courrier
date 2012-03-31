@@ -3,38 +3,38 @@
  /* ------------------------------- */
 
 html {
-	background: #c0c0c0;
+    background: #c0c0c0;
 }
 body {
-	text-align: left;
-	font: 14px /18px Arial, Helvetica, sans-serif;
-	color: #3a4f54;
-	margin: 0 auto;
+    text-align: left;
+    font: 14px /18px Arial, Helvetica, sans-serif;
+    color: #3a4f54;
+    margin: 0 auto;
 }
 a {
-	color: #e33b06;
+    color: #e33b06;
 }
 fieldset, #bordeado {
-	border: 1px solid #0B3861 !important;
-	margin-bottom: 10px;
-	background-color: #EFEFFB !important;
+    border: 1px solid #0B3861 !important;
+    margin-bottom: 10px;
+    background-color: #EFEFFB !important;
 }
 fieldset legend {
-	padding: 3px 10px;
-	border: 1px solid #0B3861;
-	background-color: #ffffff;
-	color: #222;
-	font: bold 13px /normal Arial;
-	margin-left: 10px;
+    padding: 3px 10px;
+    border: 1px solid #0B3861;
+    background-color: #ffffff;
+    color: #222;
+    font: bold 20px /normal Arial;
+    margin-left: 10px;
 }
 #header {
-	height: 30px;
-	background-color: #414141 !important;
+    height: 30px;
+    background-color: #414141 !important;
 
 }
 #header .navigation {
     background-color: #414141 ;
-/*    height: 35px;*/
+    /*    height: 35px;*/
     position: fixed;
     text-align: center;
     top: 0;
@@ -42,85 +42,86 @@ fieldset legend {
     z-index: 9;
 }
 #footer {
-	margin-top: 10px;
-	color: #444;
-	font-size: 12px;
+    margin-top: 10px;
+    color: #444;
+    font-size: 12px;
 }
 #content {
-	margin-top: 10px;
-	background: none repeat scroll 0 0 #FFFFFF;
+    margin-top: 10px;
+    background: none repeat scroll 0 0 #FFFFFF;
 }
 /*.wrapper { width: 897px; margin:0 auto; }*/
 
 /* CREANDO LOS SUBTITULOS*/
 #content h2 {
-	font: bold 20px /40px Arial;
-	padding-left: 10px;
-	background-color: #0B3861;
-	color: #FFF;
+    font: bold 20px /40px Arial;
+    padding-left: 10px;
+    background-color: #0B3861;
+    color: #FFF;
 }
 #content h3 {
-	font: bold 12px /24px Arial Black;
-	padding-left: 10px;
-	background-color: #0B3861;
-	color: #FFF;
+    font: bold 12px /24px Arial Black;
+    padding-left: 10px;
+    background-color: #0B3861;
+    color: #FFF;
 }
 #content ul li {
-	margin-left: 20px;
-	float: left;
-	width: 45%;
-	
+    margin-left: 20px;
+    float: left;
+    width: 45%;
+
 }
 .center{
-	text-align: center;
+    text-align: center;
 }
 #content ul li.max-width {
-	margin-bottom: 5px;
-	margin-left: 20px;
-	width: 90%;
-	text-align: center !important;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    width: 90%;
+    text-align: center !important;
 }
 #content .max-heigth {
-	margin-bottom: 5px;
-	margin-left: 20px;
-	margin-top: 100px;
-	height: 500px;
-	text-align: center !important;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-top: 100px;
+    height: 500px;
+    text-align: center !important;
 }
 #content .min-heigth {
-	margin-bottom: 5px;
-	margin-left: 20px;
-	margin-top: 20px;
-	height: 250px;
-	text-align: center !important;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-top: 20px;
+    height: 250px;
+    text-align: center !important;
 }
 #content ul li.max-width-right {
-	margin-left: 20px;
-	width: 90%;
-	text-align: right !important;
+    margin-left: 20px;
+    width: 90%;
+    text-align: right !important;
 }
 .clear {
-	clear: both;
-	height: 0px;
+    clear: both;
+    height: 0px;
 }
 .hide {
-	display: none !important;
+    display: none !important;
 }
 #content form {
-	/*	border:1px solid #888;*/
-/*	padding: 10px 15px;
+    /*	border:1px solid #888;*/
+    /*	padding: 10px 15px;
 	background-color: #EFEFFB !important;*/
-	/*	min-height:520px;*/
+    /*	min-height:520px;*/
 
 }
 #content form div {
-	float: left;
+    float: left;
 }
 #content table {
-	margin: 0 auto;
+    margin: 0 auto;
+
 }
 #content form {
-	/*	font: bold 14px/28px Arial;*/
+    /*	font: bold 14px/28px Arial;*/
 }
 #content  fieldset input[type="text"], 
 table input[type="text"], 
@@ -130,190 +131,240 @@ div table input[type="text"],
 #content  fieldset input[type="password"], 
 #content  table input[type="password"]
 #content  fieldset ul li select {
-	border: 1px solid #8A084B !important;
-	background-color: #FFFFFF !important;
-	padding: 3px 5px !important;
-	/*	color:#000000 !important;*/
-	font-size: 13px !important;
-	margin-bottom: 8px !important;
-	/* CSS3 spicing */
-	-moz-border-radius: 4px !important;
-	-webkit-border-radius: 4px !important;
+    border: 1px solid #8A084B !important;
+    background-color: #FFFFFF !important;
+    padding: 3px 5px !important;
+    /*	color:#000000 !important;*/
+    font-size: 13px !important;
+    margin-bottom: 8px !important;
+    /* CSS3 spicing */
+    -moz-border-radius: 4px !important;
+    -webkit-border-radius: 4px !important;
 }
-#content fieldset  input, table input, div fieldset  input, div table input {
-	margin: 5px 5px !important;
+#content fieldset  input,
+#content table input,
+#content div fieldset  input,
+#content div table input
+#content fieldset  select{
+    margin: 5px 5px !important;
 }
 #content fieldset  input.disable, div fieldset  input.disable {
-	background: #cecece !important;
+    background: #cecece !important;
 }
 #content fieldset  select, table select {
-	border: 1px solid #8A084B;
-	background-color: #FFFFFF;
-	padding: 3px 5px;
-	color: #000000;
-	font-size: 13px;
-	margin-bottom: 8px;
-	/* CSS3 spicing */
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+    border: 1px solid #8A084B;
+    background-color: #FFFFFF;
+    padding: 3px 5px;
+    color: #000000;
+    font-size: 13px;
+    margin: 5px 5px;
+    margin-bottom: 8px;
+    /* CSS3 spicing */
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
 }
 #content table td {
-	font-style: normal;
-	color: #000000;
-	padding: 0 5px;
+    font-style: normal;
+    color: #000000;
+    padding: 0 5px;
 }
 #content input:focus {
-	border: 1px solid #3a4f54 !important;
-	background-color: #ccc !important;
+    border: 1px solid #3a4f54 !important;
+    background-color: #ccc !important;
 }
 #content input:active {
-	border: 1px solid #3a4f54 !important;
-	background-color: #ccc !important;
+    border: 1px solid #3a4f54 !important;
+    background-color: #ccc !important;
 }
 .dataTables_length, .dataTables_filter, .dataTables_info {
-	margin-bottom: 0 !important;
-	font-weight: bold !important;
-	font-size: 12px;
+    margin-bottom: 0 !important;
+    font-weight: bold !important;
+    font-size: 12px;
 }
 .lista_items thead th.sorting {
-	text-align: left;
-	font: bold 11px /18px Arial !important;
+    text-align: left;
+    font: bold 11px /18px Arial !important;
 }
 .lista_detalle thead th {
-	text-align: left;
-	font: bold 11px /18px Arial !important;
+    text-align: left;
+    font: bold 11px /18px Arial !important;
 }
 /* Buttom general de todo el sistema*/
 #content fieldset input[type="submit"],
- #content table input[type="submit"], 
- #content input[type="submit"], #content a.button {
-	background: url(button-grad.png) repeat-x !important;
-	color: #fff;
-	font-weight: bold;
-	text-decoration: none;
-	padding: 3px 15px;
-	display: inline-block;
-	margin-bottom: 12px !important;
-	-moz-border-radius: 11px !important;
-	-webkit-border-radius: 11px;
-	cursor: pointer;
-	border: 1px solid #fff !important;
-	margin-top: 8px !important;
-	margin-left: 4px;
-	
+#content table input[type="submit"], 
+#content input[type="submit"], #content a.button {
+    background: url(button-grad.png) repeat-x !important;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 3px 15px;
+    display: inline-block;
+    margin-bottom: 12px !important;
+    -moz-border-radius: 11px !important;
+    -webkit-border-radius: 11px;
+    cursor: pointer;
+    border: 1px solid #fff !important;
+    margin-top: 8px !important;
+    margin-left: 4px;
+
 }
 #content input:focus {
-	border: 1px solid #3a4f54 !important;
-	background-color: #ccc !important;
+    border: 1px solid #3a4f54 !important;
+    background-color: #ccc !important;
 }
 #content  input[type="submit"]:hover, #content  fieldset  input.agregar:hover {
-	border: 1px solid #13455b
+    border: 1px solid #13455b
 }
 #content input[type="submit"]:active, #content  fieldset  input.agregar:hover {
-	background: url(button-grad-active.png) repeat-x !important;
+    background: url(button-grad-active.png) repeat-x !important;
 }
 /*Buttom buscar*/
-#content  fieldset input.search, #content  table input.search {
-	background-color: #0B3861 !important;
-	border: none;
-	background: url(../images/zoom.png) no-repeat !important;
-	width: 16px !important;
-	height: 16px !important;
-	-moz-border-radius: 0 !important;
-	-webkit-border-radius: 0 !important;
-	padding: 0 !important;
+#content  fieldset input.buscar, #content  table input.buscar {
+    background-color: #0B3861 !important;
+    border: none !important;
+    background: url(zoom.png) no-repeat !important;
+    width: 16px !important;
+    height: 16px !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    padding: 0 !important;
+    cursor: pointer;
 }
-#content  fieldset  input.search:hover, div fieldset  input.search:hover, #content  table input.search:hover {
-	border: 0 !important;
+#content  fieldset  input.buscar:hover,
+div fieldset  input.buscar:hover,
+#content  table input.buscar:hover {
+    border: 0 !important;
 }
 /*Buttom Borrar editar mostrar de las tablas*/
 #content table div a img {
-	width: 30px;
-	height: 30px;
-	cursor: pointer;
-	background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-repeat: no-repeat;
 }
-/*
- #content  fieldset input.agregar {
- padding-left:16px !important;
- background:url(../images/add.png) no-repeat !important;
- border:0 !important;
 
- }
+/*botton ADD. Agrega campos a una tabla*/
+#content  fieldset input.add {
+    padding-left:16px !important;
+    background:url(add.png) no-repeat !important;
+    border:0 !important;
+    cursor: pointer;
 
- #content  fieldset  input.agregar:hover { border:0 !important; }
- */
+}
+
+#content  fieldset  input.add:hover { border:0 !important; }
+
 #lista_items {
-	width: 0 !important;
+    width: 0 !important;
 }
 #content ul li {
-	list-style: none;
+    list-style: none;
 }
 #content  fieldset ul li label, div fieldset ul li label {
-	margin-right: 5px !important;
-	text-align: right !important;
-	width: 100px !important;
-	display: inline-block !important;
-	font-size: 12px;
+    margin-right: 5px !important;
+    text-align: right !important;
+    width: 100px !important;
+    display: inline-block !important;
+    font-size: 12px;
+
 }
 #content  fieldset ul li label.especial {
-	margin-right: 5px !important;
-	text-align: right !important;
-	width: 97px !important;
-	display: inline-block !important;
-	font-size: 12px;
+    margin-right: 5px !important;
+    text-align: right !important;
+    width: 97px !important;
+    display: inline-block !important;
+    font-size: 12px;
 }
 #content  fieldset ul li label.titulo {
-	margin-right: 5px !important;
-	text-align: center !important;
-	display: inline-block !important;
-	width: 350px !important;
+    margin-right: 5px !important;
+    text-align: center !important;
+    display: inline-block !important;
+    width: 350px !important;
 }
 #content  fieldset ul li label.titulo2 {
-	margin-right: 5px !important;
-	display: inline-block !important;
-	width: 350px !important;
+    margin-right: 5px !important;
+    display: inline-block !important;
+    width: 350px !important;
 }
 #content  fieldset  input[type="submit"]:hover, #content  fieldset  input.agregar:hover {
-	border: 1px solid #13455b
+    border: 1px solid #13455b
 }
 #content  fieldset  input[type="submit"]:active, #content  fieldset  input.agregar:hover {
-	background: url(../images/button-grad-active.png) repeat-x !important;
+    background: url(button-grad-active.png) repeat-x !important;
 }
 #content  table  input[type="submit"]:hover, #content  fieldset  input.agregar:hover {
-	border: 1px solid #13455b
+    border: 1px solid #13455b
 }
 #content  table  input[type="submit"]:active, #content  fieldset  input.agregar:hover {
-	background: url(../images/button-grad-active.png) repeat-x !important;
+    background: url(button-grad-active.png) repeat-x !important;
 }
 /*para las popup que se abren*/
 #content div  fieldset  input[type="submit"]:hover {
-	border: 1px solid #13455b
+    border: 1px solid #13455b
 }
 #content  div fieldset  input[type="submit"]:active {
-	background: url(../images/button-grad-active.png) repeat-x !important;
+    background: url(button-grad-active.png) repeat-x !important;
 }
 #content  div table  input[type="submit"]:hover {
-	border: 1px solid #13455b
+    border: 1px solid #13455b
 }
 #content  div table  input[type="submit"]:active {
-	background: url(../images/button-grad-active.png) repeat-x !important;
+    background: url(button-grad-active.png) repeat-x !important;
 }
 button.ui-datepicker-trigger {
-	background: none;
-	border: none;
-	background: url('calendar.png') no-repeat !important;
-	width: 16px !important;
-	height: 16px !important;
-	-moz-border-radius: 0 !important;
-	-webkit-border-radius: 0 !important;
-	padding: 0 !important;
-	margin-right: 5px !important;
-	cursor: pointer;
-	border: 1px solid #fff;
-	margin-top: 8px !important;
-	margin-left: 4px;
+    background: none;
+    border: none;
+    background: url('calendar.png') no-repeat !important;
+    width: 16px !important;
+    height: 16px !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    padding: 0 !important;
+    margin-right: 5px !important;
+    cursor: pointer;
+    border: 1px solid #fff;
+    margin-top: 8px !important;
+    margin-left: 4px;
 }
 button.ui-datepicker-trigger {
-	border: 0 !important;
+    border: 0 !important;
+}
+
+/*los place holder de los fechas*/
+#content input:-moz-placeholder, textarea:-moz-placeholder {
+    color: #636363;
+    font-size: 12px;
+}
+/* todo los titulos h4 osea los titulos intermedios de las intefaces
+grandes */
+#content h4 {
+    margin-bottom: 0;
+}
+/*todos los textarea del proyecto tendran las mismas dimensiones
+ y la misma posición en los formularios
+*/
+#content div.label-text-area {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+#content textarea {
+    height: 100px;
+    padding: 5px;
+    width: 150px;
+}
+
+/*Los titulos medios de las interfaces complejas*/
+#content div.subtitle{
+    margin-bottom: 5px;
+}
+#content div.subtitle h4{
+    color: #0B3861;
+    padding-left: 10px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/*se modifica el fielset padding*/
+#content fieldset, #IE8#HACK {
+    padding-top: 5px;
 }

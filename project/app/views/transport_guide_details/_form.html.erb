@@ -1,8 +1,10 @@
-<div class="span-24 last">
-  <fieldset>
-    <legend>
-			Productos
-    </legend>
+<%#*FORMULARIO DE INGRESO DE PRODUCTOS PARA GUIA DE TRANSPORTE%>
+<div>
+
+  <%#*<fieldset>%>
+    <%#*<legend>%>
+			<%#*Productos%>
+    <%#*</legend>%>
     
     <%= form_for(@transport_guide_detail) do |f| %>
 
@@ -19,52 +21,46 @@
         </div>
       <% end %>
       <ul>
-        <li>
+        <li style="width: 100%">
           <input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>
           <label>Tipo de Producto:</label>
-          <%= f.number_field :product_type_id,id: 'product_type_id' %>
-        </li>
-        <li>
+          <%= f.select :product_type_id, @transport_guide_detail.get_list_product_types, id: 'product_type_id', maxlegnth:15, size: 15 %>
           <label>Cantidad:</label>
-          <%= f.number_field :amount,id: 'amount' %>
-        </li>
-        <li>
+          <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
           <label>Peso (kg):</label>
-          <%= f.number_field :weight, id: 'weight'%>
-        </li>
-        <li>
-          <input id="add_product" type="button" value="add"></input>
+          <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
+          <input id="add_product" type="button" class="add"></input>
 
         </li>
+        <div class="clear"></div>
         <li>
-          <label>Id Guia de Tranporte:</label>
-          <%= f.number_field :transport_guide_id%>
+          <%#*<label>Id Guia de Tranporte:</label>%>
+          <%= f.hidden_field :transport_guide_id%>
         </li>
         <li>
-          <label>Lista de Productos</label>
-          <table>
-            <thead>
-              <tr>
-                <th>Product Type</th>
-                <th>Amount</th>               
-                <th>Peso</th>
-              </tr>
+          <%#*<table>%>
+            <%#*<thead>%>
+              <%#*<tr>%>
+                <%#*<th>Product Type</th>%>
+                <%#*<th>Amount</th>%>
+                <%#*<th>Peso</th>%>
+              <%#*</tr>%>
 
-            </thead>
-            <tbody id="tbDetail">
+            <%#*</thead>%>
+            <%#*<tbody id="tbDetail">%>
 
-            </tbody>
+            <%#*</tbody>%>
 
-          </table>
-          <%= f.submit :guardar%>
+          <%#*</table>%>
         </li>
       </ul>
 
     <%end%>
-  </fieldset>
+  <%#*</fieldset>%>
 
 
 </div>
+
 <script>
   $("#add_product").click(function(){
     agregarFila(document.getElementById('cant_campos'));

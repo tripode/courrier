@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+  
+  devise_for :users
  
   resources :routing_sheet_details
 

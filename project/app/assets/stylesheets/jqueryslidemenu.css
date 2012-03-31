@@ -23,7 +23,7 @@
 	color: white;
 	padding: 8px 10px;
 	border-right: 1px solid #778;
-	color: #2d2b2b;
+/*	color: #2d2b2b;*/
 	text-decoration: none;
 }
 * html .jqueryslidemenu ul li a { /*IE6 hack to get sub menu links to behave correctly*/
