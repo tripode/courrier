@@ -1,4 +1,6 @@
 Project::Application.routes.draw do
+  
+  devise_for :users
  
   resources :transport_guide_details
 
