@@ -7,7 +7,7 @@ class Employee < ActiveRecord::Base
   
   
   
-  def buscarFunctionType
+  def buscar_function_type
     FunctionType.all.collect{|tp|[tp.description, tp.id]}
   end
   
