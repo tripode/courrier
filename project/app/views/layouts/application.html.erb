@@ -24,23 +24,26 @@
 				$('table[class*=tablaIndex]').dataTable({
 					"bScrollCollapse" : true,
 					"sPaginationType" : "full_numbers",
-					"aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+					"aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
 				});
 				$("input[class*=i_fecha]").datepicker({ 
 					   altField: '#actualDate',
-					   appendText: '(dd-mm-yyyy)',
 					   changeMonth: true,
 					   changeYear: true,  
 					   dateFormat: 'dd-mm-yy',
 					   dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
 					   gotoCurrent: true,
-					   yearRange: '1900:2012',
+					   yearRange: '1900:2040',
 					   showOn: "button"
 							  
-			});
+                                });
+                               $("input[class*=i_fecha]").attr({
+                                  'placeholder':'(dd-mm-aaaa)...'
+                                });
+                                //  placeholder="write a response.."
 				
 				
-			});
+                  });
 
 		</script>
 	</head>
@@ -99,13 +102,15 @@
 		</div>
 		<div id="content">
 			<div class="container">
-				<div class="wrapper span-24 append-bottom">
+				<div class="wrapper span-24">
 					<%= yield %>
 				</div>
 			</div>
 		</div>
 		<div id="footer">
-			<div class="wrapper"></div>
+			<div class="wrapper">
+                          <label>Copyright &copy; Tripodevs S.A. Rigth Reserved </label>
+                        </div>
 		</div>
 	</body>
 </html>
