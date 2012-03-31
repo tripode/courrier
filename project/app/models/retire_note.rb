@@ -5,6 +5,8 @@ class RetireNote < ActiveRecord::Base
   belongs_to :city
   belongs_to :product_type
   
+  has_many :products
+  
   def getTipoServicios
     ServiceType.all.collect{|tp|[tp.description, tp.id]}
   end

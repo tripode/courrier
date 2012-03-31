@@ -9,7 +9,6 @@ class CreateTransportGuides < ActiveRecord::Migration
       t.integer :num_guide, :null=>false
       
       t.integer :customer_id, :null=>false
-      t.integer :foreign_company_id, :null=>false
       t.integer :employee_id, :null=>false
       t.integer :service_type_id, :null=>false
       t.integer :transport_guide_state_id, :null=>false
@@ -18,10 +17,9 @@ class CreateTransportGuides < ActiveRecord::Migration
       t.integer :destination_city_id, :null=>false
       t.integer :origin_city_id, :null=>false
 
-      t.timestamps
+
     end
     add_foreign_key :transport_guides, :customers
-    add_foreign_key :transport_guides, :foreign_companies
     add_foreign_key :transport_guides, :employees
     add_foreign_key :transport_guides, :service_types
     add_foreign_key :transport_guides, :transport_guide_states

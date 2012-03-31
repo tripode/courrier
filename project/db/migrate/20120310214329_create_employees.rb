@@ -1,7 +1,7 @@
 class CreateEmployees < ActiveRecord::Migration
   def change
     create_table :employees do |t|
-      t.string :email, :limit => 30
+      t.string :email, :limit => 60
         #  , :null => false     :null => false
       t.string :name, :limit => 30
       t.string :last_name, :limit => 30

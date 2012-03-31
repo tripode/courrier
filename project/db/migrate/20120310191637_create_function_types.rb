@@ -3,7 +3,7 @@ class CreateFunctionTypes < ActiveRecord::Migration
     create_table :function_types do |t|
       t.string :description, :limit=>30, :null=>false
 
-      t.timestamps
+
     end
   end
 end

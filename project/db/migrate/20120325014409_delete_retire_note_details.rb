@@ -5,9 +5,10 @@ class DeleteRetireNoteDetails < ActiveRecord::Migration
     add_column :retire_notes, :amount, :integer
     add_column :retire_notes, :description, :string, :limit => 50
     add_column :retire_notes, :unit_price, :decimal
+    drop_table :retire_note_details
   end
 
   def down
-     drop_table :retire_note_details
+     
   end
 end

@@ -1,6 +1,6 @@
 class AddKeyRoutingSheets < ActiveRecord::Migration
   def up
-      add_foreign_key :routing_sheets, :package_types
+      add_foreign_key :routing_sheets, :product_types
   end
 
   def down

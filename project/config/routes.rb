@@ -1,5 +1,7 @@
 Project::Application.routes.draw do
  
+  resources :routing_sheet_details
+
   resources :transport_guide_details
 
   resources :transport_guides
@@ -24,6 +26,8 @@ Project::Application.routes.draw do
   resources :customers
   
   resources :customer_companies
+  
+  devise_for :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

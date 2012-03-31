@@ -3,7 +3,7 @@ class CreateRetireNotes < ActiveRecord::Migration
     create_table :retire_notes do |t|
       t.integer :id
       t.integer :employee_id
-      t.datetime :date
+      t.date :date
       t.integer :service_type_id
       t.integer :customer_id
     end
