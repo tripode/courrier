@@ -1,4 +1,6 @@
 class CustomerCompaniesController < ApplicationController
+  
+
   # GET /customer_companies
   # GET /customer_companies.json
   def index

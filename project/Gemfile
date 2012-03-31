@@ -9,6 +9,11 @@ gem 'pg'
 gem 'foreigner'
 gem 'composite_primary_keys', "~> 5.0.1"
 
+#Authentication
+gem 'devise'
+#Authorization
+gem 'cancan'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
