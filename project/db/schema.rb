@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120331210053) do
+ActiveRecord::Schema.define(:version => 20120401012808) do
 
   create_table "areas", :force => true do |t|
     t.string "area_name",   :limit => 50,  :null => false
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20120331210053) do
     t.integer "payment_method_id",                       :null => false
     t.integer "destination_city_id",                     :null => false
     t.integer "origin_city_id",                          :null => false
+    t.integer "receiver_company_id",                     :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -234,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20120331210053) do
 
   add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_destination_city_id", :column => "destination_city_id"
   add_foreign_key "transport_guides", "cities", :name => "fk_transport_guides_origin_city_id", :column => "origin_city_id"
+  add_foreign_key "transport_guides", "customers", :name => "fk_transport_guides_receiver_company_id", :column => "receiver_company_id"
   add_foreign_key "transport_guides", "customers", :name => "transport_guides_customer_id_fk"
   add_foreign_key "transport_guides", "employees", :name => "transport_guides_employee_id_fk"
   add_foreign_key "transport_guides", "payment_methods", :name => "transport_guides_payment_method_id_fk"
