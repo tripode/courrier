@@ -75,8 +75,8 @@
             <%= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
           </li>
           <li>
-            <label>Empresa:</label>
-            <%= f.text_field :foreign_company_id, size: 15 %>
+            <label>Empresa Destino:</label>
+            <%= f.text_field :receiver_company_id, size: 15 %>
             <input class="buscar" type="button"></input>
           </li>
           <div class="clear"></div>
