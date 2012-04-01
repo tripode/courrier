@@ -16,7 +16,7 @@ class TransportGuide < ActiveRecord::Base
 
   #lista todos las ciudades disponibles en un select
   def get_list_cities
-    City.get_list_cities
+    City.get_all_cities
   end
 
   #lista todos los tipo de servicios disponibles en un select

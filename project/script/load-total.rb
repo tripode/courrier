@@ -17,11 +17,6 @@ FunctionType.transaction do
     FunctionType.create(:description=>"Secretaria")
 
 end
-City.transaction do
-  City.create(:name => "Encarnacion", :department => "Itapua")
-  City.create(:name => "Coronel Bogado", :department => "Itapua")
-  City.create(:name => "Cambyreta", :department => "Itapua")
-end
 CustomerType.transaction do
   CustomerType.create(:type_name=>"Empresa")
   CustomerType.create(:type_name=>"Individual")
@@ -155,6 +150,21 @@ TransportGuideState.transaction do
   TransportGuideState.create(:name_state=> "Perdido",
       :description=> "La GT fue extraviada por algun motivo"
   )
+end
+Country.transaction do
+  Country.create(:name => "Paraguay", :description => "Su capital es Asunción")
+  Country.create(:name => "Brasil", :description => "Su capital es Brasilia")
+  Country.create(:name => "Argentina", :description => "Su capital es Buenos Aires")
+end
+Province.transaction do
+  Province.create(:name => "Itapua", :description => "Su capital es Encarnación", :country_id=> 1)
+  Province.create(:name => "Central", :description => "Su capital es Aregua", :country_id=> 1)
+  Province.create(:name => "Alto Parana", :description => "Su capital es Ciudad del Este", :country_id=> 1)
+end
+City.transaction do
+  City.create(:name => "Encarnacion", :province_id => 1 )
+  City.create(:name => "Coronel Bogado", :province_id => 1)
+  City.create(:name => "Cambyreta", :province_id => 1)
 end
 
 #si van a crear otra tabla, aca datos agreguenle aca y creen un archivo
