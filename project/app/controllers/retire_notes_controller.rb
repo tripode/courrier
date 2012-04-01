@@ -4,6 +4,8 @@ class RetireNotesController < ApplicationController
   def index
     @retire_note = RetireNote.new
     @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    @customer = Customer.new
+    @customers = Customer.find(:all)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @retire_note }
@@ -75,6 +77,15 @@ class RetireNotesController < ApplicationController
     @retire_note = RetireNote.find(params[:id])
     @retire_note.destroy
 
+    respond_to do |format|
+      format.html { redirect_to retire_notes_url }
+      format.json { head :no_content }
+    end
+  end
+  
+  def select_customer
+    @customer = Customer.find(params[:id])
+    puts @customer.id
     respond_to do |format|
       format.html { redirect_to retire_notes_url }
       format.json { head :no_content }

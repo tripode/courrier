@@ -31,6 +31,16 @@ Project::Application.routes.draw do
   
   devise_for :users
 
+  resources :retire_notes do
+  collection do
+    get :select_customer
+  end
+  end
+  resources :retire_notes do
+  member do
+    get :select_customer
+  end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

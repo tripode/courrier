@@ -28,11 +28,14 @@
 		  
 		  <li>
 		    <label>Cliente:</label>
-		    <%= f.select :customer_id, @retire_note.getClientes, prompt: "-- Seleccionar--"%>
+		    <%= f.text_field :customer_id, :disable => :true %>
+		    <input class="buscar" type="button"></input>
+          	<%= f.hidden_field :customer_id, id: "customer_id"%>
+		   
 		  </li>
 		  <li>
 		    <label>Funcionario:</label>
-		    <%= f.select :employee_id, @retire_note.getFuncionarios, prompt: "-- Seleccionar--"%>
+		    <%= f.text_field :employee_id%>
 		  </li>
 		  <div class="clear"></div>
 		  <li>
@@ -40,11 +43,11 @@
 		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--"%>
 		  </li>
 		  <br />
-			<div class="clear"></div>
-	       <div>
-	         	<h4>Detalle del Producto</h4>
-	        </div>
-	        <div class="clear"></div>
+		   <div class="clear"></div>
+	       <div class="subtitle">
+            	<h4>Detalles del Producto</h4>
+          	</div>
+          <div class="clear"></div>
 			<br />
 			<li>
 		    	<label>Tipo de Producto:</label>
@@ -80,6 +83,10 @@
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','#', class: 'button'%>
 	</div>
+
+	<div id="form_customer" >
+			<%=render '/customers/search_customer'%>
+	</div>
 	<% end %>
 </div>
 <script>
@@ -100,5 +107,12 @@
 		showOn : "button"
 
 	});
-
+	$("#form_customer").hide();
+	$('.buscar').click(function(){
+		$("#form_customer").show();
+		$("#form_customer").dialog();
+		$( "#form_customer" ).dialog(  { title: 'Buscar Cliente',width: 800,  position: 'center', modal: true } );
+		
+	});
+	
 </script>
