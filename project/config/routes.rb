@@ -1,5 +1,8 @@
 Project::Application.routes.draw do
   
+
+
+
   devise_for :users
  
   resources :routing_sheet_details
@@ -80,7 +83,7 @@ Project::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'customer_companies#index'
+   root :to => 'main_page#index'
 
   # See how all your routes lay out with "rake routes"
 
