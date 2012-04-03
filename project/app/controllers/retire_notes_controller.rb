@@ -1,11 +1,15 @@
 class RetireNotesController < ApplicationController
+
+
   # GET /retire_notes
   # GET /retire_notes.json
   def index
-    @retire_note = RetireNote.new
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    $retire_note = RetireNote.new
     @customer = Customer.new
     @customers = Customer.find(:all)
+    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+ 
+    puts "entro index"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @retire_note }
@@ -15,42 +19,42 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/1
   # GET /retire_notes/1.json
   def show
-    @retire_note = RetireNote.find(params[:id])
+    $retire_note = RetireNote.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @retire_note }
+      format.json { render json: $retire_note }
     end
   end
 
   # GET /retire_notes/new
   # GET /retire_notes/new.json
   def new
-    @retire_note = RetireNote.new
+    $retire_note = RetireNote.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @retire_note }
+      format.json { render json: $retire_note }
     end
   end
 
   # GET /retire_notes/1/edit
   def edit
-    @retire_note = RetireNote.find(params[:id])
+    $retire_note = RetireNote.find(params[:id])
   end
 
   # POST /retire_notes
   # POST /retire_notes.json
   def create
-    @retire_note = RetireNote.new(params[:retire_note])
+    $retire_note = RetireNote.new(params[:retire_note])
 
     respond_to do |format|
-      if @retire_note.save
-        format.html { redirect_to @retire_note, notice: 'Retire note was successfully created.' }
-        format.json { render json: @retire_note, status: :created, location: @retire_note }
+      if $retire_note.save
+        format.html { redirect_to $retire_note, notice: 'Retire note was successfully created.' }
+        format.json { render json: $retire_note, status: :created, location: $retire_note }
       else
         format.html { render action: "new" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+        format.json { render json: $retire_note.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,15 +62,15 @@ class RetireNotesController < ApplicationController
   # PUT /retire_notes/1
   # PUT /retire_notes/1.json
   def update
-    @retire_note = RetireNote.find(params[:id])
+    $retire_note = RetireNote.find(params[:id])
 
     respond_to do |format|
-      if @retire_note.update_attributes(params[:retire_note])
-        format.html { redirect_to @retire_note, notice: 'Retire note was successfully updated.' }
+      if $retire_note.update_attributes(params[:retire_note])
+        format.html { redirect_to $retire_note, notice: 'Retire note was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+        format.json { render json: $retire_note.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -74,8 +78,8 @@ class RetireNotesController < ApplicationController
   # DELETE /retire_notes/1
   # DELETE /retire_notes/1.json
   def destroy
-    @retire_note = RetireNote.find(params[:id])
-    @retire_note.destroy
+    $retire_note = RetireNote.find(params[:id])
+    $retire_note.destroy
 
     respond_to do |format|
       format.html { redirect_to retire_notes_url }
@@ -85,10 +89,17 @@ class RetireNotesController < ApplicationController
   
   def select_customer
     @customer = Customer.find(params[:id])
+    #@retire_note = RetireNote.new
+    @customers = Customer.find(:all)
+    if @customer.id != nil then
+      $retire_note.customer_id = @customer.id
+    end
     puts @customer.id
+    puts "hola hoallllllllllllllllllllllllll"
     respond_to do |format|
-      format.html { redirect_to retire_notes_url }
-      format.json { head :no_content }
+      format.js
+      #format.html { redirect_to @retire_note}
+      #format.json { head :no_content }
     end
   end
 end
