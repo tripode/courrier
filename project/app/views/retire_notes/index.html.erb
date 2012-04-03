@@ -25,7 +25,7 @@
 			<td><%= if note.customer_id != nil then note.customer.company_name + " " + note.customer.last_name + " " + note.customer.name end %></td>
 			<td><%= if note.product_type.id != nil then note.product_type.description end %></td>	
 			<td><%= note.amount %></td>
-			<td><%= if note.city_id != nil then note.city.name + "-" + note.city.department end %></td>
+			<td><%= if note.city_id != nil then note.city.name + "-" + note.city.province.name end %></td>
 			<td><div><%= link_to 'Mostrar',  note %></div></td>
 			<td>
 				<div>

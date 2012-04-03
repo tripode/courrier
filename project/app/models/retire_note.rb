@@ -23,4 +23,11 @@ class RetireNote < ActiveRecord::Base
   def getFuncionarios
     Employee.all.collect{|e|[e.last_name + " " + e.name, e.id]}
   end
+  #formato de fecha
+  def format_date
+    created_at= Date.today
+    created_at.strftime("%d-%m-%Y") if created_at
+    
+
+  end
 end
