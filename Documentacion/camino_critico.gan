@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Courier" company="tripodevs" webLink="" view-date="2012-03-14" view-index="0" gantt-divider-location="316" resource-divider-location="301" version="2.0">
+<project name="Courier" company="tripodevs" webLink="" view-date="2012-03-30" view-index="0" gantt-divider-location="436" resource-divider-location="301" version="2.0">
     <description><![CDATA[Proyecto de Ingenieria de Software II]]></description>
     <view zooming-state="default:0" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Nombre" width="55" order="0"/>
-        <field id="1" name="Función" width="44" order="0"/>
+        <field id="1" name="Función" width="44" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -54,6 +54,7 @@
         </task>
         <task id="14" name="Create model,view,controller: retire_note_details_14" color="#ff0033" meeting="false" start="2012-03-10" duration="2" complete="0" priority="1" expand="true">
             <depend id="35" type="2" difference="0" hardness="Strong"/>
+            <depend id="46" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="15" name="Create Model,View,Controller:routing_sheets_15" color="#66ff66" meeting="false" start="2012-03-10" duration="2" complete="0" priority="1" expand="true"/>
         <task id="16" name="Create model:area_16" color="#66ff66" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true"/>
@@ -89,15 +90,30 @@
         </task>
         <task id="31" name="Aplicar Stylos css a la interfaz Guia de Trasnporte_31" color="#66ff66" meeting="false" start="2012-03-27" duration="9" complete="0" priority="1" expand="true"/>
         <task id="32" name="Agregar la documentación en el wiki sobre Metodologías_32" color="#009999" meeting="false" start="2012-03-23" duration="2" complete="0" priority="1" expand="true"/>
-        <task id="33" name="Crear MVC Usuarios_33" color="#009999" meeting="false" start="2012-03-23" duration="9" complete="0" priority="1" expand="true"/>
+        <task id="33" name="Crear MVC Usuarios_33" color="#009999" meeting="false" start="2012-03-23" duration="9" complete="0" priority="1" expand="true">
+            <depend id="39" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="34" name="Crear Pagina Principal del Sistema_34" color="#66ff66" meeting="false" start="2012-03-25" duration="8" complete="0" priority="1" expand="true"/>
-        <task id="35" name="Crear Interfaz Nota de Retiro_35" color="#ff0033" meeting="false" start="2012-03-26" duration="3" complete="0" priority="1" expand="true">
+        <task id="35" name="Crear Interfaz Nota de Retiro_35" color="#ff0033" meeting="false" start="2012-03-12" duration="3" complete="0" priority="1" expand="true">
             <depend id="36" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="36" name="Nota de Retiro- Agregar opcion editar_36" color="#ff0033" meeting="false" start="2012-03-29" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="36" name="Nota de Retiro- Agregar opcion editar_36" color="#ff0033" meeting="false" start="2012-03-15" duration="1" complete="0" priority="1" expand="true"/>
         <task id="37" name="Nueva tareaGuia de Transporte: Agregar selectores" color="#66ff66" meeting="false" start="2012-03-27" duration="3" complete="0" priority="1" expand="true"/>
         <task id="38" name="Actualizar Base de datos_38" color="#ff0033" meeting="false" start="2012-03-20" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="39" name="Nueva tarea_39" color="#8cb6ce" meeting="false" start="2012-03-14" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="39" name="Loguin: Agregar Permisos_39" color="#8cb6ce" meeting="false" start="2012-04-01" duration="5" complete="0" priority="1" expand="true"/>
+        <task id="40" name="Create Model,View Controller: Receivers_40" color="#8cb6ce" meeting="false" start="2012-04-11" duration="3" complete="0" priority="1" expand="true"/>
+        <task id="41" name="Guia de Transporte:Crear Maqueta Manifiesto de Carga_41" color="#ff0000" meeting="false" start="2012-04-04" duration="1" complete="0" priority="1" expand="true">
+            <depend id="45" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="42" name="Modelado de Datos: Eliminar detalle Guia de Transporte_42" color="#ff0000" meeting="false" start="2012-03-19" duration="1" complete="0" priority="1" expand="true">
+            <depend id="43" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="43" name="Guia de Trasporte: Generar migracion para ajustar al modelado._43" color="#00ff00" meeting="false" start="2012-03-20" duration="4" complete="0" priority="1" expand="true">
+            <depend id="44" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="44" name="Guia de Trasporte: Ajustar la interfaz_44" color="#00ff00" meeting="false" start="2012-04-04" duration="6" complete="0" priority="1" expand="true"/>
+        <task id="45" name="Guia de Trasporte: Crear Interfaz Manifiesto de Carga_45" color="#33ff00" meeting="false" start="2012-04-05" duration="7" complete="0" priority="1" expand="true"/>
+        <task id="46" name="Producto: Crear Interfaz_46" color="#ff0000" meeting="false" start="2012-03-12" duration="3" complete="0" priority="1" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="wildo" function="Default:1" contacts="setwildo31@gmail.com" phone="0985-163420"/>
@@ -121,8 +137,8 @@
         <allocation task-id="18" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="20" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="22" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
-        <allocation task-id="26" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
         <allocation task-id="26" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="26" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
         <allocation task-id="29" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="30" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="31" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
@@ -130,6 +146,10 @@
         <allocation task-id="33" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="34" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="37" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="39" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="40" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="43" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="44" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <taskdisplaycolumns>
