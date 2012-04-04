@@ -19,7 +19,7 @@ class CustomersController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @customer }
     end
-  end
+  end 
 
   # GET /customers/new
   # GET /customers/new.json
