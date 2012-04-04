@@ -41,6 +41,13 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/1/edit
   def edit
     @retire_note = RetireNote.find(params[:id])
+    @customers = Customer.find(:all)
+    @employees = Employee.find(:all)
+    respond_to do |format|
+      # format.html { render action: "index" }
+      format.js
+      # format.json { render json: @customer }
+    end
   end
 
   # POST /retire_notes

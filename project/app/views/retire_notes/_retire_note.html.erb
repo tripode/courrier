@@ -21,7 +21,7 @@
 		    <%= f.text_field :number, id: 'number_id', style: 'width: 20%'%>
 		  </li>
 		  <li>
-		    <label>Fecha:</label>
+		    <label>Fecha Registro:</label>
 		    <%= f.text_field :date, value: @retire_note.format_date,style: 'width: 28%', class:'i_fecha' %>
 		  </li>
 		  <div class="clear"></div>
@@ -32,13 +32,14 @@
 			<%= f.hidden_field :customer_id, id: 'customer_id_hidden' %>         
 		  </li>
 		  <li>
-		    <label>Vence Fecha:</label>
+		    <label>Fecha Vence:</label>
 		    <%= f.text_field :expiration_date,value: @retire_note.format_date,style: 'width: 28%', class:'i_fecha'%>
 		  </li>
 		  <div class="clear"></div>
 		  <li>
 		    <label for="employee">Funcionario:</label>
 		    <input id="employee" type="text" style="width: 60%" />
+		    
 			<%= f.hidden_field :employee_id, id: 'employee_id_hidden' %>         
 		  </li>
 		   <div class="clear"></div>
@@ -118,7 +119,7 @@
 		 		id: <%= c.id %>};
 			i=i+1;
 		<% end %>
-		$( "#customer" ).autocomplete({
+		$("#customer").autocomplete({
 			source: list,
 			select: function(event, ui) { 
 				$("#customer_id_hidden").val(ui.item.id); 
@@ -130,7 +131,6 @@
 	$('#number_id').focus();
 	
 	//Autocomplete Funcionarios
-	//Autocomplite de clientes
 	$(function() {
 		var list =[];
 		var i=0;
@@ -140,7 +140,7 @@
 		 		id: <%= e.id %>};
 			i=i+1;
 		<% end %>
-		$( "#employee" ).autocomplete({
+		$("#employee").autocomplete({
 			source: list,
 			select: function(event, ui) { 
 				$("#employee_id_hidden").val(ui.item.id); 

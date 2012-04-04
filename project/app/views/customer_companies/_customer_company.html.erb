@@ -18,7 +18,7 @@
 	<ul>
 		<li>
 			<%= f.label :empresa %>
-	    	<%= f.text_field :company_name %>	
+	    	<%= f.text_field :company_name, id: 'i_company_name' %>	
 		</li>
 		
 		
@@ -74,7 +74,8 @@
 		showOn : "button"
 
 	});
-	
+	//Onfocus para que el cursor este sobre el input company_name
+	$('#i_company_name').focus();
 
 </script>
 
