@@ -1,6 +1,6 @@
 class TransportGuideDetailsController < ApplicationController
   def index
-#   puts "Index Transport guide details"
+ #  puts "Index Transport guide details"
 #     @transport_guide_detail = TransportGuideDetail.new
 #
 #

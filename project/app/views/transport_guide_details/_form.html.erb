@@ -1,87 +1,96 @@
 <%#*FORMULARIO DE INGRESO DE PRODUCTOS PARA GUIA DE TRANSPORTE%>
 <div>
 
-  <%#*<fieldset>%>
-    <%#*<legend>%>
-			<%#*Productos%>
-    <%#*</legend>%>
-    
-    <%= form_for(@transport_guide_detail) do |f| %>
+<%#*<fieldset>%>
+<%#*<legend>%>
+<%#*Productos%>
+<%#*</legend>%>
 
-      <% if @transport_guide_detail.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@transport_guide_detail.errors.count, "error") %> prohibited this transport_guide from being saved:</h2>
-          <ul>
-            <% @transport_guide_detail.errors.full_messages.each do |msg| %>
-              <li>
-                <%= msg %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <ul>
-        <li style="width: 100%">
-          <input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>
-          <label>Tipo de Producto:</label>
-          <%= f.select :product_type_id, @transport_guide_detail.get_list_product_types, id: 'product_type_id', maxlegnth:15, size: 15 %>
-          <label>Cantidad:</label>
-          <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
-          <label>Peso (kg):</label>
-          <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
-          <input id="add_product" type="button" class="add"></input>
+  <%= form_for(@transport_guide_detail) do |f| %>
 
-        </li>
-        <div class="clear"></div>
-        <li>
-          <%#*<label>Id Guia de Tranporte:</label>%>
-          <%= f.hidden_field :transport_guide_id%>
-        </li>
-        <li>
-          <%#*<table>%>
-            <%#*<thead>%>
-              <%#*<tr>%>
-                <%#*<th>Product Type</th>%>
-                <%#*<th>Amount</th>%>
-                <%#*<th>Peso</th>%>
-              <%#*</tr>%>
+    <% if @transport_guide_detail.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@transport_guide_detail.errors.count, "error") %> prohibited this transport_guide from being saved:</h2>
+        <ul>
+          <% @transport_guide_detail.errors.full_messages.each do |msg| %>
+            <li>
+              <%= msg %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <ul>
+      <li style="width: 100%">
+        <input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>
+        <label>Tipo de Producto:</label>
+        <%=select("lista2", "product_type_id", ProductType.get_list_product_types, {:prompt => '-- Seleccionar --'}) %>
+        <label>Cantidad:</label>
+        <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
+        <label>Peso (kg):</label>
+        <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
+        <input id="add_product" type="button" class="add"></input>
+      </li>
+      <div class="clear"></div>
+      <li>
+  <%#*<label>Id Guia de Tranporte:</label>%>
+        <%= f.hidden_field :transport_guide_id%>
+      </li>
+      <li>
+  <%#*<table>%>
+  <%#*<thead>%>
+  <%#*<tr>%>
+  <%#*<th>Product Type</th>%>
+  <%#*<th>Amount</th>%>
+  <%#*<th>Peso</th>%>
+  <%#*</tr>%>
 
-            <%#*</thead>%>
-            <%#*<tbody id="tbDetail">%>
+  <%#*</thead>%>
+  <%#*<tbody id="tbDetail">%>
 
-            <%#*</tbody>%>
+  <%#*</tbody>%>
 
-          <%#*</table>%>
-        </li>
-      </ul>
+  <%#*</table>%>
+      </li>
+    </ul>
 
-    <%end%>
-  <%#*</fieldset>%>
+  <%end%>
+<%#*</fieldset>%>
 
 
 </div>
 
 <script>
+  var value;
   $("#add_product").click(function(){
     agregarFila(document.getElementById('cant_campos'));
+ 
   });
+
 
   
   function agregarFila(obj){
     $("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);
     var oId = $("#cant_campos").val();
-    var product_type_id = $("#product_type_id").val();
+    var product_type_name = $('#lista2_product_type_id option:selected').text();
+    var product_type_id = $('#lista2_product_type_id option:selected').val();
+    alert(product_type_name)
+    alert(product_type_id)
+    if(product_type_id==0){
+      alert("No es un producto");
+      return;
+    }
     var amount = $("#amount").val();
     var weight = $("#weight").val();
-    //var  transport_guide_id = $("#transport_guide_id").val();
-    var transport_guide_id = 7;
+  //  var  transport_guide_id = $("#transport_guide_id").val();
+   var transport_guide_id = 7;
    
-    var strHtml1 = "<td>" + product_type_id + '<input type="hidden" id="hdnProduct_type_id_' + oId + '" name="lista[' + oId + '][product_type_id]" value="' + product_type_id + '"/></td>';
+    var strHtml1 = "<td>" + product_type_name + '<input type="hidden" id="hdnProduct_type_id_' + oId + '" name="lista[' + oId + '][product_type_id]" value="' + product_type_id + '"/></td>';
     var strHtml2 = "<td>" + amount + '<input type="hidden" id="hdnAmount_' + oId + '" name="lista[' + oId + '][amount]" value="' + amount + '"/></td>' ;
     var strHtml3 = "<td>" + weight + '<input type="hidden" id="hdnWeight_' + oId + '" name="lista[' + oId + '][weight]" value="' + weight + '"/></td>' ;
     var strHtml4 = '<input type="hidden" id="hdnTransport_guide_id_' + oId + '" name="lista[' + oId + '][transport_guide_id]" value="' + transport_guide_id + '"/>' ;
     
-    var strHtml6 = '<td><img src="/assets/borrar2.gif" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';
+    var strHtml6 = '<td><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';
     //strHtml6 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';
     var strHtmlTr = "<tr id='rowDetail_" + oId + "'></tr>";
     var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml6;

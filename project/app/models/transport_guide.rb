@@ -7,6 +7,10 @@ class TransportGuide < ActiveRecord::Base
   belongs_to :city
   has_many :transport_guide_details#, :foreign_key => [:id, :transport_guide_id]
 
+  validates :num_guide, :customer_id, :employee_id, :service_type_id,
+    :transport_guide_state_id, :payment_method_id, :destination_city_id,
+    :origin_city_id, :receiver_company_id,:presence =>true
+  
   #GT guia de tranporte
   
   #lista todos los estado de GT en un select
@@ -28,6 +32,7 @@ class TransportGuide < ActiveRecord::Base
   def get_list_payments_methods
     PaymentMethod.get_list_payment_methods
   end
+
 
   #formato de fecha
   def format_date

@@ -18,7 +18,7 @@
       </legend>
       <ul>
         <li>
-          <label>N&#176;:</label>
+          <label>N&#176; * :</label>
           <%= f.number_field :num_guide, maxlength: 6, size:6 %>
           <input class="buscar" type="button"></input>
           <%= f.hidden_field :id, id: "transport_guide_id"%>
@@ -29,7 +29,7 @@
           </li>
           <li>
     <%#= f.label :employee_id %>
-            <%= f.hidden_field :employee_id %>
+            <%= f.hidden_field :employee_id, {value: 11} %>
           </li>
           <div class="clear"></div>
           <!--  Datos del Remitente primera seccion -->
@@ -40,10 +40,10 @@
 
           <li>
             <label>Origen: </label>
-            <%= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+            <%= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
           </li>
           <li>
-            <label> Empresa:</label>
+            <label> Empresa * :</label>
             <%= f.text_field :customer_id, size: 15 %>
             <input class="buscar" type="button"></input>
           </li>
@@ -51,7 +51,7 @@
           <div class="clear"></div>
           <li>
 
-            <label>Remitente: </label>
+            <label>Remitente * : </label>
 
             <%= f.text_field :remitter_person,  maxlength: 30,size: 30 %>
 
@@ -70,7 +70,7 @@
           </div>
           <div class="clear"></div>
           <li>
-            <label>Destino:</label>
+            <label>Destino * :</label>
 
             <%= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
           </li>
@@ -100,20 +100,20 @@
 
 
           <li style="width:100%">
-            <label style="width: auto !important;">Tipo de Servicio:</label>
+            <label style="width: auto !important;">Tipo de Servicio * :</label>
             <%= f.select :service_type_id, @transport_guide.get_list_service_types, prompt: "-- Seleccionar--"  %>
 
-            <label style="width:auto !important;">Forma de Pago:</label>
+            <label style="width:auto !important;">Forma de Pago * :</label>
 
             <%= f.select :payment_method_id, @transport_guide.get_list_payments_methods, prompt: "-- Seleccionar--"  %>
 
             <label style="width:auto !important;">Estado:</label>
 
-            <%= f.select :transport_guide_state_id, @transport_guide.get_list_state, prompt: "-- Seleccionar--" %>
+            <%= f.select :transport_guide_state_id, @transport_guide.get_list_state %>
           </li>
           <div class="clear"></div>
           <div class="subtitle">
-            <h4>Ingreso de Productos</h4>
+            <h4>Ingreso de Productos *</h4>
           </div>
           <div class="clear"></div>
 

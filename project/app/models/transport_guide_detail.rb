@@ -6,6 +6,6 @@ class TransportGuideDetail < ActiveRecord::Base
   #retorna una lista de los tipos de productos que estan en la
   #bd para un select
   def get_list_product_types
-    ProductType.get_list_product_types
+    ProductType.get_list_product_types_for_description
   end
 end

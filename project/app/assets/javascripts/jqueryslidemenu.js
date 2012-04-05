@@ -7,7 +7,7 @@
 //Update: April 12th, 10: Fixed compat issue with jquery 1.4x
 
 //Specify full URL to down and right arrow images (23 is padding-right to add to top level LIs with drop downs):
-var arrowimages={down:['downarrowclass', 'http://localhost:8084/compras/assets/images/down.gif', 23], right:['rightarrowclass', 'http://localhost:8084/compras/assets/images/right.gif']}
+var arrowimages={down:['downarrowclass', '../assets/down.gif', 23], right:['rightarrowclass', '../assets/right.gif']}
 
 var jqueryslidemenu={
 

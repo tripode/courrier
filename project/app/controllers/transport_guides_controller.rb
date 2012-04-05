@@ -6,9 +6,9 @@ class TransportGuidesController < ApplicationController
     @transport_guide = TransportGuide.new
     @transport_guide_details = TransportGuideDetail.all#where(transport_guide_id: @transport_guide.id)
     @transport_guide_detail=TransportGuideDetail.new
-    
-    
-
+    @product_types= ProductType.all
+#    @array=Array.new
+#    @cont=0
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @transport_guides }
@@ -54,14 +54,15 @@ class TransportGuidesController < ApplicationController
   def create
      
     puts "En el create"
-       
+#    @array.each { |item| puts item  }
     value=nil
     # value = @transport_guide.save
     TransportGuide.transaction do
       @transport_guide = TransportGuide.new(params[:transport_guide])
       value=@transport_guide.save
       params[:lista].each do |k,v|
-        v[:transport_guide_id]=@transport_guide.id
+        puts k, ' = ', v
+        v[:transport_guide_id] =@transport_guide.id
         @transport_guide_detail =TransportGuideDetail.new(v)
         @transport_guide_detail.save
   
