@@ -1,116 +1,178 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Project</title>
-		<!-- Se anexa los archivos del Blue Print-->
-		<%= stylesheet_link_tag "bp/reset" %>
-		<%= stylesheet_link_tag "bp/forms" %>
-		<%= stylesheet_link_tag "bp/grid" %>
-		<%= stylesheet_link_tag "bp/ie" %> <!-- 		<%= stylesheet_link_tag "bp/print" %> -->
-		<%= stylesheet_link_tag "bp/typography" %>
-		<%= stylesheet_link_tag "bp/screen" %>
+  <head>
+    <title>Project</title>
+    <!-- Se anexa los archivos del Blue Print-->
+    <%= stylesheet_link_tag "bp/reset" %>
+    <%= stylesheet_link_tag "bp/forms" %>
+    <%= stylesheet_link_tag "bp/grid" %>
+    <%= stylesheet_link_tag "bp/ie" %> <!-- 		<%= stylesheet_link_tag "bp/print" %> -->
+    <%= stylesheet_link_tag "bp/typography" %>
+    <%= stylesheet_link_tag "bp/screen" %>
 
-		<%= stylesheet_link_tag "default" %>
-		<%= stylesheet_link_tag "jqueryslidemenu" %>
-		<%= stylesheet_link_tag "jquery-ui" %>
-		<%= stylesheet_link_tag "demo_table" %>
-		<%= javascript_include_tag "jquery"%>
-		<%= javascript_include_tag "jqueryslidemenu"%>
-		<%= javascript_include_tag "jquery.dataTables"%>
-		<%= javascript_include_tag "application", :media => "all" %>
-		<%= csrf_meta_tags %>
-		<script charset="utf-8" type="text/javascript">
-			$(document).ready(function() {
-				$('table[class*=tablaIndex]').dataTable({
-					"bScrollCollapse" : true,
-					"sPaginationType" : "full_numbers",
-					"aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
-				});
-				$("input[class*=i_fecha]").datepicker({ 
-					   altField: '#actualDate',
-					   changeMonth: true,
-					   changeYear: true,  
-					   dateFormat: 'dd-mm-yy',
-					   dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
-					   gotoCurrent: true,
-					   yearRange: '1900:2040',
-					   showOn: "button"
+    <%= stylesheet_link_tag "default" %>
+    <%= stylesheet_link_tag "jqueryslidemenu" %>
+    <%= stylesheet_link_tag "jquery-ui" %>
+    <%= stylesheet_link_tag "demo_table" %>
+    <%= stylesheet_link_tag "validate" %>
+    <%= javascript_include_tag "jquery"%>
+    <%= javascript_include_tag "jqueryslidemenu"%>
+    <%= javascript_include_tag "jquery.dataTables"%>
+    <%= javascript_include_tag "application", :media => "all" %>
+    <%#= javascript_include_tag "prototype"%>
+    <%#= javascript_include_tag "livepipe"%>
+    <%#= javascript_include_tag "hotkeys"%>
+
+    <%= csrf_meta_tags %>
+    <script charset="utf-8" type="text/javascript">
+      $(document).ready(function() {
+        $('table[class*=tablaIndex]').dataTable({
+          "bScrollCollapse" : true,
+          "sPaginationType" : "full_numbers",
+          "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+        });
+        $("input[class*=i_fecha]").datepicker({
+          altField: '#actualDate',
+          changeMonth: true,
+          changeYear: true,
+          dateFormat: 'dd-mm-yy',
+          dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+          gotoCurrent: true,
+          yearRange: '1900:2040',
+          showOn: "button"
 							  
-                                });
-                               $("input[class*=i_fecha]").attr({
-                                  'placeholder':'(dd-mm-aaaa)...'
-                                });
-                                //  placeholder="write a response.."
+        });
+        //  placeholder="write a response.."
+        $("input[class*=i_fecha]").attr({
+          'placeholder':'(dd-mm-aaaa)...'
+        });
+        <%#*function add(a, b) {%>
+          <%#*alert(parseInt(a) + parseInt(b));%>
+        <%#*}%>
+        <%#*Hotkeys.bind("alt+a", add, 3, 4);%>
+<%#*document.observe('dom:loaded',function(){%>
+<%#*//on page console%>
+<%#*var console_element = $('name-id');%>
+<%#*var log = function(text){%>
+<%#*console_element.innerHTML += text + '\n';%>
+<%#*};%>
+<%#*$('console_clear').observe('click',function(event){%>
+<%#*console_element.innerHTML = '';%>
+<%#*event.stop();%>
+<%#*});%>
+<%#*new HotKey('a',function(event){%>
+<%#*log('control + "a" pressed');%>
+<%#*});%>
+<%#*new HotKey('b',function(event){%>
+<%#*log('control + shift + "b" pressed');%>
+<%#*},{%>
+<%#*shiftKey: true%>
+<%#*});%>
+<%#*new HotKey('c',function(event){%>
+<%#*log('control + shift + alt/option + "c" pressed');%>
+<%#*},{%>
+<%#*shiftKey: true,%>
+<%#*altKey: true%>
+<%#*});%>
+<%#*new HotKey('d',function(event){%>
+<%#*log('"d" pressed');%>
+<%#*},{%>
+<%#*ctrlKey: false%>
+<%#*});%>
+<%#*new HotKey('e',function(event){%>
+<%#*log('control + "e" pressed inside of textarea');%>
+<%#*},{%>
+<%#*element: $('apellido-id')%>
+<%#*});%>
+<%#*//you can also register against any of the special keys%>
+<%#*//defined in prototype.js%>
+<%#*//up, down, left, right, esc, return, tab, etc%>
+<%#*new HotKey('down',function(event){%>
+<%#*log('control + "down" pressed inside of textarea');%>
+<%#*},{%>
+<%#*element: $('apellido-id')%>
+<%#*});%>
+<%#*//remote trigger%>
+<%#*$('remote_trigger').observe('click',function(event){%>
+<%#*var value = $('remote_trigger_selector').value;%>
+<%#*HotKey.hotkeys.find(function(hotkey){%>
+<%#*//hotkey.letter will always be upper case%>
+<%#*return hotkey.letter == value;%>
+<%#*}).trigger();%>
+<%#*event.stop();%>
+<%#*});%>
+<%#*});%>
 				
-				
-                  });
+  });
 
-		</script>
-	</head>
-	<body>
-		<div id="header">
-			<div class="navigation">
-				<div class="container">
-					<div id="myslidemenu" class="jqueryslidemenu">
-						<ul>
-							<li>
-								<a>Clientes</a>
-								<ul>
-									<li>
-										<%= link_to 'Empresa', customer_companies_path %>	
-									</li>
-									<li>
-										<%= link_to 'Persona', customers_path %>	
-									</li>
-								</ul>
-							</li>
-							<li>
-								<%= link_to 'Empleado', employees_path %>
-							</li>
-							<li>
-								<a>Notas</a>
-								<ul>
-									<li>
-										<%= link_to 'Nota de Retiro', retire_notes_path %>
-									</li>
-									<li>
-										<%= link_to 'Guia de Tranporte', transport_guides_path %>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<%= link_to 'Hoja de Ruta', routing_sheets_path %>
-								<ul>
-									<li>
-										<%= link_to 'Productos', products_path %>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a>Informes</a>
-							</li>
-							<li>
-								<a>Perfiles</a>
-							</li>
-							<li>
-								<%= link_to "Salir", destroy_user_session_path, :method => :delete %>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="content">
-			<div class="container">
-				<div class="wrapper span-24">
-					<%= yield %>
-				</div>
-			</div>
-		</div>
-		<div id="footer">
-			<div class="wrapper">
-                          <label>Copyright &copy; Tripodevs S.A. All Rigth Reserved </label>
-                        </div>
-		</div>
-	</body>
+    </script>
+  </head>
+  <body>
+    
+ 
+    <div id="header">
+      <div class="navigation">
+        <div class="container">
+          <div id="myslidemenu" class="jqueryslidemenu">
+            <ul>
+              <li>
+                <a>Clientes</a>
+                <ul>
+                  <li>
+                    <%= link_to 'Empresa', customer_companies_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Persona', customers_path %>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <%= link_to 'Empleado', employees_path %>
+              </li>
+              <li>
+                <a>Notas</a>
+                <ul>
+                  <li>
+                    <%= link_to 'Nota de Retiro', retire_notes_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Guia de Tranporte', transport_guides_path %>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <%= link_to 'Hoja de Ruta', routing_sheets_path %>
+                <ul>
+                  <li>
+                    <%= link_to 'Productos', products_path %>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a>Informes</a>
+              </li>
+              <li>
+                <a>Perfiles</a>
+              </li>
+              <li>
+                <%= link_to "Salir", destroy_user_session_path, :method => :delete %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      <div class="container">
+        <div class="wrapper span-24">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <label>Copyright &copy; Tripodevs S.A. All Rigth Reserved </label>
+      </div>
+    </div>
+  </body>
 </html>

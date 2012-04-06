@@ -29,7 +29,7 @@
         <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
         <label>Peso (kg):</label>
         <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
-        <input id="add_product" type="button" class="add"></input>
+        <input id="add_product" type="button" class="add" accesskey="F3" ></input>
       </li>
       <div class="clear"></div>
       <li>
@@ -74,8 +74,6 @@
     var oId = $("#cant_campos").val();
     var product_type_name = $('#lista2_product_type_id option:selected').text();
     var product_type_id = $('#lista2_product_type_id option:selected').val();
-    alert(product_type_name)
-    alert(product_type_id)
     if(product_type_id==0){
       alert("No es un producto");
       return;
