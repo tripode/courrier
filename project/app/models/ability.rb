@@ -5,6 +5,46 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
        user ||= current_user # guest user (not logged in)
+       
+       #iterate over each role, a user can has many.
+       user.roles.each do |role|
+         
+         if(role.name == 'Administrator')
+            can :manage, Area
+            can :manage, City
+            can :manage, Customer
+            can :manage, Employee
+            can :manage, ForeingCompany
+            can :manage, FunctionType
+            can :manage, PaymentMethod
+            can :manage, ProductState
+            can :manage, ProductType
+            can :manage, Product
+            can :manage, Reason
+            can :manage, Receiver
+            can :manage, RetireNote
+            can :manage, Role
+            can :manage, RoutingSheetState
+            can :manage, RoutingSheet
+            can :manage, ServiceType
+            can :manage, TransportGuideDetail
+            can :manage, TransportGuideState
+            can :manage, TransportGuide
+            can :manage, User
+            can :manage, RolesUsers
+         elsif role.name == 'Transporter'
+            can :manage, RetireNote
+            can :manage, RoutingSheet
+            can :manage, TransportGuide
+            can :manage, TransportGuideDetail
+         elsif role.name == 'Secretary' 
+           #permissions for secretary role
+         end
+         
+         
+         
+       end
+       
     #   if user.admin?
     #     can :manage, :all
     #   else

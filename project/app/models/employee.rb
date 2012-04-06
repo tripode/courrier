@@ -2,6 +2,8 @@ class Employee < ActiveRecord::Base
   belongs_to :function_type
   has_many :retire_notes
   has_many :transport_guides
+  
+  has_many :users
 
   has_many :routing_sheets, :dependent => :destroy
   
@@ -23,6 +25,11 @@ class Employee < ActiveRecord::Base
     
   end
   
-  
+  #
+  # This method returns a string with the full name of the employee
+  #
+  def full_name
+    "#{self.name} #{self.last_name}"
+  end
     
 end
