@@ -97,6 +97,12 @@
     $("#tbDetail").append(strHtmlTr);
     //si se agrega el HTML de una sola vez se debe comentar la linea siguiente.
     $("#rowDetail_" + oId).html(strHtmlFinal);
+
+    var cant = $("#cant_productos_").val();
+    cant++;
+    $("#cant_productos_").val(cant);
+
+
     return false;
   }
   function eliminarFila(oId){

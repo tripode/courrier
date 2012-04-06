@@ -131,7 +131,7 @@ div table input[type="text"],
 #content  fieldset input[type="password"], 
 #content  table input[type="password"]
 #content  fieldset ul li select {
-    border: 1px solid #8A084B !important;
+    border: 1px solid #8A084B;
     background-color: #FFFFFF !important;
     padding: 3px 5px !important;
     /*	color:#000000 !important;*/
