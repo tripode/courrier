@@ -57,7 +57,7 @@
 	
 	</fieldset>
 	<div class="span-24 center last" >
-			<%= f.submit 'Guardar' %>
+			<%= f.submit 'Guardar', id: 'save_button' %>
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','#', class: 'button'%>
 	</div>
@@ -83,5 +83,9 @@
 	});
 	//Onfocus para que el cursor este sobre el input company_name
 	$('#i_name').focus();
+	var customer_id = <%= @customer.id%>;
+	if(customer_id!=null){
+		$("#save_button").val("Actualizar");
+	}
 </script>
 
