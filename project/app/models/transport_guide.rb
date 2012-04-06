@@ -9,7 +9,7 @@ class TransportGuide < ActiveRecord::Base
 
   validates :num_guide, :customer_id, :employee_id, :service_type_id,
     :transport_guide_state_id, :payment_method_id, :destination_city_id,
-    :origin_city_id, :receiver_company_id,:presence =>true
+    :origin_city_id, :receiver_company_id, :presence =>true
   
   #GT guia de tranporte
   

@@ -3,12 +3,11 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides.json
   def index
     @transport_guides = TransportGuide.find(:all, :conditions=> "created_at between current_date-10 and current_date")
-    @transport_guide = TransportGuide.new
+#    @transport_guide = TransportGuide.new
 #    @transport_guide_details = TransportGuideDetail.all#where(transport_guide_id: @transport_guide.id)
-    @transport_guide_detail=TransportGuideDetail.new
+  
 #    @product_types= ProductType.find(:all)
-    @cities = City.find(:all)
-    @customers = Customer.find(:all)
+    
 #    @array=Array.new
 #    @cont=0
     respond_to do |format|
@@ -31,8 +30,11 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides/new
   # GET /transport_guides/new.json
   def new
+    @cities = City.find(:all)
+    @customers = Customer.find(:all)
     @transport_guide = TransportGuide.new
-    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+    @transport_guide_detail=TransportGuideDetail.new
+#    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
 
 
     respond_to do |format|
