@@ -6,7 +6,7 @@ class TransportGuidesController < ApplicationController
     @transport_guide = TransportGuide.new
 #    @transport_guide_details = TransportGuideDetail.all#where(transport_guide_id: @transport_guide.id)
     @transport_guide_detail=TransportGuideDetail.new
-    @product_types= ProductType.all
+#    @product_types= ProductType.find(:all)
     @cities = City.find(:all)
     @customers = Customer.find(:all)
 #    @array=Array.new

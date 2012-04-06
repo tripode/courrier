@@ -18,8 +18,8 @@
       </legend>
       <ul>
         <li>
-          <label>N&#176; * :</label>
-          <%= f.number_field :num_guide, maxlength: 6, size:6 %>
+          <label>* N&#176;:</label>
+          <%= f.text_field :num_guide, maxlength: 6, size:6 %>
           <input class="buscar" type="button"></input>
           <%= f.hidden_field :id, id: "transport_guide_id"%>
         </li>
@@ -39,14 +39,14 @@
           <div class="clear"></div>
 
           <li>
-            <label>Origen: </label>
+            <label>* Origen: </label>
             <input id="origin_city" type="text" />
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden' %>
     <%#= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
             <input class="buscar" type="button"></input>
           </li>
           <li>
-            <label> Empresa * :</label>
+            <label> *Empresa/Cliente:</label>
             <input id="customer" type="text" size="15" />
             <%= f.hidden_field :customer_id, id: 'customer_id_hidden' %>
             <input class="buscar" type="button"></input>
@@ -55,7 +55,7 @@
           <div class="clear"></div>
           <li>
 
-            <label>Remitente * : </label>
+            <label>* Remitente: </label>
 
             <%= f.text_field :remitter_person,  maxlength: 30,size: 30 %>
 
@@ -74,13 +74,14 @@
           </div>
           <div class="clear"></div>
           <li>
-            <label>Destino * :</label>
+            <label>* Destino:</label>
              <input id="destination_city" type="text" />
             <%= f.hidden_field :destination_city_id, id: 'destination_city_id_hidden' %>
             <%#= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+            <input class="buscar" type="button"></input>
           </li>
           <li>
-            <label>Empresa Destino:</label>
+            <label>* Empresa:</label>
             <input id="receiver_company" type="text" size="15" />
             <%= f.hidden_field :receiver_company_id, id: 'receiver_company_id_hidden' %>
     <%#= f.text_field :receiver_company_id, size: 15 %>
@@ -107,10 +108,10 @@
 
 
           <li style="width:100%">
-            <label style="width: auto !important;">Tipo de Servicio * :</label>
+            <label style="width: auto !important;">* Tipo de Servicio:</label>
             <%= f.select :service_type_id, @transport_guide.get_list_service_types, prompt: "-- Seleccionar--"  %>
 
-            <label style="width:auto !important;">Forma de Pago * :</label>
+            <label style="width:auto !important;">* Forma de Pago:</label>
 
             <%= f.select :payment_method_id, @transport_guide.get_list_payments_methods, prompt: "-- Seleccionar--"  %>
 
@@ -132,7 +133,7 @@
           <%=render 'transport_guide_details/details'%>
           <div class="span-11 prepend-1 last">
             <div class="span-10" style="height: 80px;">
-              <table>
+              <table id="product_table">
                 <thead>
                   <tr>
                     <th>Tipo de Producto</th>
@@ -143,14 +144,14 @@
 
                 </thead>
                 <tbody id="tbDetail">
-
+                <input type="hidden" id="cant_productos_" value="0"></input>
                 </tbody>
 
               </table>
             </div>
           </div>
           <div class="span-8 center prepend-top last" >
-            <%= f.submit 'Guardar' %>
+            <%= f.submit 'Guardar', id: 'guardar_guia_transporte' %>
             <%= link_to 'Limpiar','#', class: 'limpiar button'%>
               <%= link_to 'Cancelar','#', class: 'button'%>
               </div>
@@ -162,6 +163,13 @@
 
       <script>
         $(function() {
+            $("#guardar_guia_transporte").click(function(){
+            var temp = $("#guardar_guia_transporte").val();
+            if(temp == 0){
+              alert("Debes Cargar algun producto a la lista");
+              return false;
+            }
+      });
           //focus en el formulario
           $("form:not(.filter) :input:visible:enabled:first").focus();
           
@@ -219,9 +227,34 @@
           });
       });
       var f1 = new LiveValidation('transport_guide_num_guide', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
-      f1.add( Validate.Numericality );
+      f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
+      f1.add( Validate.Presence, { failureMessage: " " } );
 
+      //Validacion de Datos del Remitente
+      var f2 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f2.add( Validate.Presence, { failureMessage: " " } );
 
+      var f3 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f3.add( Validate.Presence, { failureMessage: " " } );
+
+      var f4 = new LiveValidation('transport_guide_remitter_person', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f4.add( Validate.Presence, { failureMessage: " " } );
+
+      //Datos del Destinatorio
+      var f5 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f5.add( Validate.Presence, { failureMessage: " " } );
+
+      var f6 = new LiveValidation('receiver_company', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f6.add( Validate.Presence, { failureMessage: " " } );
+
+      //Condiciones Generales
+      var f7 = new LiveValidation('transport_guide_service_type_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f7.add( Validate.Presence, { failureMessage: " " } );
+
+      var f8 = new LiveValidation('transport_guide_payment_method_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+      f8.add( Validate.Presence, { failureMessage: " " } );
+
+    
       </script>
 
 
