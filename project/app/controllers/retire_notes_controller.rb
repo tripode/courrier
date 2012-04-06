@@ -17,7 +17,6 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/1.json
   def show
     @retire_note = RetireNote.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @retire_note }
