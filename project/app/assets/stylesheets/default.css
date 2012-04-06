@@ -368,3 +368,17 @@ grandes */
 #content fieldset, #IE8#HACK {
     padding-top: 5px;
 }
+
+/*
+ * this css is for the current user text
+ */
+.navigation .container .current-user{
+	background: none repeat scroll 0 0 #414141;
+	font-weight: bold;
+	font-size: 11px;
+    color: white;
+    display: block;
+    padding: 8px 10px;
+    text-decoration: none;
+    text-align: right;
+} 
