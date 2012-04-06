@@ -1,9 +1,10 @@
 class EmployeesController < ApplicationController
+  #en el metodo index van todos los metodos que apuntan al index
+  #El index solo es para listar. Crear un tabla
   # GET /employees
   # GET /employees.json
   def index
     @employees = Employee.all
-    @employee= Employee.new
  
     respond_to do |format|
       format.html # index.html.erb
@@ -11,40 +12,45 @@ class EmployeesController < ApplicationController
     end
   end
 
+  #cuando queremos mostrar un objeto creado usa el show
   # GET /employees/1
   # GET /employees/1.json
   def show
     @employee = Employee.find(params[:id])
-    puts "aca2"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @employee }
     end
   end
 
+  #aca van todos los datos necesario para desplegar la ventana new
+  #donde se crea un nuevo objeto, luego apunta al create para guardar el objeto
+  #
   # GET /employees/new
   # GET /employees/new.json
   def new
+    @employees = Employee.all
     @employee = Employee.new
-    puts "aca3"
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @employee }
     end
   end
 
+  # aca se guarda el nuevo objeto editado o actualizado en la ventana edit.html
+  # levando por el metodo update
   # GET /employees/1/edit
   def edit
     @employee = Employee.find(params[:id])
-    # @employees = Employee.all
-    puts "aca edito"
     respond_to do |format|
       # format.html { render action: "index" }
       format.js
       # format.json { render json: @employee }
     end
   end
-
+  # cuando estamos le damos crear objeto o guardar en la ventana new.html
+  # lanzado por el metodo new, se dispara este metodo par a
+  # realizar los procesos de guardado en la bd
   # POST /employees
   # POST /employees.json
   def create
@@ -61,6 +67,8 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # aqui van todo lo necesario para levantar la ventana edit.html
+  # cuando le damos guardar objeto o actualizar objeto va al metodo edit
   # PUT /employees/1
   # PUT /employees/1.json
   def update
@@ -77,6 +85,7 @@ class EmployeesController < ApplicationController
     end
   end
 
+  # cuando damos delete a un objeto se lanza este metodo 
   # DELETE /employees/1
   # DELETE /employees/1.json
   def destroy

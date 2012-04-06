@@ -1,12 +1,8 @@
-
-<div id="form_employee">
-	<%=render 'employee'%>
-</div>
 <br />
-<table 
-	columnClasses="center,center,center,center,center,center,center,center,center,center" 
+<table
+	columnClasses="center,center,center,center,center,center,center,center,center,center"
 	headerClass="center"
-	rowClasses="odd gradeC" cellpadding="0" cellspacing="0" 
+	rowClasses="odd gradeC" cellpadding="0" cellspacing="0"
 	border="1" class="tablaIndex display"  bgcolor="white">
 	<thead>
 		<tr>
@@ -26,7 +22,7 @@
 		<tr>
 			<td><%= employee.name %></td>
 			<td><%= employee.last_name %></td>
-			<td><%= employee.num_identity %></td>	
+			<td><%= employee.num_identity %></td>
 			<td><%= employee.mobile_number %></td>
 			<td><%= employee.phone_number %></td>
 			<td><%=employee.function_type.blank? ? "-" : employee.function_type.description %></td>
@@ -47,3 +43,5 @@
 </table>
 <br />
 <br />
+
+
