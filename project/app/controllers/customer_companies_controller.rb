@@ -5,8 +5,7 @@ class CustomerCompaniesController < ApplicationController
   # GET /customer_companies.json
   def index
     @customer_companies = Customer.find(:all, :conditions => "customer_type_id = 1")
-    @customer_company = Customer.new
- 
+   
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @customer_companies }
@@ -27,7 +26,7 @@ class CustomerCompaniesController < ApplicationController
   # GET /customer_companies/new.json
   def new
     @customer_company = Customer.new
-    @customer_types = Customer.find(:all, :conditions => "customer_type_id = 1")
+    @customer_companies = Customer.find(:all, :conditions => "customer_type_id = 1")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer_company }

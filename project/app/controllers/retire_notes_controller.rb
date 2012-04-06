@@ -4,10 +4,7 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes
   # GET /retire_notes.json
   def index
-    @retire_note = RetireNote.new
-    @customer = Customer.new
-    @customers = Customer.find(:all)
-    @employees = Employee.find(:all)
+   
     @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
 
     respond_to do |format|
@@ -31,7 +28,10 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/new.json
   def new
     @retire_note = RetireNote.new
-
+    @customer = Customer.new
+    @customers = Customer.find(:all)
+    @employees = Employee.find(:all)
+    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @retire_note }
