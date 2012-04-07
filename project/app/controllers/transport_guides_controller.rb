@@ -90,16 +90,19 @@ class TransportGuidesController < ApplicationController
     TransportGuide.transaction do
       value=@transport_guide.update_attributes(params[:transport_guide])
       params[:lista].each do |k,v|
-        if(v[:transport_guide_id].to_i == @transport_guide.id )
-            @transport_guide_detail= TransportGuideDetail.find(v[:id],@transport_guide.id)
-            @transport_guide_detail.update_attributes(v)
+        if(v[:destroy].to_i == 1)
+          @transport_guide_detail= TransportGuideDetail.find(v[:id])
+          @transport_guide_detail.destroy
         else
-          v[:transport_guide_id] =@transport_guide.id
-          @transport_guide_detail =TransportGuideDetail.new(v)
-          @transport_guide_detail.save
+          if(v[:transport_guide_id].to_i == @transport_guide.id )
+              @transport_guide_detail= TransportGuideDetail.find(v[:id])
+              @transport_guide_detail.update_attributes(v)
+          else
+            v[:transport_guide_id] =@transport_guide.id
+            @transport_guide_detail =TransportGuideDetail.new(v)
+            @transport_guide_detail.save
+          end
         end
-        
-
       end
     end
 
