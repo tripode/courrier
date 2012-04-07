@@ -140,7 +140,7 @@
           <div class="span-8 center prepend-top last" >
             <%= f.submit 'Guardar', id: 'save_button' %>
             <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-              <%= link_to 'Cancelar','#', class: 'button'%>
+              <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
               </div>
             </div>
           </fieldset>
@@ -149,6 +149,11 @@
       </div>
 
       <script>
+        $('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
         $(function() {
 
           //focus en el formulario
@@ -264,6 +269,7 @@
               $("#customer").val(name);
           }
       });
+      //VALIDACIONES
       var f1 = new LiveValidation('transport_guide_num_guide', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
       f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
       f1.add( Validate.Presence, { failureMessage: " " } );

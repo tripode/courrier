@@ -19,54 +19,57 @@
 		<% end %>
 		<ul>
 			<li>
-				<label> N&#176; de CI</label>
-				<%= f.number_field :num_identity %>
+				<label> *N&#176; de CI:</label>
+				<%= f.text_field :num_identity, size: 8, maxlength: 8 %>
 			</li>
 			<div class="clear"></div>
 			<li>
-				<%= f.label :nombre %>
-				<%= f.text_field :name %>
+				<label> *Nombre:</label>
+				<%= f.text_field :name, size: 30, maxlength: 30 %>
 			</li>
 			<li>
-				<%= f.label :apellido%>
-				<%= f.text_field :last_name %>
+				<label> *Apellido:</label>
+				<%= f.text_field :last_name, size: 30, maxlength: 30 %>
 			</li>
 			<div class="clear"></div>
 			<li>
-				<%= f.label :direccion %>
-				<%= f.text_field :address %>
+				<label> *Direccion:</label>
+				<%= f.text_field :address, size: 30, maxlength: 30 %>
 			</li>
+                        <li>
+				<label> *Email:</label>
+				<%= f.text_field :email, size: 30, maxlength: 30 %>
+			</li>
+			
+			<div class="clear"></div>
+			<li>
+				<label> *N&#176; de Celular:</label>
+				<%= f.text_field :mobile_number, size: 20, maxlength: 20 %>
+			</li>
+
+			<li>
+				<label> *N&#176; de Telefono:</label>
+				<%= f.text_field :phone_number, size: 20, maxlength: 20 %>
+			</li>
+			<div class="clear"></div>
 			<li>
 				<%= f.label :salario %>
-				<%= f.text_field :salary %>
+				<%= f.text_field :salary, size: 15, maxlength: 15 %>
 			</li>
-			<div class="clear"></div>
+
 			<li>
-				<%= f.label :celular%>
-				<%= f.text_field :mobile_number %>
-			</li>
-			<li>
-				<%= f.label :telefono%>
-				<%= f.text_field :phone_number %>
-			</li>
-			<div class="clear"></div>
-			<li>
-				<%= f.label :email %>
-				<%= f.text_field :email %>
-			</li>
-			<li>
-				<%= f.label :cargo %>
+				<label> *Cargo:</label>
 				<%= f.select :function_type_id, @employee.buscar_function_type, prompt: "-- Seleccionar--"%>
 			</li>
 			<div class="clear"></div>
 			<li style="width: 100%;">
-				<label>Nacimiento</label>
-				<%= f.text_field :birthday,{value: @employee.format_birthday, class:'i_fecha'} %>
+				<label>*Nacimiento:</label>
+				<%= f.text_field :birthday,{value: @employee.format_birthday, class:'i_fecha', size: 15, maxlength: 12} %>
 			</li>
 			
 			<li style="width: 100%;">
-				<label>Ingreso</label>
-				<%= f.text_field :admission_date, {value: @employee.format_admission_date, class:'i_fecha'} %>
+				<label>Ingreso:</label>
+				<%= f.text_field :admission_date, {value: @employee.format_admission_date, class:'i_fecha', size: 15, maxlength: 12} %>
 			</li>
 			
 			<div class="clear"></div>
@@ -86,6 +89,9 @@
 </div>
 
 <script>
+        //focus en el formulario
+          $("form:not(.filter) :input:visible:enabled:first").focus();
+          
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
@@ -102,5 +108,27 @@
 		showOn : "button"
 
 	});
+        //validaciones
+        var f1 = new LiveValidation('employee_num_identity', { validMessage: " ", wait: 500 });
+        f1.add( Validate.Presence, { failureMessage: " " } );
+
+        var f2 = new LiveValidation('employee_name', { validMessage: " ", wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: " " } );
+        var f3 = new LiveValidation('employee_last_name', { validMessage: " ", wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: " " } );
+
+     //   var f4 = new LiveValidation('employee_email', { validMessage: " ", wait: 500 });
+     //   f4.add( Validate.Email, { failureMessage: " " } );
+
+        var f5 = new LiveValidation('employee_birthday', { validMessage: " ", wait: 500 });
+        f5.add( Validate.Presence, { failureMessage: " " } );
+
+        var f6 = new LiveValidation('employee_function_type_id', { validMessage: " ", wait: 500 });
+        f6.add( Validate.Presence, { failureMessage: " " } );
+
+        var f7 = new LiveValidation('employee_mobile_number', { validMessage: " ", wait: 500 });
+        f7.add( Validate.Presence, { failureMessage: " " } );
+        var f8 = new LiveValidation('employee_address', { validMessage: " ", wait: 500 });
+        f8.add( Validate.Presence, { failureMessage: " " } );
 
 </script>
