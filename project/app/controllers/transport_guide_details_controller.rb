@@ -63,7 +63,8 @@ class TransportGuideDetailsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to edit_transport_guide_url(@transport_guide) }
-      format.json { head :no_content }
+   #    format.js
+     format.json { head :no_content }
    end
   end
 end

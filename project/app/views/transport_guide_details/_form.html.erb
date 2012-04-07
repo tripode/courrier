@@ -93,7 +93,7 @@
           var strHtml4 = '<input type="hidden" id="hdnTransport_guide_id_' + oId + '" name="lista[' + oId + '][transport_guide_id]" value="' + transport_guide_id + '"/>' ;
           var strHtml5 = '<input type="hidden" id="hdnTransport_guide_detail_id_' + oId + '" name="lista[' + oId + '][id]" value="' + id + '"/>' ;
 
-          var strHtml6 = '<td><a rel="nofollow" data-method="delete" href="/transport_guide_details/'+id+'" ><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/></a> </td>';
+          var strHtml6 = '<td><a rel="nofollow" data-method="delete" remote="true" href="/transport_guide_details/'+id+'" ><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/></a> </td>';
           //strHtml6 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';
           var strHtmlTr = "<tr id='rowDetail_" + oId + "'></tr>";
           var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6;

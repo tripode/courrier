@@ -133,23 +133,8 @@
           <%=render 'transport_guide_details/details'%>
 
           <div class="span-11 prepend-1 last">
-            <div class="span-10" style="height: 80px;">
-              <table id="product_table">
-                <thead>
-                  <tr>
-                    <th>Tipo de Producto</th>
-                    <th>Cantidad</th>
-                    <th>Peso</th>
-                    <th><div style="width: 16px"></div></th>
-                  </tr>
-
-                </thead>
-                <tbody id="tbDetail">
-                <input type="hidden" id="cant_productos_" value="0"></input>
-                </tbody>
-
-              </table>
-            </div>
+            <%=render 'transport_guide_details/list_details'%>
+            
           </div>
 
           <div class="span-8 center prepend-top last" >
