@@ -44,4 +44,12 @@
 </fieldset>
 <br />
 <br />
+<script charset="utf-8" type="text/javascript">
+  $(document).ready(function() {
+    $('table[class*=tablaIndex]').dataTable({
+      "bScrollCollapse" : true,
+      "sPaginationType" : "full_numbers",
+      "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+    });
+</script>
 
