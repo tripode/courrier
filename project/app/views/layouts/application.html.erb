@@ -155,6 +155,9 @@
                 <a>Perfiles</a>
               </li>
               <li>
+                <%= link_to "Usuarios", new_user_registration_path %>
+              </li>
+              <li>
                 <%= link_to "Salir", destroy_user_session_path, :method => :delete %>
               </li>
             </ul>
