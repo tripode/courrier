@@ -56,6 +56,12 @@ class TransportGuideDetailsController < ApplicationController
   end
 
   def destroy
-#    puts "destroy Transport guide details"
+    @transport_guide_details = TransportGuideDetail.find(params[:id])
+    @transport_guide_details.destroy
+
+    respond_to do |format|
+      format.html { redirect_to transport_guides_url }
+      format.json { head :no_content }
+    end
   end
 end
