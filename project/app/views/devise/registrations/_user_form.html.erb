@@ -13,8 +13,12 @@
 				</li>
 				<div class="clear"></div>
 				<li>
+					<%= f.label :username %>
+			    	<%= f.text_field :username, id: 'i_username' %>	
+				</li>
+				<li>
 					<%= f.label :email %>
-			    	<%= f.email_field :email, id: 'i_email' %>	
+			    	<%= f.email_field :email %>	
 				</li>
 				<div class="clear"></div>
 				<li>
@@ -56,7 +60,7 @@
 
 	});
 	//Onfocus para que el cursor este sobre el input email
-	$('#i_email').focus();
+	$('#i_username').focus();
 
 </script>
 
