@@ -1,35 +1,4 @@
-<h2>Crear usuario</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div>
-  	
-  	<%= collection_select(resource_name, :employee_id, Employee.all, :id, "#{:full_name}") %>
-  	
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
-
-
-<ul>
-   <% Role.all.each do |role| %>
-      <li>
-      	<%= check_box_tag :role_ids, role.id, resource.roles.include?(role), :name => 'user[role_ids][]' %>
-      	<%= label_tag :role_ids, role.name %>
-      </li>
-   <% end %>
-</ul>
-
-<%= render "links" %>
-
-
+<div id="user_form">
+	<%=render 'user_form'%>
+</div>
 
