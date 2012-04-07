@@ -382,3 +382,14 @@ grandes */
     text-decoration: none;
     text-align: right;
 } 
+
+/*
+ * this is for usuario form
+ */
+ul.field-list li{
+	width: 100% !important;
+}
+
+ul.field-list li label{
+	text-align: left !important;/*must be left*/
+}

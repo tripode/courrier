@@ -1,11 +1,12 @@
 class Employee < ActiveRecord::Base
   belongs_to :function_type
   has_many :retire_notes
-  has_many :transport_guides
-  
+  has_many :transport_guides 
   has_many :users
-
   has_many :routing_sheets, :dependent => :destroy
+
+  validates :name, :last_name, :num_identity, :birthday,
+    :mobile_number, :address,:funtion_type_id, :presence =>true
   
   
   

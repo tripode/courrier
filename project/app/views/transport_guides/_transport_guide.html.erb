@@ -20,7 +20,7 @@
         <li>
           <label>* N&#176;:</label>
           <%= f.text_field :num_guide, maxlength: 6, size:6 %>
-          <input class="buscar" type="button"></input>
+          <input class="buscar" type="button" ></input>
           <%= f.hidden_field :id, id: "transport_guide_id"%>
         </li>
         <li>
@@ -131,29 +131,16 @@
         <div id="form_transport_guide_detail">
 
           <%=render 'transport_guide_details/details'%>
+
           <div class="span-11 prepend-1 last">
-            <div class="span-10" style="height: 80px;">
-              <table id="product_table">
-                <thead>
-                  <tr>
-                    <th>Tipo de Producto</th>
-                    <th>Cantidad</th>
-                    <th>Peso</th>
-                    <th><div style="width: 16px"></div></th>
-                  </tr>
-
-                </thead>
-                <tbody id="tbDetail">
-                <input type="hidden" id="cant_productos_" value="0"></input>
-                </tbody>
-
-              </table>
-            </div>
+            <%=render 'transport_guide_details/list_details'%>
+            
           </div>
+
           <div class="span-8 center prepend-top last" >
-            <%= f.submit 'Guardar', id: 'guardar_guia_transporte' %>
+            <%= f.submit 'Guardar', id: 'save_button' %>
             <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-              <%= link_to 'Cancelar','#', class: 'button'%>
+              <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
               </div>
             </div>
           </fieldset>
@@ -162,14 +149,13 @@
       </div>
 
       <script>
+        $('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
         $(function() {
-            $("#guardar_guia_transporte").click(function(){
-            var temp = $("#guardar_guia_transporte").val();
-            if(temp == 0){
-              alert("Debes Cargar algun producto a la lista");
-              return false;
-            }
-      });
+
           //focus en el formulario
           $("form:not(.filter) :input:visible:enabled:first").focus();
           
@@ -196,6 +182,39 @@
 
             }
           });
+          
+          if($("#origin_city_id_hidden").val()!= "") {
+              //Cuando el id de la Ciudad de origen no es vacio se setea el nombre de la ciudad en el campo
+              //Esto se usa cuando se edita la Guia de Transporte,
+              //al hacer click en edit setea La ciudad de origen
+              $("#save_button").val("Actualizar");
+              var id=$("#origin_city_id_hidden").val();
+              var name= ""
+              // busca la ciudad dentro de la lista
+              $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+              })
+              //setea el nombre del empleado en el campo employee
+              $("#origin_city").val(name);
+          }
+          if($("#destination_city_id_hidden").val()!= "") {
+              
+              //Esto se usa cuando se edita la Guia de Transporte,
+              //al hacer click en edit setea La ciudad de destino
+              $("#save_button").val("Actualizar");
+              var id=$("#destination_city_id_hidden").val();
+              var name= ""
+              $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+              })
+              $("#destination_city").val(name);
+          }
          
            
       });
@@ -225,7 +244,32 @@
               }
 
           });
+          if($("#receiver_company_id_hidden").val()!= "") {
+              $("#save_button").val("Actualizar");
+              var id=$("#receiver_company_id_hidden").val();
+              var name= ""
+              $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+              })
+              $("#receiver_company").val(name);
+          }
+          if($("#customer_id_hidden").val()!= "") {
+              $("#save_button").val("Actualizar");
+              var id=$("#customer_id_hidden").val();
+              var name= ""
+              $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+              })
+              $("#customer").val(name);
+          }
       });
+      //VALIDACIONES
       var f1 = new LiveValidation('transport_guide_num_guide', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
       f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
       f1.add( Validate.Presence, { failureMessage: " " } );

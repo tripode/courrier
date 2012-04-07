@@ -4,7 +4,9 @@ Project::Application.routes.draw do
 
 
   devise_for :users,:controllers => { :registrations => "registrations" }
- 
+  
+  get 'main_page/index'
+
   resources :routing_sheet_details
 
   resources :transport_guide_details
