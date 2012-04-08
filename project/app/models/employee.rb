@@ -4,6 +4,7 @@ class Employee < ActiveRecord::Base
   has_many :transport_guides 
   has_many :users
   has_many :routing_sheets, :dependent => :destroy
+  has_many :cargo_manifests
 
   validates :name, :last_name, :num_identity, :birthday,
     :mobile_number, :address,:funtion_type_id, :presence =>true

@@ -5,6 +5,7 @@ class TransportGuide < ActiveRecord::Base
   belongs_to :transport_guide_state
   belongs_to :payment_method
   belongs_to :city
+  has_many :cargo_manifest_details
   has_many :transport_guide_details#, :foreign_key => [:id, :transport_guide_id]
 
   validates :num_guide, :customer_id, :employee_id, :service_type_id,

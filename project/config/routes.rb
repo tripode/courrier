@@ -3,6 +3,8 @@ Project::Application.routes.draw do
 
 
 
+  resources :cargo_manifests
+
   devise_for :users,:controllers => { :registrations => "registrations" }
   
   get 'main_page/index'
