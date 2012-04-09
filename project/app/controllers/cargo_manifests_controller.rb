@@ -21,10 +21,13 @@ class CargoManifestsController < ApplicationController
     end
   end
 
+  # se setean todos los valores necesarios para levantar la ventana new
+  # de Manifiesto de carga
   # GET /cargo_manifests/new
   # GET /cargo_manifests/new.json
   def new
     @cargo_manifest = CargoManifest.new
+    @cities= City.find(:all)
 
     respond_to do |format|
       format.html # new.html.erb
