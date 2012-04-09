@@ -7,7 +7,7 @@ class Employee < ActiveRecord::Base
   has_many :cargo_manifests
 
   validates :name, :last_name, :num_identity, :birthday,
-    :mobile_number, :address,:funtion_type_id, :presence =>true
+    :mobile_number, :address,:function_type_id, :presence =>true
   
   
   
