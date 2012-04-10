@@ -3,6 +3,8 @@ Project::Application.routes.draw do
 
 
 
+  resources :cargo_manifests
+
   devise_for :users,:controllers => { :registrations => "registrations" }
   
   get 'main_page/index'
@@ -37,6 +39,9 @@ Project::Application.routes.draw do
   devise_for :users
 
   
+ 
+  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

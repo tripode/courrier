@@ -1,0 +1,2 @@
+module CargoManifestsHelper
+end

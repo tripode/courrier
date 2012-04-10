@@ -1,0 +1,37 @@
+<h1>Listing cargo_manifests</h1>
+
+<table>
+  <tr>
+    <th>Created at</th>
+    <th>Manifest num</th>
+    <th>Origin city</th>
+    <th>Destiny city</th>
+    <th>Employee</th>
+    <th>Total guides</th>
+    <th>Total products</th>
+    <th>Total weight</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cargo_manifests.each do |cargo_manifest| %>
+  <tr>
+    <td><%= cargo_manifest.created_at %></td>
+    <td><%= cargo_manifest.manifest_num %></td>
+    <td><%= cargo_manifest.origin_city_id %></td>
+    <td><%= cargo_manifest.destiny_city_id %></td>
+    <td><%= cargo_manifest.employee_id %></td>
+    <td><%= cargo_manifest.total_guides %></td>
+    <td><%= cargo_manifest.total_products %></td>
+    <td><%= cargo_manifest.total_weight %></td>
+    <td><%= link_to 'Show', cargo_manifest %></td>
+    <td><%= link_to 'Edit', edit_cargo_manifest_path(cargo_manifest) %></td>
+    <td><%= link_to 'Destroy', cargo_manifest, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cargo manifest', new_cargo_manifest_path %>

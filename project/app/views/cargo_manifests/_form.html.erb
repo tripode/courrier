@@ -1,0 +1,133 @@
+<div>
+  <%= form_for(@cargo_manifest) do |f| %>
+    <fieldset>
+      <legend>Crear Manifiesto de Carga</legend>
+      <% if @cargo_manifest.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@cargo_manifest.errors.count, "error") %> prohibited this cargo_manifest from being saved:</h2>
+
+          <ul>
+            <% @cargo_manifest.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <ul>
+        <li>
+          <label>* N&#176;:</label>
+          <%= f.text_field :manifest_num, maxlength: 10, size:10  %>
+        </li>
+        <li>
+          <label>Fecha:</label>
+          <%= f.text_field :created_at, class:'i_fecha', maxlength: 12, size: 12 %>
+
+          </li>
+          <div class="clear"></div>
+          <li>
+    <%#= f.label :employee_id %>
+            <%= f.hidden_field :employee_id %>
+          </li>
+          <li>
+            <label>* Origen: </label>
+            <input id="origin_city" type="text" />
+            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden' %>
+            <input class="buscar" type="button"></input>
+          </li>
+
+          <li>
+            <label>* Destino:</label>
+            <input id="destination_city" type="text" />
+            <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden' %>
+            <input class="buscar" type="button"></input>
+
+          </li>
+          <li>
+            Tabla
+          </li>
+          <li style="width:100%">
+            <label>Total de Guias:</label>
+            <%= f.text_field :total_guides, maxlength: 5, size: 5 %>
+
+            <label>Total de Piezas:</label>
+            <%= f.text_field :total_products, maxlength: 5, size: 5 %>
+
+            <label> Total de Peso (Kg):</label>
+            <%= f.text_field :total_weight, maxlength: 5, size: 5 %>
+          </li>
+          <div class="center">
+            <%= f.submit 'Guardar', id:'save_button' %>
+          </div>
+          
+        </ul>
+      </fieldset>
+    <% end %>
+
+  </div>
+  <script>
+    $(function() {
+
+      //focus en el formulario
+      $("form:not(.filter) :input:visible:enabled:first").focus();
+
+      //AutoComplite de Origenes
+      var list =[];
+      var i=0;
+  <% @cities.each do |c| %>
+        list[i]={
+          label: "<%= c.name%>",
+          id: <%= c.id %> };
+        i=i+1;
+  <% end %>
+      $("#origin_city").autocomplete({
+        source: list,
+        select: function(event, ui) {
+          $("#origin_city_id_hidden").val(ui.item.id);
+
+        }
+      });
+      $("#destination_city").autocomplete({
+        source: list,
+        select: function(event, ui) {
+          $("#destination_city_id_hidden").val(ui.item.id);
+
+        }
+      });
+
+      if($("#origin_city_id_hidden").val()!= "") {
+        //Cuando el id de la Ciudad de origen no es vacio se setea el nombre de la ciudad en el campo
+        //Esto se usa cuando se edita la Guia de Transporte,
+        //al hacer click en edit setea La ciudad de origen
+        $("#save_button").val("Actualizar");
+        var id=$("#origin_city_id_hidden").val();
+        var name= ""
+        // busca la ciudad dentro de la lista
+        $(list).each(function(index,element){
+          if(element.id == id){
+            name=element.label
+            return true
+          }
+        })
+        //setea el nombre del empleado en el campo employee
+        $("#origin_city").val(name);
+      }
+      if($("#destination_city_id_hidden").val()!= "") {
+
+        //Esto se usa cuando se edita la Guia de Transporte,
+        //al hacer click en edit setea La ciudad de destino
+        $("#save_button").val("Actualizar");
+        var id=$("#destination_city_id_hidden").val();
+        var name= ""
+        $(list).each(function(index,element){
+          if(element.id == id){
+            name=element.label
+            return true
+          }
+        })
+        $("#destination_city").val(name);
+      }
+
+
+    });
+  </script>
