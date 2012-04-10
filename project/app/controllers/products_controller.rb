@@ -25,8 +25,9 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     @product = Product.new
-
-    respond_to do |format|
+    @retire_note = RetireNote.new
+    @retire_notes = RetireNote.find(:all); #This variable is for the autocomplete
+      respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @product }
     end
@@ -41,7 +42,8 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(params[:product])
-
+    #@retire_note= RetireNote.find(:condition=> "where number=" + params[:"product.retire_note_id"])
+    puts "entro"
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
@@ -79,5 +81,20 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url }
       format.json { head :no_content }
     end
+  end
+  
+  #List products for retire_note
+  def search
+    puts "entroooooooooooooooooooooooooooooooo"
+   @retire_note= RetireNote.new
+   @retire_notes = RetireNote.find(:all); #This variable is for the autocomplete
+
+   
+  end
+  def result
+     @retire_note= RetireNote.find(params[:id])
+     if @retire_note.empty?
+       render action: "new"
+     end
   end
 end
