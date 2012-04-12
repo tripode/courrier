@@ -41,6 +41,8 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new.json
   def new
     @cargo_manifest = CargoManifest.new
+    @transport_guides= TransportGuide.where(id: 0)
+#    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
 
     respond_to do |format|

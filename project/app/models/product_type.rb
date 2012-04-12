@@ -15,5 +15,4 @@ class ProductType < ActiveRecord::Base
     all.collect { |pt| [pt.description,pt.id]  }
   end
 
-  
 end

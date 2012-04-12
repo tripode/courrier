@@ -30,7 +30,7 @@ class RetireNote < ActiveRecord::Base
   def format_date
     created_at= Date.today
     created_at.strftime("%d-%m-%Y") if created_at
-    
-
   end
+  
+  
 end

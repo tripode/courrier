@@ -1,21 +1,87 @@
 <div class="span-24 left">
 	<fieldset>
-		<div>Registrar Producto</div>
-			
-		
-		<%= form_for @product do |f| %>
-		  <% if @product.errors.any? %>
+		<legend>
+			Producto
+		</legend>
+		<ul>
+			<li>
+			    <label for="retire_note">Nota Retiro N°*:</label>
+			    <input id="retire_note" type="text" size="5" />
+			</li>
+			<li>
+			    <label>Cliente:</label>
+			    <input id="customer_id" type="text" style="width: 50%" />
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Cant Productos:</label>
+				<input id='total_id', size="5" />
+			</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<div class="subtitle">
+            <h4>Registrar Producto</h4>
+          </div>
+		<%= form_for $product do |f| %>
+		  <% if $product.errors.any? %>
 		    <div id="error_explanation">
-		      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+		      <h2><%= pluralize($product.errors.count, "error") %> prohibited this product from being saved:</h2>
 		
 		      <ul>
-		      <% @product.errors.full_messages.each do |msg| %>
+		      <% $product.errors.full_messages.each do |msg| %>
 		        <li><%= msg %></li>
 		      <% end %>
 		      </ul>
 		    </div>
 		  <% end %>
 		<ul>
+			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div>  
+			<li>
+				<label>Tipo de Producto:</label>
+				<input id='product_type' type="text" size="20"/>
+				<%= f.hidden_field :product_type_id, id: 'product_type_id_hidden' %>
+			</li>
+			<li>
+				<label>Item:</label>
+				<input id='item_id', size="5" />
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Codigo de Barra:</label>
+				<%= f.text_field :bar_code, id: 'bar_code',size: '27'%>
+			</li>
+			<li>
+				<label>Remitente</label>
+				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%' %>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label for="receiver">Destinatario:</label>
+			    <input id="receiver" type="text" size="27" />
+				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Ciudad</label>
+				<input id="city_id" type="text" size="20" />
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Direccion</label>
+				<input id='address_id' type="text"  size="30" />
+			</li>
+			
+			<div class="clear"></div>
+			<li>
+				<label>Fragil</label>
+				<%= f.text_field :fragile, id:'fragile_id', size: 8%>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Descripcion</label>
+				<%=f.text_field :description, size:'30',id: 'description_id' %>
+			</li>
 			
 			<div class="clear"></div>
 			
@@ -25,7 +91,7 @@
 	</fieldset>
 	<div class="span-24 center last" >
 		
-			<%= link_to 'Guardar','#', class: 'limpiar button'%>
+			<%= f.submit 'Guardar'%>
 			<%= link_to 'Salir','#', class: 'button'%>
 	</div>
 	<% end %>
@@ -39,7 +105,115 @@
 	//Onfocus para que el cursor este sobre el input company_name
 	$('#i_retire_note').focus();
 	
+	//Autocomplite de notas de retiro
+	$(function() {
+
+		var list =[];
+		var i=0;
+		var item=1;
+		<% $retire_notes.each do |r| %>
+		 	list[i]={
+		 		label: "<%= r.number %>",id: "<%= r.id %>", product_type_id:"<%=r.product_type_id %>", 
+		 		amount:<%=r.amount %>, customer_id:"<%=r.customer_id %>" };
+			i=i+1;
+		<% end %>
+		//autocomplete de nota de retiro
+		$("#retire_note").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#retire_note_id_hidden").val(ui.item.id);
+				$("#product_type_id_hidden").val(ui.item.product_type_id);
+				$("#item_id").val(item); ++item;
+				$("#total_id").val(ui.item.amount);
+				
+				var product_type_id=ui.item.product_type_id;
+				var customer_id=ui.item.customer_id;
+				
+				//Metodo ajax que envia el id del tipo de producto al metodo getProducType
+				//dentro del controller y como resultado obtiene un objeto product_type
+				$.post("<%= getProductType_products_path %>",
+				{"id": product_type_id},
+				function(product_type){
+					$("#product_type").val(product_type.description);
+				},"json");
+				//Metodo ajax que envia el id del customer al metodo getCustomer
+				//dentro del controller y como resultado obtiene un objeto customer
+				$.post("<%= getCustomer_products_path %>",
+				{"id": customer_id},
+				function(customer){
+					$("#remitter_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+				},"json");
+				
+			}
+		});
+		if($("#retire_note_id_hidden").val()!= "") {
+			//Cuando el id de la nota de retiro no es vacio se setea el numero de la nota en el campo
+						
+			var id=$("#retire_note_id_hidden").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del empleado en el campo employee
+			$("#retire_note").val(name);
+		}
+	});
 	
-	
+	//Autocomplite de destinatarios
+	$(function() {
+		var list =[];
+		var i=0;
+		<% $receivers.each do |receiver| %>
+		 	list[i]={
+		 		label: "<%= receiver.receiver_name %>",
+		 		id: <%= receiver.id %>, city_id:<%= receiver.city_id %>, address:"<%= receiver.address %>"};
+			i=i+1;
+		<% end %>
+		//receiver autocomplete
+		$("#receiver").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#receiver_id_hidden").val(ui.item.id);
+				//se obtiene elid del receiver
+				var receiver_id=ui.item.id;
+				//llamada ajax tipo Post al metodo setReceiverData para setear el id
+				//del receiver, como resultado devuelve un objecto receiver
+				$.post("<%= getReceiver_products_path %>",
+				{"id": receiver_id},
+				function(receiver){
+					$("#city_id").val(receiver.city_name); //seteo el nombre de la ciudad en el campo city_id
+					$("#address_id").val(receiver.address); //seteo el nombre de la direccion en el camco address_id
+					$('#fragile_id').focus();
+				},"json");
+
+				 
+				
+			}
+		});
+		if($("#receiver_id_hidden").val()!= "") {
+			//Cuando el id de receiver no es vacio se setea el nombre del receiver en el campo
+						
+			var id=$("#receiver_id_hidden").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del destinatario en el campo receiver
+			$("#receiver").val(name);
+		}
+	});
+	$("#retire_note").change(function(){
+		
+		
+	});
 	
 </script>

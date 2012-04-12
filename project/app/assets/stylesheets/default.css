@@ -123,6 +123,15 @@ fieldset legend {
 #content form {
     /*	font: bold 14px/28px Arial;*/
 }
+/* Sacar el filtro en la tabla*/
+#content div.dataTables_filter{
+    display: none;
+}
+/*tabla.tablaLocal tbody tr.odd td{
+    border-bottom-color: #000000 !important;
+    border-bottom-style: solid !important;
+    border-bottom-width: medium !important;
+}*/
 #content  fieldset input[type="text"], 
 table input[type="text"], 
 .dataTables_filter input[type="text"], 
@@ -167,6 +176,13 @@ div table input[type="text"],
     font-style: normal;
     color: #000000;
     padding: 0 5px;
+}
+#content table.tablaLocal td table td{
+    font-style: normal;
+    color: #000000;
+    font-size: 10px;
+    padding: 0 5px;
+   width: 70%;
 }
 #content input:focus {
     border: 1px solid #3a4f54 !important;
