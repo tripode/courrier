@@ -383,6 +383,16 @@ grandes */
     text-align: right;
 } 
 
+.navigation .container .current-user p{
+	margin-right: 10px;
+	display: inline;
+}
+
+.navigation .container .current-user a{
+	float: right;
+	margin: 0 3px 0 3px;
+}
+
 /*
  * this is for usuario form
  */

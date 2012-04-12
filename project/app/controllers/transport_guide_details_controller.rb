@@ -1,4 +1,20 @@
 class TransportGuideDetailsController < ApplicationController
+  
+  
+  #
+  # Antes de hacer cualquier cosa con este controler,
+  # se verifica si hay permiso para el usuario logueado
+  #
+  before_filter :check_permissions
+  skip_before_filter :require_no_authentication
+  #
+  # Llama a este metodo y verifica los permisos que tiene para Employee
+  #
+  def check_permissions
+    authorize! :create, TransportGuideDetail
+  end
+  
+  
   def index
  #  puts "Index Transport guide details"
 #     @transport_guide_detail = TransportGuideDetail.new
