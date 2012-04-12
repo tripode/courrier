@@ -1,4 +1,18 @@
 class CargoManifestsController < ApplicationController
+  
+  #
+  # Antes de hacer cualquier cosa con este controler,
+  # se verifica si hay permiso para el usuario logueado
+  #
+  before_filter :check_permissions
+  skip_before_filter :require_no_authentication
+  #
+  # Llama a este metodo y verifica los permisos que tiene para Employee
+  #
+  def check_permissions
+    authorize! :create, CargoManifest
+  end
+  
   # GET /cargo_manifests
   # GET /cargo_manifests.json
   def index
@@ -27,6 +41,8 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new.json
   def new
     @cargo_manifest = CargoManifest.new
+    @transport_guides= TransportGuide.where(id: 0)
+#    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
 
     respond_to do |format|

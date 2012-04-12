@@ -42,6 +42,11 @@
           showOn: "button"
 							  
         });
+        $('table[class*= tablaLocal]').dataTable({
+
+          "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+        });
+
         //  placeholder="write a response.."
         $("input[class*=i_fecha]").attr({
           'placeholder':'(dd-mm-aaaa)...'
@@ -118,55 +123,69 @@
               <li>
                 <%= link_to 'Inicio', '../main_page/index' %>
               </li>
-              <li>
-                <a>Clientes</a>
-                <ul>
-                  <li>
-                    <%= link_to 'Empresa', new_customer_company_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Persona', new_customer_path %>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <%= link_to 'Empleado', new_employee_path %>
-              </li>
+              <% if can? :manage, Customer %>
+	              <li>
+	                <a>Clientes</a>
+	                <ul>
+	                  <li>
+	                    <%= link_to 'Empresa', new_customer_company_path %>
+	                  </li>
+	                  <li>
+	                    <%= link_to 'Persona', new_customer_path %>
+	                  </li>
+	                </ul>
+	              </li>
+	          <% end %>
+	          <% if can? :manage, Employee %>
+	              <li>
+	                <%= link_to 'Empleado', new_employee_path %>
+	              </li>
+	          <% end %>
               <li>
                 <a>Notas</a>
                 <ul>
-                  <li>
-                    <%= link_to 'Nota Retiro', new_retire_note_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Guia de Tranporte', new_transport_guide_path %>
-                  </li>
-                  <li>
-                    <%= link_to 'Manifiesto de Carga', new_cargo_manifest_path %>
-                  </li>
+                  
+	              <% if can? :manage, RetireNote %>	
+	                  <li>
+	                    <%= link_to 'Nota Retiro', new_retire_note_path %>
+	                  </li>
+	              <% end %>
+	          	  <% if can? :manage, TransportGuide %>
+	                  <li>
+	                    <%= link_to 'Guia de Tranporte', new_transport_guide_path %>
+	                  </li>
+	              <% end %>
+	          	  <% if can? :manage, CargoManifest %>
+	                  <li>
+                      	<%= link_to 'Manifiesto de Carga', new_cargo_manifest_path %>
+                  	  </li>
+                  <% end %>
                 </ul>
               </li>
-              <li>
-                <%= link_to 'Hoja de Ruta', routing_sheets_path %>
-                <ul>
-                  <li>
-                    <%= link_to 'Productos', new_product_path %>
-                  </li>
-                </ul>
-              </li>
+              <% if can? :manage, RoutingSheet %>
+	              <li>
+	                <%= link_to 'Hoja de Ruta', routing_sheets_path %>
+	                <ul>
+	                  <li>
+	                    <%= link_to 'Productos', new_product_path %>
+	                  </li>
+	                </ul>
+	              </li>
+	          <% end %>
               <li>
                 <a>Informes</a>
               </li>
-              <li>
-                <%= link_to "Usuarios", new_user_registration_path %>
-              </li>
-              <li>
-                <%= link_to "Salir", destroy_user_session_path, :method => :delete %>
-              </li>
+              <% if can? :manage, User %>
+	              <li>
+	                <%= link_to "Usuarios", new_user_registration_path %>
+	              </li>
+	          <% end %>
             </ul>
           </div>
           <div class='current-user'>
-          	<%= current_user.email %>
+          	<p><%= "#{current_user.employee.full_name} (#{current_user.username}) "%></p>
+          	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
+          	<%= link_to image_tag('config.png'), destroy_user_session_path, :method => :delete %>
           </div>
         </div>
       </div>

@@ -1,4 +1,19 @@
 class RoutingSheetDetailsController < ApplicationController
+  
+  #
+  # Antes de hacer cualquier cosa con este controler,
+  # se verifica si hay permiso para el usuario logueado
+  #
+  before_filter :check_permissions
+  skip_before_filter :require_no_authentication
+  #
+  # Llama a este metodo y verifica los permisos que tiene para Employee
+  #
+  def check_permissions
+    authorize! :create, RoutingSheetDetail
+  end
+    
+  
   # GET /routing_sheet_details
   # GET /routing_sheet_details.json
   def index
