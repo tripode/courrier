@@ -29,7 +29,7 @@
           </li>
           <li>
     <%#= f.label :employee_id %>
-            <%= f.hidden_field :employee_id, {value: 11} %>
+            <%= f.hidden_field :employee_id, {value: current_user.employee.id} %>
           </li>
           <div class="clear"></div>
           <!--  Datos del Remitente primera seccion -->

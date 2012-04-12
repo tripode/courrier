@@ -1,4 +1,4 @@
-<h1>Listando Guia de Transporte</h1>
+<h1>Listado de Guia de Transporte</h1>
 
 <table columnClasses="center,center,center,center,center,center,center,center,center,center,center,center,center,center,center"
 	headerClass="center"
@@ -32,13 +32,13 @@
         <td><%= transport_guide.destination_person %></td>
         <td><%= transport_guide.remitter_person %></td>
 
-        <td><%= transport_guide.customer_id %></td>
+        <td><%= transport_guide.customer.company_name %></td>
 
-        <td><%= transport_guide.service_type_id %></td>
+        <td><%= transport_guide.service_type.description %></td>
         
-        <td><%= transport_guide.destination_city_id %></td>
-        <td><%= transport_guide.origin_city_id %></td>
-        <td><%= transport_guide.transport_guide_state_id %></td>
+        <td><%= City.find(transport_guide.destination_city_id).name  %></td>
+        <td><%= City.find(transport_guide.origin_city_id).name   %></td>
+        <td><%= transport_guide.transport_guide_state.name_state %></td>
         <td><%= transport_guide.created_at %></td>
         <td><%= link_to 'Show',  transport_guide %></td>
         <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
