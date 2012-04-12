@@ -175,13 +175,11 @@
 	                <%= link_to "Usuarios", new_user_registration_path %>
 	              </li>
 	          <% end %>
-              <li>
-                <%= link_to "Salir", destroy_user_session_path, :method => :delete %>
-              </li>
             </ul>
           </div>
           <div class='current-user'>
-          	<%= "#{current_user.employee.full_name} (#{current_user.username}) "%>
+          	<p><%= "#{current_user.employee.full_name} (#{current_user.username}) "%></p>
+          	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
           </div>
         </div>
       </div>
