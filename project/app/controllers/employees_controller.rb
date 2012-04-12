@@ -1,4 +1,17 @@
 class EmployeesController < ApplicationController
+  #
+  # Antes de hacer cualquier cosa con este controler,
+  # se verifica si hay permiso para el usuario logueado
+  #
+  before_filter :check_permissions
+  skip_before_filter :require_no_authentication
+  #
+  # Llama a este metodo y verifica los permisos que tiene para Employee
+  #
+  def check_permissions
+    authorize! :create, Employee
+  end
+  
   #en el metodo index van todos los metodos que apuntan al index
   #El index solo es para listar. Crear un tabla
   # GET /employees

@@ -19,4 +19,19 @@ class User < ActiveRecord::Base
    where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.strip.downcase }]).first
  end
  
+ #
+  # This method returns a string with all roles of the user
+  # separated by comma ','.
+  #
+  def full_roles
+    r = ''
+    if @roles
+      @roles.each do |role|
+        r += (role.name+",")
+        puts role.name
+      end
+    end
+    r
+  end
+ 
 end
