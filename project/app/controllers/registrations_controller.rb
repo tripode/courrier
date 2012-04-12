@@ -60,6 +60,7 @@ class RegistrationsController < Devise::RegistrationsController
   def delete_user
     @deleted_user = User.find(params[:id])
     @deleted_user.destroy
+    respond_with resource, :location => after_sign_up_path_for(resource)
   end
 
   protected

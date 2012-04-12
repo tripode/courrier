@@ -14,7 +14,6 @@
             <th>Empleado</th>
             <th>Roles</th>
             <th></th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -23,15 +22,14 @@
             <td><%= user.username %></td>
             <td><%= user.email %></td>
             <td><%= user.employee.full_name %></td>
-            <td><%= user.full_roles %></td>
             <td>
-	        	<div>
-	        		<%= link_to image_tag('editar.gif'), edit_user_registration_path(user), remote: true %>
-	        	</div>
+            	<% user.full_roles.split(" ").each do |role| %>
+            	  <p class="role-description"><%= role %></p>
+            	<% end %>
             </td>
             <td>
             	<div>
-            		<%= link_to 'destroy', '/users/1', method: :delete %>
+            		<%= link_to image_tag('borrar2.gif'), delete_user_path(user), :method => :delete %>
             	</div>
             </td>
           </tr>
