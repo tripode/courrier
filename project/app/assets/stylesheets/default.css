@@ -389,7 +389,8 @@ grandes */
 }
 
 .navigation .container .current-user a{
-	float: right
+	float: right;
+	margin: 0 3px 0 3px;
 }
 
 /*

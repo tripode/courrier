@@ -180,6 +180,7 @@
           <div class='current-user'>
           	<p><%= "#{current_user.employee.full_name} (#{current_user.username}) "%></p>
           	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
+          	<%= link_to image_tag('config.png'), destroy_user_session_path, :method => :delete %>
           </div>
         </div>
       </div>
