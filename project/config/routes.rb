@@ -1,11 +1,13 @@
 Project::Application.routes.draw do
   
-
-
+  
+  #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
   resources :cargo_manifests
 
-  devise_for :users,:controllers => { :registrations => "registrations" }
+  devise_for :users,:controllers => { :registrations => "registrations" } do
+    delete "/users/:id" => 'registrations#delete_user', :as => :delete_user
+  end
   
   get 'main_page/index'
 

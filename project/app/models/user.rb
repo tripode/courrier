@@ -25,9 +25,9 @@ class User < ActiveRecord::Base
   #
   def full_roles
     r = ''
-    if @roles
-      @roles.each do |role|
-        r += (role.name+",")
+    if roles
+      roles.each do |role|
+        r += (role.name+" ")
         puts role.name
       end
     end

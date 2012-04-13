@@ -419,3 +419,6 @@ ul.field-list li{
 ul.field-list li label{
 	text-align: left !important;/*must be left*/
 }
+p.role-description{
+	padding-top: 20px;
+}
