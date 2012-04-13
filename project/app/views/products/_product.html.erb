@@ -36,24 +36,24 @@
 		    </div>
 		  <% end %>
 		<ul>
-			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div>  
+			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div> 
+			<li>
+				<label>Item:</label>
+				<input id='item_id', size="5" />
+			</li> 
 			<li>
 				<label>Tipo de Producto:</label>
 				<input id='product_type' type="text" size="20"/>
 				<%= f.hidden_field :product_type_id, id: 'product_type_id_hidden' %>
 			</li>
-			<li>
-				<label>Item:</label>
-				<input id='item_id', size="5" />
-			</li>
 			<div class="clear"></div>
+			<li>
+				<label>Remitente:</label>
+				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%' %>
+			</li>
 			<li>
 				<label>Codigo de Barra:</label>
 				<%= f.text_field :bar_code, id: 'bar_code',size: '27'%>
-			</li>
-			<li>
-				<label>Remitente</label>
-				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%' %>
 			</li>
 			<div class="clear"></div>
 			<li>
@@ -61,30 +61,29 @@
 			    <input id="receiver" type="text" size="27" />
 				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
 			</li>
-			<div class="clear"></div>
 			<li>
-				<label>Ciudad</label>
+				<label>Ciudad:</label>
 				<input id="city_id" type="text" size="20" />
 			</li>
 			<div class="clear"></div>
 			<li>
-				<label>Direccion</label>
+				<label>Direccion:</label>
 				<input id='address_id' type="text"  size="30" />
 			</li>
-			
-			<div class="clear"></div>
 			<li>
-				<label>Fragil</label>
+				<label>Fragil:</label>
 				<%= f.text_field :fragile, id:'fragile_id', size: 8%>
 			</li>
 			<div class="clear"></div>
 			<li>
-				<label>Descripcion</label>
+				<label>Descripcion:</label>
 				<%=f.text_field :description, size:'30',id: 'description_id' %>
 			</li>
-			
+			<li>
+				<label>Estado:</label>
+				<%=f.select :product_state_id, $product_state.getProductStates,prompt: "-- Seleccionar--", id:'product_state_id' %>
+			</li>
 			<div class="clear"></div>
-			
 		</ul>
 		
 	
@@ -123,11 +122,18 @@
 			select: function(event, ui) { 
 				$("#retire_note_id_hidden").val(ui.item.id);
 				$("#product_type_id_hidden").val(ui.item.product_type_id);
-				$("#item_id").val(item); ++item;
 				$("#total_id").val(ui.item.amount);
 				
 				var product_type_id=ui.item.product_type_id;
 				var customer_id=ui.item.customer_id;
+				var amount=ui.item.amount;
+				//Metodo ajax para obtejer el nro de item del servidor
+				$.post("<%= getItem_products_path %>",
+				{"amount": amount},
+				function(objectItem){
+					$("#item_id").val(objectItem.item);
+				},"json");
+				
 				
 				//Metodo ajax que envia el id del tipo de producto al metodo getProducType
 				//dentro del controller y como resultado obtiene un objeto product_type
@@ -145,6 +151,8 @@
 					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
 				},"json");
 				
+				//coloco el foco para que ingrese el codigo de barra
+				$('#bar_code').focus();
 			}
 		});
 		if($("#retire_note_id_hidden").val()!= "") {
@@ -152,15 +160,53 @@
 						
 			var id=$("#retire_note_id_hidden").val();
 			var name= ""
+			var product_type_id=-1;
+			var customer_id=-1;
+			var amount=-1
 			// busca el empleado dentro de la lista
 			$(list).each(function(index,element){
 				if(element.id == id){
-					name=element.label
+					name=element.label;
+					product_type_id=element.product_type_id;
+					customer_id=element.customer_id;
+					amount=element.amount
 					return true
 				}
 			})
 			//setea el nombre del empleado en el campo employee
 			$("#retire_note").val(name);
+			
+			//---------------------------
+			
+				//se setean las variables
+				$("#retire_note_id_hidden").val(id);
+				$("#product_type_id_hidden").val(product_type_id);
+				$("#total_id").val(amount);
+				
+				//Metodo ajax para obtejer el nro de item del servidor
+				$.post("<%= getItem_products_path %>",
+				{"amount": amount},
+				function(objectItem){
+					$("#item_id").val(objectItem.item);
+				},"json");
+				
+				//ajax product
+				$.post("<%= getProductType_products_path %>",
+				{"id": product_type_id},
+				function(product_type){
+					$("#product_type").val(product_type.description);
+				},"json");
+				//ajax para cliente
+				$.post("<%= getCustomer_products_path %>",
+				{"id": customer_id},
+				function(customer){
+					$("#remitter_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+				},"json");
+				
+				//coloco el foco para que ingrese el codigo de barra
+				$('#bar_code').focus();
+			//---------------------------
 		}
 	});
 	
@@ -189,10 +235,7 @@
 					$("#city_id").val(receiver.city_name); //seteo el nombre de la ciudad en el campo city_id
 					$("#address_id").val(receiver.address); //seteo el nombre de la direccion en el camco address_id
 					$('#fragile_id').focus();
-				},"json");
-
-				 
-				
+				},"json");	
 			}
 		});
 		if($("#receiver_id_hidden").val()!= "") {
@@ -212,8 +255,6 @@
 		}
 	});
 	$("#retire_note").change(function(){
-		
-		
 	});
 	
 </script>

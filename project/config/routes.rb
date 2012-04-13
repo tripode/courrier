@@ -43,6 +43,7 @@ Project::Application.routes.draw do
        post 'getProductType'
        post 'getReceiver'
        post 'getCustomer'
+       post 'getItem'
     end
   end
  
