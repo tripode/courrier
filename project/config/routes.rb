@@ -6,7 +6,7 @@ Project::Application.routes.draw do
   resources :cargo_manifests
 
   devise_for :users,:controllers => { :registrations => "registrations" } do
-    delete "/users/:id" => 'registrations#delete_user', :as => :delete_user
+    delete "/users/delete/:id" => 'registrations#delete_user', :as => :delete_user
     get    "/users/profiles/:id" => 'registrations#change_profile', :as => :change_profile
   end
   
