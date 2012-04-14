@@ -62,6 +62,16 @@ class RegistrationsController < Devise::RegistrationsController
     @deleted_user.destroy
     respond_with resource, :location => after_sign_up_path_for(resource)
   end
+  
+  #
+  # Este metodo busca el usuario por su id, 
+  # y lo hace disponible para la pagina de profiles.
+  #
+  def change_profile
+    @user = User.find(params[:id])
+    puts "####################################################"
+    puts @user.inspect
+  end
 
   protected
   
