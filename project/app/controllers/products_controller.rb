@@ -17,8 +17,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
+   @products = Product.where("retire_note_id=?", 14)
+  puts "entor index"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -40,12 +40,12 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     $product = Product.new
-    #$retire_note = RetireNote.new
     $retire_notes = RetireNote.find(:all) #This variable is for the autocomplete
     $receivers = Receiver.find(:all)
-    puts "entro neeeeeeeeeeeeeeeeeeeeee"
-    #Variables de la vista
+    $product_state=ProductState.new
+    $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
     
+    $item = 1
       respond_to do |format|
       format.html # new.html.erb
       format.json { render json: $product }
@@ -61,10 +61,31 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     $product = Product.new(params[:product])
+    @retire_note_id=$product.retire_note_id
+    @product_type_id=$product.product_type_id
+    
+    @amount=RetireNote.where("id=?",@retire_note_id).first.amount
     respond_to do |format|
       if $product.save
-        format.html { redirect_to $product, notice: 'Product was successfully created.' }
-        format.json { render json: $product, status: :created, location: $product }
+        $product=Product.new
+        #Controla que se ingreso todos los productos de la nota de retiro
+         if ($item.to_i < @amount.to_i)
+          $item= $item + 1
+          $product.retire_note_id=@retire_note_id
+          $product.product_type_id=@product_type_id
+         else
+            $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
+            #Redirijo la pagina hacia el index para ver todos los productos registrados
+            @products = Product.where("retire_note_id=?", @retire_note_id)
+            format.html { render action: "index" }
+            format.json { render json: @products }
+         end
+        
+        $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
+        
+        format.html {render action: "new"}# { redirect_to $product, notice: 'Product was successfully created.' }
+        format.json {render json: $product}
+        #format.json { render json: $product, status: :created, location: $product }
       else
         format.html { render action: "new" }
         format.json { render json: $product.errors, status: :unprocessable_entity }
@@ -138,6 +159,19 @@ class ProductsController < ApplicationController
          format.html #need for ajax with html datatype 
          format.json { render json: @customer }#need for ajax with json datatyp 
     end
-   
+  end
+  
+  #post
+  #Metodo que retorna el item correcspondiente al producto que se va a registrar
+  def getItem
+    @amount=params[:amount]
+    if ($item.to_i < @amount.to_i)
+      $item= $item + 1
+    end
+    @objectItem={item: $item}
+    respond_to do |format|
+         format.html #need for ajax with html datatype 
+         format.json { render json: @objectItem }#need for ajax with json datatyp 
+    end
   end
 end
