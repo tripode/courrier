@@ -4,21 +4,22 @@
 			Producto
 		</legend>
 		<%= form_for $product do |f| %>
-		  <% if $product.errors.any? %>
-		    <div id="error_explanation">
-		      <h2><%= pluralize($product.errors.count, "error") %> prohibited this product from being saved:</h2>
-		
-		      <ul>
-		      <% $product.errors.full_messages.each do |msg| %>
-		        <li><%= msg %></li>
-		      <% end %>
-		      </ul>
-		    </div>
-		  <% end %>
+		<% if $product.errors.any? %>
+		<div id="error_explanation">
+			<h2>Esta prohibido guardar un producto sin datos correctos:</h2>
+			<ul>
+				<% $product.errors.full_messages.each do |msg| %>
+				<li>
+					<%= msg %>
+				</li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
 		<ul>
 			<li>
 			    <label for="retire_note">*Nota Retiro N°:</label>
-			    <input id="retire_note" type="text" value="" size="5" />
+			    <input id="retire_note" type="text"  value="" size="5" />
 			</li>
 			<li>
 			    <label>Cliente:</label>
@@ -28,6 +29,10 @@
 			<li>
 				<label>Cant Productos:</label>
 				<input id='total_id' type="text" size="5" />
+			</li>
+			<li>
+				<label>Fecha:</label>
+				<%= f.text_field :created_at, {value: $product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12} %>
 			</li>
 		</ul>
 	</fieldset>
@@ -91,7 +96,7 @@
 	</fieldset>
 	<div class="span-24 center last" >
 		
-			<%= f.submit 'Guardar'%>
+			<%= f.submit 'Guardar', id: 'button_save_id'%>
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
@@ -113,7 +118,7 @@
 	$("#product_type").attr({disabled: true});
 	$("#city_id").attr({disabled: true});
 	$("#address_id").attr({disabled: true});
-	
+	//$("#button_save_id").attr({disabled: true});
 	
 	
 	//Autocomplite de notas de retiro
@@ -213,11 +218,11 @@
 		
 		//Metodo ajax para obtejer el nro de item del servidor
 		
-		$.post("<%= getItem_products_path %>",
-		{"amount": $.amount},
+		$.post("<%= getItem_products_path %>",{"amount": $.amount},
 		function(objectItem){
 			$("#item_id").val(objectItem.item);
 		},"json");
+		
 		
 	});
 	
@@ -266,6 +271,21 @@
 		}
 	});
 	
-	
+	//Validaciones
+	//Validacion del nro de la nota de retiro
+	 var f1 = new LiveValidation('retire_note', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f1.add( Validate.Numericality, { notANumberMessage: " " } );
+        f1.add( Validate.Presence, { failureMessage: " " } );
+    //Validacion del codigo de barra
+     var f2 = new LiveValidation('bar_code', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f2.add( Validate.Numericality, { notANumberMessage: " " } );
+        f2.add( Validate.Presence, { failureMessage: " " } );
+     //Validacion del receiver
+     var f3 = new LiveValidation('receiver', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: " " } );
+        
+     //Validacion del remitente
+	 var f4 = new LiveValidation('remitter', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f4.add( Validate.Presence, { failureMessage: " " } );
 	
 </script>
