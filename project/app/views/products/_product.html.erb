@@ -3,26 +3,6 @@
 		<legend>
 			Producto
 		</legend>
-		<ul>
-			<li>
-			    <label for="retire_note">Nota Retiro N°*:</label>
-			    <input id="retire_note" type="text" size="5" />
-			</li>
-			<li>
-			    <label>Cliente:</label>
-			    <input id="customer_id" type="text" style="width: 50%" />
-			</li>
-			<div class="clear"></div>
-			<li>
-				<label>Cant Productos:</label>
-				<input id='total_id', size="5" />
-			</li>
-		</ul>
-	</fieldset>
-	<fieldset>
-		<div class="subtitle">
-            <h4>Registrar Producto</h4>
-          </div>
 		<%= form_for $product do |f| %>
 		  <% if $product.errors.any? %>
 		    <div id="error_explanation">
@@ -36,10 +16,31 @@
 		    </div>
 		  <% end %>
 		<ul>
+			<li>
+			    <label for="retire_note">*Nota Retiro N°:</label>
+			    <input id="retire_note" type="text" value="" size="5" />
+			</li>
+			<li>
+			    <label>Cliente:</label>
+			    <input id="customer_id" type="text" style="width: 50%" />
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Cant Productos:</label>
+				<input id='total_id' type="text" size="5" />
+			</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<div class="subtitle">
+            <h4>Registrar Producto</h4>
+          </div>
+		
+		<ul>
 			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div> 
 			<li>
 				<label>Item:</label>
-				<input id='item_id', size="5" />
+				<input id='item_id' type="text" size="5" />
 			</li> 
 			<li>
 				<label>Tipo de Producto:</label>
@@ -52,12 +53,12 @@
 				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%' %>
 			</li>
 			<li>
-				<label>Codigo de Barra:</label>
-				<%= f.text_field :bar_code, id: 'bar_code',size: '27'%>
+				<label>*Codigo de Barra:</label>
+				<%= f.text_field :bar_code, id: 'bar_code',size: '20'%>
 			</li>
 			<div class="clear"></div>
 			<li>
-				<label for="receiver">Destinatario:</label>
+				<label for="receiver">* Destinatario:</label>
 			    <input id="receiver" type="text" size="27" />
 				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
 			</li>
@@ -72,7 +73,7 @@
 			</li>
 			<li>
 				<label>Fragil:</label>
-				<%= f.text_field :fragile, id:'fragile_id', size: 8%>
+				<%= f.select :fragile,["si","no"],id:'fragile_id', size:'5'%>
 			</li>
 			<div class="clear"></div>
 			<li>
@@ -91,18 +92,29 @@
 	<div class="span-24 center last" >
 		
 			<%= f.submit 'Guardar'%>
-			<%= link_to 'Salir','#', class: 'button'%>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	<% end %>
+	
 </div>
 <script>
+	//focus en el formulario
+    $("form:not(.filter) :input:visible:enabled:first").focus();
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
 
 	});
-	//Onfocus para que el cursor este sobre el input company_name
-	$('#i_retire_note').focus();
+	//Aqui se hacer disable todo los imputs que se setean automaticamente
+	$("#customer_id").attr({disabled: true});
+	$("#total_id").attr({disabled: true});
+	$("#item_id").attr({disabled: true});
+	$("#product_type").attr({disabled: true});
+	$("#city_id").attr({disabled: true});
+	$("#address_id").attr({disabled: true});
+	
+	
 	
 	//Autocomplite de notas de retiro
 	$(function() {
@@ -126,13 +138,8 @@
 				
 				var product_type_id=ui.item.product_type_id;
 				var customer_id=ui.item.customer_id;
-				var amount=ui.item.amount;
-				//Metodo ajax para obtejer el nro de item del servidor
-				$.post("<%= getItem_products_path %>",
-				{"amount": amount},
-				function(objectItem){
-					$("#item_id").val(objectItem.item);
-				},"json");
+				$.amount=ui.item.amount;
+				
 				
 				
 				//Metodo ajax que envia el id del tipo de producto al metodo getProducType
@@ -162,7 +169,7 @@
 			var name= ""
 			var product_type_id=-1;
 			var customer_id=-1;
-			var amount=-1
+			$.amount=-1
 			// busca el empleado dentro de la lista
 			$(list).each(function(index,element){
 				if(element.id == id){
@@ -178,36 +185,40 @@
 			
 			//---------------------------
 			
-				//se setean las variables
-				$("#retire_note_id_hidden").val(id);
-				$("#product_type_id_hidden").val(product_type_id);
-				$("#total_id").val(amount);
+			//se setean las variables
+			$("#retire_note_id_hidden").val(id);
+			$("#product_type_id_hidden").val(product_type_id);
+			$("#total_id").val(amount);
 				
-				//Metodo ajax para obtejer el nro de item del servidor
-				$.post("<%= getItem_products_path %>",
-				{"amount": amount},
-				function(objectItem){
-					$("#item_id").val(objectItem.item);
-				},"json");
 				
-				//ajax product
-				$.post("<%= getProductType_products_path %>",
-				{"id": product_type_id},
-				function(product_type){
-					$("#product_type").val(product_type.description);
-				},"json");
-				//ajax para cliente
-				$.post("<%= getCustomer_products_path %>",
-				{"id": customer_id},
-				function(customer){
-					$("#remitter_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
-					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
-				},"json");
 				
-				//coloco el foco para que ingrese el codigo de barra
-				$('#bar_code').focus();
+			//ajax product
+			$.post("<%= getProductType_products_path %>",
+			{"id": product_type_id},
+			function(product_type){
+				$("#product_type").val(product_type.description);
+			},"json");
+			//ajax para cliente
+			$.post("<%= getCustomer_products_path %>",
+			{"id": customer_id},
+			function(customer){
+				$("#remitter_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+				$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
+			},"json");
+				
+			//coloco el foco para que ingrese el codigo de barra
+			$('#bar_code').focus();
 			//---------------------------
 		}
+		
+		//Metodo ajax para obtejer el nro de item del servidor
+		
+		$.post("<%= getItem_products_path %>",
+		{"amount": $.amount},
+		function(objectItem){
+			$("#item_id").val(objectItem.item);
+		},"json");
+		
 	});
 	
 	//Autocomplite de destinatarios
@@ -254,7 +265,7 @@
 			$("#receiver").val(name);
 		}
 	});
-	$("#retire_note").change(function(){
-	});
+	
+	
 	
 </script>

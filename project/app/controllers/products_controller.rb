@@ -17,8 +17,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
+   @products = Product.where("retire_note_id=?", 14)
+  puts "entor index"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -43,7 +43,9 @@ class ProductsController < ApplicationController
     $retire_notes = RetireNote.find(:all) #This variable is for the autocomplete
     $receivers = Receiver.find(:all)
     $product_state=ProductState.new
-    $item = 0
+    $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
+    
+    $item = 1
       respond_to do |format|
       format.html # new.html.erb
       format.json { render json: $product }
@@ -61,11 +63,26 @@ class ProductsController < ApplicationController
     $product = Product.new(params[:product])
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
+    
+    @amount=RetireNote.where("id=?",@retire_note_id).first.amount
     respond_to do |format|
       if $product.save
         $product=Product.new
-        $product.retire_note_id=@retire_note_id
-        $product.product_type_id=@product_type_id
+        #Controla que se ingreso todos los productos de la nota de retiro
+         if ($item.to_i < @amount.to_i)
+          $item= $item + 1
+          $product.retire_note_id=@retire_note_id
+          $product.product_type_id=@product_type_id
+         else
+            $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
+            #Redirijo la pagina hacia el index para ver todos los productos registrados
+            @products = Product.where("retire_note_id=?", @retire_note_id)
+            format.html { render action: "index" }
+            format.json { render json: @products }
+         end
+        
+        $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
+        
         format.html {render action: "new"}# { redirect_to $product, notice: 'Product was successfully created.' }
         format.json {render json: $product}
         #format.json { render json: $product, status: :created, location: $product }
