@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Project</title>
+    
     <!-- Se anexa los archivos del Blue Print-->
     <%= stylesheet_link_tag "bp/reset" %>
     <%= stylesheet_link_tag "bp/forms" %>
@@ -10,7 +11,7 @@
     <%= stylesheet_link_tag "bp/typography" %>
     <%= stylesheet_link_tag "bp/screen" %>
 
-    <%= stylesheet_link_tag "default" %>
+    
     <%= stylesheet_link_tag "jqueryslidemenu" %>
     <%= stylesheet_link_tag "jquery-ui" %>
     <%= stylesheet_link_tag "demo_table" %>
@@ -22,6 +23,7 @@
     <%#= javascript_include_tag "prototype"%>
     <%#= javascript_include_tag "livepipe"%>
     <%#= javascript_include_tag "hotkeys"%>
+    <%= stylesheet_link_tag "default" %>
 
     <%= csrf_meta_tags %>
     <script charset="utf-8" type="text/javascript">
@@ -42,7 +44,7 @@
           showOn: "button"
 							  
         });
-        $('table[class*= tablaLocal]').dataTable({
+        $('table[id*=tablaLocal]').dataTable({
 
           "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
         });
@@ -168,6 +170,9 @@
 	                <ul>
 	                  <li>
 	                    <%= link_to 'Productos', new_product_path %>
+	                  </li>
+	                  <li>
+	                    <%= link_to 'Destinatarios', new_receiver_path %>
 	                  </li>
 	                </ul>
 	              </li>

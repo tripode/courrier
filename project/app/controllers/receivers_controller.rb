@@ -40,7 +40,8 @@ class ReceiversController < ApplicationController
   # GET /receivers/new.json
   def new
     @receiver = Receiver.new
-
+    @receivers = Receiver.all
+    @cities = City.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @receiver }
