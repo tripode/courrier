@@ -276,7 +276,7 @@ div fieldset  input.buscar:hover,
 #content ul li {
     list-style: none;
 }
-#content  fieldset ul li label, div fieldset ul li label {
+#content  fieldset ul > li label, div fieldset ul > li label { /* li debe ser hijo directo de ul*/
     margin-right: 5px !important;
     text-align: right !important;
     width: 100px !important;
@@ -415,9 +415,15 @@ grandes */
 ul.field-list li{
 	width: 100% !important;
 }
-
+/*
+ * Este css es aplicado a los roles de usuarios.
+ */
 ul.field-list li label{
 	text-align: left !important;/*must be left*/
+	margin-right: 5px !important;
+    width: 100px !important;
+    display: inline-block !important;
+    font-size: 12px;
 }
 p.role-description{
 	padding-top: 20px;
