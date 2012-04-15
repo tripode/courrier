@@ -1,5 +1,53 @@
-<h1>New receiver</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', receivers_path %>
+<div id="form_employee">
+	<%=render 'form'%>
+</div>
+<!-- Esta tabla no debe estar aca solo debe ir un render hasta el index. pero no me esta funcionando -->
+<%= link_to 'ver todos', '#', id: 'ver-todos'%>
+<div id="todos">
+	<table
+		columnClasses="center,center,center,center,center,center,center,center,center,center"
+		headerClass="center"
+		rowClasses="odd gradeC" cellpadding="0" cellspacing="0"
+		border="1" class="tablaIndex display"  bgcolor="white">
+		<thead>
+			<tr>
+				<th>Nombre y Apellido</th>
+				<th>Nº de Documento</th>
+				<th>Ciudad</th>
+				<th>Dirección</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @receivers.each do |receiver| %>
+			<tr>
+				<td><%= receiver.receiver_name %></td>
+				<td><%= receiver.document %></td>
+				<td><%= receiver.city.name %></td>
+				<td><%= receiver.address %></td>
+				
+				<td>
+					<div>
+						<%= link_to image_tag('editar.gif'), edit_receiver_path(receiver) %>
+					</div>
+				</td>
+				<td>
+					<div>
+						<%= link_to image_tag('borrar2.gif'), receiver, confirm: 'Deseas eliminar el destinatario?', method: :delete %>
+					</div>
+				</td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<br />
+<br />
+<script>
+	$("#todos").hide();
+	$('#ver-todos').click(function(event){
+		event.preventDefault;
+		$("#todos").toggle();
+	});
+</script>
