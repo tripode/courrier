@@ -92,7 +92,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     respond_to do |format|  
-      if  (!RetireNote.exists?(:customer_id => @customer.id) && !TransportGuide.exists?(:customer_id => @customer.id))
+      if  (!RetireNote.exists?(:customer_id => @customer.id) && !TransportGuide.exists?(:customer_id => @customer.id) && !TransportGuide.exists?(:receiver_company_id => @customer.id) )
         @customer.destroy
         format.html { redirect_to new_customer_path,  notice: 'El cliente ha sido eliminado.' }
         format.json { head :no_content }

@@ -92,11 +92,17 @@ class CustomerCompaniesController < ApplicationController
   # DELETE /customer_companies/1.json
   def destroy
     @customer_company = Customer.find(params[:id])
-    @customer_company.destroy
+    
 
     respond_to do |format|
-      format.html { redirect_to customer_companies_url }
-      format.json { head :no_content }
+      if  (!RetireNote.exists?(:customer_id => @customer_company.id) && !TransportGuide.exists?(:customer_id => @customer_company.id) && !TransportGuide.exists?(:receiver_company_id => @customer_company.id) )
+        @customer_company.destroy
+        format.html { redirect_to new_customer_company_path,notice: 'El cliente ha sido eliminado.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to new_customer_company_path,notice: 'El cliente no puede ser eliminado.' }
+        format.json { head :no_content }
+      end
     end
   end
 end
