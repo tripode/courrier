@@ -29,11 +29,11 @@
 		<div class="clear"></div>
 		<li>
 			<%= f.label :direccion %>
-	    	<%= f.text_field :address %>	
+	    	<%= f.text_field :address, id:'i_address' %>	
 		</li>
 		<li>
 			<%= f.label :email %>
-	    	<%= f.text_field :email %>	
+	    	<%= f.text_field :email, id:'i_email' %>	
 		</li>
 		<div class="clear"></div>
 		<li>
@@ -43,7 +43,7 @@
 		
 		<li>
 			<%= f.label :telefono %>
-	    	<%= f.text_field :phone_number %>	
+	    	<%= f.text_field :phone_number, id:'phone_number' %>	
 		</li>
 		<div class="clear"></div>
 	</ul>
@@ -52,7 +52,7 @@
 <div class="span-24 center last" >
 			<%= f.submit 'Actualizar' %>
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
-			<%= link_to 'Cancelar',customer_companies_path, class: 'button'%>
+			<%= link_to 'Cancelar',new_customer_company_path, class: 'button'%>
 </div>
 <% end %>
 </div>
@@ -76,6 +76,16 @@
 	});
 	//Onfocus para que el cursor este sobre el input company_name
 	$('#i_company_name').focus();
-
+	
+	//validaciones
+        var f1 = new LiveValidation('i_company_name', { validMessage: " ", wait: 500 });
+        f1.add( Validate.Presence, { failureMessage: " " } );
+       
+        var f2 = new LiveValidation('i_phone_number', { validMessage: " ", wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: " " } );
+        var f3 = new LiveValidation('i_email', { validMessage: " ", wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: " " } );
+        var f4 = new LiveValidation('i_address', { validMessage: " ", wait: 500 });
+        f4.add( Validate.Presence, { failureMessage: " " } );
 </script>
 

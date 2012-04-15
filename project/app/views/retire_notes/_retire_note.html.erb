@@ -28,7 +28,7 @@
 		  
 		  <li>
 		    <label for="customer">* Cliente:</label>
-		    <input id="customer" type="text" style="width: 60%" />
+		    <input id="customer" type="text"  style="width: 60%" />
 			<%= f.hidden_field :customer_id, id: 'customer_id_hidden' %>         
 		  </li>
 		  <li>
@@ -38,14 +38,14 @@
 		  <div class="clear"></div>
 		  <li>
 		    <label for="employee">* Funcionario:</label>
-		    <input id="employee" type="text" style="width: 60%" />
+		    <input id="employee" type="text" value="<%= @retire_note.employee.last_name + " " + @retire_note.employee.name %>" style="width: 60%" />
 		    
 			<%= f.hidden_field :employee_id, id: 'employee_id_hidden' %>         
 		  </li>
-		   <div class="clear"></div>
+		  
 		  <li>
-		    <label>* Tipo de Servicio:</label>
-		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--",id: 'service_type_id'%>
+		    <label>* Tipo Servicio:</label>
+		   	<%= f.select :service_type_id, @retire_note.getTipoServicios,id: 'service_type_id'%>
 		  </li>
 		  <br />
 		   <div class="clear"></div>
@@ -91,6 +91,9 @@
 	<% end %>
 </div>
 <script>
+	//Onfocus para que el cursor este sobre el input numero de retiro
+	$('#number_id').focus();
+	
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
@@ -144,47 +147,9 @@
 			$("#customer").val(name);
 		}
 	});
-	//Onfocus para que el cursor este sobre el input numero de retiro
-	$('#number_id').focus();
+	
 
-	//Autocomplete Funcionarios
-	$(function() {
-		var list =[];
-		var i=0;
-		<% @employees.each do |e| %>
-		 	list[i]={
-		 		label: "<%= e.last_name + " " + e.name %>",
-		 		id: <%= e.id %>};
-			i=i+1;
-		<% end %>
-		//if el id del empleado es vacio se carga la lista para mostrar el autocomplete
-		
-		$("#employee").autocomplete({
-			source: list,
-			select: function(event, ui) { 
-				$("#employee_id_hidden").val(ui.item.id); 	
-			}
-		});
-		if($("#employee_id_hidden").val()!="") {
-			//Cuando el id del empleado no es vacio se setea el nombre del empleado en el campo
-			//Esto se usa cuando se edita una nota de retiro, al hacer click en 
-			//edit setea el nombre del empleado 
-			$("#save_button").val("Actualizar");
-			
-			var id=$("#employee_id_hidden").val();
-			var name= ""
-			// busca el empleado dentro de la lista
-			$(list).each(function(index,element){
-				if(element.id == id){
-					name=element.label
-					return true
-				}
-			})
-			//setea el nombre del empleado en el campo employee
-			$("#employee").val(name);
-		}
-		
-	});
+	
 	
 		//Validaciones
         var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
