@@ -124,8 +124,8 @@ fieldset legend {
     /*	font: bold 14px/28px Arial;*/
 }
 /* Sacar el filtro en la tabla*/
-#content div.dataTables_filter{
-    display: none;
+div#tablaLocal_wrapper div.dataTables_filter{
+    display: none !important;
 }
 /*tabla.tablaLocal tbody tr.odd td{
     border-bottom-color: #000000 !important;
