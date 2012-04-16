@@ -73,7 +73,7 @@ class RetireNotesController < ApplicationController
     @retire_note.employee_id=current_user.employee.id
     respond_to do |format|
       if @retire_note.save
-        format.html { redirect_to @retire_note, notice: 'Retire note was successfully created.' }
+        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido guardada..' }
         format.json { render json: @retire_note, status: :created, location: @retire_note }
       else
         format.html { render action: "new" }
@@ -89,7 +89,7 @@ class RetireNotesController < ApplicationController
 
     respond_to do |format|
       if @retire_note.update_attributes(params[:retire_note])
-        format.html { redirect_to @retire_note, notice: 'Retire note was successfully updated.' }
+        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido actualizada.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -102,11 +102,18 @@ class RetireNotesController < ApplicationController
   # DELETE /retire_notes/1.json
   def destroy
     @retire_note = RetireNote.find(params[:id])
-    @retire_note.destroy
+    @notice=""
 
     respond_to do |format|
-      format.html { redirect_to retire_notes_url }
-      format.json { head :no_content }
+      begin
+        @retire_note.destroy
+        @notice="La nota de retiro ha sido eliminada.."
+      rescue
+        @notice="Esta nota de retiro no puede ser eliminada.."
+      ensure
+       format.html { redirect_to new_retire_note_path, notice: @notice }
+       format.json { head :no_content } 
+      end
     end
   end
   

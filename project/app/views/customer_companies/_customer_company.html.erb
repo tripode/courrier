@@ -60,6 +60,7 @@
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
+		$('#form_msg').hide();
 
 	});
 	$("input[class*=i_fecha]").datepicker({
@@ -78,14 +79,14 @@
 	$('#i_company_name').focus();
 	
 	//validaciones
-        var f1 = new LiveValidation('i_company_name', { validMessage: " ", wait: 500 });
+        var f1 = new LiveValidation('i_company_name', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
         f1.add( Validate.Presence, { failureMessage: " " } );
        
-        var f2 = new LiveValidation('i_phone_number', { validMessage: " ", wait: 500 });
+        var f2 = new LiveValidation('i_phone_number', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f2.add( Validate.Presence, { failureMessage: " " } );
-        var f3 = new LiveValidation('i_email', { validMessage: " ", wait: 500 });
+        var f3 = new LiveValidation('i_email', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f3.add( Validate.Presence, { failureMessage: " " } );
-        var f4 = new LiveValidation('i_address', { validMessage: " ", wait: 500 });
+        var f4 = new LiveValidation('i_address', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f4.add( Validate.Presence, { failureMessage: " " } );
 
 </script>

@@ -8,7 +8,7 @@ class RetireNote < ActiveRecord::Base
   has_many :products
   
   validates :number, :customer_id, :date, :expiration_date, :employee_id, :service_type_id, :product_type_id,
-  :city_id, :amount, :unit_price, :description, :presence => true
+  :city_id, :amount, :unit_price,  :presence => true
   
   def getTipoServicios
     ServiceType.all.collect{|tp|[tp.description, tp.id]}

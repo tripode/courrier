@@ -38,14 +38,14 @@
 		  <div class="clear"></div>
 		  <li>
 		    <label for="employee">* Funcionario:</label>
-		    <input id="employee" type="text" style="width: 60%" />
+		    <input id="employee" type="text" value="<%= current_user.employee.last_name + " "+ current_user.employee.name %>" style="width: 60%" />
 		    
 			<%= f.hidden_field :employee_id, id: 'employee_id_hidden' %>         
 		  </li>
 		   <div class="clear"></div>
 		  <li>
 		    <label>* Tipo de Servicio:</label>
-		   	<%= f.select :service_type_id, @retire_note.getTipoServicios, prompt: "-- Seleccionar--",id: 'service_type_id'%>
+		   	<%= f.select :service_type_id, @retire_note.getTipoServicios,id: 'service_type_id'%>
 		  </li>
 		  <br />
 		   <div class="clear"></div>
@@ -94,7 +94,7 @@
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
-
+		$('#form_msg').hide();
 	});
 	$("input[class*=i_fecha]").datepicker({
 		altField : '#actualDate',
@@ -127,6 +127,7 @@
 			}
 		});
 		if($("#customer_id_hidden").val()!= "") {
+			
 			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
 			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
 			$("#save_button").val("Actualizar");
@@ -147,44 +148,7 @@
 	//Onfocus para que el cursor este sobre el input numero de retiro
 	$('#number_id').focus();
 
-	//Autocomplete Funcionarios
-	$(function() {
-		var list =[];
-		var i=0;
-		<% @employees.each do |e| %>
-		 	list[i]={
-		 		label: "<%= e.last_name + " " + e.name %>",
-		 		id: <%= e.id %>};
-			i=i+1;
-		<% end %>
-		//if el id del empleado es vacio se carga la lista para mostrar el autocomplete
-		
-		$("#employee").autocomplete({
-			source: list,
-			select: function(event, ui) { 
-				$("#employee_id_hidden").val(ui.item.id); 	
-			}
-		});
-		if($("#employee_id_hidden").val()!="") {
-			//Cuando el id del empleado no es vacio se setea el nombre del empleado en el campo
-			//Esto se usa cuando se edita una nota de retiro, al hacer click en 
-			//edit setea el nombre del empleado 
-			$("#save_button").val("Actualizar");
-			
-			var id=$("#employee_id_hidden").val();
-			var name= ""
-			// busca el empleado dentro de la lista
-			$(list).each(function(index,element){
-				if(element.id == id){
-					name=element.label
-					return true
-				}
-			})
-			//setea el nombre del empleado en el campo employee
-			$("#employee").val(name);
-		}
-		
-	});
+	
 	
 		//Validaciones
         var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
