@@ -39,8 +39,8 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/new
   # GET /retire_notes/new.json
   def new
-    puts "entroooooooo"
     @retire_note = RetireNote.new
+    @retire_note.employee_id=current_user.employee.id
     @customer = Customer.new
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
@@ -70,6 +70,7 @@ class RetireNotesController < ApplicationController
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
     @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    @retire_note.employee_id=current_user.employee.id
     respond_to do |format|
       if @retire_note.save
         format.html { redirect_to @retire_note, notice: 'Retire note was successfully created.' }
