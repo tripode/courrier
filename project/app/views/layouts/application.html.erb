@@ -19,7 +19,7 @@
     <%= javascript_include_tag "jquery"%>
     <%= javascript_include_tag "jqueryslidemenu"%>
     <%= javascript_include_tag "jquery.dataTables"%>
-    <%= javascript_include_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
     <%#= javascript_include_tag "prototype"%>
     <%#= javascript_include_tag "livepipe"%>
     <%#= javascript_include_tag "hotkeys"%>
@@ -46,12 +46,17 @@
         });
         $('table[id*=tablaLocal]').dataTable({
 
-          "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+          "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          "bRetrieve": true
         });
 
-        //  placeholder="write a response.."
+        // place holder para fechas
         $("input[class*=i_fecha]").attr({
           'placeholder':'(dd-mm-aaaa)...'
+        });
+        //  placeholder para campos con auto complit
+        $("input[class*=i_autocomplit]").attr({
+          'placeholder':'Escriba para buscar...'
         });
         <%#*function add(a, b) {%>
           <%#*alert(parseInt(a) + parseInt(b));%>

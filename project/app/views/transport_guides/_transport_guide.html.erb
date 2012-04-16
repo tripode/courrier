@@ -41,14 +41,14 @@
           <li>
             <label>* Origen: </label>
             <input id="origin_city" type="text" />
-            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden' %>
+            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden',class: 'i_autocomplit' %>
     <%#= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
             <input class="buscar" type="button"></input>
           </li>
           <li>
             <label> *Empresa/Cliente:</label>
             <input id="customer" type="text" size="15" />
-            <%= f.hidden_field :customer_id, id: 'customer_id_hidden' %>
+            <%= f.hidden_field :customer_id, id: 'customer_id_hidden',class: 'i_autocomplit' %>
             <input class="buscar" type="button"></input>
           </li>
 
@@ -75,14 +75,14 @@
           <div class="clear"></div>
           <li>
             <label>* Destino:</label>
-             <input id="destination_city" type="text" />
+             <input id="destination_city" type="text" class="i_autocomplit"/>
             <%= f.hidden_field :destination_city_id, id: 'destination_city_id_hidden' %>
             <%#= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
             <input class="buscar" type="button"></input>
           </li>
           <li>
             <label>* Empresa:</label>
-            <input id="receiver_company" type="text" size="15" />
+            <input id="receiver_company" type="text" size="15" class="i_autocomplit" />
             <%= f.hidden_field :receiver_company_id, id: 'receiver_company_id_hidden' %>
     <%#= f.text_field :receiver_company_id, size: 15 %>
             <input class="buscar" type="button"></input>
@@ -244,6 +244,7 @@
               }
 
           });
+          //cuando se da editar carga los campos
           if($("#receiver_company_id_hidden").val()!= "") {
               $("#save_button").val("Actualizar");
               var id=$("#receiver_company_id_hidden").val();
