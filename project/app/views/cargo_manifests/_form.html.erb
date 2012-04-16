@@ -34,20 +34,20 @@
           <li>
             <label>* Origen: </label>
             <input id="origin_city" type="text" />
-            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden',class: 'i_autocomplit' %>
+            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden', name: 'lista[origin]' %>
             <input class="buscar" type="button"></input>
           </li>
 
           <li>
             <label>* Destino:</label>
             <input id="destination_city" type="text" />
-            <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden',class: 'i_autocomplit' %>
+            <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden', name: 'lista[destino]' %>
             <input class="buscar" type="button"></input>
 
           </li>
           <div class="clear"></div>
           <li>
-            <%=  link_to 'Generar Manifiesto',{id: 'button_generate_manifests',type: 'submit', method: 'post', remote: 'true'} %>
+            <%=link_to 'Generar Manifiesto',get_transport_guides_cargo_manifests_path, id: 'button_generate_manifests', remote: 'true',method: 'post', class: 'button' %>
             
           </li>
           
@@ -89,13 +89,6 @@
       f3.add( Validate.Presence, { failureMessage: " " } );
 
     $(function() {
-       $("#button_generate_manifests").click(function(){
-      var origin = $("#origin_city_id_hidden").val();
-      var destiny = $("#destination_city_id_hidden").val();
-      $.post("<%get_transport_guides_cargo_manifests_path%>",
-      {"origin": origin, "destiny": destiny},
-      "json");
-    });
 
       //focus en el formulario
       $("form:not(.filter) :input:visible:enabled:first").focus();
@@ -166,7 +159,11 @@
 
 
     <%#*})%>
-   
+    $("#button_generate_manifests").click(function(){
+      var origin = $("#origin_city").val();
+      var destiny =$("#destination_city").val();
+      $.post("",{"origin": origin, "destiny": destiny}, "json");
+    });
     
 
    
