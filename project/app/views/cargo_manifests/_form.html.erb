@@ -160,9 +160,10 @@
 
     <%#*})%>
     $("#button_generate_manifests").click(function(){
-      var origin = $("#origin_city").val();
-      var destiny =$("#destination_city").val();
-      $.post("",{"origin": origin, "destiny": destiny}, "json");
+      var origin = $("#origin_city_id_hidden").val();
+      var destiny =$("#destination_city_id_hidden").val();
+      var href= $(this).attr("href");
+      $(this).attr("href",href + "?origin="+origin + "&destiny="+destiny);
     });
     
 

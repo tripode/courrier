@@ -105,8 +105,9 @@ class CargoManifestsController < ApplicationController
   #no esta funcionando!
   def get_transport_guides
     puts 'entro en get_transport_guides'
-    puts params[:origin].nil?
-    @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",1, 2, 1)
+    origin= params[:origin]
+    destiny=params[:destiny]
+    @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
         respond_to do |format|
               format.js
         end
