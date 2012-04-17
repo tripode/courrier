@@ -38,7 +38,7 @@
 		  <div class="clear"></div>
 		  <li>
 		    <label for="employee">* Funcionario:</label>
-		    <input id="employee" type="text" value="<%= current_user.employee.last_name + " "+ current_user.employee.name %>" style="width: 60%" />
+		    <input id="employee" type="text" value="<%= current_user.employee.last_name + " " + current_user.employee.name %>" style="width: 60%" />
 		    
 			<%= f.hidden_field :employee_id, id: 'employee_id_hidden' %>         
 		  </li>

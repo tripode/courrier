@@ -71,6 +71,7 @@ class RetireNotesController < ApplicationController
     @employees = Employee.find(:all)
     @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
     @retire_note.employee_id=current_user.employee.id
+    @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
     respond_to do |format|
       if @retire_note.save
         format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido guardada..' }
