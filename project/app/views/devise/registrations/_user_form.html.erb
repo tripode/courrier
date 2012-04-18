@@ -36,12 +36,14 @@
 		<div class='span-11'>
 			<%= f.label :roles%>
 			<ul class="field-list">
-			   <% Role.all.each do |role| %>
-			      <li class="left">
-			      	<%= check_box_tag :role_ids, role.id, resource.roles.include?(role), :name => 'user[role_ids][]' %>
-			      	<%= label_tag :role_ids, role.name %>
-			      </li>
-			   <% end %>
+				<div>
+				   <% Role.all.each do |role| %>
+				      <li class="left">
+				      	<%= check_box_tag :role_ids, role.id, resource.roles.include?(role), :name => 'user[role_ids][]' %>
+				      	<%= label_tag :role_ids, role.name %>
+				      </li>
+				   <% end %>
+				</div>
 			</ul>
 		</div>
 	</fieldset>
@@ -61,6 +63,10 @@
 	});
 	//Onfocus para que el cursor este sobre el input email
 	$('#i_username').focus();
+	
+	//validaciones
+		var f1 = new LiveValidation('#i_username', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+     	f1.add( Validate.Presence, { failureMessage: " " } );
 
 </script>
 

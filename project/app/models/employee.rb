@@ -36,11 +36,25 @@ class Employee < ActiveRecord::Base
   
   #
   # This method returns a string with the full name of the employee
-  # receive a length limit as parameter.
+  # receive a length limit as 24 characters.
   #
   def full_name_24_length
     full = "#{self.name} #{self.last_name}"
     full[0,24]
   end
+  #
+  # This method returns a string with the full name of the employee
+  # receive a length limit as parameter.
+  #  
+  def full_name_length(length)
+    
+    full = "#{self.name} #{self.last_name}"
+    
+    if full.length <= length.to_i
+      full
+    else
+      full[0,length.to_i]+"..."
+    end
+  end  
     
 end

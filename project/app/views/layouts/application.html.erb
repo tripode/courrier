@@ -143,6 +143,11 @@
 	                <%= link_to 'Empleado', new_employee_path %>
 	              </li>
 	          <% end %>
+	          <% if can? :manage, Receiver %>
+	          	  <li>
+	                <%= link_to 'Destinatario', new_receiver_path %>
+	              </li>
+	          <% end %>
               <li>
                 <a>Notas</a>
                 <ul>
@@ -185,7 +190,7 @@
             </ul>
           </div>
           <div class='current-user'>
-          	<p><%= "#{current_user.employee.full_name} (#{current_user.username}) "%></p>
+          	<p><%= "#{current_user.employee.full_name_length(20)} (#{current_user.username}) "%></p>
           	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
           	<%= link_to image_tag('config.png'), edit_user_registration_path%>
           </div>

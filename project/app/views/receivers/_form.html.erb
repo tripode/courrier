@@ -6,15 +6,17 @@
 		<%= form_for(@receiver) do |f| %>
 			<div class='span-11'>
 				<ul class="field-list">
-					<li>
-						<%= f.label :receiver_name, '*Nombre y Apellido' %>
-		    			<%= f.text_field :receiver_name, :id => 'i-full-name' %>
-					</li>
-					<div class="clear"></div>
-					<li>
-						<%= f.label :document, 'Nº de documento.' %><br />
-		    			<%= f.text_field :document %>	
-					</li>
+					<div>
+						<li>
+							<%= f.label :receiver_name, '*Nombre y Apellido' %>
+			    			<%= f.text_field :receiver_name, :id => 'i-full-name' %>
+						</li>
+						<div class="clear"></div>
+						<li>
+							<%= f.label :document, 'Nº de documento' %>
+			    			<%= f.text_field :document %>	
+						</li>
+					</div>
 					<div class="clear"></div>
 				</ul>
 			</div>
