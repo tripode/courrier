@@ -4,72 +4,61 @@
 			Destinatario
 		</legend>
 		<%= form_for(@receiver) do |f| %>
-			<div class='span-11'>
-				<ul class="field-list">
-					<div>
-						<li>
-							<%= f.label :receiver_name, '*Nombre y Apellido' %>
-			    			<%= f.text_field :receiver_name, :id => 'i-full-name' %>
-						</li>
-						<div class="clear"></div>
-						<li>
-							<%= f.label :document, 'Nº de documento' %>
-			    			<%= f.text_field :document %>	
-						</li>
-					</div>
-					<div class="clear"></div>
-				</ul>
-			</div>
-			<div class='span-11'>
-				<ul class="field-list">
-					<li>
-						<%= f.label :address, '*Dirección' %>
-		    			<%= f.text_field :address %>	
-					</li>
-					<li>
-						<%= f.label :city_id, 'Ciudad' %>
-						<input id="city" type="text" style="width: 60%" />
-		    			<%= f.hidden_field :city_id, id: 'c_hidden' %>
-					</li>
-				</ul>
-				<div class="clear"></div>
-			</div>
-		</fieldset>
-		<div class="span-24 center last" >
-				<%= f.submit "Guardar" %>
-				<%= link_to 'Limpiar','#', class: 'limpiar button'%>
-				<%= link_to 'Cancelar','#', class: 'button'%>
+
+		<% if @receiver.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@receiver.errors.count, "error") %> prohiben este destinatario de ser guardado:</h2>
+			<ul>
+				<% @employee.errors.full_messages.each do |msg| %>
+				<li>
+					<%= msg %>
+				</li>
+				<% end %>
+			</ul>
 		</div>
+		<% end %>
+		<div class="span-10">
+			<ul class="field-list">
+				<div>
+					<li>
+						<%= f.label :receiver_name, "Nombre y Apellido" %>
+		    			<%= f.text_field :receiver_name %>
+					</li>
+					<div class="clear"></div>
+					<li>
+						<%= f.label :document, "Nº de Documento" %>
+		    			<%= f.text_field :document %>
+					</li>
+				</div>
+			</ul>
+		</div>
+		<div class="span-10">
+			<ul class="field-list">
+				<div>
+					<li>
+						<%= f.label :address, "Dirección" %>
+		    			<%= f.text_field :address %>
+					</li>
+					<div class="clear"></div>
+					<li>
+						<%= f.label :city_id, "Ciudad" %>
+		    			<%= f.number_field :city_id %>
+					</li>
+	            </div>
+			</ul>
+		</div>
+				
+		
+		
+	</fieldset>
+	<div class="span-24 center last" >
+			<% if @receiver.id %>
+				<%= f.submit 'Actualizar' %>
+			<% else %>
+				<%= f.submit 'Guardar' %>
+			<% end %>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','#', class: 'button'%>
+	</div>
 	<% end %>
 </div>
-<script>
-	//this clear all inputs with type text or type number
-	$('.limpiar').click(function() {
-		$('input[type=text]').val("");
-		$('input[type=number]').val("");
-		
-	});
-	//Onfocus para que el cursor este sobre el input email
-	$('#i-full-name').focus();
-</script>
-
-<script>
-	$(function() {
-		var list =[];
-		var i=0;
-		<% @cities.each do |city| %>
-			list[i]={
-			label: "<%= city.name %>",
-			id: <%= city.id %>};
-			i=i+1;
-		<% end %>
-		$( "#city" ).autocomplete({
-			source: list,
-			select: function(event, ui) { 
-				$("#c_hidden").val(ui.item.id); 
-			}
-		});
-	});
-	
-</script>
-
