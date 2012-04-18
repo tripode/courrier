@@ -21,7 +21,7 @@
         </li>
         <li>
           <label>Fecha:</label>
-          <%= f.text_field :created_at, class:'i_fecha', maxlength: 12, size: 12 %>
+          <%= f.text_field :created_at,{value: @cargo_manifest.format_date, class:'i_fecha', maxlength: 12, size: 12 }%>
 
           </li>
           <div class="clear"></div>
@@ -29,78 +29,34 @@
     <%#= f.label :employee_id %>
             <%= f.hidden_field :employee_id %>
           </li>
+        
+          
           <li>
             <label>* Origen: </label>
             <input id="origin_city" type="text" />
-            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden' %>
+            <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden', name: 'lista[origin]' %>
             <input class="buscar" type="button"></input>
           </li>
 
           <li>
             <label>* Destino:</label>
             <input id="destination_city" type="text" />
-            <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden' %>
+            <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden', name: 'lista[destino]' %>
             <input class="buscar" type="button"></input>
 
           </li>
           <div class="clear"></div>
+          <li>
+            <%=link_to 'Generar Manifiesto',get_transport_guides_cargo_manifests_path, id: 'button_generate_manifests', remote: 'true',method: 'post', class: 'button' %>
+            
+          </li>
+          
+          <div class="clear"></div>
           <br/>
           <br/>
           <li>
-            <div class="prepend-1">
-              <fieldset class="span-13 prepend-top">
-                <table  columnClasses="center,center,center,center,center,center,center"
-                        headerClass="center"
-                        rowClasses="odd gradeC" cellpadding="0" cellspacing="0"
-                        border="1" class="tablaLocal display"  bgcolor="white">
-                  <thead>
-                    <tr>
-                      <th>N&#176;</th>
-                      <th>Remitente</th>
-                      <th>Destinatario</th>
-                      <th>Cliente</th>
-
-                      <th><div style="width: 200px;">Producto<span style="color:#0B3861; ">_________</span>  Cantidad <span style="color:#0B3861; ">_</span> Peso</div></th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% @transport_guides.each do |transport_guide| %>
-
-                      <tr>
-                        <td><%= transport_guide.num_guide %></td>
-                        <td><%= transport_guide.remitter_person %></td>
-                        <td><%= transport_guide.destination_person %></td>
-                        <td><%= transport_guide.customer.company_name %></td>
-                        <td>
-                          <table>
-                            <thead>
-
-                            </thead>
-                            <tbody>
-                              <%@transport_guide_details = get_tg_details(transport_guide.id)%>
-                              <% @transport_guide_details.each do |detail| %>
-                                <tr>
-                                  <td><%= detail.product_type.description %></td>
-                                  <td><%= detail.amount %></td>
-                                  <td><%= detail.weight %></td>
-                                </tr>
-                              <%end%>
-                            </tbody>
-
-                          </table>
-                        </td>
-
-                        <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
-                        <td><%= link_to image_tag('borrar2.gif')%></td>
-                      </tr>
-                    <% end %>
-                  </tbody>
-                </table>
-              </fieldset>
-            </div>
-
+            <div id="table_transport_guides"><%=render 'list_transport_guides'%></div>
+                  
           </li>
           <li style="width:100%">
             <label>Total de Guias:</label>
@@ -109,7 +65,7 @@
             <label>Total de Piezas:</label>
             <%= f.text_field :total_products, maxlength: 5, size: 5 %>
 
-            <label> Total de Peso (Kg):</label>
+            <label> Total Peso (Kg):</label>
             <%= f.text_field :total_weight, maxlength: 5, size: 5 %>
           </li>
           <div class="center">
@@ -121,7 +77,17 @@
     <% end %>
 
   </div>
-  <script>
+<script type="text/javascript">
+      var f1 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f1.add( Validate.Presence, { failureMessage: " " } );
+      var f2 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f2.add( Validate.Presence, { failureMessage: " " } );
+      var f3 = new LiveValidation('cargo_manifest_created_at', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f3.add( Validate.Presence, { failureMessage: " " } );
+      var f3 = new LiveValidation('cargo_manifest_manifest_num', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f3.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
+      f3.add( Validate.Presence, { failureMessage: " " } );
+
     $(function() {
 
       //focus en el formulario
@@ -165,7 +131,6 @@
           return true
         }
       })
-      //setea el nombre del empleado en el campo employee
       $("#origin_city").val(name);
     }
     if($("#destination_city_id_hidden").val()!= "") {
@@ -183,6 +148,26 @@
       })
       $("#destination_city").val(name);
     }
+    <%#*$("#button_generate_manifests").click(function(){%>
+      <%#*var origin = $("#origin_city").val();%>
+      <%#*var destiny =$("#destination_city").val();%>
+      <%#*if(origin==null){%>
+        <%#*$("#origin_city").addcClass("LV_invalid_field");%>
+      <%#*}else if(destiny==null){%>
+        <%#*$("#destination_city").addClass("LV_invalid_field");%>
+      <%#*}%>
+
+
+    <%#*})%>
+    $("#button_generate_manifests").click(function(){
+      var origin = $("#origin_city_id_hidden").val();
+      var destiny =$("#destination_city_id_hidden").val();
+      var href= $(this).attr("href");
+      $(this).attr("href",href + "?origin="+origin + "&destiny="+destiny);
+    });
+    
+
+   
 
 
   });

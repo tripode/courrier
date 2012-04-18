@@ -3,7 +3,11 @@ Project::Application.routes.draw do
   
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
-  resources :cargo_manifests
+  resources :cargo_manifests do
+     collection do
+       post 'get_transport_guides'
+    end
+  end
 
   devise_for :users,:controllers => { :registrations => "registrations" } do
     delete "/users/delete/:id" => 'registrations#delete_user', :as => :delete_user

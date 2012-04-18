@@ -40,8 +40,10 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new
   # GET /cargo_manifests/new.json
   def new
+    puts 'entro a new'
     @cargo_manifest = CargoManifest.new
-    @transport_guides= TransportGuide.all
+    @transport_guides= TransportGuide.where(id: 0)
+    @cargo_manifest_detail=CargoManifestDetail.new
 #    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
 
@@ -99,4 +101,17 @@ class CargoManifestsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #no esta funcionando!
+  def get_transport_guides
+    puts 'entro en get_transport_guides'
+    origin= params[:origin]
+    destiny=params[:destiny]
+    @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
+        respond_to do |format|
+              format.js
+        end
+    end
+
+  
 end

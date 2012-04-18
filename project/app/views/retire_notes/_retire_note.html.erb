@@ -28,7 +28,7 @@
 		  
 		  <li>
 		    <label for="customer">* Cliente:</label>
-		    <input id="customer" type="text"  style="width: 60%" />
+		    <input id="customer" type="text" style="width: 60%" class="i_autocomplit"  />
 			<%= f.hidden_field :customer_id, id: 'customer_id_hidden' %>         
 		  </li>
 		  <li>
@@ -38,13 +38,13 @@
 		  <div class="clear"></div>
 		  <li>
 		    <label for="employee">* Funcionario:</label>
-		    <input id="employee" type="text" value="<%= @retire_note.employee.last_name + " " + @retire_note.employee.name %>" style="width: 60%" />
+		    <input id="employee" type="text" value="<%= current_user.employee.last_name + " " + current_user.employee.name %>" style="width: 60%" />
 		    
 			<%= f.hidden_field :employee_id, id: 'employee_id_hidden' %>         
 		  </li>
-		  
+		   <div class="clear"></div>
 		  <li>
-		    <label>* Tipo Servicio:</label>
+		    <label>* Tipo de Servicio:</label>
 		   	<%= f.select :service_type_id, @retire_note.getTipoServicios,id: 'service_type_id'%>
 		  </li>
 		  <br />
@@ -91,13 +91,10 @@
 	<% end %>
 </div>
 <script>
-	//Onfocus para que el cursor este sobre el input numero de retiro
-	$('#number_id').focus();
-	
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
-
+		$('#form_msg').hide();
 	});
 	$("input[class*=i_fecha]").datepicker({
 		altField : '#actualDate',
@@ -130,6 +127,7 @@
 			}
 		});
 		if($("#customer_id_hidden").val()!= "") {
+			
 			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
 			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
 			$("#save_button").val("Actualizar");
@@ -147,7 +145,8 @@
 			$("#customer").val(name);
 		}
 	});
-	
+	//Onfocus para que el cursor este sobre el input numero de retiro
+	$('#number_id').focus();
 
 	
 	

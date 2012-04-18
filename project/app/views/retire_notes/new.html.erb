@@ -1,6 +1,9 @@
 <div id="form_retire_note">
 	<%=render 'retire_note'%>
 </div>
+<div id="form_msg">
+	<label id="notice"> <font color="green"><%= notice %></font> </label>	
+</div>
 <table 
 	columnClasses="center,center,center,center,center,center,center,center,center,center" 
 	headerClass="center"
@@ -44,12 +47,5 @@
 </fieldset>
 <br />
 <br />
-<script charset="utf-8" type="text/javascript">
-  $(document).ready(function() {
-    $('table[class*=tablaIndex]').dataTable({
-      "bScrollCollapse" : true,
-      "sPaginationType" : "full_numbers",
-      "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
-    });
-</script>
+
 

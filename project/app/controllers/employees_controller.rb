@@ -103,10 +103,15 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1.json
   def destroy
     @employee = Employee.find(params[:id])
-    @employee.destroy
+    begin
+      @employee.destroy
+    rescue ActiveRecord::StatementInvalid
+      notice= 'Hubo un error'
+    end
+    
 
     respond_to do |format|
-      format.html { redirect_to new_employee_url }
+      format.html { redirect_to new_employee_url}
       format.json { head :no_content }
     end
   end

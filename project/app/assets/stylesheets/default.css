@@ -123,15 +123,12 @@ fieldset legend {
 #content form {
     /*	font: bold 14px/28px Arial;*/
 }
-/* Sacar el filtro en la tabla*/
-div#tablaLocal_wrapper div.dataTables_filter{
-    display: none !important;
-}
-/*tabla.tablaLocal tbody tr.odd td{
+
+div#tablaLocal_wrapper tabla tbody tr.odd td{
     border-bottom-color: #000000 !important;
     border-bottom-style: solid !important;
     border-bottom-width: medium !important;
-}*/
+}
 #content  fieldset input[type="text"], 
 table input[type="text"], 
 .dataTables_filter input[type="text"], 
@@ -177,13 +174,36 @@ div table input[type="text"],
     color: #000000;
     padding: 0 5px;
 }
-#content table.tablaLocal td table td{
-    font-style: normal;
+/*Pequeña tabla local, se usa en manifiesto de carga*/
+/* Sacar el filtro en la tabla*/
+#content div#tablaLocal_wrapper div.dataTables_filter{
+    display: none !important;
+}
+
+/*las letras de los productos de la guia de transporte*/
+#content table#tablaLocal td table td{
+    font-style: oblique;
     color: #000000;
     font-size: 10px;
     padding: 0 5px;
-   width: 70%;
+    width: 70%;
 }
+/*Tamaño de las letras de toda la tabla*/
+#content table#tablaLocal td{
+    font-style: normal;
+    color: #000000;
+    font-size: 12px;
+
+}
+/*setea los colores de los tr*/
+#content table#tablaLocal tr.even td{ background-color: #ccccff !important;}
+#content table#tablaLocal tr.odd td{background-color: white !important;}
+#content table#tablaLocal th.sorting {
+    background-image: none;
+}
+
+
+
 #content input:focus {
     border: 1px solid #3a4f54 !important;
     background-color: #ccc !important;
@@ -192,6 +212,7 @@ div table input[type="text"],
     border: 1px solid #3a4f54 !important;
     background-color: #ccc !important;
 }
+/*Estilos en la tablas*/
 .dataTables_length, .dataTables_filter, .dataTables_info {
     margin-bottom: 0 !important;
     font-weight: bold !important;
