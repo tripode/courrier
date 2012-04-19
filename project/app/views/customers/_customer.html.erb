@@ -27,11 +27,11 @@
 			<div class="clear"></div>
 			<li>
 				<label>Ruc:</label>
-		    	<%= f.text_field :ruc %>	
+		    	<%= f.text_field :ruc,:maxlength => 10 %>	
 			</li>
 			<li>
 				<label>* Direccion:</label>
-		    	<%= f.text_field :address, id: 'i_address',:minlength => 3, :maxlength => 100, :size=>30 %>	
+		    	<%= f.text_field :address, id: 'i_address',:minlength => 5, :maxlength => 100, :size=>30 %>	
 			</li>
 			<div class="clear"></div>
 			<li>

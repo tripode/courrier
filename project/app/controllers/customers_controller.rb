@@ -41,7 +41,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new
     @customer_types = Customer.find(:all, :conditions => "customer_type_id = 2")
     @customers = Customer.find(:all, :conditions => "customer_type_id = 2")
-    @hello="hello"
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer }
@@ -68,7 +68,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       begin 
          @customer.save
-         @notice="El cliente se guardo correctamente."
+         @notice="El cliente se registro correctamente."
       rescue
          @notice="No se pudo registrar el cliente."
       ensure
@@ -84,9 +84,14 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
 
     respond_to do |format|
-      if @customer.update_attributes(params[:customer])
-        format.html { redirect_to @customer, notice: 'El cliente ha sido actualizado' }
-        format.json { head :no_content }
+      begin 
+         @customer.update_attributes(params[:customer])
+         @notice="El cliente se actualizo correctamente."
+      rescue
+         @notice="No se pudo actualizar el cliente."
+      ensure
+        format.html { redirect_to new_customer_path, notice: @notice }
+        format.json { head :no_content } 
       end
     end
   end
