@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  #For all action controllers a user must be on session
-  before_filter :authenticate_user!
+  #Para tener acceso a cualquier metodo en el controller 
+  # debe haber un user loggeado.
+  before_filter :authenticate_user!, :errase_message
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "No tienes permisos para acceder a esta pagina."
@@ -26,6 +27,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
   
-  
+  #
+  # Este metodo es para eliminar todos los tipos de mensajes.
+  #
+  def errase_message
+    [:notice, :info, :warning, :error].each {|type|
+      if flash[type]
+        flash[type]= nil
+      end
+    }
+  end
   
 end

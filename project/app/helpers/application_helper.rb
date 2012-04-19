@@ -14,8 +14,6 @@ module ApplicationHelper
         messages += "<p class=\"#{type}\">#{flash[type]}</p>"
       end
     }
-    
-    messages
     render(:inline => messages)
   end
   
