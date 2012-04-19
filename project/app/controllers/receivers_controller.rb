@@ -1,4 +1,18 @@
 class ReceiversController < ApplicationController
+  #
+  # Antes de hacer cualquier cosa con este controler,
+  # se verifica si hay permiso para el usuario logueado
+  #
+  before_filter :check_permissions
+  skip_before_filter :require_no_authentication
+  #
+  # Llama a este metodo y verifica los permisos que tiene para Employee
+  #
+  def check_permissions
+    authorize! :create, Customer
+  end
+  before_filter :errase_message
+  
   # GET /receivers
   # GET /receivers.json
   def index
@@ -24,6 +38,7 @@ class ReceiversController < ApplicationController
   # GET /receivers/new
   # GET /receivers/new.json
   def new
+    flash[:notice] = "Testando mensaggens flash"
     @receiver = Receiver.new
     @receivers = Receiver.all
     @cities = City.all
@@ -48,6 +63,7 @@ class ReceiversController < ApplicationController
 
     respond_to do |format|
       if @receiver.save
+        flash[:notice] = "guardado."
         format.html { redirect_to @receiver, notice: 'Receiver was successfully created.' }
         format.json { render json: @receiver, status: :created, location: @receiver }
       else
