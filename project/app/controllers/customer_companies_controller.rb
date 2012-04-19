@@ -39,7 +39,7 @@ class CustomerCompaniesController < ApplicationController
   # GET /customer_companies/new.json
   def new
     @customer_company = Customer.new
-    @customer_companies = Customer.find(:all, :conditions => "customer_type_id = 1")
+    @customer_companies = Customer.find(:all, :conditions => "customer_type_id = 1") # 1=cliente empresa
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @customer_company }
@@ -61,14 +61,17 @@ class CustomerCompaniesController < ApplicationController
   # POST /customer_companies.json
   def create
     @customer_company = Customer.new(params[:customer])
-    @customer_company.customer_type_id = 1
+    @customer_company.customer_type_id =CustomerType.where("type_name='Empresa' ").first.id
+    @notice=""
     respond_to do |format|
-      if @customer_company.save
-        format.html { redirect_to customer_company_path(@customer_company), notice: 'El cliente ha sido correctamente guardado' }
-        format.json { render json: @customer_company, status: :created, location: @customer_company }
-      else
-       format.html { redirect_to customer_company_path(@customer_company), notice: 'No se ha podido guardar el cliente' }
-        format.json { render json: @customer_company.errors, status: :unprocessable_entity }
+      begin 
+         @customer_company.save
+         @notice="El cliente se registro correctamente."
+      rescue
+         @notice="No se pudo registrar el cliente."
+      ensure
+        format.html { redirect_to new_customer_company_path, notice: @notice }
+        format.json { head :no_content } 
       end
     end
   end
@@ -78,12 +81,14 @@ class CustomerCompaniesController < ApplicationController
   def update
     @customer_company = Customer.find(params[:id])
     respond_to do |format|
-      if @customer_company.update_attributes(params[:customer])
-        format.html { redirect_to customer_company_path(@customer_company), notice: 'El cliente ha sido actualizado.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @customer_company.errors, status: :unprocessable_entity }
+      begin 
+        @customer_company.update_attributes(params[:customer])
+         @notice="El cliente se actualizo correctamente."
+      rescue
+         @notice="No se pudo actualizar el cliente."
+      ensure
+        format.html { redirect_to new_customer_company_path, notice: @notice }
+        format.json { head :no_content } 
       end
     end
   end
