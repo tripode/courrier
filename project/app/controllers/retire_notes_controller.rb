@@ -73,13 +73,19 @@ class RetireNotesController < ApplicationController
     @retire_note.employee_id=current_user.employee.id
     @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
     respond_to do |format|
-      if @retire_note.save
-        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido guardada..' }
-        format.json { render json: @retire_note, status: :created, location: @retire_note }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+      begin
+          if @retire_note.save
+            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido guardada..' }
+            format.json { head :no_content}
+          else
+            format.html { redirect_to @retire_note, notice: 'No se pudo guardar la nota de retiro..' }
+            format.json {  head :no_content }
+          end
+      rescue
+         format.html { redirect_to @retire_note, notice: 'Error al intentar guardar la nota de retiro..' }
+         format.json {  head :no_content }
       end
+      
     end
   end
 
@@ -89,12 +95,17 @@ class RetireNotesController < ApplicationController
     @retire_note = RetireNote.find(params[:id])
 
     respond_to do |format|
-      if @retire_note.update_attributes(params[:retire_note])
-        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido actualizada.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+      begin
+          if @retire_note.update_attributes(params[:retire_note])
+            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido actualizada..' }
+            format.json { head :no_content }
+          else
+            format.html { redirect_to new_retire_note_path, notice: 'No se pudo actualizar la nota de retiro..' }
+            format.json {  head :no_content }
+          end
+      rescue
+         format.html { redirect_to new_retire_note_path, notice: 'Error al intentar actualizar la nota de retiro..' }
+         format.json {  head :no_content }
       end
     end
   end
