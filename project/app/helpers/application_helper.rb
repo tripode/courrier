@@ -16,6 +16,7 @@ module ApplicationHelper
     }
     
     messages
+    render(:inline => messages)
   end
   
 end 
