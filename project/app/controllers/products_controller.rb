@@ -40,7 +40,9 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     $product = Product.new
-    $retire_notes = RetireNote.find(:all) #This variable is for the autocomplete
+    #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
+    #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
     $receivers = Receiver.find(:all)
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
@@ -77,6 +79,15 @@ class ProductsController < ApplicationController
             $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
             #Redirijo la pagina hacia el index para ver todos los productos registrados
             @products = Product.where("retire_note_id=?", @retire_note_id)
+            #Cambio de estado la nota de retiro registrado de "En Proceso" a "Procesado"
+            begin
+              @retire_note=RetireNote.find(@retire_note_id)
+              @state_id=RetireNoteState.where("state_name='Procesado'").first.id
+              @retire_note.update_attribute(:retire_note_state_id, @state_id)
+              puts "actualizo"
+            rescue
+              puts "no actualizo"
+            end
             format.html { render action: "index" }
             format.json { render json: @products }
          end

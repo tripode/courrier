@@ -65,7 +65,11 @@
 		  		<label>Descripcion:</label>
 		    	<%= f.text_field :description,style: 'width: 65%',:maxlength => 50,:size=> 30  %>
 		  	</li>
-		  	<div class="clear"></div>
+		  	<li id="retire_note_state">
+		  		<label>Estado:</label>
+		  		<%= f.select :retire_note_state_id, @retire_note.getEstados, prompt: "-- Seleccionar--"%>
+		  	</li>
+		  	<div class="clear"></div> 
 		  	
 		</ul>
 		
@@ -95,7 +99,7 @@
 		showOn : "button"
 
 	});
-	
+	$("#retire_note_state").hide();
     //Autocomplite de clientes
 	$(function() {
 		var list =[];
@@ -118,7 +122,7 @@
 			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
 			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
 			$("#save_button").val("Actualizar");
-			
+			$("#retire_note_state").show();
 			var id=$("#customer_id_hidden").val();
 			var name= ""
 			// busca el empleado dentro de la lista

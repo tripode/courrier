@@ -82,7 +82,7 @@ class CustomersController < ApplicationController
   # PUT /customers/1.json
   def update
     @customer = Customer.find(params[:id])
-
+    @notice=""
     respond_to do |format|
       begin 
          @customer.update_attributes(params[:customer])
@@ -90,7 +90,7 @@ class CustomersController < ApplicationController
       rescue
          @notice="No se pudo actualizar el cliente."
       ensure
-        format.html { redirect_to new_customer_path, notice: @notice }
+        format.html { redirect_to new_customer_path, notice:@notice }
         format.json { head :no_content } 
       end
     end

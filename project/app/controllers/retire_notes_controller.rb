@@ -44,7 +44,8 @@ class RetireNotesController < ApplicationController
     @customer = Customer.new
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @retire_note }

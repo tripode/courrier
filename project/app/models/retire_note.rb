@@ -26,6 +26,9 @@ class RetireNote < ActiveRecord::Base
   def getFuncionarios
     Employee.all.collect{|e|[e.last_name + " " + e.name, e.id]}
   end
+  def getEstados
+    RetireNoteState.all.collect{|r|[r.state_name, r.id]}
+  end
   #formato de fecha
   def format_date
     created_at= Date.today
