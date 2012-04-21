@@ -4,6 +4,7 @@ class RetireNote < ActiveRecord::Base
   belongs_to :service_type
   belongs_to :city
   belongs_to :product_type
+  belongs_to :retire_note_state
  
   has_many :products
   

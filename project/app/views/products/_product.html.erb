@@ -45,38 +45,39 @@
 				<label>Remitente:</label>
 				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%',:maxlength => 50 %>
 			</li>
-			<li>
-				<label>*Codigo de Barra:</label>
-				<%= f.text_field :bar_code, id: 'bar_code',size: '20', :maxlength => 25%>
-			</li>
-			<div class="clear"></div>
+			
 			<li>
 				<label for="receiver">* Destinatario:</label>
 			    <input id="receiver" type="text" size="27" />
 			    <input id="add_receiver" type="button" class="add" ></input>
 				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
 			</li>
+			<div class="clear"></div>
 			<li>
 				<label>Ciudad:</label>
 				<input id="city_id" type="text" size="20" />
 			</li>
-			<div class="clear"></div>
 			<li>
 				<label>Direccion:</label>
 				<input id='address_id' type="text"  size="30" />
 			</li>
+			<div class="clear"></div>
 			<li>
 				<label>Fragil:</label>
 				<%= f.select :fragile,["si","no"],id:'fragile_id', size:'5'%>
 			</li>
-			<div class="clear"></div>
 			<li>
 				<label>Descripcion:</label>
 				<%=f.text_field :description, size:'30',id: 'description_id',:maxlength => 100  %>
 			</li>
+			<div class="clear"></div>
 			<li>
 				<label>Estado:</label>
 				<%=f.select :product_state_id, $product_state.getProductStates,prompt: "-- Seleccionar--", id:'product_state_id' %>
+			</li>
+			<li>
+				<label>*Codigo de Barra:</label>
+				<%= f.text_field :bar_code, id: 'bar_code',size: '20', :maxlength => 25%>
 			</li>
 			<div class="clear"></div>
 		</ul>
@@ -152,8 +153,8 @@
 					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
 				},"json");
 				
-				//coloco el foco para que ingrese el codigo de barra
-				$('#bar_code').focus();
+				//coloco el foco para que ingrese el destinatario
+				$('#receiver').focus();
 			}
 		});
 		if($("#retire_note_id_hidden").val()!= "") {
@@ -200,8 +201,8 @@
 				$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
 			},"json");
 				
-			//coloco el foco para que ingrese el codigo de barra
-			$('#bar_code').focus();
+			//coloco el foco para que ingrese el destinatario
+			$('#receiver').focus();
 			//---------------------------
 		}
 		
@@ -239,7 +240,7 @@
 				function(receiver){
 					$("#city_id").val(receiver.city_name); //seteo el nombre de la ciudad en el campo city_id
 					$("#address_id").val(receiver.address); //seteo el nombre de la direccion en el camco address_id
-					$('#fragile_id').focus();
+					$('#bar_code').focus();
 				},"json");	
 			}
 		});
@@ -257,6 +258,7 @@
 			})
 			//setea el nombre del destinatario en el campo receiver
 			$("#receiver").val(name);
+		
 		}
 	});
 	
