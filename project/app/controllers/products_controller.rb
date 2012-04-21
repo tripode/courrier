@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
     $product = Product.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+    $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
     $receivers = Receiver.find(:all)
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
