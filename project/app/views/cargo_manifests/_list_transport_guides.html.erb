@@ -20,8 +20,9 @@
         </thead>
         <tbody>
           <% @transport_guides.each do |transport_guide| %>
-
+            
             <tr>
+              <%=hidden_field(:transport_guides_list,transport_guide.id, :value=>transport_guide.id)%>
               <td><%= transport_guide.num_guide %></td>
               <%puts transport_guide.num_guide%>
               <td><%= transport_guide.remitter_person %></td>
@@ -52,6 +53,10 @@
           <% end %>
         </tbody>
       </table>
+      <%data=get_totals(@transport_guides)%>
+      <%=hidden_field(:data, :total_weight, :value=> data[1])%>
+      <%=hidden_field(:data, :total_products, :value=> data[2])%>
+      <%=hidden_field(:data, :total_guides, :value=> data[0])%>
 
   </fieldset>
 </div>
@@ -61,6 +66,19 @@
           "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
           "bRetrieve": true
         });
+
+
+    $(function(){
+        var weight=$("#data_total_weight").val();
+        var products=$("#data_total_products").val();
+        var guides=$("#data_total_guides").val();
+        $("#cargo_manifest_total_guides").val(guides);
+        $("#cargo_manifest_total_products").val(products);
+        $("#cargo_manifest_total_weight").val(weight);
+
+    });
+
+
 
     </script>
 

@@ -20,7 +20,7 @@
         <li>
           <label>* N&#176;:</label>
           <%= f.text_field :num_guide, maxlength: 6, size:6 %>
-          <input class="buscar" type="button" ></input>
+          
           <%= f.hidden_field :id, id: "transport_guide_id"%>
         </li>
         <li>
@@ -43,13 +43,13 @@
             <input id="origin_city" type="text" />
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden',class: 'i_autocomplit' %>
     <%#= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
-            <input class="buscar" type="button"></input>
+
           </li>
           <li>
             <label> *Empresa/Cliente:</label>
             <input id="customer" type="text" size="15" />
             <%= f.hidden_field :customer_id, id: 'customer_id_hidden',class: 'i_autocomplit' %>
-            <input class="buscar" type="button"></input>
+             
           </li>
 
           <div class="clear"></div>
@@ -78,14 +78,14 @@
              <input id="destination_city" type="text" class="i_autocomplit"/>
             <%= f.hidden_field :destination_city_id, id: 'destination_city_id_hidden' %>
             <%#= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
-            <input class="buscar" type="button"></input>
+
           </li>
           <li>
             <label>* Empresa:</label>
             <input id="receiver_company" type="text" size="15" class="i_autocomplit" />
             <%= f.hidden_field :receiver_company_id, id: 'receiver_company_id_hidden' %>
     <%#= f.text_field :receiver_company_id, size: 15 %>
-            <input class="buscar" type="button"></input>
+
           </li>
           <div class="clear"></div>
           <li>

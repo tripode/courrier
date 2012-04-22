@@ -17,17 +17,17 @@
       <ul>
         <li>
           <label>* N&#176;:</label>
-          <%= f.text_field :manifest_num, maxlength: 10, size:10  %>
+          <%= f.text_field :manifest_num, maxlength: 10, size:10 %>
         </li>
         <li>
           <label>Fecha:</label>
-          <%= f.text_field :created_at,{value: @cargo_manifest.format_date, class:'i_fecha', maxlength: 12, size: 12 }%>
+          <%= f.text_field :created_at,{value: @cargo_manifest.format_date, class:'i_fecha', maxlength: 12, size: 12}%>
 
           </li>
           <div class="clear"></div>
           <li>
     <%#= f.label :employee_id %>
-            <%= f.hidden_field :employee_id %>
+            <%= f.hidden_field :employee_id, {value: current_user.employee.id} %>
           </li>
         
           
@@ -35,14 +35,14 @@
             <label>* Origen: </label>
             <input id="origin_city" type="text" />
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden', name: 'lista[origin]' %>
-            <input class="buscar" type="button"></input>
+           
           </li>
 
           <li>
             <label>* Destino:</label>
             <input id="destination_city" type="text" />
             <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden', name: 'lista[destino]' %>
-            <input class="buscar" type="button"></input>
+            
 
           </li>
           <div class="clear"></div>
@@ -60,17 +60,21 @@
           </li>
           <li style="width:100%">
             <label>Total de Guias:</label>
-            <%= f.text_field :total_guides, maxlength: 5, size: 5 %>
+            <%= f.text_field :total_guides, maxlength: 5, size: 5, disabled: 'disabled' %>
 
             <label>Total de Piezas:</label>
-            <%= f.text_field :total_products, maxlength: 5, size: 5 %>
+            <%= f.text_field :total_products, maxlength: 5, size: 5, disabled: 'disabled' %>
 
             <label> Total Peso (Kg):</label>
-            <%= f.text_field :total_weight, maxlength: 5, size: 5 %>
+            <%= f.text_field :total_weight, maxlength: 5, size: 5, disabled: 'disabled' %>
           </li>
-          <div class="center">
+          <div class="span-10 center prepend-top las">
             <%= f.submit 'Guardar', id:'save_button' %>
+            <%= link_to 'Limpiar','#', class: 'limpiar button'%>
+            <%= link_to 'Imprimir','#', class: 'button'%>
+              <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
           </div>
+
 
         </ul>
       </fieldset>
@@ -148,22 +152,13 @@
       })
       $("#destination_city").val(name);
     }
-    <%#*$("#button_generate_manifests").click(function(){%>
-      <%#*var origin = $("#origin_city").val();%>
-      <%#*var destiny =$("#destination_city").val();%>
-      <%#*if(origin==null){%>
-        <%#*$("#origin_city").addcClass("LV_invalid_field");%>
-      <%#*}else if(destiny==null){%>
-        <%#*$("#destination_city").addClass("LV_invalid_field");%>
-      <%#*}%>
-
-
-    <%#*})%>
     $("#button_generate_manifests").click(function(){
       var origin = $("#origin_city_id_hidden").val();
       var destiny =$("#destination_city_id_hidden").val();
       var href= $(this).attr("href");
-      $(this).attr("href",href + "?origin="+origin + "&destiny="+destiny);
+      $(this).attr("href",href +
+        "?origin="+origin +
+        "&destiny="+destiny);
     });
     
 

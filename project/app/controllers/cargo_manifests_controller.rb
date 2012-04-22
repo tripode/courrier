@@ -44,7 +44,7 @@ class CargoManifestsController < ApplicationController
     @cargo_manifest = CargoManifest.new
     @transport_guides= TransportGuide.where(id: 0)
     @cargo_manifest_detail=CargoManifestDetail.new
-#    @transport_guide_details= TransportGuideDetail.all
+    #    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
 
     respond_to do |format|
@@ -60,11 +60,35 @@ class CargoManifestsController < ApplicationController
 
   # POST /cargo_manifests
   # POST /cargo_manifests.json
+  # prepara los datos que se ingresan en la interfaz de Crear Manifiesto de Carga
+  # para guardalos en la BD.
+  #
   def create
     @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
+    value=false
+    CargoManifest.transaction do
+     
+      @cargo_manifest.total_weight=params[:data][:total_weight]
+      @cargo_manifest.total_products=params[:data][:total_products]
+      @cargo_manifest.total_guides=params[:data][:total_guides]
+
+      @cargo_manifest.origin_city_id=@@origin
+      @cargo_manifest.destiny_city_id=@@destiny
+      value = @cargo_manifest.save
+      #se cree el detalle
+      cargo_manifest_details= params[:transport_guides_list]
+      cargo_manifest_details.each { |k,v|
+        cargo_manifest_detail = CargoManifestDetail.new
+        cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
+        cargo_manifest_detail.transport_guide_id=v.to_i
+        cargo_manifest_detail.save
+      }
+
+      
+    end
 
     respond_to do |format|
-      if @cargo_manifest.save
+      if value
         format.html { redirect_to @cargo_manifest, notice: 'Cargo manifest was successfully created.' }
         format.json { render json: @cargo_manifest, status: :created, location: @cargo_manifest }
       else
@@ -102,16 +126,28 @@ class CargoManifestsController < ApplicationController
     end
   end
 
-  #no esta funcionando!
+  #POST . Peticion AJAX
+  #
+  #Metodo utilizado para crear la lista de guias de transporte que
+  #se mostrara en el tabla. Crea la lista de acuerdo a las variables Origen y Destino
+  #de la interfaz (Ciudades origen y destino), esta variables se envia por el params
+  #:origin y :destiny
+  #Retorna. Hace un respond a get_transport_guides.js.erb
+  #
   def get_transport_guides
-    puts 'entro en get_transport_guides'
     origin= params[:origin]
     destiny=params[:destiny]
-    @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
-        respond_to do |format|
-              format.js
-        end
+    if origin=='' || destiny==''
+      @transport_guides=TransportGuide.where(id: 0);
+    else
+      @@origin=origin
+      @@destiny=destiny
+      @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
     end
+    respond_to do |format|
+      format.js
+    end
+  end
 
   
 end
