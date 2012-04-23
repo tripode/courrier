@@ -163,17 +163,14 @@
         var f6 = new LiveValidation('expiration_date', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f6.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f5 = new LiveValidation('date', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
-        f5.add( Validate.Presence, { failureMessage: " " } ); 
-        
-        var f6 = new LiveValidation('retire_note_service_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
-        f6.add( Validate.Presence, { failureMessage: " " } ); 
-        
-        var f7 = new LiveValidation('retire_note_product_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f7 = new LiveValidation('retire_note_service_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f7.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f8 = new LiveValidation('retire_note_city_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f8 = new LiveValidation('retire_note_product_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f8.add( Validate.Presence, { failureMessage: " " } ); 
+        
+        var f9 = new LiveValidation('retire_note_city_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        f9.add( Validate.Presence, { failureMessage: " " } ); 
         
        
 </script>

@@ -60,7 +60,12 @@ Project::Application.routes.draw do
     end
   end
   
- 
+  resources :retire_notes do
+    collection do
+      post 'search'
+    end
+  end
+
   
 
   # The priority is based upon order of creation:
