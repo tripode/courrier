@@ -17,9 +17,12 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes
   # GET /retire_notes.json
   def index
-   
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
-
+    @retire_note=RetireNote.new
+    @retire_note.employee_id=current_user.employee.id
+    @customer = Customer.new
+    @customers = Customer.find(:all)
+    @employees = Employee.find(:all)
+    @retire_notes=Array.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @retire_note }
@@ -134,5 +137,41 @@ class RetireNotesController < ApplicationController
   end
   
   
-  
+  # SEARCH post hace una consulta a la base de datos con los parametros que recibe del cliente
+  def search
+    @retire_notes=Array.new
+     @retire_note=RetireNote.new # inicializo para usar metodos de formato de fecha que tiene nota de retiro
+     @customers = Customer.find(:all) #necesito para el autocomplite
+     @sql="1=1"
+     #Obtengo los parametros para la consulta
+     @number=params[:number]
+     @customer_id=params[:customer_id]
+     @register_date=params[:date]
+     @expiration_date=params[:expiration_date]
+     @product_type_id=params[:product_type_id]
+     @state_id=params[:retire_note_state_id]
+       begin
+         if @number!="" then @sql = @sql + " and number=" + @number end
+         if @customer_id!="" then @sql = @sql + " and customer_id=" + @customer_id end
+         if @register_date != "" then @sql= @sql + " and date='" + @register_date +"'" end
+         if @expiration_date != "" then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
+         if @state_id != "" then @sql=@sql + " and retire_note_state_id=" + @state_id end
+         if @product_type_id != "" then @sql=@sql + " and product_type_id=" + @product_type_id end
+         #Genero la consulta
+         
+           if(@sql!="1=1") 
+              @retire_notes=RetireNote.where(@sql)
+           end
+           respond_to do |format|
+            format.html {render action:"index"}# index.html.erb
+            format.json { head :no_content}
+          end
+       rescue Exception
+         respond_to do |format|
+          format.html {redirect_to retire_notes_path}# index.html.erb
+          format.json { head :no_content}
+        end 
+      end
+   end
+        
 end

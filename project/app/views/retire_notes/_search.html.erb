@@ -1,0 +1,117 @@
+<div class="span-24 last">
+	<fieldset>
+		<legend>
+			Buscar Nota de Retiro
+		</legend>
+		<%= form_tag :controller => 'retire_notes', :action=> 'search',:method=> 'post', :class=>'RetireNote'  do |f| %>
+		<ul>
+	      <li>
+		    <label>N°:</label>
+		    <%= text_field_tag :number,"",id: 'number_id', style: 'width: 20%', :maxlength => 7 %>
+		  </li>
+		  <li>
+		    <label>Fecha Registro:</label>
+		    <%= text_field_tag :date,nil,id: 'date',style: 'width: 28%',class:'i_fecha' %>
+		  </li>
+		  <div class="clear"></div>
+		  
+		  <li>
+		    <label for="customer">Cliente:</label>
+		    <input id="customer" type="text" style="width: 60%" class="i_autocomplit"  />
+			<%= hidden_field_tag :customer_id,"",id: 'customer_id_hidden' %>         
+		  </li>
+		  <li>
+		    <label>Fecha Vence:</label>
+		    <%= text_field_tag :expiration_date,nil, id:'expiration_date',style: 'width: 28%', class:'i_fecha'%>
+		  </li>
+		  <div class="clear"></div>
+		  
+		  <br />
+		   <div class="clear"></div>
+	       <div class="subtitle">
+            	<h4>Detalles del Producto</h4>
+          	</div>
+            <div class="clear"></div>
+			<br />
+			<li>
+		    	<label>Tipo Producto:</label>
+		    	<%= select_tag :product_type_id,options_for_select(@retire_note.getTipoProductos), prompt: 'seleccionar'%>
+		  	</li>
+		 
+		  	<li id="retire_note_state">
+		  		<label>Estado:</label>
+		  		<%= select_tag :retire_note_state_id ,options_for_select(@retire_note.getEstados),prompt: 'seleccionar'%>
+		  	</li>
+		  	<div class="clear"></div> 
+		  	
+		</ul>
+		</fieldset>
+	<div class="span-24 center last" >
+			<%= submit_tag 'Buscar'%>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+	</div>
+	<% end %>
+</div>
+<script>
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+		$('#form_msg').hide();
+	});
+	$("input[class*=i_fecha]").datepicker({
+		altField : '#actualDate',
+		appendText : '(dd-mm-yyyy)',
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd-mm-yy',
+		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+		gotoCurrent : true,
+		yearRange : '1900:2012',
+		showOn : "button"
+
+	});
+
+    //Autocomplite de clientes
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @customers.each do |c| %>
+		 	list[i]={
+		 		label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		//if el id del cliente es vacio se carga la lista para mostrar el autocomplete
+		$("#customer").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#customer_id_hidden").val(ui.item.id); 
+			}
+		});
+		if($("#customer_id_hidden").val()!= "") {
+			
+			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
+			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
+			$("#save_button").val("Actualizar");
+			$("#retire_note_state").show();
+			var id=$("#customer_id_hidden").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del empleado en el campo employee
+			$("#customer").val(name);
+		}
+	});
+	//Onfocus para que el cursor este sobre el input numero de retiro
+	$('#number_id').focus();
+	
+	var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
+        f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
+     
+</script>
