@@ -11,7 +11,6 @@ class ReceiversController < ApplicationController
   def check_permissions
     authorize! :create, Customer
   end
-  before_filter :errase_message
   
   # GET /receivers
   # GET /receivers.json
