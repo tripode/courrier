@@ -38,9 +38,11 @@ class ReceiversController < ApplicationController
   # GET /receivers/new
   # GET /receivers/new.json
   def new
-    flash[:notice] = "Testando mensaggens flash"
     @receiver = Receiver.new
+    @receiver.receiver_addresses = Array.new
     @receivers = Receiver.all
+    @receiver_address = ReceiverAddress.new
+    @receiver_addresses = []
     @cities = City.all
     respond_to do |format|
       format.html # new.html.erb
@@ -59,12 +61,20 @@ class ReceiversController < ApplicationController
   # POST /receivers
   # POST /receivers.json
   def create
+    puts "######################################################create"
+    puts @receiver.inspect
+    puts "###################################################### 1"
+    puts params[:receiver].inspect
+    puts "######################################################2"
+    puts params[:receiver[:receiver_address]].inspect
+    puts "###################################################### 3"
+    puts params[:receiver_address].inspect
     @receiver = Receiver.new(params[:receiver])
-
+    
     respond_to do |format|
       if @receiver.save
         flash[:notice] = "guardado."
-        format.html { redirect_to @receiver, notice: 'Receiver was successfully created.' }
+        format.html { redirect_to @receiver, algo: flash[:notice]}
         format.json { render json: @receiver, status: :created, location: @receiver }
       else
         format.html { render action: "new" }
@@ -100,4 +110,25 @@ class ReceiversController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  ##
+  # This method get a ReceiveAddress and put
+  # it in a hash of an existing instance of @receiver
+  #
+  def add_address
+    
+    params[:place]
+    address = ReceiverAddress.new(:label    => params[:place], 
+                                  :city_id  => params[:city_id], 
+                                  :address  => params[:address])
+    @receive.document = "234"
+    @receiver.receiver_addresses << address
+    respond_to do |format|
+      format.html { render @receiver, action ='new'}
+    end
+  end
+  
+  
+  
+  
 end

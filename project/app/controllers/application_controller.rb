@@ -27,15 +27,4 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
   
-  #
-  # Este metodo es para eliminar todos los tipos de mensajes.
-  #
-  def errase_message
-    [:notice, :info, :warning, :error].each {|type|
-      if flash[type]
-        flash[type]= nil
-      end
-    }
-  end
-  
 end
