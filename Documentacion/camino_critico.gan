@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Courier" company="tripodevs" webLink="" view-date="2012-03-30" view-index="0" gantt-divider-location="362" resource-divider-location="301" version="2.0">
+<project name="Courier" company="tripodevs" webLink="" view-date="2012-04-06" view-index="0" gantt-divider-location="491" resource-divider-location="301" version="2.0">
     <description><![CDATA[Proyecto de Ingenieria de Software II]]></description>
     <view zooming-state="default:0" id="gantt-chart"/>
     <view id="resource-table">
@@ -36,6 +36,7 @@
         <task id="2" name="Crear Modelo,Vista,Controlador: Clientes_2" color="#ff0033" meeting="false" start="2012-03-08" duration="2" complete="0" priority="1" expand="true">
             <depend id="21" type="2" difference="0" hardness="Strong"/>
             <depend id="28" type="2" difference="0" hardness="Strong"/>
+            <depend id="51" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="3" name="Crear Modelo: Tipos de Paquete_3" color="#66ff66" meeting="false" start="2012-03-08" duration="6" complete="0" priority="1" expand="true"/>
         <task id="4" name="Crear Modelo: Estado de Paquetes_4" color="#ff0033" meeting="false" start="2012-03-08" duration="6" complete="0" priority="1" expand="true"/>
@@ -45,12 +46,17 @@
         <task id="8" name="Create Model,View,Controller: foreign_company_8" color="#ff0033" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true"/>
         <task id="9" name="Comenzar documento analisis de riegos_9" color="#009999" meeting="false" start="2012-03-10" duration="15" complete="0" priority="1" expand="true"/>
         <task id="10" name="Create Model: service_types_10" color="#ff0033" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="11" name="Create Model,View,Controller: transport_guides_11" color="#66ff66" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="11" name="Create Model,View,Controller: transport_guides_11" color="#66ff66" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true">
+            <depend id="50" type="2" difference="0" hardness="Strong"/>
+            <depend id="52" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="12" name="Create model,view,controller:transport_guide_details_12" color="#66ff66" meeting="false" start="2012-03-10" duration="2" complete="0" priority="1" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="13" name="Crear Model,view,controller: retire_notes_13" color="#ff0033" meeting="false" start="2012-03-10" duration="2" complete="0" priority="1" expand="true">
             <depend id="35" type="2" difference="0" hardness="Strong"/>
+            <depend id="56" type="2" difference="0" hardness="Strong"/>
+            <depend id="58" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="14" name="Create model,view,controller: retire_note_details_14" color="#ff0033" meeting="false" start="2012-03-10" duration="2" complete="0" priority="1" expand="true">
             <depend id="35" type="2" difference="0" hardness="Strong"/>
@@ -61,7 +67,9 @@
         <task id="17" name="Cambiar la vista de employee de ingles a espanol_17" color="#66ff66" meeting="false" start="2012-03-10" duration="1" complete="0" priority="1" expand="true"/>
         <task id="18" name="Linkear el menu a sus respectivas vistas_18" color="#66ff66" meeting="false" start="2012-03-12" duration="1" complete="0" priority="1" expand="true"/>
         <task id="19" name="Crear una maqueta de Hojas de Ruta para mostrar al cliente_19" color="#ff0033" meeting="false" start="2012-03-13" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="20" name="Mejorar la interfaz de employee_20" color="#66ff66" meeting="false" start="2012-03-14" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="20" name="Mejorar la interfaz de employee_20" color="#66ff66" meeting="false" start="2012-03-14" duration="1" complete="0" priority="1" expand="true">
+            <depend id="54" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="21" name="Mejorar la interfaz de customers_21" color="#ff0033" meeting="false" start="2012-03-10" duration="15" complete="0" priority="1" expand="true">
             <depend id="28" type="2" difference="0" hardness="Strong"/>
         </task>
@@ -80,33 +88,96 @@
             <depend id="38" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="27" name="Create model Cities_27" color="#ff0033" meeting="false" start="2012-03-19" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="28" name="Nueva tareaDividir la vista de Clientes en Cliente Individual y Empresa" color="#ff0033" meeting="false" start="2012-03-25" duration="12" complete="0" priority="1" expand="true"/>
+        <task id="28" name="Nueva tareaDividir la vista de Clientes en Cliente Individual y Empresa" color="#ff0033" meeting="false" start="2012-03-25" duration="12" complete="0" priority="1" expand="true">
+            <depend id="51" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="29" name="Crear MVC de Guias de Transporte_29" color="#66ff66" meeting="false" start="2012-03-20" duration="1" complete="0" priority="1" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
+            <depend id="71" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="30" name="Juntar en una interfaz la Guia de Transporte (Cabecera- Detalle)_30" color="#66ff66" meeting="false" start="2012-03-21" duration="6" complete="0" priority="1" expand="true">
             <depend id="31" type="2" difference="0" hardness="Strong"/>
             <depend id="37" type="2" difference="0" hardness="Strong"/>
+            <depend id="52" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="31" name="Aplicar Stylos css a la interfaz Guia de Trasnporte_31" color="#66ff66" meeting="false" start="2012-03-27" duration="9" complete="0" priority="1" expand="true"/>
+        <task id="31" name="Aplicar Stylos css a la interfaz Guia de Trasnporte_31" color="#66ff66" meeting="false" start="2012-03-27" duration="9" complete="0" priority="1" expand="true">
+            <depend id="63" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="32" name="Agregar la documentación en el wiki sobre Metodologías_32" color="#009999" meeting="false" start="2012-03-23" duration="2" complete="0" priority="1" expand="true"/>
         <task id="33" name="Crear MVC Usuarios_33" color="#009999" meeting="false" start="2012-03-23" duration="9" complete="0" priority="1" expand="true">
             <depend id="39" type="2" difference="0" hardness="Strong"/>
+            <depend id="47" type="2" difference="0" hardness="Strong"/>
+            <depend id="53" type="2" difference="0" hardness="Strong"/>
+            <depend id="57" type="2" difference="0" hardness="Strong"/>
+            <depend id="60" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="34" name="Crear Pagina Principal del Sistema_34" color="#66ff66" meeting="false" start="2012-03-25" duration="8" complete="0" priority="1" expand="true"/>
+        <task id="34" name="Crear Pagina Principal del Sistema_34" color="#66ff66" meeting="false" start="2012-03-25" duration="8" complete="0" priority="1" expand="true">
+            <depend id="47" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="35" name="Crear Interfaz Nota de Retiro_35" color="#ff0033" meeting="false" start="2012-03-12" duration="3" complete="0" priority="1" expand="true">
             <depend id="36" type="2" difference="0" hardness="Strong"/>
+            <depend id="68" type="2" difference="0" hardness="Strong"/>
+            <depend id="72" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="36" name="Nota de Retiro- Agregar opcion editar_36" color="#ff0033" meeting="false" start="2012-03-15" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="37" name="Nueva tareaGuia de Transporte: Agregar selectores" color="#66ff66" meeting="false" start="2012-03-27" duration="3" complete="0" priority="1" expand="true"/>
-        <task id="38" name="Actualizar Base de datos_38" color="#ff0033" meeting="false" start="2012-03-20" duration="1" complete="0" priority="1" expand="true"/>
-        <task id="39" name="Loguin: Agregar Permisos_39" color="#8cb6ce" meeting="false" start="2012-04-01" duration="5" complete="0" priority="1" expand="true"/>
+        <task id="37" name="Nueva tareaGuia de Transporte: Agregar selectores" color="#66ff66" meeting="false" start="2012-03-27" duration="3" complete="0" priority="1" expand="true">
+            <depend id="71" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="38" name="Actualizar Base de datos_38" color="#ff0033" meeting="false" start="2012-03-20" duration="1" complete="0" priority="1" expand="true">
+            <depend id="53" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="39" name="Loguin: Agregar Permisos_39" color="#8cb6ce" meeting="false" start="2012-04-01" duration="5" complete="0" priority="1" expand="true">
+            <depend id="55" type="2" difference="0" hardness="Strong"/>
+        </task>
         <task id="40" name="Create Model,View Controller: Receivers_40" color="#8cb6ce" meeting="false" start="2012-04-11" duration="3" complete="0" priority="1" expand="true"/>
         <task id="41" name="Guia de Transporte:Crear Maqueta Manifiesto de Carga_41" color="#ff0000" meeting="false" start="2012-04-04" duration="1" complete="0" priority="1" expand="true">
             <depend id="45" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="45" name="Guia de Trasporte: Crear Interfaz Manifiesto de Carga_45" color="#33ff00" meeting="false" start="2012-04-05" duration="7" complete="0" priority="1" expand="true"/>
-        <task id="46" name="Producto: Crear Interfaz_46" color="#ff0000" meeting="false" start="2012-03-12" duration="3" complete="0" priority="1" expand="true"/>
+        <task id="45" name="Guia de Trasporte: Crear Interfaz Manifiesto de Carga_45" color="#33ff00" meeting="false" start="2012-04-05" duration="7" complete="0" priority="1" expand="true">
+            <depend id="48" type="2" difference="0" hardness="Strong"/>
+            <depend id="49" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="46" name="Producto: Crear Interfaz_46" color="#ff0000" meeting="false" start="2012-03-12" duration="3" complete="0" priority="1" expand="true">
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+            <depend id="66" type="2" difference="0" hardness="Strong"/>
+            <depend id="69" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="47" name="User: Colorcar el user actual en una esquiva de la interfaz_47" color="#8cb6ce" meeting="false" start="2012-04-02" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="48" name="Guia de Tranporte : Agregar AutoComplit a campos_48" color="#66ff00" meeting="false" start="2012-04-12" duration="2" complete="0" priority="1" expand="true"/>
+        <task id="49" name="Guia de Transporte : Tabla para listar todas las guias_49" color="#66ff00" meeting="false" start="2012-04-12" duration="4" complete="0" priority="1" expand="true"/>
+        <task id="50" name="Guia de Transporte : Realizar modificaciones para REST_50" color="#66ff00" meeting="false" start="2012-03-11" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="51" name="Customer: Realizar modificaciones para ajustar a REST_51" color="#ff0000" meeting="false" start="2012-04-04" duration="2" complete="0" priority="1" expand="true"/>
+        <task id="52" name="Guia de Transporte : (reparar) carga de productos_52" color="#66ff00" meeting="false" start="2012-03-27" duration="14" complete="0" priority="1" expand="true"/>
+        <task id="53" name="Roles y Permisos: Generar script para cargar datos en la bd_53" color="#8cb6ce" meeting="false" start="2012-04-01" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="54" name="Interfaz Empleado: conectar validaciones_54" color="#66ff00" meeting="false" start="2012-03-15" duration="7" complete="0" priority="1" expand="true"/>
+        <task id="55" name="Perfiles y Roles: Modificar el user por defecto del device_55" color="#8cb6ce" meeting="false" start="2012-04-06" duration="7" complete="0" priority="1" expand="true"/>
+        <task id="56" name="Modelado de Base de datos: Actualizar la tabla user_56" color="#8cb6ce" meeting="false" start="2012-03-12" duration="7" complete="0" priority="1" expand="true"/>
+        <task id="57" name="User: Cambiar mail por nombre del empleado_57" color="#8cb6ce" meeting="false" start="2012-04-01" duration="2" complete="0" priority="1" expand="true">
+            <depend id="65" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="58" name="Nota de Retiro:Agregar Validaciones a la interfaz_58" color="#ff0000" meeting="false" start="2012-04-09" duration="5" complete="0" priority="1" expand="true">
+            <depend id="70" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="59" name="Modificar sign_in automatico cuando sign_up_59" color="#8cb6ce" meeting="false" start="2012-04-12" duration="2" complete="0" priority="1" expand="true">
+            <depend id="61" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="60" name="User: Permitir eliminar un usuario_60" color="#8cb6ce" meeting="false" start="2012-04-01" duration="2" complete="0" priority="1" expand="true"/>
+        <task id="61" name="User: Permitir editar password el propio usuario_61" color="#8cb6ce" meeting="false" start="2012-04-14" duration="2" complete="0" priority="1" expand="true"/>
+        <task id="62" name="Producto: Permitir registrar todos los productos de la nota de retiro_62" color="#ff0000" meeting="false" start="2012-03-15" duration="5" complete="0" priority="1" expand="true">
+            <depend id="64" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="63" name="Estados de Nota de Retiro: Crear script para cargar la base de datos_63" color="#ff0000" meeting="false" start="2012-04-05" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="64" name="Producto: listar todos los productos guardados_64" color="#ff0000" meeting="false" start="2012-03-20" duration="7" complete="0" priority="1" expand="true">
+            <depend id="65" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="65" name="Producto: Agregar Validaciones_65" color="#ff0000" meeting="false" start="2012-04-03" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="66" name="Product:Agregar Fecha que se registro el producto_66" color="#ff0000" meeting="false" start="2012-03-15" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="67" name="Autocomplete: Generar estilo para el input_67" color="#66ff00" meeting="false" start="2012-04-14" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="68" name="Nota de Retiro: Modificar Interfaz_68" color="#ff0000" meeting="false" start="2012-03-15" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="69" name="Producto: Validar el limite de los campos a ingresar_69" color="#ff0000" meeting="false" start="2012-04-17" duration="1" complete="0" priority="1" expand="true"/>
+        <task id="70" name="Nota de Retiro:Validar la longitud de los campos_70" color="#ff0000" meeting="false" start="2012-04-14" duration="5" complete="0" priority="1" expand="true"/>
+        <task id="71" name="Guia de Trasporte: Remover botones de buscar que no se utilizan_71" color="#66ff00" meeting="false" start="2012-04-19" duration="3" complete="0" priority="1" expand="true"/>
+        <task id="72" name="Nota de Retiro:Cambiar el estado a &quot;Procesado&quot; cuando se registran todos los productos_72" color="#ff0000" meeting="false" start="2012-04-14" duration="5" complete="0" priority="1" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="wildo" function="Default:1" contacts="setwildo31@gmail.com" phone="0985-163420"/>
@@ -122,8 +193,8 @@
         <allocation task-id="9" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="11" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="12" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
-        <allocation task-id="13" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
         <allocation task-id="13" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="13" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
         <allocation task-id="15" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="16" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="17" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
@@ -141,6 +212,20 @@
         <allocation task-id="37" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="39" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="40" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="47" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="48" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="49" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="50" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="52" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="53" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="55" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="57" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="59" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="60" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="61" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="67" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="71" resource-id="1" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <taskdisplaycolumns>
