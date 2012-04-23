@@ -65,9 +65,8 @@ class ReceiversController < ApplicationController
     puts "###################################################### 1"
     puts params[:receiver].inspect
     puts "######################################################2"
-    puts params[:receiver[:receiver_address]].inspect
-    puts "###################################################### 3"
-    puts params[:receiver_address].inspect
+    puts params[:receiver[:receiver_addresses]].inspect
+    
     @receiver = Receiver.new(params[:receiver])
     
     respond_to do |format|
