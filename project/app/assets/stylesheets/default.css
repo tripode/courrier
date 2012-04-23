@@ -229,7 +229,7 @@ div table input[type="text"],
 /* Buttom general de todo el sistema*/
 #content fieldset input[type="submit"],
 #content table input[type="submit"], 
-#content input[type="submit"], #content a.button {
+#content input[type="submit"], #content a.button, button.button{
     background: url(button-grad.png) repeat-x !important;
     color: #fff;
     font-weight: bold;
@@ -458,3 +458,16 @@ p.role-description{
 	padding-top: 20px;
 }
 
+/*
+ * Este css es para el recuadro de mensajes
+ * notice-info-error-warning
+ */
+div.notice-info-error-warning{
+	font-size: 10px;
+	margin-top: 5px;
+	z-index: 0;
+	width: 200px;
+	height: 20px;
+	text-align: center;
+	margin-left: 800px;
+}

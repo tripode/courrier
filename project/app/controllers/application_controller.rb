@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   
   #Para tener acceso a cualquier metodo en el controller 
   # debe haber un user loggeado.
-  before_filter :authenticate_user!, :errase_message
+  before_filter :authenticate_user!
   
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "No tienes permisos para acceder a esta pagina."
@@ -25,17 +25,6 @@ class ApplicationController < ActionController::Base
 #    render :text => message, :status => :method_not_allowed
     flash[:error] = "No tienes permisos para acceder a esta pagina."
     redirect_to root_url
-  end
-  
-  #
-  # Este metodo es para eliminar todos los tipos de mensajes.
-  #
-  def errase_message
-    [:notice, :info, :warning, :error].each {|type|
-      if flash[type]
-        flash[type]= nil
-      end
-    }
   end
   
 end

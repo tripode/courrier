@@ -24,30 +24,42 @@
 						<%= f.label :receiver_name, "Nombre y Apellido" %>
 		    			<%= f.text_field :receiver_name %>
 					</li>
-					<div class="clear"></div>
 					<li>
 						<%= f.label :document, "Nº de Documento" %>
 		    			<%= f.text_field :document %>
-					</li>
+					</li>					
 				</div>
 			</ul>
-		</div>
-		<div class="span-10">
+			<div class="prepend-3 prepend-top subtitle">
+	        	<h4>Direccion</h4>
+	        </div>
 			<ul class="field-list">
 				<div>
 					<li>
-						<%= f.label :address, "Dirección" %>
-		    			<%= f.text_field :address %>
+						<%= label_tag :label, "Lugar" %>
+						<%= text_field_tag(:label,nil, options = {:size => "30", :id => 'place'})%>
+						
 					</li>
-					<div class="clear"></div>
 					<li>
-						<%= f.label :city_id, "Ciudad" %>
-		    			<%= f.number_field :city_id %>
+						<%= label_tag :city, "Ciudad" %>
+						<%= text_field_tag :city, nil, options = {:size => "30", :id => 'city_id'} %>
 					</li>
-	            </div>
+					<li>
+						<%= label_tag :address, "Dirección" %>
+						<%= text_field_tag :address, nil, options = {:size => "30", :id => 'address'} %>
+					</li>
+			    </div>
 			</ul>
+			<div class="prepend-5 center" >
+				<%= link_to 'Agregar Dirección', id: "add_button", class: "button" %>
+			</div>
 		</div>
-				
+		<div id="address" class="prepend-1 span-10 last subtitle">
+			<h4>Direcciones</h4>
+			<%= render :partial => "receiver_addresses/address_table", :locals => {:receiver_addresses => @receiver.receiver_addresses} %>
+		</div>
+		
+		<div class="span"		
 		
 		
 	</fieldset>
@@ -62,3 +74,17 @@
 	</div>
 	<% end %>
 </div>
+
+<script>
+	
+	$("#add_button").click(function(){
+		place = $('#place').val();
+		city_id = $('#city').val();
+		address = $('#address').val();
+	    $.post("<%= add_address_receivers_path %>",
+			{"place": place, "city_id": city_id,"address": address,},
+				function(){
+			},"json");
+	})
+	
+</script>
