@@ -1,6 +1,8 @@
 Project::Application.routes.draw do
   
   
+  resources :receiver_addresses
+
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
   resources :cargo_manifests do
@@ -24,7 +26,11 @@ Project::Application.routes.draw do
 
   resources :products
 
-  resources :receivers
+  resources :receivers do
+    collection do
+      post 'add_address'
+    end
+  end
 
   resources :routing_sheets
 
