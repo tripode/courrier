@@ -159,7 +159,10 @@
                   
 	              <% if can? :manage, RetireNote %>	
 	                  <li>
-	                    <%= link_to 'Nota Retiro', new_retire_note_path %>
+	                    <%= link_to 'Crear Nota Retiro', new_retire_note_path %>
+	                  </li>
+	                  <li>
+	                    <%= link_to 'Buscar Nota Retiro', retire_notes_path %>
 	                  </li>
 	              <% end %>
 	          	  <% if can? :manage, TransportGuide %>

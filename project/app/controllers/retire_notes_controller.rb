@@ -30,9 +30,12 @@ class RetireNotesController < ApplicationController
   # GET /retire_notes/1.json
   def show
     @retire_note = RetireNote.find(params[:id])
+   
+      
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @retire_note }
+      format.json { render json: @retire_note}
+    
     end
   end
 
@@ -44,7 +47,8 @@ class RetireNotesController < ApplicationController
     @customer = Customer.new
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @retire_note }
@@ -73,13 +77,19 @@ class RetireNotesController < ApplicationController
     @retire_note.employee_id=current_user.employee.id
     @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
     respond_to do |format|
-      if @retire_note.save
-        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido guardada..' }
-        format.json { render json: @retire_note, status: :created, location: @retire_note }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+      begin
+          if @retire_note.save
+            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido guardada..' }
+            format.json { head :no_content}
+          else
+            format.html { redirect_to @retire_note, notice: 'No se pudo guardar la nota de retiro..' }
+            format.json {  head :no_content }
+          end
+      rescue
+         format.html { redirect_to @retire_note, notice: 'Error al intentar guardar la nota de retiro..' }
+         format.json {  head :no_content }
       end
+      
     end
   end
 
@@ -89,12 +99,17 @@ class RetireNotesController < ApplicationController
     @retire_note = RetireNote.find(params[:id])
 
     respond_to do |format|
-      if @retire_note.update_attributes(params[:retire_note])
-        format.html { redirect_to @retire_note, notice: 'La nota de retiro ha sido actualizada.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @retire_note.errors, status: :unprocessable_entity }
+      begin
+          if @retire_note.update_attributes(params[:retire_note])
+            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido actualizada..' }
+            format.json { head :no_content }
+          else
+            format.html { redirect_to new_retire_note_path, notice: 'No se pudo actualizar la nota de retiro..' }
+            format.json {  head :no_content }
+          end
+      rescue
+         format.html { redirect_to new_retire_note_path, notice: 'Error al intentar actualizar la nota de retiro..' }
+         format.json {  head :no_content }
       end
     end
   end
@@ -117,6 +132,7 @@ class RetireNotesController < ApplicationController
       end
     end
   end
+  
   
   
 end

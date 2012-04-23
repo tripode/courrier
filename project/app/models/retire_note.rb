@@ -4,6 +4,7 @@ class RetireNote < ActiveRecord::Base
   belongs_to :service_type
   belongs_to :city
   belongs_to :product_type
+  belongs_to :retire_note_state
  
   has_many :products
   
@@ -25,6 +26,9 @@ class RetireNote < ActiveRecord::Base
   end
   def getFuncionarios
     Employee.all.collect{|e|[e.last_name + " " + e.name, e.id]}
+  end
+  def getEstados
+    RetireNoteState.all.collect{|r|[r.state_name, r.id]}
   end
   #formato de fecha
   def format_date
