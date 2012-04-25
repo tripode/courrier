@@ -54,7 +54,7 @@ Project::Application.routes.draw do
   resources :products do
      collection do
        post 'getProductType'
-       post 'getReceiver'
+       post 'getReceiverAddress'
        post 'getCustomer'
        post 'getItem'
     end

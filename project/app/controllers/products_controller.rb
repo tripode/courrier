@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     $receivers = Receiver.find(:all)
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
-    
+    @addresses=Array.new
     $item = 1
       respond_to do |format|
       format.html # new.html.erb
@@ -147,17 +147,20 @@ class ProductsController < ApplicationController
   end
   
   #post
-  #Metodod que retorna el u objecto receiver
-  #Busca el receiver con el id del receiver que se le pasa por parametro
-  def getReceiver
-   @receiver_name=Receiver.where("id=?",params[:id]).first.receiver_name
-   @receiver_address=Receiver.where("id=?",params[:id]).first.address
-   @city_id=Receiver.where("id=?",params[:id]).first.city_id
-   @city_name=City.where("id=?",@city_id).first.name
-   @receiver={name: @receiver_name, address:@receiver_address, city_name:@city_name}
+  #Metodod que retorna un objecto que contiene las direcciones del destinatario
+  #Busca las direcciones con el id del destinatario que se le pasa por parametro
+  def getReceiverAddress
+   
+   @addresses= ReceiverAddress.where("receiver_id=",params[:id]);
+   @selector="<label>Direccion:</label>"+
+              "<select id='product_receiver_address_id'>"+
+              "<option value='1'>Direccion 1</option> "+
+              "<option value='2'>Direccion 2</option>"+
+              "</select>"
+   @html_object={html:@selector}
    respond_to do |format|
          format.html #need for ajax with html datatype 
-         format.json { render json: @receiver }#need for ajax with json datatyp 
+         format.json { render json: @html_object }#need for ajax with json datatyp 
     end
   end
   
