@@ -21,35 +21,35 @@
 	        	<h4>Direccion</h4>
 	        </div>
  
-			    <%= f.fields_for :receiver_addresses do |f2| %> 
 			    	<ul class="field-list">
 						<div>
 							<li>
-								<%= f2.label :label, "Lugar" %>
-								<%= f2.text_field(:label)%>
+								<p>
+									
+								</p>
+								<%= label_tag :place, "Lugar" %>
+								<%= text_field_tag :place, nil, :id => 'i-place'%>
 								
 							</li>
 							<li>
-								<%= f2.label :city, "Ciudad" %>
-								<%= f2.text_field :city_id %>
+								<%= label_tag :city, "City" %>
+								<%= text_field_tag :city, nil, :id => 'i-city'%>
 							</li>
 							<li>
-								<%= f2.label :address, "Dirección" %>
-								<%= f2.text_field :address %>
+								<%= label_tag :address, "Dirección" %>
+								<%= text_field_tag :address, nil, :id => 'i-dirección'%>
 							</li>
 					    </div>
 					</ul>  
-			    <% end %> 
-			
-			
-			
-			
 			<div class="prepend-5 center" >
-				<%= link_to 'Agregar Dirección', id: "add_button", class: "button" %>
+				<%= link_to 'Agregar Dirección', id: "add-button", class: "button" %>
 			</div>
 		</div>
 		<div id="address" class="prepend-1 span-10 last subtitle">
 			<h4>Direcciones</h4>
+			<div id="div-adresses">
+				
+			</div>
 			<%= render :partial => "receiver_addresses/address_table", :locals => {:receiver_addresses => @receiver.receiver_addresses} %>
 		</div>
 		
@@ -71,14 +71,12 @@
 
 <script>
 	
-	$("#add_button").click(function(){
-		place = $('#place').val();
-		city_id = $('#city').val();
-		address = $('#address').val();
-	    $.post("<%= add_address_receivers_path %>",
-			{"place": place, "city_id": city_id,"address": address,},
-				function(){
-			},"json");
+	$("#add-button").click(function(){
+		place = $('#i-place').val();
+		city_id = $('#i-city').val();
+		address = $('#i-address').val();
+	    
+	    
 	})
 	
 </script>
