@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   belongs_to :retire_note
   belongs_to :product_state
   belongs_to :receiver
+  belongs_to :receiver_address
   has_many :routing_sheet_details
   
    validates :retire_note_id, :receiver_id, :remitter, :product_type_id,

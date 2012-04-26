@@ -3,7 +3,7 @@
 		<legend>
 			Buscar Nota de Retiro
 		</legend>
-		<%= form_tag :controller => 'retire_notes', :action=> 'search',:method=> 'post', :class=>'RetireNote'  do |f| %>
+		<%= form_tag action: 'search'  do |f| %>
 		<ul>
 	      <li>
 		    <label>N°:</label>
