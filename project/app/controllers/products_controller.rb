@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
+   
     $product = Product.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
@@ -46,7 +47,8 @@ class ProductsController < ApplicationController
     $receivers = Receiver.find(:all)
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
-    @addresses=Array.new
+    
+    $addresses=ReceiverAddress.find(:all);
     $item = 1
       respond_to do |format|
       format.html # new.html.erb
@@ -151,16 +153,19 @@ class ProductsController < ApplicationController
   #Busca las direcciones con el id del destinatario que se le pasa por parametro
   def getReceiverAddress
    
-   @addresses= ReceiverAddress.where("receiver_id=",params[:id]);
-   @selector="<label>Direccion:</label>"+
-              "<select id='product_receiver_address_id'>"+
-              "<option value='1'>Direccion 1</option> "+
-              "<option value='2'>Direccion 2</option>"+
-              "</select>"
-   @html_object={html:@selector}
+    $addresses= ReceiverAddress.where("receiver_id=?",params[:id]);
+    @a=ReceiverAddress.new
+    @a.id=3
+    @a.address="direccion 3"
+    @b=ReceiverAddress.new
+    @b.id=4
+    @b.address="direccion 4"
+    #$addresses=[{id:@a.id,address:@a.address},{id:@b.id,address:@b.address}]
+    
    respond_to do |format|
          format.html #need for ajax with html datatype 
-         format.json { render json: @html_object }#need for ajax with json datatyp 
+         format.json { render json: $addresses }#need for ajax with json datatyp
+         #format.js 
     end
   end
   
@@ -186,6 +191,16 @@ class ProductsController < ApplicationController
     respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: @objectItem }#need for ajax with json datatyp 
+    end
+  end
+  
+  #post
+  #Metodo que retorna la ciudad correcspondiente a una direccion
+  def getCity
+    @city=City.where("id=?",params[:city_id]).first
+    respond_to do |format|
+      format.html
+      format.json {render json: @city}
     end
   end
 end

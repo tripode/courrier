@@ -57,6 +57,7 @@ Project::Application.routes.draw do
        post 'getReceiverAddress'
        post 'getCustomer'
        post 'getItem'
+       post 'getCity'
     end
   end
   

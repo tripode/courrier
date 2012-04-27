@@ -54,11 +54,8 @@
 			</li>
 			<div class="clear"></div>
 			<li>
-				
-				 <div id="update_receiver_address_div">
-				 	<label>Direccion:</label>
-					<%= f.collection_select :receiver_address_id, @addresses, :id, :label, prompt: 'Seleccionar', id: 'address_id'%>
-				</div>
+				<label>Direccion:</label>
+				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id'%>
 			</li>
 			<li>
 				<label>Ciudad:</label>
@@ -94,8 +91,8 @@
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
-	<% end %>
 	
+	<% end %>
 </div>
 <script>
 	//focus en el formulario
@@ -237,12 +234,21 @@
 				$("#receiver_id_hidden").val(ui.item.id);
 				//se obtiene elid del receiver
 				var receiver_id=ui.item.id;
-				//llamada ajax tipo Post al metodo setReceiverData para setear el id
-				//del receiver, como resultado devuelve un objecto receiver
+				var optionIndex=0;
+				var index=0;
+				//llamada ajax tipo Post al metodo getReceiverAddress para setear el id
+				//del receiver, como resultado devuelve la lista de direcciones del destinatario
 				$.post("<%= getReceiverAddress_products_path %>",
 				{"id": receiver_id},
-				function(html_object){
-					$("#update_receiver_address_div").html(html_object.html);
+				function(addresses){
+					var index=0;
+					$("#product_receiver_address_id option").each(function(){
+						$(this).remove();
+					});
+					$(addresses).each(function(index,value){
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].address+"</option>");
+					});
+					
 					$('#address_id').focus();
 				},"json");	
 			}
@@ -263,6 +269,13 @@
 			$("#receiver").val(name);
 		
 		}
+	});
+	//Cuando cambia la direccion se actualiza el label city
+	$("#product_receiver_address_id").change(function(){
+		$.post("<%= getCity_products_path %>",{"city_id": $(this).val()},
+		function(city){
+			$("#city_id").val(city.name);
+		},"json");
 	});
 	
 	//Validaciones
