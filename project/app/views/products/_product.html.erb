@@ -42,7 +42,7 @@
 			</li>
 			<div class="clear"></div>
 			<li>
-				<label>Remitente:</label>
+				<label>*Remitente:</label>
 				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%',:maxlength => 50 %>
 			</li>
 			
@@ -245,10 +245,11 @@
 					$("#product_receiver_address_id option").each(function(){
 						$(this).remove();
 					});
+					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].address+"</option>");
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label+": "+addresses[index].address+"</option>");
 					});
-					
+
 					$('#address_id').focus();
 				},"json");	
 			}
@@ -272,9 +273,10 @@
 	});
 	//Cuando cambia la direccion se actualiza el label city
 	$("#product_receiver_address_id").change(function(){
-		$.post("<%= getCity_products_path %>",{"city_id": $(this).val()},
+		$.post("<%= getCity_products_path %>",{"address_id": $(this).val()},
 		function(city){
 			$("#city_id").val(city.name);
+			$("#bar_code").focus();
 		},"json");
 	});
 	
@@ -294,5 +296,9 @@
      //Validacion del remitente
 	 var f4 = new LiveValidation('remitter_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f4.add( Validate.Presence, { failureMessage: " " } );
+        
+     //Validacion de las direcciones
+     var f5 = new LiveValidation('product_receiver_address_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f5.add( Validate.Presence, { failureMessage: " " } );
 	
 </script>

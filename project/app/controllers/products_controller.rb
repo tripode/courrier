@@ -17,8 +17,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-   @products = Product.where("retire_note_id=?", 14)
-  puts "entor index"
+   @products = Product.all
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -48,7 +48,7 @@ class ProductsController < ApplicationController
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
     
-    $addresses=ReceiverAddress.find(:all);
+    $addresses=Array.new
     $item = 1
       respond_to do |format|
       format.html # new.html.erb
@@ -154,14 +154,6 @@ class ProductsController < ApplicationController
   def getReceiverAddress
    
     $addresses= ReceiverAddress.where("receiver_id=?",params[:id]);
-    @a=ReceiverAddress.new
-    @a.id=3
-    @a.address="direccion 3"
-    @b=ReceiverAddress.new
-    @b.id=4
-    @b.address="direccion 4"
-    #$addresses=[{id:@a.id,address:@a.address},{id:@b.id,address:@b.address}]
-    
    respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: $addresses }#need for ajax with json datatyp
@@ -197,7 +189,8 @@ class ProductsController < ApplicationController
   #post
   #Metodo que retorna la ciudad correcspondiente a una direccion
   def getCity
-    @city=City.where("id=?",params[:city_id]).first
+    @city_id=ReceiverAddress.where("id=?",params[:address_id]).first.city_id
+    @city=City.where("id=?",@city_id).first
     respond_to do |format|
       format.html
       format.json {render json: @city}

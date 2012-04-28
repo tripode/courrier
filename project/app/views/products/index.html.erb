@@ -1,4 +1,4 @@
-
+<div class="span-24 left">
 
 	<div class="subtitle">
          <h4>Lista de Productos Registrados..</h4>
@@ -15,7 +15,9 @@
 	    <th>Cliente</th>
 	    <th>Destinatario</th>
 	    <th>Ciudad</th>
+	    <th>Lugar</th>
 	    <th>Direccion</th>
+	    
 	  </tr>
 	</thead>
 	<tbody>
@@ -26,19 +28,16 @@
 	  		 product.retire_note.customer.last_name + " " + 
 	  		 product.retire_note.customer.name %></td>
 	  	<td><%= product.receiver.receiver_name%></td>
-	  	<td><%= product.receiver.city.name %></td>
-	  	<td><%= product.receiver.address%></td>
+	  	<td><%= product.receiver_address.city.name %></td>
+	  	<td><%= product.receiver_address.label%></td>
+	  	<td><%= product.receiver_address.address%></td>
 	  </tr>
 	<% end %>
 	</tbody>
 </table>
+</div>
 <script charset="utf-8" type="text/javascript">
-  $(document).ready(function() {
-    $('table[class*=tablaIndex]').dataTable({
-      "bScrollCollapse" : true,
-      "sPaginationType" : "full_numbers",
-      "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
-    });
+  
 </script>
 
 <%= link_to 'Regresar', new_product_path %>
