@@ -28,7 +28,6 @@
 		<div class="subtitle">
             <h4>Registrar Producto</h4>
           </div>
-		
 		<ul>
 			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div> 
 			<li>
@@ -82,11 +81,8 @@
 			</li>
 			<div class="clear"></div>
 		</ul>
-		
-	
 	</fieldset>
 	<div class="span-24 center last" >
-		
 			<%= f.submit 'Guardar', id: 'button_save_id'%>
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>

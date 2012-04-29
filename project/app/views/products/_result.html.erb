@@ -6,6 +6,7 @@
 	border="1" class="tablaIndex display"  bgcolor="white">
 	<thead>
 	  <tr>
+	  	<th>Codigo</th>
 	    <th>Producto</th>
 	    <th>Cliente</th>
 	    <th>Destinatario</th>
@@ -16,8 +17,9 @@
 	  </tr>
 	</thead>
 	<tbody>
-	<% @products.each do |product| %>
+	<% $products.each do |product| %>
 	  <tr>
+	  	<td><%= product.bar_code%></td>
 	  	<td><%= product.product_type.description %></td>
 	  	<td><%= product.retire_note.customer.company_name + " " +
 	  		 product.retire_note.customer.last_name + " " + 
