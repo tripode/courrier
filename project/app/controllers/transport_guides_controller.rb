@@ -144,4 +144,8 @@ class TransportGuidesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def add_detail_product
+    
+  end
 end

@@ -2,27 +2,27 @@
 <html>
   <head>
     <title>Project</title>
-    
+
     <!-- Se anexa los archivos del Blue Print-->
     <%= stylesheet_link_tag "bp/reset" %>
     <%= stylesheet_link_tag "bp/forms" %>
     <%= stylesheet_link_tag "bp/grid" %>
-    <%= stylesheet_link_tag "bp/ie" %> <!-- 		<%= stylesheet_link_tag "bp/print" %> -->
+    <%= stylesheet_link_tag "bp/ie" %> 
     <%= stylesheet_link_tag "bp/typography" %>
     <%= stylesheet_link_tag "bp/screen" %>
 
-    
+
     <%= stylesheet_link_tag "jqueryslidemenu" %>
     <%= stylesheet_link_tag "jquery-ui" %>
     <%= stylesheet_link_tag "demo_table" %>
     <%= stylesheet_link_tag "validate" %>
     <%= javascript_include_tag "jquery"%>
-    <%= javascript_include_tag "jqueryslidemenu"%>
+     <%#= javascript_include_tag "jqueryslidemenu"%>
+    <%= javascript_include_tag "livevalidation_prototype"%>
+    <%= javascript_include_tag "livevalidation_standalone"%>
     <%= javascript_include_tag "jquery.dataTables"%>
-    <%= javascript_include_tag "application" %>
-    <%#= javascript_include_tag "prototype"%>
-    <%#= javascript_include_tag "livepipe"%>
-    <%#= javascript_include_tag "hotkeys"%>
+    <%= javascript_include_tag "application"%>
+   
     <%= stylesheet_link_tag "default" %>
 
     <%= csrf_meta_tags %>
@@ -58,10 +58,10 @@
         $("input[class*=i_autocomplit]").attr({
           'placeholder':'Escriba para buscar...'
         });
-        <%#*function add(a, b) {%>
-          <%#*alert(parseInt(a) + parseInt(b));%>
-        <%#*}%>
-        <%#*Hotkeys.bind("alt+a", add, 3, 4);%>
+<%#*function add(a, b) {%>
+<%#*alert(parseInt(a) + parseInt(b));%>
+<%#*}%>
+<%#*Hotkeys.bind("alt+a", add, 3, 4);%>
 <%#*document.observe('dom:loaded',function(){%>
 <%#*//on page console%>
 <%#*var console_element = $('name-id');%>
@@ -120,100 +120,91 @@
     </script>
   </head>
   <body>
-    
- 
+
+
     <div id="header">
       <div class="navigation">
         <div class="container">
           <div id="myslidemenu" class="jqueryslidemenu">
             <ul>
-              <li>
-                <%= link_to 'Inicio', '../main_page/index' %>
-              </li>
-              <% if can? :manage, Customer %>
-	              <li>
-	                <a>Clientes</a>
-	                <ul>
-	                  <li>
-	                    <%= link_to 'Empresa', new_customer_company_path %>
-	                  </li>
-	                  <li>
-	                    <%= link_to 'Persona', new_customer_path %>
-	                  </li>
-	                </ul>
-	              </li>
-	          <% end %>
-	          <% if can? :manage, Employee %>
-	              <li>
-	                <%= link_to 'Empleado', new_employee_path %>
-	              </li>
-	          <% end %>
-	          <% if can? :manage, Receiver %>
-	          	  <li>
-	                <%= link_to 'Destinatario', new_receiver_path %>
-	              </li>
-	          <% end %>
-              <li>
-                <a>Notas</a>
+              <li><%= link_to 'Inicio', '../main_page/index' %> </li>
+              <li><a href="#">Registros Varios</a>
                 <ul>
-                  
-	              <% if can? :manage, RetireNote %>	
-	                  <li>
-	                    <%= link_to 'Crear Nota Retiro', new_retire_note_path %>
-	                  </li>
-	                  <li>
-	                    <%= link_to 'Buscar Nota Retiro', retire_notes_path %>
-	                  </li>
-	              <% end %>
-	          	  <% if can? :manage, TransportGuide %>
-	                  <li>
-	                    <%= link_to 'Guia de Tranporte', new_transport_guide_path %>
-	                  </li>
-	              <% end %>
-	          	  <% if can? :manage, CargoManifest %>
-	                  <li>
-                      	<%= link_to 'Manifiesto de Carga', new_cargo_manifest_path %>
-                  	  </li>
+                  <% if can? :manage, Customer %>
+                    <li><a href="#">Clientes</a>
+                      <ul>
+                        <li><%= link_to 'Por Empresa', new_customer_company_path %> </li>
+                        <li><%= link_to 'Por Persona', new_customer_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, Receiver %>
+                    <li><%= link_to 'Destinatario', new_receiver_path %></li>
+                  <% end %>
+                  <% if can? :manage, Employee %>
+                    <li><a href="#">Empleados</a>
+                      <ul>
+                        <li><%= link_to 'Crear Empleado', new_employee_path %></li>
+                        <li><%= link_to 'Listar Empleados', employees_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, User %>
+                    <li><%= link_to "Usuarios", new_user_registration_path %></li>
                   <% end %>
                 </ul>
               </li>
-              <% if can? :manage, Product %>
-	              <li>
-	                <a>Producto</a>
-	                <ul>
-	                  <li>
-	                    <%= link_to 'Registrar Producto', new_product_path %>
-	                  </li>
-	                  <li>
-	                    <%= link_to 'Buscar Producto', products_path %>
-	                  </li>
-	                </ul>
-	              </li>
-	          <% end %>
-              <% if can? :manage, RoutingSheet %>
-	              <li>
-	                <a>Hoja de Ruta</a>
-	                <ul>
-	                  <li>
-	                    <%= link_to 'Crear Hoja Ruta', new_routing_sheet_path %>
-	                  </li>
-	                </ul>
-	              </li>
-	          <% end %>
-              <li>
-                <a>Informes</a>
+              <li><a href="#">Notas</a>
+                <ul>
+                  <% if can? :manage, RetireNote %>
+                    <li><a href="#">Nota de Retiro</a>
+                      <ul>
+                        <li><%= link_to 'Crear Nota Retiro', new_retire_note_path %></li>
+                        <li><%= link_to 'Buscar Nota Retiro', retire_notes_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, Product %>
+                    <li><a href="#">Producto</a>
+                      <ul>
+                        <li><%= link_to 'Registrar Producto', new_product_path %></li>
+                        <li><%= link_to 'Buscar Producto', products_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, RoutingSheet %>
+                    <li><a href="#">Hoja de Ruta</a>
+                      <ul>
+                        <li><%= link_to 'Crear Hoja Ruta', new_routing_sheet_path %></li>
+                        <li><%= link_to 'Listar Hojas Ruta', routing_sheets_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, TransportGuide %>
+                    <li><a href="#">Guia de Transporte</a>
+                      <ul>
+                        <li><%= link_to 'Crear Guia de Tranporte', new_transport_guide_path %></li>
+                        <li><%= link_to 'Listar Guia de Tranporte', transport_guides_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if can? :manage, CargoManifest %>
+                    <li><a href="#">Manifiesto de Carga</a>
+                      <ul>
+                        <li><%= link_to 'Crear Manifiesto', new_cargo_manifest_path %></li>
+                        <li><%= link_to 'Listar Manifiestos', cargo_manifests_path %></li>
+                      </ul>
+                    </li>
+                  <% end %>
+                </ul>
               </li>
-              <% if can? :manage, User %>
-	              <li>
-	                <%= link_to "Usuarios", new_user_registration_path %>
-	              </li>
-	          <% end %>
+              <li><a href="#">Informes</a></li>
             </ul>
           </div>
           <div class='current-user'>
-          	<p><%= "#{current_user.employee.full_name_length(8)}(#{current_user.username})  "%></p>
-          	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
-          	<%= link_to image_tag('config.png'), edit_user_registration_path%>
+            <p><%= "#{current_user.employee.full_name_length(8)}(#{current_user.username})  "%></p>
+            <%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
+            <%= link_to image_tag('config.png'), edit_user_registration_path%>
           </div>
         </div>
       </div>

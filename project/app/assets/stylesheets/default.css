@@ -11,6 +11,9 @@ body {
     color: #3a4f54;
     margin: 0 auto;
 }
+#header .navigation .container .jqueryslidemenu ul li ul li{
+    z-index: 9999;
+}
 a {
     color: #e33b06;
 }
@@ -38,6 +41,7 @@ fieldset legend {
     color: #444;
     font-size: 12px;
 }
+
 #content {
     margin-top: 10px;
     background: none repeat scroll 0 0 #FFFFFF;
