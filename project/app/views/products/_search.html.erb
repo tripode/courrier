@@ -1,0 +1,133 @@
+<div class="span-24 left">
+	<fieldset>
+		<legend>
+			Buscar Productos
+		</legend>
+		<%= form_tag({:action => 'search'}, :remote => true) do  %>
+		<ul>
+			<li>
+			    <label for="retire_note">Nota Retiro N°:</label>
+			    <%= text_field_tag :retire_note_number,"" %>
+			  
+			</li>
+			<li>
+			    <label>Cliente:</label>
+			    <input id="customer" type="text" style="width: 60%" class="i_autocomplit"  />
+			    <%= hidden_field_tag :customer_id,"",id: 'customer_id_hidden' %>    
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Tipo de Producto:</label>
+				<%= select_tag :product_type_id, ProductType.get_list_product_types, prompt: "-- Seleccionar--"%>
+				
+			</li>
+			<li>
+				<label>Fecha Registro:</label>
+				<%= text_field_tag :created_at,nil, class:'i_fecha', size: 15, maxlength: 12 %>
+			</li>
+			<div class="clear"></div>
+		</ul>
+		<ul>
+			<li>
+				<label for="receiver"> Destinatario:</label>
+			    <input id="receiver" type="text" size="27" class="i_autocomplit" />
+				<%= hidden_field :receiver_id,"", id: 'receiver_id_hidden' %>
+			</li>
+			
+			<li>
+				<label>Ciudad:</label>
+				 <input id="city" type="text" size="20" class="i_autocomplit" />
+				 <%= hidden_field :city_id,"", id: 'city_id_hidden' %>
+			</li>
+			
+			<div class="clear"></div>
+			
+			<li>
+				<label>Estado:</label>
+				<%=select_tag :product_state_id, $product_state.getProductStates,prompt: "-- Seleccionar--", id:'product_state_id' %>
+			</li>
+			<li>
+				<label>Codigo de Barra:</label>
+				<%= text_field_tag :bar_code,"", id: 'bar_code',size: '20', :maxlength => 25%>
+			</li>
+			<div class="clear"></div>
+		</ul>
+		
+	
+	</fieldset>
+	<div class="span-24 center last" >
+		
+			<%= submit_tag 'Buscar', id: 'button_search_id'%>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+	</div>
+	
+	<% end %>
+</div>
+<script>
+	//focus en el formulario
+    $("form:not(.filter) :input:visible:enabled:first").focus();
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+
+	});
+	
+	 //Autocomplite de clientes
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @customers.each do |c| %>
+		 	list[i]={
+		 		label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		$("#customer").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#customer_id_hidden").val(ui.item.id); 
+			}
+		});
+	});
+	
+	//Autocomplite de destinatarios
+	$(function() {
+		var list =[];
+		var i=0;
+		<% $receivers.each do |receiver| %>
+		 	list[i]={
+		 		label: "<%= receiver.receiver_name %>",
+		 		id: <%= receiver.id %>};
+			i=i+1;
+		<% end %>
+		//receiver autocomplete
+		$("#receiver").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#receiver_id_hidden").val(ui.item.id);
+			}
+		});
+	});
+	
+	//Autocomplite de ciudades
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @cities.each do |city| %>
+		 	list[i]={
+		 		label: "<%= city.name + " " + city.province.name%>",
+		 		id: <%= city.id %>};
+			i=i+1;
+		<% end %>
+		//receiver autocomplete
+		$("#city").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#city_id_hidden").val(ui.item.id);
+			}
+		});
+	});
+
+	
+</script>

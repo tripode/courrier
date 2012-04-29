@@ -139,8 +139,7 @@ class RetireNotesController < ApplicationController
   
   # SEARCH post hace una consulta a la base de datos con los parametros que recibe del cliente
   def search
-    puts " search search search"
-    @retire_notes=Array.new
+     @retire_notes=Array.new
      @retire_note=RetireNote.new # inicializo para usar metodos de formato de fecha que tiene nota de retiro
      @customers = Customer.find(:all) #necesito para el autocomplite
      @sql="1=1"
@@ -164,9 +163,9 @@ class RetireNotesController < ApplicationController
               @retire_notes=RetireNote.where(@sql)
            end
            respond_to do |format|
-            format.html {render action:"index"}# index.html.erb
-            format.json { head :no_content}
-            #format.js
+            #format.html {render action:"index"}# index.html.erb
+            #format.json { head :no_content}
+            format.js
           end
        rescue Exception
          respond_to do |format|

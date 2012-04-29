@@ -18,7 +18,12 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
    @products = Product.all
-
+   @customers=Customer.all
+   @cities=City.all
+   $product=Product.new
+   $product_state=ProductState.new
+   @product_type=ProductType.new
+   $addresses=Array.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -194,6 +199,44 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html
       format.json {render json: @city}
+    end
+  end
+  
+  def search
+    @retire_note_number=params[:retire_note_number]
+    @customer_id=params[:customer_id]
+    @product_type_id=params[:product_type_id]
+    @created_at=params[:created_at]
+    @receiver_id=params[:receiver_id]
+    @city_id=params[:city_id]
+    @product_state_id=[:product_state_id]
+    @bar_code=params[:bar_code]
+    
+    @sql="1=1 "
+    #Si es distinto de 0 es un numero
+    if(@retire_note_number.to_i!=0)then
+      @retire_note_id=RetireNote.where("number=?",@retire_note_number).first.id
+      @sql = @sql + " and retire_note_id=" + @retire_note_id
+    end
+    if(@customer_id!="") then
+      @sql= @sql + " and customer_id=" + @customer_id
+    end
+    if(@product_type_id!="") then
+      @sql = @sql + " and product_type_id=" + @product_type_id
+    end
+    if(@created_at!=nil) then
+      @sql = @sql + " and created_at='" + @created_at + "'"
+    end
+    if(@receiver_id!="") then
+      @sql = @sql + " and receiver_id=" + @receiver_id
+    end
+    if(@city_id!="") then
+      
+    end
+    @products=Product.where("retire_note_id=?",24)
+    puts @retire_note_id
+    respond_to do |format|
+      format.js
     end
   end
 end
