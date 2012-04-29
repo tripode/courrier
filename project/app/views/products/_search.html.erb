@@ -7,7 +7,7 @@
 		<ul>
 			<li>
 			    <label for="retire_note">Nota Retiro N°:</label>
-			    <%= text_field_tag :retire_note_number,"" %>
+			    <%= text_field_tag :retire_note_number,"", id:'retire_note_number' %>
 			  
 			</li>
 			<li>
@@ -18,7 +18,7 @@
 			<div class="clear"></div>
 			<li>
 				<label>Tipo de Producto:</label>
-				<%= select_tag :product_type_id, ProductType.get_list_product_types, prompt: "-- Seleccionar--"%>
+				<%= select_tag :product_type_id, options_from_collection_for_select(ProductType.all,"id","description"), prompt: "-- Seleccionar--"%>
 				
 			</li>
 			<li>
@@ -31,24 +31,16 @@
 			<li>
 				<label for="receiver"> Destinatario:</label>
 			    <input id="receiver" type="text" size="27" class="i_autocomplit" />
-				<%= hidden_field :receiver_id,"", id: 'receiver_id_hidden' %>
-			</li>
-			
-			<li>
-				<label>Ciudad:</label>
-				 <input id="city" type="text" size="20" class="i_autocomplit" />
-				 <%= hidden_field :city_id,"", id: 'city_id_hidden' %>
-			</li>
-			
-			<div class="clear"></div>
-			
-			<li>
-				<label>Estado:</label>
-				<%=select_tag :product_state_id, $product_state.getProductStates,prompt: "-- Seleccionar--", id:'product_state_id' %>
+				<%= hidden_field_tag :receiver_id,"", id: 'receiver_id_hidden' %>
 			</li>
 			<li>
 				<label>Codigo de Barra:</label>
 				<%= text_field_tag :bar_code,"", id: 'bar_code',size: '20', :maxlength => 25%>
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Estado:</label>
+				<%= select_tag :product_state_id, options_from_collection_for_select(ProductState.all,"id","state_name"), prompt: "-- Seleccionar--", id:'product_state_id' %>
 			</li>
 			<div class="clear"></div>
 		</ul>
@@ -110,24 +102,24 @@
 		});
 	});
 	
-	//Autocomplite de ciudades
-	$(function() {
-		var list =[];
-		var i=0;
-		<% @cities.each do |city| %>
-		 	list[i]={
-		 		label: "<%= city.name + " " + city.province.name%>",
-		 		id: <%= city.id %>};
-			i=i+1;
-		<% end %>
-		//receiver autocomplete
-		$("#city").autocomplete({
-			source: list,
-			select: function(event, ui) { 
-				$("#city_id_hidden").val(ui.item.id);
-			}
-		});
-	});
-
+	
+	//Validaciones
+	//Validacion del nro de la nota de retiro
+	 var f1 = new LiveValidation('retire_note_number', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un numero" } );
+      
+    //Validacion del codigo de barra
+     var f2 = new LiveValidation('bar_code', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f2.add( Validate.Numericality, { notANumberMessage: " " } );
+      
+     //Validacion del receiver
+     var f3 = new LiveValidation('receiver', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+       
+        
+     //Validacion del remitente
+	 var f4 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+      
+        
+     
 	
 </script>

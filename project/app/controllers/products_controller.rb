@@ -17,12 +17,11 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-   @products = Product.all
+   $products = Array.new
    @customers=Customer.all
    @cities=City.all
    $product=Product.new
-   $product_state=ProductState.new
-   @product_type=ProductType.new
+   $receivers = Receiver.find(:all)
    $addresses=Array.new
     respond_to do |format|
       format.html # index.html.erb
@@ -46,6 +45,7 @@ class ProductsController < ApplicationController
   def new
    
     $product = Product.new
+    $products=Array.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
     $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
@@ -76,6 +76,7 @@ class ProductsController < ApplicationController
     @amount=RetireNote.where("id=?",@retire_note_id).first.amount
     respond_to do |format|
       if $product.save
+        $products.push($product)
         $product=Product.new
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
@@ -91,12 +92,11 @@ class ProductsController < ApplicationController
               @retire_note=RetireNote.find(@retire_note_id)
               @state_id=RetireNoteState.where("state_name='Procesado'").first.id
               @retire_note.update_attribute(:retire_note_state_id, @state_id)
-              puts "actualizo"
+            
             rescue
-              puts "no actualizo"
             end
-            format.html { render action: "index" }
-            format.json { render json: @products }
+            format.html {  redirect_to  new_product_path}
+            format.json { head :no_content }
          end
         
         $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
@@ -209,32 +209,49 @@ class ProductsController < ApplicationController
     @created_at=params[:created_at]
     @receiver_id=params[:receiver_id]
     @city_id=params[:city_id]
-    @product_state_id=[:product_state_id]
+    @product_state_id=params[:product_state_id]
     @bar_code=params[:bar_code]
     
-    @sql="1=1 "
+    @sql=" 1=1 "
     #Si es distinto de 0 es un numero
     if(@retire_note_number.to_i!=0)then
       @retire_note_id=RetireNote.where("number=?",@retire_note_number).first.id
-      @sql = @sql + " and retire_note_id=" + @retire_note_id
+      @sql = @sql + " and products.retire_note_id=" + @retire_note_id.to_s
     end
-    if(@customer_id!="") then
-      @sql= @sql + " and customer_id=" + @customer_id
-    end
+    #Si se selecciono algun tipo de producto entonces agrego a la consulta
     if(@product_type_id!="") then
-      @sql = @sql + " and product_type_id=" + @product_type_id
+      puts @product_type_id
+      @sql = @sql + " and products.product_type_id=" + @product_type_id.to_s
     end
-    if(@created_at!=nil) then
-      @sql = @sql + " and created_at='" + @created_at + "'"
+    #Si se selecciono algun tipo de estado entonces agrego a la consulta
+    if(@product_state_id!="")then
+      puts @product_state_id
+      @sql = @sql + " and products.product_state_id=" + @product_state_id.to_s
     end
+    #Si se ingreso algun fecha agrego a la consulta
+    if(@created_at!="") then
+      @sql = @sql + " and products.created_at='" + @created_at + "'"
+    end
+     #Si se selecciono algun destinatario agrego a la consulta
     if(@receiver_id!="") then
-      @sql = @sql + " and receiver_id=" + @receiver_id
+     @sql = @sql + " and receiver_id=" + @receiver_id.to_s
     end
-    if(@city_id!="") then
-      
+    #Si hay codigo de barras agrego a la consulta
+    if(@bar_code!="")then
+      @sql = @sql + " and products.bar_code='" + @bar_code.to_s + "'"
     end
-    @products=Product.where("retire_note_id=?",24)
-    puts @retire_note_id
+    #Si hay cliente agrego a la consulta
+    if(@customer_id!="") then
+      $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
+      " inner join customers c on c.id=r.customer_id  where c.id="+@customer_id + " and " + @sql)
+    else
+      if(@sql.to_s.strip! != "1=1") then
+        $products=Product.where(@sql)
+      else
+        $products=Array.new
+      end
+    end
+    
     respond_to do |format|
       format.js
     end
