@@ -11,6 +11,9 @@ body {
     color: #3a4f54;
     margin: 0 auto;
 }
+#header .navigation .container .jqueryslidemenu ul li ul li{
+    z-index: 9999;
+}
 a {
     color: #e33b06;
 }
@@ -32,20 +35,13 @@ fieldset legend {
     background-color: #414141 !important;
 
 }
-#header .navigation {
-    background-color: #414141 ;
-    /*    height: 35px;*/
-    position: fixed;
-    text-align: center;
-    top: 0;
-    width: 100%;
-    z-index: 9;
-}
+
 #footer {
     margin-top: 10px;
     color: #444;
     font-size: 12px;
 }
+
 #content {
     margin-top: 10px;
     background: none repeat scroll 0 0 #FFFFFF;
@@ -74,31 +70,7 @@ fieldset legend {
 .center{
     text-align: center;
 }
-#content ul li.max-width {
-    margin-bottom: 5px;
-    margin-left: 20px;
-    width: 90%;
-    text-align: center !important;
-}
-#content .max-heigth {
-    margin-bottom: 5px;
-    margin-left: 20px;
-    margin-top: 100px;
-    height: 500px;
-    text-align: center !important;
-}
-#content .min-heigth {
-    margin-bottom: 5px;
-    margin-left: 20px;
-    margin-top: 20px;
-    height: 250px;
-    text-align: center !important;
-}
-#content ul li.max-width-right {
-    margin-left: 20px;
-    width: 90%;
-    text-align: right !important;
-}
+
 .clear {
     clear: both;
     height: 0px;
@@ -106,26 +78,9 @@ fieldset legend {
 .hide {
     display: none !important;
 }
-#content form {
-    /*	border:1px solid #888;*/
-    /*	padding: 10px 15px;
-	background-color: #EFEFFB !important;*/
-    /*	min-height:520px;*/
-
-}
-#content form div {
-    float: left;
-}
-#content table {
-    margin: 0 auto;
-
-}
-#content form {
-    /*	font: bold 14px/28px Arial;*/
-}
 
 div#tablaLocal_wrapper tabla tbody tr.odd td{
-    border-bottom-color: #000000 !important;
+/*    border-bottom-color: #000000 !important;*/
     border-bottom-style: solid !important;
     border-bottom-width: medium !important;
 }
@@ -406,6 +361,8 @@ grandes */
     padding-top: 5px;
 }
 
+
+/*CSS DEL MENU*/
 /*
  * this css is for the current user text
  */
@@ -415,10 +372,10 @@ grandes */
 	font-size: 11px;
     color: white;
     display: block;
-    padding: 8px 10px;
+    padding: 6px 6px;
     text-decoration: none;
     text-align: right;
-} 
+}
 
 .navigation .container .current-user p{
 	margin-right: 10px;
@@ -471,3 +428,5 @@ div.notice-info-error-warning{
 	text-align: center;
 	margin-left: 800px;
 }
+
+
