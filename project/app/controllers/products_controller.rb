@@ -17,8 +17,13 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-   @products = Product.where("retire_note_id=?", 14)
-  puts "entor index"
+   @products = Product.all
+   @customers=Customer.all
+   @cities=City.all
+   $product=Product.new
+   $product_state=ProductState.new
+   @product_type=ProductType.new
+   $addresses=Array.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -39,6 +44,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
+   
     $product = Product.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
@@ -47,6 +53,7 @@ class ProductsController < ApplicationController
     $product_state=ProductState.new
     $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
     
+    $addresses=Array.new
     $item = 1
       respond_to do |format|
       format.html # new.html.erb
@@ -147,17 +154,15 @@ class ProductsController < ApplicationController
   end
   
   #post
-  #Metodod que retorna el u objecto receiver
-  #Busca el receiver con el id del receiver que se le pasa por parametro
-  def getReceiver
-   @receiver_name=Receiver.where("id=?",params[:id]).first.receiver_name
-   @receiver_address=Receiver.where("id=?",params[:id]).first.address
-   @city_id=Receiver.where("id=?",params[:id]).first.city_id
-   @city_name=City.where("id=?",@city_id).first.name
-   @receiver={name: @receiver_name, address:@receiver_address, city_name:@city_name}
+  #Metodod que retorna un objecto que contiene las direcciones del destinatario
+  #Busca las direcciones con el id del destinatario que se le pasa por parametro
+  def getReceiverAddress
+   
+    $addresses= ReceiverAddress.where("receiver_id=?",params[:id]);
    respond_to do |format|
          format.html #need for ajax with html datatype 
-         format.json { render json: @receiver }#need for ajax with json datatyp 
+         format.json { render json: $addresses }#need for ajax with json datatyp
+         #format.js 
     end
   end
   
@@ -183,6 +188,55 @@ class ProductsController < ApplicationController
     respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: @objectItem }#need for ajax with json datatyp 
+    end
+  end
+  
+  #post
+  #Metodo que retorna la ciudad correcspondiente a una direccion
+  def getCity
+    @city_id=ReceiverAddress.where("id=?",params[:address_id]).first.city_id
+    @city=City.where("id=?",@city_id).first
+    respond_to do |format|
+      format.html
+      format.json {render json: @city}
+    end
+  end
+  
+  def search
+    @retire_note_number=params[:retire_note_number]
+    @customer_id=params[:customer_id]
+    @product_type_id=params[:product_type_id]
+    @created_at=params[:created_at]
+    @receiver_id=params[:receiver_id]
+    @city_id=params[:city_id]
+    @product_state_id=[:product_state_id]
+    @bar_code=params[:bar_code]
+    
+    @sql="1=1 "
+    #Si es distinto de 0 es un numero
+    if(@retire_note_number.to_i!=0)then
+      @retire_note_id=RetireNote.where("number=?",@retire_note_number).first.id
+      @sql = @sql + " and retire_note_id=" + @retire_note_id
+    end
+    if(@customer_id!="") then
+      @sql= @sql + " and customer_id=" + @customer_id
+    end
+    if(@product_type_id!="") then
+      @sql = @sql + " and product_type_id=" + @product_type_id
+    end
+    if(@created_at!=nil) then
+      @sql = @sql + " and created_at='" + @created_at + "'"
+    end
+    if(@receiver_id!="") then
+      @sql = @sql + " and receiver_id=" + @receiver_id
+    end
+    if(@city_id!="") then
+      
+    end
+    @products=Product.where("retire_note_id=?",24)
+    puts @retire_note_id
+    respond_to do |format|
+      format.js
     end
   end
 end

@@ -42,7 +42,7 @@
 			</li>
 			<div class="clear"></div>
 			<li>
-				<label>Remitente:</label>
+				<label>*Remitente:</label>
 				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%',:maxlength => 50 %>
 			</li>
 			
@@ -54,13 +54,14 @@
 			</li>
 			<div class="clear"></div>
 			<li>
+				<label>Direccion:</label>
+				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id'%>
+			</li>
+			<li>
 				<label>Ciudad:</label>
 				<input id="city_id" type="text" size="20" />
 			</li>
-			<li>
-				<label>Direccion:</label>
-				<input id='address_id' type="text"  size="30" />
-			</li>
+			
 			<div class="clear"></div>
 			<li>
 				<label>Fragil:</label>
@@ -90,8 +91,8 @@
 			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
-	<% end %>
 	
+	<% end %>
 </div>
 <script>
 	//focus en el formulario
@@ -223,7 +224,7 @@
 		<% $receivers.each do |receiver| %>
 		 	list[i]={
 		 		label: "<%= receiver.receiver_name %>",
-		 		id: <%= receiver.id %>, city_id:<%= receiver.city_id %>, address:"<%= receiver.address %>"};
+		 		id: <%= receiver.id %>};
 			i=i+1;
 		<% end %>
 		//receiver autocomplete
@@ -233,14 +234,23 @@
 				$("#receiver_id_hidden").val(ui.item.id);
 				//se obtiene elid del receiver
 				var receiver_id=ui.item.id;
-				//llamada ajax tipo Post al metodo setReceiverData para setear el id
-				//del receiver, como resultado devuelve un objecto receiver
-				$.post("<%= getReceiver_products_path %>",
+				var optionIndex=0;
+				var index=0;
+				//llamada ajax tipo Post al metodo getReceiverAddress para setear el id
+				//del receiver, como resultado devuelve la lista de direcciones del destinatario
+				$.post("<%= getReceiverAddress_products_path %>",
 				{"id": receiver_id},
-				function(receiver){
-					$("#city_id").val(receiver.city_name); //seteo el nombre de la ciudad en el campo city_id
-					$("#address_id").val(receiver.address); //seteo el nombre de la direccion en el camco address_id
-					$('#bar_code').focus();
+				function(addresses){
+					var index=0;
+					$("#product_receiver_address_id option").each(function(){
+						$(this).remove();
+					});
+					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
+					$(addresses).each(function(index,value){
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label+": "+addresses[index].address+"</option>");
+					});
+
+					$('#address_id').focus();
 				},"json");	
 			}
 		});
@@ -261,6 +271,14 @@
 		
 		}
 	});
+	//Cuando cambia la direccion se actualiza el label city
+	$("#product_receiver_address_id").change(function(){
+		$.post("<%= getCity_products_path %>",{"address_id": $(this).val()},
+		function(city){
+			$("#city_id").val(city.name);
+			$("#bar_code").focus();
+		},"json");
+	});
 	
 	//Validaciones
 	//Validacion del nro de la nota de retiro
@@ -276,7 +294,11 @@
         f3.add( Validate.Presence, { failureMessage: " " } );
         
      //Validacion del remitente
-	 var f4 = new LiveValidation('remitter', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+	 var f4 = new LiveValidation('remitter_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f4.add( Validate.Presence, { failureMessage: " " } );
+        
+     //Validacion de las direcciones
+     var f5 = new LiveValidation('product_receiver_address_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f5.add( Validate.Presence, { failureMessage: " " } );
 	
 </script>

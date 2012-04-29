@@ -177,12 +177,25 @@
                   <% end %>
                 </ul>
               </li>
-              <% if can? :manage, RoutingSheet %>
+              <% if can? :manage, Product %>
 	              <li>
-	                <%= link_to 'Hoja de Ruta', routing_sheets_path %>
+	                <a>Producto</a>
 	                <ul>
 	                  <li>
-	                    <%= link_to 'Productos', new_product_path %>
+	                    <%= link_to 'Registrar Producto', new_product_path %>
+	                  </li>
+	                  <li>
+	                    <%= link_to 'Buscar Producto', products_path %>
+	                  </li>
+	                </ul>
+	              </li>
+	          <% end %>
+              <% if can? :manage, RoutingSheet %>
+	              <li>
+	                <a>Hoja de Ruta</a>
+	                <ul>
+	                  <li>
+	                    <%= link_to 'Crear Hoja Ruta', new_routing_sheet_path %>
 	                  </li>
 	                </ul>
 	              </li>
@@ -198,7 +211,7 @@
             </ul>
           </div>
           <div class='current-user'>
-          	<p><%= "#{current_user.employee.full_name_length(20)} (#{current_user.username}) "%></p>
+          	<p><%= "#{current_user.employee.full_name_length(8)}(#{current_user.username})  "%></p>
           	<%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
           	<%= link_to image_tag('config.png'), edit_user_registration_path%>
           </div>
