@@ -6,43 +6,52 @@
 		<%= form_tag({:action => 'search'}, :remote => true) do  %>
 		<ul>
 			<li>
+				<label>Inicio:</label>
+				<%= text_field_tag :inited_at,$product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12, id: 'inited_at' %>
+			</li>
+			<li>
+				<label>Fin:</label>
+				<%= text_field_tag :finished_at,$product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12, id:'finished_at' %>
+			</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<div class="subtitle">
+            <h4>Ingresar datos para la busqueda</h4>
+          </div>
+		
+		<ul>
+			<li>
 			    <label for="retire_note">Nota Retiro N°:</label>
-			    <%= text_field_tag :retire_note_number,"", id:'retire_note_number' %>
+			    <%= text_field_tag :retire_note_number,nil, id:'retire_note_number' %>
 			  
 			</li>
 			<li>
 			    <label>Cliente:</label>
-			    <input id="customer" type="text" style="width: 60%" class="i_autocomplit"  />
-			    <%= hidden_field_tag :customer_id,"",id: 'customer_id_hidden' %>    
+			    <input id="customer"  type="text" style="width: 60%" class="i_autocomplit"  />
+			    <%= hidden_field_tag :customer_id,nil,id: 'customer_id_hidden' %>    
 			</li>
 			<div class="clear"></div>
 			<li>
 				<label>Tipo de Producto:</label>
-				<%= select_tag :product_type_id, options_from_collection_for_select(ProductType.all,"id","description"), prompt: "-- Seleccionar--"%>
-				
+				<%= select_tag :product_type_id, options_from_collection_for_select(ProductType.all,"id","description"), prompt: "-- Todos--"%>
 			</li>
-			<li>
-				<label>Fecha Registro:</label>
-				<%= text_field_tag :created_at,nil, class:'i_fecha', size: 15, maxlength: 12 %>
-			</li>
-			<div class="clear"></div>
-		</ul>
-		<ul>
 			<li>
 				<label for="receiver"> Destinatario:</label>
 			    <input id="receiver" type="text" size="27" class="i_autocomplit" />
-				<%= hidden_field_tag :receiver_id,"", id: 'receiver_id_hidden' %>
+				<%= hidden_field_tag :receiver_id,nil, id: 'receiver_id_hidden' %>
 			</li>
+			<div class="clear"></div>
 			<li>
 				<label>Codigo de Barra:</label>
-				<%= text_field_tag :bar_code,"", id: 'bar_code',size: '20', :maxlength => 25%>
+				<%= text_field_tag :bar_code,nil, id: 'bar_code',size: '20', :maxlength => 25%>
 			</li>
-			<div class="clear"></div>
+			
 			<li>
 				<label>Estado:</label>
-				<%= select_tag :product_state_id, options_from_collection_for_select(ProductState.all,"id","state_name"), prompt: "-- Seleccionar--", id:'product_state_id' %>
+				<%= select_tag :product_state_id, options_from_collection_for_select(ProductState.all,"id","state_name"), prompt: "-- Todos--", id:'product_state_id' %>
 			</li>
-			<div class="clear"></div>
+			
 		</ul>
 		
 	
@@ -62,7 +71,7 @@
 	$('.limpiar').click(function() {
 		$('input[type=text]').val("");
 		$('input[type=number]').val("");
-
+		$('input[type=hidden]').val("");
 	});
 	
 	 //Autocomplite de clientes
@@ -107,7 +116,7 @@
 	//Validacion del nro de la nota de retiro
 	 var f1 = new LiveValidation('retire_note_number', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un numero" } );
-      
+
     //Validacion del codigo de barra
      var f2 = new LiveValidation('bar_code', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f2.add( Validate.Numericality, { notANumberMessage: " " } );
@@ -118,8 +127,12 @@
         
      //Validacion del remitente
 	 var f4 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
-      
-        
      
-	
+     //Validaciones fechas
+     var f5 = new LiveValidation('inited_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f5.add( Validate.Presence, { failureMessage: " " } );
+     var f6 = new LiveValidation('finished_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f6.add( Validate.Presence, { failureMessage: " " } );   
+     
+
 </script>

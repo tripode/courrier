@@ -206,52 +206,65 @@ class ProductsController < ApplicationController
     @retire_note_number=params[:retire_note_number]
     @customer_id=params[:customer_id]
     @product_type_id=params[:product_type_id]
-    @created_at=params[:created_at]
+    @inited_at=params[:inited_at]
+    @finished_at=params[:finished_at]
     @receiver_id=params[:receiver_id]
     @city_id=params[:city_id]
     @product_state_id=params[:product_state_id]
     @bar_code=params[:bar_code]
     
-    @sql=" 1=1 "
-    #Si es distinto de 0 es un numero
-    if(@retire_note_number.to_i!=0)then
-      @retire_note_id=RetireNote.where("number=?",@retire_note_number).first.id
-      @sql = @sql + " and products.retire_note_id=" + @retire_note_id.to_s
-    end
-    #Si se selecciono algun tipo de producto entonces agrego a la consulta
-    if(@product_type_id!="") then
-      puts @product_type_id
-      @sql = @sql + " and products.product_type_id=" + @product_type_id.to_s
-    end
-    #Si se selecciono algun tipo de estado entonces agrego a la consulta
-    if(@product_state_id!="")then
-      puts @product_state_id
-      @sql = @sql + " and products.product_state_id=" + @product_state_id.to_s
-    end
-    #Si se ingreso algun fecha agrego a la consulta
-    if(@created_at!="") then
-      @sql = @sql + " and products.created_at='" + @created_at + "'"
-    end
-     #Si se selecciono algun destinatario agrego a la consulta
-    if(@receiver_id!="") then
-     @sql = @sql + " and receiver_id=" + @receiver_id.to_s
-    end
-    #Si hay codigo de barras agrego a la consulta
-    if(@bar_code!="")then
-      @sql = @sql + " and products.bar_code='" + @bar_code.to_s + "'"
-    end
-    #Si hay cliente agrego a la consulta
-    if(@customer_id!="") then
-      $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
-      " inner join customers c on c.id=r.customer_id  where c.id="+@customer_id + " and " + @sql)
-    else
-      if(@sql.to_s.strip! != "1=1") then
-        $products=Product.where(@sql)
-      else
-        $products=Array.new
-      end
-    end
+   #filtro por las fechas de inicio y fin
+    valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
+    valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
+    if(valid_inited_at != nil && valid_finished_at!= nil) then
+      @sql=" 1=1 "
+      @sql = @sql + " and products.created_at between '" + @inited_at.to_s + "' and '" + @finished_at.to_s + "'"
     
+        
+        #Si es distinto de nil es un numero
+        valid_number=/\d+/.match(@retire_note_number)
+        puts valid_number
+        if(valid_number!= nil) then
+        
+          @retire_note=RetireNote.where("number=?",valid_number.to_s).first
+          if (@retire_note!=nil) then
+            @sql = @sql + " and products.retire_note_id=" + @retire_note.id.to_s
+          end
+        end
+        #Si se selecciono algun tipo de producto entonces agrego a la consulta
+        if(@product_type_id!="") then
+          @sql = @sql + " and products.product_type_id=" + @product_type_id.to_s
+        end
+        #Si se selecciono algun tipo de estado entonces agrego a la consulta
+        valid_product_state_id=/\d+/.match(@product_state_id)
+        if(valid_product_state_id!=nil)then
+          @sql = @sql + " and products.product_state_id=" + valid_product_state_id.to_s
+        end
+        
+         #Si se selecciono algun destinatario agrego a la consulta
+        valid_receiver_id=/\d+/.match(@receiver_id)
+        if(valid_receiver_id!=nil) then
+         @sql = @sql + " and receiver_id=" + valid_receiver_id.to_s
+        end
+        #Si hay codigo de barras agrego a la consulta
+        valid_barcode=/\d+/.match(@bar_code)
+        if(valid_barcode!=nil) then
+          @sql = @sql + " and products.bar_code='" + valid_barcode.to_s + "'"
+        end
+        
+        #Si hay cliente agrego a la consulta
+        valid_customer_id=/\d+/.match(@customer_id)
+        puts valid_customer_id
+        if(valid_customer_id!=nil) then
+          puts "cliente"
+          $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
+          " inner join customers c on c.id=r.customer_id  where c.id="+valid_customer_id.to_s + " and " + @sql)
+        else
+          $products=Product.where(@sql)
+        end  
+    else
+       $products=Array.new
+    end
     respond_to do |format|
       format.js
     end
