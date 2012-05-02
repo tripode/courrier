@@ -5,13 +5,33 @@
         <th>Tipo de Producto</th>
         <th>Cantidad</th>
         <th>Peso</th>
+        <%#*<th><div style="width: 25px"></div></th>%>
         <th><div style="width: 25px"></div></th>
       </tr>
 
     </thead>
     <tbody id="tbDetail">
-    <input type="hidden" id="cant_productos_" value="0"></input>
+      <%@cont=0 %>
+      <%@transport_guide_details.each do |detail|  %>
+        <tr>
+          <td><%=detail.product_type.description%></td>
+          <input type="hidden" name="details[<%=@cont%>][product_type_id]" value="<%=detail.product_type_id%>"></input>
+          <td><%=detail.amount %></td>
+          <input type="hidden" name="details[<%=@cont%>][amount]" value="<%=detail.amount%>"></input>
+          <td><%=detail.weight%></td>
+          <input type="hidden" name="details[<%=@cont%>][weight]" value="<%=detail.weight%>"></input>
+          <input type="hidden" name="details[<%=@cont%>][transport_guide_id]" value=""></input>
+          <%#*<td><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="eliminarFila()"/> </td>%>
+          <td><%= link_to 'Destroy', delete_detail_product_transport_guide_details_path(amount: detail.amount, product_type_id: detail.product_type_id, weight: detail.weight, destroy: @cont), method: 'post' , remote: 'true', onclick: 'eliminarFila()'%></td>
+          <%@cont+=1%>
+      </tr>
+    <%end%>
+    
     </tbody>
 
   </table>
 </div>
+<script type="text/javascript">
+  
+
+</script>

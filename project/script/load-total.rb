@@ -166,7 +166,47 @@ City.transaction do
   City.create(:name => "Coronel Bogado", :province_id => 1)
   City.create(:name => "Cambyreta", :province_id => 1)
 end
+Receiver.transaction do
+  Receiver.create(:receiver_name => "Villalba Teresa",:document=> "3539120")
+  Receiver.create(:receiver_name => "Ocampo Rober",  :document=> "4500632")
+  Receiver.create(:receiver_name => "Monges Karla",  :document=> "3539456")
+  Receiver.create(:receiver_name => "Espinoza Jose", :document=> "3120000")
+  Receiver.create(:receiver_name => "Garcete Sofia", :document=> "4258966")
+end
+ReceiverAddress.transaction do
+  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 1, :receiver_id => 1)
+  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 1)
+  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 2, :receiver_id => 2)
+  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 2)
+  ReceiverAddress.create(:label => "Facultad", :address=> "direccion facultad", :city_id => 3, :receiver_id => 3)
+  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 1, :receiver_id => 3)
+  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 3)
+  ReceiverAddress.create(:label => "Casa 1", :address => "direccion casa 1", :city_id => 1, :receiver_id => 4)
+  ReceiverAddress.create(:label  => "Casa 2", :address => "direccion casa 2", :city_id => 1, :receiver_id => 4)
+  ReceiverAddress.create(:label => "Casa 3", :address => "direccion casa 3", :city_id => 1, :receiver_id => 4)
+end
+RetireNoteState.transaction do
+  RetireNoteState.create(:state_name => "Procesado")
+  RetireNoteState.create(:state_name => "En Proceso")
+  RetireNoteState.create(:state_name => "Perdido")
+  RetireNoteState.create(:state_name => "Cancelado")
+end
+Role.transaction do
 
+    Role.create(:name=> 'Administrator')
+    Role.create(:name=> 'Deliver')
+    Role.create(:name=> 'Secretary')
+
+end
+User.transaction do
+
+    User.create(:username     => 'admin',
+                :email        => 'admin@admin.com',
+                :password     => 'pass',
+                :employee_id  => Employee.first.id,
+                :role_ids     => Role.where(:name => 'Administrator').first.id
+               )
+end
 #si van a crear otra tabla, aca datos agreguenle aca y creen un archivo
 #llamado load_xxxx.rb xxxx es el nombre del modelado que crearon
 #asi no borramos todos los datos y volvemos a correr load-total y solo corremos

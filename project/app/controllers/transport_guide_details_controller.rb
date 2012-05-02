@@ -16,71 +16,66 @@ class TransportGuideDetailsController < ApplicationController
   
   
   def index
- #  puts "Index Transport guide details"
-#     @transport_guide_detail = TransportGuideDetail.new
-#
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.json { render json: @transport_guide_detail}
-#    end
+
   end
   def show
     
   end
 
   def new
-#     puts "new Transport guide details"
-#    @transport_guide_detail = TransportGuideDetail.new
-#
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.json { render json: @transport_guide_detail}
-#    end
+
   end
 
   def create
-#    puts "create Transport guide details"
-#    # @transport_guide = TransportGuide.new(params[:transport_guide])
-#
-#   # value = @transport_guide.save
-#   cont =0;
-#    params[:lista].each do |k,v|
-#      puts k
-#      puts v
-#      array = Array.new
-#      array =k.split(', ')
-#      puts array[1];
-#      @transport_guide_detail =TransportGuideDetail.new(
-#          "product_type_id"=>v,
-#          "amount"=>v,
-#          "weight" =>v,
-#          "transport_guide_id"=>7
-#      )
-#      t.integer :transport_guide_id, :null=>false
-#      t.integer :amount
-#      t.integer :product_type_id, :null=>false
-#      #en kilogramos
-#      t.decimal :weight
-#      @transport_guide_detail.save
-#      cont+=1
-#    end
-#    puts cont
- 
 
   end
 
+  #delete
   def destroy
-#    @transport_guide_details = TransportGuideDetail.find(params[:id])
-#    @transport_guide = TransportGuide.find(@transport_guide_details.transport_guide_id)
-#
-#    @transport_guide_details.destroy
-#
-#    respond_to do |format|
-#      format.html { redirect_to edit_transport_guide_url(@transport_guide) }
-#   #    format.js
-#     format.json { head :no_content }
-#   end
+
   end
+
+  #post
+  def delete_detail_product
+    cont = 0
+    index=0
+    tgd=@@transport_guide_details;
+    @@transport_guide_details=Array.new
+    tgd.each do |detail|
+      
+      if(params[:destroy].to_i!= cont)
+        puts detail.product_type.description
+        @@transport_guide_details.insert(index, detail)
+        index+=1
+        
+      end
+      cont+=1
+    end  
+    @transport_guide_details=@@transport_guide_details
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  @@index_product=0
+  #  @@transport_guide_details=Array.new
+  #post
+  def add_detail_product
+    puts "entro en add_Detail_product"
+
+    @transport_guide_detail=TransportGuideDetail.new
+    @transport_guide_detail.amount=params[:amount]
+    @transport_guide_detail.weight=params[:weight]
+    @transport_guide_detail.product_type_id=params[:product_type_id]
+
+    @@transport_guide_details=Array.new if params[:cant_product].to_i==0
+    @@transport_guide_details.insert(params[:cant_product].to_i, @transport_guide_detail)
+   
+    @transport_guide_details=@@transport_guide_details
+    respond_to do |format|
+      format.js
+    end
+
+  end
+
 end

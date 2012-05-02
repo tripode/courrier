@@ -18,8 +18,8 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides
   # GET /transport_guides.json
   def index
-    @transport_guides = TransportGuide.find(:all, :conditions=> "created_at between current_date-10 and current_date")
-
+#    @transport_guides = TransportGuide.find(:all, :conditions=> "created_at between current_date-10 and current_date")
+    @transport_guides= TransportGuide.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @transport_guides }
@@ -40,6 +40,7 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides/new
   # GET /transport_guides/new.json
   def new
+
     @cities = City.find(:all)
     @customers = Customer.find(:all)
     @transport_guide = TransportGuide.new
@@ -47,7 +48,7 @@ class TransportGuidesController < ApplicationController
 #    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
     #mala practica de programación pero lo hago para el metodo js agregarFila_Arreglo
     #no me tire error en el each vere como puedo depurar luego
-    @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
+    @transport_guide_details= Array.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -78,9 +79,9 @@ class TransportGuidesController < ApplicationController
     TransportGuide.transaction do
       @transport_guide = TransportGuide.new(params[:transport_guide])
       value=@transport_guide.save
-      params[:lista].each do |k,v|
-        puts k, ' = ', v
+      params[:details].each do |k,v|
         v[:transport_guide_id] =@transport_guide.id
+        puts v
         @transport_guide_detail =TransportGuideDetail.new(v)
         @transport_guide_detail.save
   
@@ -89,7 +90,7 @@ class TransportGuidesController < ApplicationController
 
     respond_to do |format|
       if value
-        format.html { redirect_to @transport_guide, notice: 'Transport guide was successfully created.' }
+        format.html { redirect_to @transport_guide, notice: 'La guia de Transporte fue existosamente creada.' }
         format.json { render json: @transport_guide, status: :created, location: @transport_guide }
       else
         format.html { render action: "new" }
@@ -145,7 +146,5 @@ class TransportGuidesController < ApplicationController
     end
   end
 
-  def add_detail_product
-    
-  end
+
 end

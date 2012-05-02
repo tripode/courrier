@@ -6,8 +6,8 @@ Project::Application.routes.draw do
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
   resources :cargo_manifests do
-     collection do
-       post 'get_transport_guides'
+    collection do
+      post 'get_transport_guides'
     end
   end
 
@@ -20,7 +20,16 @@ Project::Application.routes.draw do
 
   resources :routing_sheet_details
 
-  resources :transport_guide_details
+  resources :transport_guide_details do
+    member do
+     
+    end
+    collection do
+      post 'add_detail_product'
+      post 'delete_detail_product'
+       
+    end
+  end
 
   resources :transport_guides
 
@@ -52,13 +61,13 @@ Project::Application.routes.draw do
   devise_for :users
 
   resources :products do
-     collection do
-       post 'getProductType'
-       post 'getReceiverAddress'
-       post 'getCustomer'
-       post 'getItem'
-       post 'getCity'
-       post 'search'
+    collection do
+      post 'getProductType'
+      post 'getReceiverAddress'
+      post 'getCustomer'
+      post 'getItem'
+      post 'getCity'
+      post 'search'
     end
   end
   
@@ -119,7 +128,7 @@ Project::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'main_page#index'
+  root :to => 'main_page#index'
 
   # See how all your routes lay out with "rake routes"
 

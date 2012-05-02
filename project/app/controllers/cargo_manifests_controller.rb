@@ -40,7 +40,7 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new
   # GET /cargo_manifests/new.json
   def new
-    puts 'entro a new'
+
     @cargo_manifest = CargoManifest.new
     @transport_guides= TransportGuide.where(id: 0)
     @cargo_manifest_detail=CargoManifestDetail.new
@@ -49,7 +49,7 @@ class CargoManifestsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @cargo_manifest }
+      format.json { render json: @cargo_manifest}
     end
   end
 
@@ -64,38 +64,40 @@ class CargoManifestsController < ApplicationController
   # para guardalos en la BD.
   #
   def create
-    @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
-    value=false
-    CargoManifest.transaction do
+    begin
+
+      @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
+      CargoManifest.transaction do
      
-      @cargo_manifest.total_weight=params[:data][:total_weight]
-      @cargo_manifest.total_products=params[:data][:total_products]
-      @cargo_manifest.total_guides=params[:data][:total_guides]
+        @cargo_manifest.total_weight=params[:data][:total_weight]
+        @cargo_manifest.total_products=params[:data][:total_products]
+        @cargo_manifest.total_guides=params[:data][:total_guides]
 
-      @cargo_manifest.origin_city_id=@@origin
-      @cargo_manifest.destiny_city_id=@@destiny
-      value = @cargo_manifest.save
-      #se cree el detalle
-      cargo_manifest_details= params[:transport_guides_list]
-      cargo_manifest_details.each { |k,v|
-        cargo_manifest_detail = CargoManifestDetail.new
-        cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
-        cargo_manifest_detail.transport_guide_id=v.to_i
-        cargo_manifest_detail.save
-      }
-
-      
-    end
-
-    respond_to do |format|
-      if value
-        format.html { redirect_to @cargo_manifest, notice: 'Cargo manifest was successfully created.' }
-        format.json { render json: @cargo_manifest, status: :created, location: @cargo_manifest }
-      else
-        format.html { render action: "new" }
+        @cargo_manifest.origin_city_id=@@origin
+        @cargo_manifest.destiny_city_id=@@destiny
+        @cargo_manifest.save
+        #se cree el detalle
+        cargo_manifest_details= params[:transport_guides_list]
+        cargo_manifest_details.each { |k,v|
+          cargo_manifest_detail = CargoManifestDetail.new
+          cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
+          cargo_manifest_detail.transport_guide_id=v.to_i
+          cargo_manifest_detail.save
+        }      
+      end
+      respond_to do |format|
+        format.html { render new_cargo_manifest_path, flash[:msg]= "Guardado Correctamente!"}
+        format.json { head :no_content}
+#        format.json { render json: @msg}
+      end
+    rescue
+      respond_to do |format|
+        format.html { redirect_to new_cargo_manifest_path,flash[:msg]= "Error al guardar!"}
         format.json { render json: @cargo_manifest.errors, status: :unprocessable_entity }
       end
+
     end
+  
   end
 
   # PUT /cargo_manifests/1

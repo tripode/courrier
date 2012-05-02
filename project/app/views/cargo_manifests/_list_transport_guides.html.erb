@@ -1,4 +1,4 @@
-<%puts 'entro en la lista'%>
+
 <div class="prepend-1">
 
   <fieldset class="span-13 prepend-top">
@@ -24,7 +24,6 @@
             <tr>
               <%=hidden_field(:transport_guides_list,transport_guide.id, :value=>transport_guide.id)%>
               <td><%= transport_guide.num_guide %></td>
-              <%puts transport_guide.num_guide%>
               <td><%= transport_guide.remitter_person %></td>
               <td><%= transport_guide.destination_person %></td>
               <td><%= transport_guide.customer.company_name %></td>

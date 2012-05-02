@@ -2,7 +2,19 @@
 ##########Estructura de Sitio CSSS################################
 ##################################################################*/
 
-
+/*#####################################
+##############Colores Usados###########
+#######################################*/
+/*
+	Background: #c0c0c0
+	letras del body: #3a4f54 
+	Background de fieldset #EFEFFB
+	border del fieldset: #0B3861
+	Background del fieldset legend: #ffffff
+	letras del fieldeset legend #222
+	header background-color: #414141 
+	foot color: #444;
+*/
 /*################################################################
 #Cambios Generales en los tag del Sitio###########################
 ##################################################################*/
@@ -209,6 +221,7 @@ intermedios de las intefaces grandes */
 }
 
 /*Botones class ADD. Agrega campos a una tabla*/
+#content  fieldset a.add,
 #content  fieldset input.add {
     padding-left:16px !important;
     background:url(add.png) no-repeat !important;
