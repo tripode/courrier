@@ -9,6 +9,7 @@
 			<th>Cliente</th>
 			<th>Producto</th>
 			<th>Cantidad</th>
+			<th>Registrado</th>
 			<th>Ciudad</th>
 			<th>Estado</th>
 			<th>Fecha Registro</th>
@@ -24,6 +25,7 @@
 			<td><%= if note.customer_id != nil then note.customer.company_name + " " + note.customer.last_name + " " + note.customer.name end %></td>
 			<td><%= if note.product_type.id != nil then note.product_type.description end %></td>	
 			<td><%= note.amount %></td>
+			<td><%= note.amount_processed %></td>
 			<td><%= if note.city_id != nil then note.city.name + "-" + note.city.province.name end %></td>
 			<td><%= if note.retire_note_state_id != nil then note.retire_note_state.state_name end %> </td>
 			<td><%= note.date%></td>

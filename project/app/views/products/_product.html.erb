@@ -3,7 +3,7 @@
 		<legend>
 			Producto
 		</legend>
-		<%= form_for $product do |f| %>
+		<%= form_for($product, remote:true) do |f| %>
 		<ul>
 			<li>
 			    <label for="retire_note">*Nota Retiro N°:</label>
@@ -114,10 +114,11 @@
 		var list =[];
 		var i=0;
 		var item=1;
+		
 		<% $retire_notes.each do |r| %>
 		 	list[i]={
 		 		label: "<%= r.number %>",id: "<%= r.id %>", product_type_id:"<%=r.product_type_id %>", 
-		 		amount:<%=r.amount %>, customer_id:"<%=r.customer_id %>" };
+		 		amount:<%=r.amount %>,amount_processed:<%=r.amount_processed%> ,customer_id:"<%=r.customer_id %>" };
 			i=i+1;
 		<% end %>
 		//autocomplete de nota de retiro
@@ -131,8 +132,8 @@
 				var product_type_id=ui.item.product_type_id;
 				var customer_id=ui.item.customer_id;
 				$.amount=ui.item.amount;
-				
-				
+				$.retire_note_id=ui.item.id;
+				//alert(retire_note_id);
 				
 				//Metodo ajax que envia el id del tipo de producto al metodo getProducType
 				//dentro del controller y como resultado obtiene un objeto product_type
@@ -150,6 +151,16 @@
 					$("#customer_id").val(customer.name + " "+ customer.last_name + " " + customer.company_name);
 				},"json");
 				
+				
+				//Metodo ajax para obtejer el nro de item del servidor
+			    $.post("<%= getItem_products_path %>",{"amount": $.amount, "id": $.retire_note_id},
+				function(objectItem){
+				$("#item_id").val(objectItem.item);
+				},"json");	
+				
+				//Metodo ajax para listar los productos de la nota de retiro
+			    $.post("<%= getListProducts_products_path %>",{"id": $.retire_note_id},"json");
+			   	
 				//coloco el foco para que ingrese el destinatario
 				$('#receiver').focus();
 			}
@@ -171,7 +182,7 @@
 					amount=element.amount
 					return true
 				}
-			})
+			});
 			//setea el nombre del empleado en el campo employee
 			$("#retire_note").val(name);
 			
@@ -201,14 +212,13 @@
 			//coloco el foco para que ingrese el destinatario
 			$('#receiver').focus();
 			//---------------------------
+			
+			$.post("<%= getItem_products_path %>",{"amount": amount, "id": id},
+				function(objectItem){
+					$("#item_id").val(objectItem.item);
+			},"json");	
+		
 		}
-		
-		//Metodo ajax para obtejer el nro de item del servidor
-		
-		$.post("<%= getItem_products_path %>",{"amount": $.amount},
-		function(objectItem){
-			$("#item_id").val(objectItem.item);
-		},"json");
 		
 		
 	});

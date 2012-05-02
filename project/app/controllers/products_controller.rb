@@ -72,37 +72,59 @@ class ProductsController < ApplicationController
     $product = Product.new(params[:product])
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
-    
+    @retire_note=RetireNote.find(@retire_note_id)
     @amount=RetireNote.where("id=?",@retire_note_id).first.amount
     respond_to do |format|
       if $product.save
         $products.push($product)
         $product=Product.new
+        #actualiza la amount_processed de nota de retiro
+        begin
+          @retire_note.update_attribute(:amount_processed, $item)
+        rescue
+          
+        end
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
           $item= $item + 1
           $product.retire_note_id=@retire_note_id
           $product.product_type_id=@product_type_id
+          $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
+          puts "js redireccion"
+          format.js
          else
             $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
-            #Redirijo la pagina hacia el index para ver todos los productos registrados
-            @products = Product.where("retire_note_id=?", @retire_note_id)
+            #$products = Product.where("retire_note_id=?", @retire_note_id)
             #Cambio de estado la nota de retiro registrado de "En Proceso" a "Procesado"
             begin
-              @retire_note=RetireNote.find(@retire_note_id)
               @state_id=RetireNoteState.where("state_name='Procesado'").first.id
               @retire_note.update_attribute(:retire_note_state_id, @state_id)
-            
             rescue
             end
-            format.html {  redirect_to  new_product_path}
-            format.json { head :no_content }
+            $product = Product.new
+            #init all--------------
+            #$products=Array.new
+            #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            $receivers = Receiver.find(:all)
+            $product_state=ProductState.new
+            $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
+            
+            $addresses=Array.new
+            $item = 1
+            ##----------
+     
+            format.js
+            #format.html { render action: "new" }
+            #format.json { head :no_content }
          end
         
-        $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
+       
         
-        format.html {render action: "new"}# { redirect_to $product, notice: 'Product was successfully created.' }
-        format.json {render json: $product}
+        #format.html {render action: "new"}# { redirect_to $product, notice: 'Product was successfully created.' }
+        #format.json {render json: $product}
+        
         #format.json { render json: $product, status: :created, location: $product }
       else
         format.html { render action: "new" }
@@ -181,6 +203,8 @@ class ProductsController < ApplicationController
   #Metodo que retorna el item correcspondiente al producto que se va a registrar
   def getItem
     @amount=params[:amount]
+    @amount_processed=RetireNote.where("id=?",params[:id]).first.amount_processed
+    $item=@amount_processed
     if ($item.to_i < @amount.to_i)
       $item= $item + 1
     end
@@ -190,7 +214,15 @@ class ProductsController < ApplicationController
          format.json { render json: @objectItem }#need for ajax with json datatyp 
     end
   end
-  
+  #post
+  #Metodo para buscar los productos de la nota de retiro de retiro si ya existe en la base de datos
+  def getListProducts
+    @retire_note_id=params[:id]
+    $products=Product.where("retire_note_id=?",@retire_note_id)
+    respond_to do |format|
+         format.js
+    end
+  end
   #post
   #Metodo que retorna la ciudad correcspondiente a una direccion
   def getCity
