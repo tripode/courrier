@@ -64,6 +64,7 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(params[:customer])
     @customer.customer_type_id = CustomerType.where("type_name='Individual' ").first.id
+    @customer.company_name='' #se guarda un espacio
     @notice=""
     respond_to do |format|
       begin 

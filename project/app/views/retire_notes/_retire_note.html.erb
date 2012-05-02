@@ -3,7 +3,7 @@
 		<legend>
 			Nota de Retiro
 		</legend>
-		<%= form_for(@retire_note) do |f| %>
+		<%= form_for(@retire_note, remote:true) do |f| %>
 		<ul>
 	      <li>
 		    <label>* N°:</label>
@@ -142,34 +142,34 @@
 	
 	
 		//Validaciones
-        var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
+        var f1 = new LiveValidation('number_id', { validMessage: " ",wait: 100 });
         f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
         f1.add( Validate.Presence, { failureMessage: " " } );
         
-        var f2 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f2 = new LiveValidation('customer', { validMessage: " ", wait: 500 });
         f2.add( Validate.Presence, { failureMessage: " " } );
         
-        var f3 = new LiveValidation('amount_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
+        var f3 = new LiveValidation('amount_id', { validMessage: " ",wait: 500 });
         f3.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
         f3.add( Validate.Presence, { failureMessage: " " } );
         
-        var f4 = new LiveValidation('unit_price_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f4 = new LiveValidation('unit_price_id', { validMessage: " ", wait: 500 });
         f4.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
         f4.add( Validate.Presence, { failureMessage: " " } );
         
-        var f5 = new LiveValidation('date', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f5 = new LiveValidation('date', { validMessage: " ", wait: 500 });
         f5.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f6 = new LiveValidation('expiration_date', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f6 = new LiveValidation('expiration_date', { validMessage: " ", wait: 500 });
         f6.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f7 = new LiveValidation('retire_note_service_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f7 = new LiveValidation('retire_note_service_type_id', { validMessage: " ", wait: 500 });
         f7.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f8 = new LiveValidation('retire_note_product_type_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f8 = new LiveValidation('retire_note_product_type_id', { validMessage: " ", wait: 500 });
         f8.add( Validate.Presence, { failureMessage: " " } ); 
         
-        var f9 = new LiveValidation('retire_note_city_id', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        var f9 = new LiveValidation('retire_note_city_id', { validMessage: " ", wait: 500 });
         f9.add( Validate.Presence, { failureMessage: " " } ); 
         
        
