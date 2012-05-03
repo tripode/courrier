@@ -9,13 +9,10 @@
 			<th>Cliente</th>
 			<th>Producto</th>
 			<th>Cantidad</th>
-			<th>Registrado</th>
 			<th>Ciudad</th>
-			<th>Estado</th>
-			<th>Fecha Registro</th>
-			<th>Fecha Vencimiento</th>
 			<th></th>
-			
+			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,16 +22,19 @@
 			<td><%= if note.customer_id != nil then note.customer.company_name + " " + note.customer.last_name + " " + note.customer.name end %></td>
 			<td><%= if note.product_type.id != nil then note.product_type.description end %></td>	
 			<td><%= note.amount %></td>
-			<td><%= note.amount_processed %></td>
 			<td><%= if note.city_id != nil then note.city.name + "-" + note.city.province.name end %></td>
-			<td><%= if note.retire_note_state_id != nil then note.retire_note_state.state_name end %> </td>
-			<td><%= note.date%></td>
-			<td><%= note.expiration_date%></td>
-			<td><div><%= link_to 'Mostrar',  note, id: 'mostrar' %></div></td>
-		<% end%>
+			<td><div><%= link_to 'Mostrar',  note %></div></td>
+			<td>
+				<div>
+					<%= link_to image_tag('editar.gif'), edit_retire_note_path(note), remote: true %>
+				</div>
+			</td>
+			<td>
+				<div>
+					<%= link_to image_tag('borrar2.gif'), note, confirm: 'Deseas eliminar la nota de retiro?', method: :delete, remote:true %>
+				</div>
+			</td>
 		</tr>
+		<% end %>
 	</tbody>
 </table>
-<br />
-<br />
-

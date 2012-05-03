@@ -82,15 +82,35 @@ class RetireNotesController < ApplicationController
     respond_to do |format|
       begin
           if @retire_note.save
-            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido guardada..' }
-            format.json { head :no_content}
+            #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            #format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido guardada..' }
+            #format.json { head :no_content}
+            format.js
           else
-            format.html { redirect_to @retire_note, notice: 'No se pudo guardar la nota de retiro..' }
-            format.json {  head :no_content }
+             #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            
+            #format.html { redirect_to @retire_note, notice: 'No se pudo guardar la nota de retiro..' }
+            #format.json {  head :no_content }
+            format.js
           end
       rescue
-         format.html { redirect_to @retire_note, notice: 'Error al intentar guardar la nota de retiro..' }
-         format.json {  head :no_content }
+         #format.html { redirect_to @retire_note, notice: 'Error al intentar guardar la nota de retiro..' }
+         #format.json {  head :no_content }
+         format.js
       end
       
     end
@@ -104,15 +124,37 @@ class RetireNotesController < ApplicationController
     respond_to do |format|
       begin
           if @retire_note.update_attributes(params[:retire_note])
-            format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido actualizada..' }
-            format.json { head :no_content }
+            #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            
+            #format.html { redirect_to new_retire_note_path, notice: 'La nota de retiro ha sido actualizada..' }
+            #format.json { head :no_content }
+            flash[:notice]='Se Actualizo Correctamente'
+            format.js
           else
-            format.html { redirect_to new_retire_note_path, notice: 'No se pudo actualizar la nota de retiro..' }
-            format.json {  head :no_content }
+             #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            
+            #format.html { redirect_to new_retire_note_path, notice: 'No se pudo actualizar la nota de retiro..' }
+            #format.json {  head :no_content }
+            format.js
           end
       rescue
-         format.html { redirect_to new_retire_note_path, notice: 'Error al intentar actualizar la nota de retiro..' }
-         format.json {  head :no_content }
+         #format.html { redirect_to new_retire_note_path, notice: 'Error al intentar actualizar la nota de retiro..' }
+         #format.json {  head :no_content }
+         format.js
       end
     end
   end
@@ -130,8 +172,20 @@ class RetireNotesController < ApplicationController
       rescue
         @notice="Esta nota de retiro no puede ser eliminada.."
       ensure
-       format.html { redirect_to new_retire_note_path, notice: @notice }
-       format.json { head :no_content } 
+       #format.html { redirect_to new_retire_note_path, notice: @notice }
+       #format.json { head :no_content }
+       #Initialize all variables
+        #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            
+       
+       format.js 
       end
     end
   end
@@ -174,5 +228,6 @@ class RetireNotesController < ApplicationController
         end 
       end
    end
+   
         
 end

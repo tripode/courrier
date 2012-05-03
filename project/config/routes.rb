@@ -68,6 +68,7 @@ Project::Application.routes.draw do
       post 'getItem'
       post 'getCity'
       post 'search'
+      post 'getListProducts'
     end
   end
   
