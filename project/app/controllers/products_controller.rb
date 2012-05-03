@@ -90,7 +90,6 @@ class ProductsController < ApplicationController
           $product.retire_note_id=@retire_note_id
           $product.product_type_id=@product_type_id
           $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
-          puts "js redireccion"
           format.js
          else
             $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
@@ -103,7 +102,6 @@ class ProductsController < ApplicationController
             end
             $product = Product.new
             #init all--------------
-            #$products=Array.new
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
             #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
             $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
@@ -114,10 +112,7 @@ class ProductsController < ApplicationController
             $addresses=Array.new
             $item = 1
             ##----------
-     
             format.js
-            #format.html { render action: "new" }
-            #format.json { head :no_content }
          end
         
        
@@ -127,8 +122,18 @@ class ProductsController < ApplicationController
         
         #format.json { render json: $product, status: :created, location: $product }
       else
-        format.html { render action: "new" }
-        format.json { render json: $product.errors, status: :unprocessable_entity }
+        #init all--------------
+            #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            $receivers = Receiver.find(:all)
+            $product_state=ProductState.new
+            $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
+            
+            $addresses=Array.new
+            $item = 1
+            ##----------
+        format.js
       end
     end
   end
@@ -153,11 +158,19 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     @product = Product.find(params[:id])
-    @product.destroy
-
+    @retire_note_id=@product.retire_note_id
+    @retire_note=RetireNote.where("id=?", @retire_note_id).first
+    @amount_processed=@retire_note.amount_processed
+    if @product.destroy 
+      ##Actualizo la cantidad de productos registrados de la nota de retiro. Se elimino un producto , se resta 1
+      @amount_processed=@amount_processed - 1
+      @retire_note.update_attribute(:amount_processed, @amount_processed) 
+    end
+    $products=Product.where("retire_note_id=?",@retire_note_id);
     respond_to do |format|
-      format.html { redirect_to products_url }
-      format.json { head :no_content }
+      format.js
+      #format.html { redirect_to new_product_path }
+      #format.json { head :no_content }
     end
   end
   
@@ -184,7 +197,6 @@ class ProductsController < ApplicationController
    respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: $addresses }#need for ajax with json datatyp
-         #format.js 
     end
   end
   
@@ -233,7 +245,7 @@ class ProductsController < ApplicationController
       format.json {render json: @city}
     end
   end
-  
+  #Metodo post para realizar busquedas de productos
   def search
     @retire_note_number=params[:retire_note_number]
     @customer_id=params[:customer_id]

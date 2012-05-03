@@ -13,7 +13,7 @@
 	    <th>Ciudad</th>
 	    <th>Lugar</th>
 	    <th>Direccion</th>
-	   
+	    <th></th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -28,6 +28,11 @@
 	  	<td><%= product.receiver_address.city.name %></td>
 	  	<td><%= product.receiver_address.label%></td>
 	  	<td><%= product.receiver_address.address%></td>
+	  	<td>
+			<div>
+				<%= link_to image_tag('borrar2.gif'), product, confirm: 'Deseas eliminar el producto?', method: :delete, remote:true %>
+			</div>
+		</td>
 	  </tr>
 	<% end %>
 	</tbody>
@@ -35,4 +40,3 @@
 <script>
 	
 </script>
-
