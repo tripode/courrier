@@ -172,8 +172,20 @@ class RetireNotesController < ApplicationController
       rescue
         @notice="Esta nota de retiro no puede ser eliminada.."
       ensure
-       format.html { redirect_to new_retire_note_path, notice: @notice }
-       format.json { head :no_content } 
+       #format.html { redirect_to new_retire_note_path, notice: @notice }
+       #format.json { head :no_content }
+       #Initialize all variables
+        #Initialize al variables
+            @retire_note = RetireNote.new
+            @retire_note.employee_id=current_user.employee.id
+            @customer = Customer.new
+            @customers = Customer.find(:all)
+            @employees = Employee.find(:all)
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            
+       
+       format.js 
       end
     end
   end
