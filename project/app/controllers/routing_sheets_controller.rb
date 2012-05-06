@@ -41,7 +41,9 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/new.json
   def new
     @routing_sheet = RoutingSheet.new
-
+    $products= Array.new
+    @area= Area.new
+    $total=0;
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @routing_sheet }
@@ -57,12 +59,24 @@ class RoutingSheetsController < ApplicationController
   # POST /routing_sheets.json
   def create
     @routing_sheet = RoutingSheet.new(params[:routing_sheet])
-
+    @routing_sheet.employee_id=current_user.employee.id #Seteo el user logueado
+    @routing_sheet.routing_sheet_state_id = 1 # Por defecto el estado es "En Proceso", id: 1
+    @routing_sheet.total_amount=$total
     respond_to do |format|
-      if @routing_sheet.save
+      begin
+        RoutingSheet.transaction do
+        @routing_sheet.save
+        $products.each do |product|
+            @routing_sheet_detail=RoutingSheetDetail.new
+            @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
+            @routing_sheet_detail.product_id=product.id
+          
+            @routing_sheet_detail.save
+          end
+        end
         format.html { redirect_to @routing_sheet, notice: 'Routing sheet was successfully created.' }
         format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
-      else
+      rescue
         format.html { render action: "new" }
         format.json { render json: @routing_sheet.errors, status: :unprocessable_entity }
       end
@@ -94,6 +108,18 @@ class RoutingSheetsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to routing_sheets_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def add_product
+    @bar_code=params[:bar_code]
+    @product=Product.where("bar_code=?",@bar_code).first
+    $products.push(@product)
+    $total=$total + 1
+    respond_to do |format|
+      #format.html { redirect_to routing_sheets_url }
+      #format.json { head :no_content }
+      format.js
     end
   end
 end

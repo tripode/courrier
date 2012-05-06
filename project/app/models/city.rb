@@ -5,6 +5,7 @@ class City < ActiveRecord::Base
   belongs_to :province
   has_many :cargo_manifests
   has_many :receiver_addresses
+  has_many :areas
 
   #retorna una lista de todos las ciudades dentro de la BD
   def self.get_all_cities

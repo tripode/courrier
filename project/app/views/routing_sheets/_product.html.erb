@@ -1,0 +1,15 @@
+<fieldset>
+	<%= form_tag({:action => 'add_product'}, :remote => true) do%>
+	<ul>
+		<li>
+			<label>Codigo de Barra:</label>
+			<%= text_field_tag :bar_code,nil, id: 'bar_code',size: '20', :maxlength => 25%>
+			<%= submit_tag 'Agregar'%>
+		</li>
+		
+	</ul>
+	<% end %>
+	<div id="div_routing_sheet_detail">
+		<%= render 'detail'%>
+	</div>
+</fieldset>

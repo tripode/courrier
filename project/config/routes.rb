@@ -78,7 +78,11 @@ Project::Application.routes.draw do
     end
   end
 
-  
+  resources :routing_sheets do
+    collection do
+      post 'add_product'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
