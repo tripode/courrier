@@ -48,7 +48,7 @@ class TransportGuidesController < ApplicationController
 #    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
     #mala practica de programación pero lo hago para el metodo js agregarFila_Arreglo
     #no me tire error en el each vere como puedo depurar luego
-    @transport_guide_details= Array.new
+    @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -90,8 +90,10 @@ class TransportGuidesController < ApplicationController
 
     respond_to do |format|
       if value
-        format.html { redirect_to @transport_guide, notice: 'La guia de Transporte fue existosamente creada.' }
-        format.json { render json: @transport_guide, status: :created, location: @transport_guide }
+#        format.html { redirect_to @transport_guide, notice: 'La guia de Transporte fue existosamente creada.' }
+#        format.json { render json: @transport_guide, status: :created, location: @transport_guide }
+        format.html { redirect_to new_transport_guide_path, notice: "Guardado Correctamente!"}
+        format.json { head :no_content}
       else
         format.html { render action: "new" }
         format.json { render json: @transport_guide.errors, status: :unprocessable_entity }
@@ -106,27 +108,21 @@ class TransportGuidesController < ApplicationController
     value=nil
     TransportGuide.transaction do
       value=@transport_guide.update_attributes(params[:transport_guide])
-      params[:lista].each do |k,v|
-        if(v[:destroy].to_i == 1)
-          @transport_guide_detail= TransportGuideDetail.find(v[:id])
-          @transport_guide_detail.destroy
-        else
-          if(v[:transport_guide_id].to_i == @transport_guide.id )
-              @transport_guide_detail= TransportGuideDetail.find(v[:id])
-              @transport_guide_detail.update_attributes(v)
-          else
+      @transport_guide_details=TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+      @transport_guide_details.each do |item|
+        item.destroy
+      end
+      params[:details].each do |k,v|
             v[:transport_guide_id] =@transport_guide.id
             @transport_guide_detail =TransportGuideDetail.new(v)
-            @transport_guide_detail.save
-          end
-        end
+            @transport_guide_detail.save      
       end
     end
 
     respond_to do |format|
       if value
-        format.html { redirect_to @transport_guide, notice: 'Transport guide was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to new_transport_guide_path, notice: "GT Nº#{@transport_guide.num_guide} Actualizado Correctamente!"}
+        format.json { head :no_content}
       else
         format.html { render action: "edit" }
         format.json { render json: @transport_guide.errors, status: :unprocessable_entity }
