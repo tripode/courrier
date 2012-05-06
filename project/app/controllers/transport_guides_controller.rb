@@ -18,7 +18,7 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides
   # GET /transport_guides.json
   def index
-#    @transport_guides = TransportGuide.find(:all, :conditions=> "created_at between current_date-10 and current_date")
+    #    @transport_guides = TransportGuide.find(:all, :conditions=> "created_at between current_date-10 and current_date")
     @transport_guides= TransportGuide.all
     respond_to do |format|
       format.html # index.html.erb
@@ -45,7 +45,7 @@ class TransportGuidesController < ApplicationController
     @customers = Customer.find(:all)
     @transport_guide = TransportGuide.new
     @transport_guide_detail=TransportGuideDetail.new
-#    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+    #    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
     #mala practica de programación pero lo hago para el metodo js agregarFila_Arreglo
     #no me tire error en el each vere como puedo depurar luego
     @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
@@ -64,41 +64,43 @@ class TransportGuidesController < ApplicationController
     
     @transport_guide = TransportGuide.find(params[:id])
     @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
-     respond_to do |format|
-        format.html { render action: "new" }
-#        format.js
-        format.json { render json: @transport_guide }
-     end
+    respond_to do |format|
+      format.html { render action: "new" }
+      #        format.js
+      format.json { render json: @transport_guide }
+    end
   end
 
   # POST /transport_guides
   # POST /transport_guides.json
   def create
+    begin
+      TransportGuide.transaction do
 
-    value=nil
-    TransportGuide.transaction do
-      @transport_guide = TransportGuide.new(params[:transport_guide])
-      value=@transport_guide.save
-      params[:details].each do |k,v|
-        v[:transport_guide_id] =@transport_guide.id
-        puts v
-        @transport_guide_detail =TransportGuideDetail.new(v)
-        @transport_guide_detail.save
-  
+        @transport_guide = TransportGuide.new(params[:transport_guide])
+        @transport_guide.save
+        params[:details].each do |k,v|
+          v[:transport_guide_id] =@transport_guide.id
+          @transport_guide_detail =TransportGuideDetail.new(v)
+          @transport_guide_detail.save
+
+        end
       end
-    end
 
-    respond_to do |format|
-      if value
-#        format.html { redirect_to @transport_guide, notice: 'La guia de Transporte fue existosamente creada.' }
-#        format.json { render json: @transport_guide, status: :created, location: @transport_guide }
+      respond_to do |format|
         format.html { redirect_to new_transport_guide_path, notice: "Guardado Correctamente!"}
         format.json { head :no_content}
-      else
-        format.html { render action: "new" }
-        format.json { render json: @transport_guide.errors, status: :unprocessable_entity }
       end
+
+    rescue => e
+      respond_to do |format|
+        format.html { redirect_to new_transport_guide_path, 
+                      notice: "Error en la transaccion, no se guardo la guia de transporte"}
+        format.json { head :no_content}
+      end
+
     end
+    
   end
 
   # PUT /transport_guides/1
@@ -113,9 +115,9 @@ class TransportGuidesController < ApplicationController
         item.destroy
       end
       params[:details].each do |k,v|
-            v[:transport_guide_id] =@transport_guide.id
-            @transport_guide_detail =TransportGuideDetail.new(v)
-            @transport_guide_detail.save      
+        v[:transport_guide_id] =@transport_guide.id
+        @transport_guide_detail =TransportGuideDetail.new(v)
+        @transport_guide_detail.save
       end
     end
 

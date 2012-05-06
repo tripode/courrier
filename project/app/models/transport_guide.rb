@@ -8,7 +8,8 @@ class TransportGuide < ActiveRecord::Base
   has_many :cargo_manifest_details
   has_many :transport_guide_details#, :foreign_key => [:id, :transport_guide_id]
 
-  validates :num_guide, :customer_id, :employee_id, :service_type_id,
+  validates :num_guide, :uniqueness =>true, :presence =>true
+  validates :customer_id, :employee_id, :service_type_id,
     :transport_guide_state_id, :payment_method_id, :destination_city_id,
     :origin_city_id, :receiver_company_id, :presence =>true
   

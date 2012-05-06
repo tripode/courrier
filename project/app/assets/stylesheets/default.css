@@ -153,6 +153,15 @@ textarea {
     padding-top: 5px;
 }
 
+#content a.delete {
+    height: 16px;
+    width: 16px;
+    background: url(delete.png) no-repeat;
+    border: 0 none !important;
+    cursor: pointer;
+    padding-left: 16px !important
+}
+
 
 /*#################################################################
 ##########clases Generales#########################################
