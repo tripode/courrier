@@ -79,9 +79,12 @@ Project::Application.routes.draw do
   end
 
   resources :routing_sheets do
+    member do
+      get 'delete_product'
+    end
     collection do
       post 'add_product'
-      post 'delete_product'
+      
     end
   end
 

@@ -28,7 +28,7 @@
 	  	<td><%= product.receiver_address.address%></td>
 	  	<td>
 			<div>
-				<%= link_to image_tag('borrar2.gif'), product, method: :delete, remote:true %>
+				<%= link_to image_tag('borrar2.gif'),delete_product_routing_sheet_path(id: product.id), remote:true%>
 			</div>
 		</td>
 	  </tr>

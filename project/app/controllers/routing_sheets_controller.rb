@@ -136,9 +136,9 @@ class RoutingSheetsController < ApplicationController
     end
   end
   
-  ## Elimina el producto de la lista
+  ## Get Elimina el producto de la lista
   def delete_product
-    @product=params[:product]
+    @product=Product.where("id=?",params[:id]).first
     if $products.include?(@product)
       $products.delete(@product)
     end
