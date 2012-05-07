@@ -34,20 +34,28 @@ class TransportGuideDetailsController < ApplicationController
   def destroy
 
   end
-
+  
   #post
   def delete_detail_product
+    #    puts params[:details].to_s
     cont = 0
     index=0
-    tgd=@@transport_guide_details;
+    tgd=Set.new
+    if(params[:transport_guide_id].nil?)
+      puts "aca1"
+      tgd=@@transport_guide_details;
+    else
+      puts "aca3"
+      params[:details].each do |item|
+        tgd.add(TransportGuideDetail.find(item.to_i));      
+      end
+    end   
     @@transport_guide_details=Array.new
-    tgd.each do |detail|
-      
+    tgd.each do |detail|  
       if(params[:destroy].to_i!= cont)
         puts detail.product_type.description
         @@transport_guide_details.insert(index, detail)
-        index+=1
-        
+        index+=1  
       end
       cont+=1
     end  

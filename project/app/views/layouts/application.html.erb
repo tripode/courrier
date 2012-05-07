@@ -7,7 +7,7 @@
     <%= stylesheet_link_tag "bp/reset" %>
     <%= stylesheet_link_tag "bp/forms" %>
     <%= stylesheet_link_tag "bp/grid" %>
-    <%= stylesheet_link_tag "bp/ie" %> 
+    <%= stylesheet_link_tag "bp/ie" %>
     <%= stylesheet_link_tag "bp/typography" %>
     <%= stylesheet_link_tag "bp/screen" %>
 
@@ -17,17 +17,19 @@
     <%= stylesheet_link_tag "demo_table" %>
     <%= stylesheet_link_tag "validate" %>
     <%= javascript_include_tag "jquery"%>
-     <%#= javascript_include_tag "jqueryslidemenu"%>
+<%#= javascript_include_tag "jqueryslidemenu"%>
+    <%= javascript_include_tag "jquery.hotkeys-0.7.9.min"%>
     <%= javascript_include_tag "livevalidation_prototype"%>
     <%= javascript_include_tag "livevalidation_standalone"%>
     <%= javascript_include_tag "jquery.dataTables"%>
     <%= javascript_include_tag "application"%>
-   
+
     <%= stylesheet_link_tag "default" %>
 
     <%= csrf_meta_tags %>
     <script charset="utf-8" type="text/javascript">
       $(document).ready(function() {
+       
         $('table[class*=tablaIndex]').dataTable({
           "bScrollCollapse" : true,
           "sPaginationType" : "full_numbers",
@@ -38,10 +40,11 @@
           changeMonth: true,
           changeYear: true,
           dateFormat: 'dd-mm-yy',
+          monthNamesShort: ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul',
+                            'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
           dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
           gotoCurrent: true,
-          yearRange: '1900:2040',
-          showOn: "button"
+          yearRange: '1900:2040'
 							  
         });
         $('table[id*=tablaLocal]').dataTable({
@@ -57,6 +60,11 @@
         //  placeholder para campos con auto complit
         $("input[class*=i_autocomplit]").attr({
           'placeholder':'Escriba para buscar...'
+        });
+        $('.limpiar').click(function() {
+          $('input[type=text]').val("");
+          $('input[type=number]').val("");
+
         });
 <%#*function add(a, b) {%>
 <%#*alert(parseInt(a) + parseInt(b));%>

@@ -38,10 +38,7 @@ class ReceiversController < ApplicationController
   # GET /receivers/new.json
   def new
     @receiver = Receiver.new
-    @receiver.receiver_addresses = Array.new
     @receivers = Receiver.all
-    @receiver_address = ReceiverAddress.new
-    @receiver_addresses = []
     @cities = City.all
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +48,9 @@ class ReceiversController < ApplicationController
 
   # GET /receivers/1/edit
   def edit
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@editttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     @receiver = Receiver.find(params[:id])
+    @cities = City.all
     respond_to do |format|
       format.js
     end
@@ -60,17 +59,20 @@ class ReceiversController < ApplicationController
   # POST /receivers
   # POST /receivers.json
   def create
-    puts "######################################################create"
-    puts @receiver.inspect
-    puts "###################################################### 1"
-    puts params[:receiver].inspect
-    puts "######################################################2"
-    puts params[:receiver[:receiver_addresses]].inspect
-    
-    @receiver = Receiver.new(params[:receiver])
-    
+    @receiver = Receiver.new(:receiver_name => params[:receiver][:receiver_name], :document => params[:receiver][:document])
     respond_to do |format|
       if @receiver.save
+        @receiver_addresses = params[:receiver][:receiver_addresses_attributes]
+        @receiver_addresses.each do |address|
+          puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@guardando addressees"
+          puts address[0]
+          puts address[1][:label]
+          ReceiverAddress.create(:receiver_id => @receiver.id, 
+                                 :label => address[1][:label],
+                                 :address => address[1][:address],
+                                 :city_id => address[1][:city_id])  
+        end
+        puts "chega ate aqui @@@@@@@@@@@@@@@@"
         flash[:notice] = "guardado."
         format.html { redirect_to @receiver, algo: flash[:notice]}
         format.json { render json: @receiver, status: :created, location: @receiver }
@@ -85,7 +87,7 @@ class ReceiversController < ApplicationController
   # PUT /receivers/1.json
   def update
     @receiver = Receiver.find(params[:id])
-
+    @receiver.receiver_addresses.destroy_all
     respond_to do |format|
       if @receiver.update_attributes(params[:receiver])
         format.html { redirect_to @receiver, notice: 'Receiver was successfully updated.' }

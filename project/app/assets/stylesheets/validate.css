@@ -26,3 +26,10 @@ textarea.LV_invalid_field:hover,
 textarea.LV_invalid_field:active {
     border: 2px solid #CC0000 !important;
 }
+/*validaciones y errores*/
+div.field_with_errors{
+    display: inline-block;
+}
+div.field_with_errors input{
+    border: 2px solid #CC0000 !important;
+}

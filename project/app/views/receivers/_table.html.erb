@@ -7,19 +7,15 @@
 		<tr>
 			<th>Nombre y Apellido</th>
 			<th>Nº de Documento</th>
-			<th>Ciudad</th>
-			<th>Dirección</th>
 			<th></th>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
+		<% @receivers.each do |receiver| %>
 		<tr class="field">
 			<td><%= receiver.receiver_name %></td>
 			<td><%= receiver.document %></td>
-			<td><%= receiver.city.name if receiver.city%></td>
-			<td><%=  %></td>
-			
 			<td>
 				<div>
 					<%= link_to image_tag('editar.gif'), edit_receiver_path(receiver), remote: true %>
@@ -31,6 +27,7 @@
 				</div>
 			</td>
 		</tr>
+		<% end %>
 	</tbody>
 </table>
 

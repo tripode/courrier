@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def route_not_found
-    render :text => 'What the fuck are you looking for ?', :status => :not_found
+    render :text => 'No se encontro la ruta pedida', :status => :not_found
   end
 
   def invalid_method
