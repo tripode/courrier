@@ -46,11 +46,7 @@
     $('#cant_productos').val(cant_productos);
     return false;
   }
-  //Cuando se realiza la combinación de Ctrl + a realizara un click
-  // sobre el boton add para agregar un campo a la tabla productos
-   $(document).bind('keydown', 'ctrl+a', function(){
-          $("#add_product").click();
-   });
+
   $("#add_product").click(function(){
 
            var product_type = $("#lista2_product_type_id").val();

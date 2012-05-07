@@ -135,7 +135,7 @@
               <div class="span-8 center prepend-top last" >
                 <%= f.submit 'Guardar', id: 'save_button' %>
                 <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-                  <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+                  <%= link_to 'Cancelar' ,'../main_page/index' ,class: 'button', id: 'cancel_button'%>
                   </div>
                 </div>
               </fieldset>
@@ -143,7 +143,7 @@
             <% end %>
           </div>
 
-<script type="text/javascript">
+          <script type="text/javascript">
     
 
             $('.limpiar').click(function() {
@@ -160,142 +160,159 @@
               var list =[];
               var i=0;
           <% @cities.each do |c| %>
-            list[i]={
-            label: "<%= c.name%>",
-            id: <%= c.id %> };
-            i=i+1;
+                list[i]={
+                  label: "<%= c.name%>",
+                  id: <%= c.id %> };
+                i=i+1;
           <% end %>
-          $("#origin_city").autocomplete({
-          source: list,
-          select: function(event, ui) {
-            $("#origin_city_id_hidden").val(ui.item.id);
+              $("#origin_city").autocomplete({
+                source: list,
+                select: function(event, ui) {
+                  $("#origin_city_id_hidden").val(ui.item.id);
 
-          }
-          });
-          $("#destination_city").autocomplete({
-          source: list,
-          select: function(event, ui) {
-            $("#destination_city_id_hidden").val(ui.item.id);
+                }
+              });
+              $("#destination_city").autocomplete({
+                source: list,
+                select: function(event, ui) {
+                  $("#destination_city_id_hidden").val(ui.item.id);
 
-          }
-          });
+                }
+              });
           
-          if($("#origin_city_id_hidden").val()!= "") {
-          //Cuando el id de la Ciudad de origen no es vacio se setea el nombre de la ciudad en el campo
-          //Esto se usa cuando se edita la Guia de Transporte,
-          //al hacer click en edit setea La ciudad de origen
-          $("#save_button").val("Actualizar");
-          var id=$("#origin_city_id_hidden").val();
-          var name= ""
-          // busca la ciudad dentro de la lista
-          $(list).each(function(index,element){
-            if(element.id == id){
-              name=element.label
-              return true
-            }
-          })
-          //setea el nombre del empleado en el campo employee
-          $("#origin_city").val(name);
-          }
-          if($("#destination_city_id_hidden").val()!= "") {
+              if($("#origin_city_id_hidden").val()!= "") {
+                //Cuando el id de la Ciudad de origen no es vacio se setea el nombre de la ciudad en el campo
+                //Esto se usa cuando se edita la Guia de Transporte,
+                //al hacer click en edit setea La ciudad de origen
+                $("#save_button").val("Actualizar");
+                var id=$("#origin_city_id_hidden").val();
+                var name= ""
+                // busca la ciudad dentro de la lista
+                $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+                })
+                //setea el nombre del empleado en el campo employee
+                $("#origin_city").val(name);
+              }
+              if($("#destination_city_id_hidden").val()!= "") {
               
-          //Esto se usa cuando se edita la Guia de Transporte,
-          //al hacer click en edit setea La ciudad de destino
-          $("#save_button").val("Actualizar");
-          var id=$("#destination_city_id_hidden").val();
-          var name= ""
-          $(list).each(function(index,element){
-            if(element.id == id){
-              name=element.label
-              return true
-            }
-          })
-          $("#destination_city").val(name);
-          }
+                //Esto se usa cuando se edita la Guia de Transporte,
+                //al hacer click en edit setea La ciudad de destino
+                $("#save_button").val("Actualizar");
+                var id=$("#destination_city_id_hidden").val();
+                var name= ""
+                $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+                })
+                $("#destination_city").val(name);
+              }
          
            
-          });
-          //Autocomplite de clientes (Empresa Origen y destino)
-          $(function() {
-          var list =[];
-          var i=0;
+            });
+            //Autocomplite de clientes (Empresa Origen y destino)
+            $(function() {
+              var list =[];
+              var i=0;
           <% @customers.each do |c| %>
-            list[i]={
-            label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
-            id: <%= c.id %>};
-            i=i+1;
+                list[i]={
+                  label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
+                  id: <%= c.id %>};
+                i=i+1;
           <% end %>
-          $("#customer").autocomplete({
-          source: list,
-          select: function(event, ui) {
-            $("#customer_id_hidden").val(ui.item.id);
+              $("#customer").autocomplete({
+                source: list,
+                select: function(event, ui) {
+                  $("#customer_id_hidden").val(ui.item.id);
 
-          }
+                }
 
-          });
-          $("#receiver_company").autocomplete({
-          source: list,
-          select: function(event, ui) {
-            $("#receiver_company_id_hidden").val(ui.item.id);
+              });
+              $("#receiver_company").autocomplete({
+                source: list,
+                select: function(event, ui) {
+                  $("#receiver_company_id_hidden").val(ui.item.id);
 
-          }
+                }
 
-          });
-          //cuando se da editar carga los campos
-          if($("#receiver_company_id_hidden").val()!= "") {
-          $("#save_button").val("Actualizar");
-          var id=$("#receiver_company_id_hidden").val();
-          var name= ""
-          $(list).each(function(index,element){
-            if(element.id == id){
-              name=element.label
-              return true
-            }
-          })
-          $("#receiver_company").val(name);
-          }
-          if($("#customer_id_hidden").val()!= "") {
-          $("#save_button").val("Actualizar");
-          var id=$("#customer_id_hidden").val();
-          var name= ""
-          $(list).each(function(index,element){
-            if(element.id == id){
-              name=element.label
-              return true
-            }
-          })
-          $("#customer").val(name);
-          }
-          });
-          //VALIDACIONES
-          var f1 = new LiveValidation('transport_guide_num_guide', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
-          f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
-          f1.add( Validate.Presence, { failureMessage: " " } );
+              });
+              //cuando se da editar carga los campos
+              if($("#receiver_company_id_hidden").val()!= "") {
+                $("#save_button").val("Actualizar");
+                var id=$("#receiver_company_id_hidden").val();
+                var name= ""
+                $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+                })
+                $("#receiver_company").val(name);
+              }
+              if($("#customer_id_hidden").val()!= "") {
+                $("#save_button").val("Actualizar");
+                var id=$("#customer_id_hidden").val();
+                var name= ""
+                $(list).each(function(index,element){
+                  if(element.id == id){
+                    name=element.label
+                    return true
+                  }
+                })
+                $("#customer").val(name);
+              }
+            });
+            //VALIDACIONES
+            var f1 = new LiveValidation('transport_guide_num_guide', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+            f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
+            f1.add( Validate.Presence, { failureMessage: " " } );
 
-          //Validacion de Datos del Remitente
-          var f2 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f2.add( Validate.Presence, { failureMessage: " " } );
+            //Validacion de Datos del Remitente
+            var f2 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f2.add( Validate.Presence, { failureMessage: " " } );
 
-          var f3 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f3.add( Validate.Presence, { failureMessage: " " } );
+            var f3 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f3.add( Validate.Presence, { failureMessage: " " } );
 
-          var f4 = new LiveValidation('transport_guide_remitter_person', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f4.add( Validate.Presence, { failureMessage: " " } );
+            var f4 = new LiveValidation('transport_guide_remitter_person', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f4.add( Validate.Presence, { failureMessage: " " } );
 
-          //Datos del Destinatorio
-          var f5 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f5.add( Validate.Presence, { failureMessage: " " } );
+            //Datos del Destinatorio
+            var f5 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f5.add( Validate.Presence, { failureMessage: " " } );
 
-          var f6 = new LiveValidation('receiver_company', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f6.add( Validate.Presence, { failureMessage: " " } );
+            var f6 = new LiveValidation('receiver_company', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f6.add( Validate.Presence, { failureMessage: " " } );
 
-          //Condiciones Generales
-          var f7 = new LiveValidation('transport_guide_service_type_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f7.add( Validate.Presence, { failureMessage: " " } );
+            //Condiciones Generales
+            var f7 = new LiveValidation('transport_guide_service_type_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f7.add( Validate.Presence, { failureMessage: " " } );
 
-          var f8 = new LiveValidation('transport_guide_payment_method_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-          f8.add( Validate.Presence, { failureMessage: " " } );
+            var f8 = new LiveValidation('transport_guide_payment_method_id', { validMessage: " ",onlyOnSubmit: true , wait: 500});
+            f8.add( Validate.Presence, { failureMessage: " " } );
 
+            //###### HOTKEYS ######
+
+            //Cuando se realiza la combinación de Ctrl + a realizara un click
+            // sobre el boton add para agregar un campo a la tabla productos
+            $(document).bind('keydown', 'ctrl+a', function(){
+              $("#add_product").click();
+            });
+            //Cuando se realiza la combinación de Ctrl + g guarda el proyecto
+            // o lo actualiza
+            $(document).bind('keydown', 'ctrl+g', function(){
+              $("#save_button").click();
+            });
+            //Cuando se realiza la combinación de Ctrl + x sale de la interfaz
+            //y va al index
+            $(document).bind('keydown', 'ctrl+x', function(){
+              $("#cancel_button").click();
+            });
     
           </script>
 
