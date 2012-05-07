@@ -1,16 +1,20 @@
-<ul class="field-list">
-	<div>
-		<li>
-			<%= label_tag :label, "Lugar" %>
-			<%= text_field_tag :label %>
-		</li>
-		<li>
-			<%= label_tag :city, "Ciudad" %>
-			<%= text_field_tag :city %>
-		</li>
-		<li>
-			<%= label_tag :address, "Dirección" %>
-			<%= text_field_tag :address %>
-		</li>
-    </div>
-</ul>
+
+
+<%= f.fields_for @receiver.receiver_addresses do |address| %>
+	<tr>
+		<td><%= address.label %><%= address.hidden_field :label, nil %></td>
+		<td><%= address.city.name if address.city %><%= address.hidden_field :city_id, nil %></td>
+		<td><%= address.address %><%= address.hidden_field :address, nil %></td>
+		<td><a href='delete'>x</a></td>
+	</tr>
+<% end %>
+
+<script>
+	function updateDeleteLinks(){
+		$('a[href=delete]').click(function(event){
+			event.preventDefault();
+			$(this).parent().parent().remove();
+		});
+	}
+</script>
+

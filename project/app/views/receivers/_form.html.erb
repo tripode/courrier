@@ -8,54 +8,79 @@
 			<ul class="field-list">
 				<div>
 					<li>
-						<%= f.label :receiver_name, "Nombre y Apellido" %>
-		    			<%= f.text_field :receiver_name %>
+						<%= f.label :receiver_name, "* Nombre y Apellido"%>
+		    			<%= f.text_field :receiver_name , :id => 'receiver-name'%>
 					</li>
 					<li>
 						<%= f.label :document, "Nº de Documento" %>
-		    			<%= f.text_field :document %>
+		    			<%= f.text_field :document, :id => 'document' %>
 					</li>					
 				</div>
 			</ul>
-			<div class="prepend-3 prepend-top subtitle">
-	        	<h4>Direccion</h4>
-	        </div>
+ 			<div class="subtitle">
+				<h4>Dirección</h4>
+			</div>		
+	    	<ul class="field-list">
+				<div>
+					<li>
+						<p>
+							
+						</p>
+						<%= label_tag :place, "* Lugar" %>
+						<%= text_field_tag :place, nil, :id => 'i-place', :size => '30'%>
+						
+					</li>
+					<li>
+	
+						<%= label_tag :city, "* Ciudad" %>
+						<input id="city" type="text" style="width: 203px" class="i_autocomplit"  />
+						<%= hidden_field_tag :city_id,nil, id: 'h-city' %>   
  
-			    	<ul class="field-list">
-						<div>
-							<li>
-								<p>
-									
-								</p>
-								<%= label_tag :place, "Lugar" %>
-								<%= text_field_tag :place, nil, :id => 'i-place'%>
-								
-							</li>
-							<li>
-								<%= label_tag :city, "City" %>
-								<%= text_field_tag :city, nil, :id => 'i-city'%>
-							</li>
-							<li>
-								<%= label_tag :address, "Dirección" %>
-								<%= text_field_tag :address, nil, :id => 'i-dirección'%>
-							</li>
-					    </div>
-					</ul>  
-			<div class="prepend-5 center" >
-				<%= link_to 'Agregar Dirección', id: "add-button", class: "button" %>
-			</div>
+					</li>
+					<li>
+						<%= label_tag :address, "* Dirección" %>
+						<%= text_field_tag :address, nil, :id => 'i-address', :size => '30'%>
+					</li>
+			    </div>
+			</ul> 
+			<div class="prepend-7">
+				<%= button_to_function "Agregar", "add()"%>
+			</div> 
 		</div>
+		
 		<div id="address" class="prepend-1 span-10 last subtitle">
 			<h4>Direcciones</h4>
-			<div id="div-adresses">
-				
-			</div>
-			<%= render :partial => "receiver_addresses/address_table", :locals => {:receiver_addresses => @receiver.receiver_addresses} %>
+			<table>
+				<thead>
+					<th>Lugar</th>
+					<th>Ciudad</th>
+					<th>Dirección</th>
+					<th></th>
+				</thead>
+				<tbody id="addresses">
+					<% counter = 100 %>
+					<% @receiver.receiver_addresses.each do |address| %>
+							<tr>
+								<td>
+									<%= address.label %>
+									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][label]' value='<%= address.label%>'>
+								</td>
+								<td>
+									<%= address.city.name if address.city %>
+									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][city_id]' value='<%= address.city.id %>'>
+								</td>
+								<td>
+									<%= address.address %>
+									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][address]' value='<%= address.address %>'>
+								</td>
+								<td><%= link_to_function('x', "delete()", :href => 'delete') %></td>
+							</tr>
+							<% counter+=1 %>
+					<% end %>
+					
+				</tbody>
+			</table>
 		</div>
-		
-		<div class="span"		
-		
-		
 	</fieldset>
 	<div class="span-24 center last" >
 			<% if @receiver.id %>
@@ -69,14 +94,93 @@
 	<% end %>
 </div>
 
+<script type="text/javascript">
+	  var f1 = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f1.add( Validate.Presence, { failureMessage: " " } );
+      var f2 = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      f2.add( Validate.Presence, { failureMessage: " " } );
+</script>
 <script>
+	/*
+	 * Este codigo es el responsable por agregar filas a la tabla de direcciones
+	 */
+	var counter = 0;
+	function add(){
+		place_obj = $('#i-place');
+		city_obj = $('#city');
+		city_id_obj = $('#h-city');
+		address_obj = $('#i-address');
+		
+		place = place_obj.attr('value');
+		city = city_obj.attr('value');
+		address = address_obj.attr('value');
+		city_id = city_id_obj.attr('value');
+		place_obj.attr('value','');
+		city_obj.attr('value','');
+		address_obj.attr('value','');
+		city_id_obj.attr('value','');
+		
+		
+		var string = "<tr>"+
+		"<td>"+place+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][label]' value='"+place+"'></td>"+
+		"<td>"+city+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][city_id]' value='"+city_id+"'></td>"+
+		"<td>"+address+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][address]' value='"+address+"'></td>"+
+		"<td><a id='"+place+city+address+"' href='delete'>x</a></td>"+
+		"</tr>"
+		$('#addresses').append(string);
+		counter++;
+		updateDeleteLinks();
+	}
+	/* esta funcion es la encargada de eliminar las 
+	 * filas de las tablas de las direcciones 
+	 * al hacer click en un boton
+	 */
+	function updateDeleteLinks(){
+		$('a[href=delete]').click(function(event){
+			event.preventDefault();
+			$(this).parent().parent().remove();
+		});
+	}
 	
-	$("#add-button").click(function(){
-		place = $('#i-place').val();
-		city_id = $('#i-city').val();
-		address = $('#i-address').val();
-	    
-	    
-	})
+	function delete(event){
+		event.preventDefault();
+		alert('hehe');
+	}
 	
+	//autocomplete para ciudades
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @cities.each do |c| %>
+		 	list[i]={
+		 		label: "<%= c.name %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		//if el id del cliente es vacio se carga la lista para mostrar el autocomplete
+		$("#city").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#h-city").val(ui.item.id); 
+			}
+		});
+		if($("#h-city").val()!= "") {
+			
+			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
+			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
+			$("#save_button").val("Actualizar");
+			$("#retire_note_state").show();
+			var id=$("#h-city").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del empleado en el campo employee
+			$("#city").val(name);
+		}
+	});
 </script>
