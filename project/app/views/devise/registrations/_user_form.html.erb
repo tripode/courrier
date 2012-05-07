@@ -12,7 +12,7 @@
           <div class="clear"></div>
           <li>
             <%= f.label :username %>
-            <%= f.text_field :username, id: 'i_username' %>
+            <%= f.text_field :username, :id => 'i_username' %>
           </li>
           <li>
             <%= f.label :email %>
@@ -62,9 +62,5 @@
       //Onfocus para que el cursor este sobre el input email
       $('#i_username').focus();
 	
-      //validaciones
-      var f1 = new LiveValidation('#i_username', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-      f1.add( Validate.Presence, { failureMessage: " " } );
-
     </script>
 
