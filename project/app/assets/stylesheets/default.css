@@ -65,6 +65,7 @@ textarea {
     top: 0;
     height: 35px !important;
     z-index: 9;
+     width: 100%;
 
 }
 
@@ -83,7 +84,6 @@ textarea {
     padding: 6px 6px;
     text-decoration: none;
     text-align: right;
-    width: 100%;
 }
 
 #header .navigation .container .current-user p{
@@ -115,12 +115,13 @@ textarea {
     list-style: none;
 
 }
-#content  fieldset ul > li label, div fieldset ul > li label { /* li debe ser hijo directo de ul*/
-                                                               margin-right: 5px !important;
-                                                               text-align: right !important;
-                                                               width: 100px !important;
-                                                               display: inline-block !important;
-                                                               font-size: 12px;
+#content  fieldset ul > li label, div fieldset ul > li label {
+    /* li debe ser hijo directo de ul*/
+    margin-right: 5px !important;
+    text-align: right !important;
+    width: 100px !important;
+    display: inline-block !important;
+    font-size: 12px;
 
 }
 #content  fieldset input[type="text"],
@@ -318,6 +319,65 @@ button.ui-datepicker-trigger {
 button.ui-datepicker-trigger {
     border: 0 !important;
 }
+/*Datepicker color*/
+.ui-widget-header{
+    background: none;
+}
+#ui-datepicker-div thead th{ background-color: #eeeeee !important; }
+
+#ui-datepicker-div tbody tr:nth-child(even) td,  tbody tr.even td {background:none;}
+/*datepicker*/
+.ui-datepicker {
+    display: none;
+    padding: 0 !important;
+    width: 14.2em !important;
+}
+
+
+.ui-widget-content {
+    /*    background: url("../images/images-jquery-ui//ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #FCFDFD;*/
+    border: 1px solid #C0C0C0 !important;
+    color: #222222;
+}
+
+.ui-datepicker table {
+    border-collapse: collapse;
+    font-size: 0.7em !important;
+    margin: 0 0 0.4em;
+    width: 100%;
+}
+
+.ui-datepicker th {
+    border: 0 none;
+    font-weight: bold;
+    padding: 0.5em 0.2em !important;
+    text-align: center;
+}
+
+.ui-state-default,  .ui-widget-content .ui-state-default,  .ui-widget-header .ui-state-default{
+    border: 1px solid #C0C0C0 !important;
+    font-weight: normal;
+}
+
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;
+}
+
+.ui-datepicker-header {
+    padding: 0 !important;
+    position: relative;
+}
+table.ui-datepicker-calendar .ui-state-default{
+    background: white;
+}
+table.ui-datepicker-calendar .ui-state-active{
+    background:whitesmoke;
+}
+table.ui-datepicker-calendar .ui-state-highlight{
+    background-color: #d5d5ff;
+}
+
 
 /*Cambios a una tabla local, se usa en manifiesto 
         de carga */

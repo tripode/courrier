@@ -35,14 +35,14 @@
 
           <li>
             <label>* Origen: </label>
-            <input id="origin_city" type="text" />
+            <input id="origin_city" type="text" class="i_autocomplit"/>
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden',class: 'i_autocomplit' %>
       <%#= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
 
             </li>
             <li>
               <label> *Empresa/Cliente:</label>
-              <input id="customer" type="text" size="15" />
+              <input id="customer" type="text" size="15" class="i_autocomplit"/>
               <%= f.hidden_field :customer_id, id: 'customer_id_hidden',class: 'i_autocomplit' %>
 
               </li>
