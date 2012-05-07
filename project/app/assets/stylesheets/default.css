@@ -60,6 +60,16 @@ textarea {
     height: 30px;
     background-color: #414141;
 }
+#header .navigation .container{
+    position: fixed;
+    text-align: center;
+    top: 0;
+    height: 35px !important;
+    width: 100%;
+    z-index: 9;
+    
+}
+
 /*CSS DEL MENU*/
 /*
  * Esto afecta al div que esta
@@ -117,7 +127,7 @@ textarea {
 #content  fieldset input[type="text"],
 #content  fieldset input[type="password"], 
 #content  fieldset ul li select {
-    border: 1px solid #8A084B;
+    border: 1px solid #414141;
     background-color: #FFFFFF;
     padding: 3px 5px;
     font-size: 13px;
