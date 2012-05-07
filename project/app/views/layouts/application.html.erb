@@ -7,7 +7,7 @@
     <%= stylesheet_link_tag "bp/reset" %>
     <%= stylesheet_link_tag "bp/forms" %>
     <%= stylesheet_link_tag "bp/grid" %>
-    <%= stylesheet_link_tag "bp/ie" %> 
+    <%= stylesheet_link_tag "bp/ie" %>
     <%= stylesheet_link_tag "bp/typography" %>
     <%= stylesheet_link_tag "bp/screen" %>
 
@@ -17,12 +17,12 @@
     <%= stylesheet_link_tag "demo_table" %>
     <%= stylesheet_link_tag "validate" %>
     <%= javascript_include_tag "jquery"%>
-     <%#= javascript_include_tag "jqueryslidemenu"%>
+<%#= javascript_include_tag "jqueryslidemenu"%>
     <%= javascript_include_tag "livevalidation_prototype"%>
     <%= javascript_include_tag "livevalidation_standalone"%>
     <%= javascript_include_tag "jquery.dataTables"%>
     <%= javascript_include_tag "application"%>
-   
+
     <%= stylesheet_link_tag "default" %>
 
     <%= csrf_meta_tags %>
@@ -57,6 +57,11 @@
         //  placeholder para campos con auto complit
         $("input[class*=i_autocomplit]").attr({
           'placeholder':'Escriba para buscar...'
+        });
+        $('.limpiar').click(function() {
+          $('input[type=text]').val("");
+          $('input[type=number]').val("");
+
         });
 <%#*function add(a, b) {%>
 <%#*alert(parseInt(a) + parseInt(b));%>

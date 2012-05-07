@@ -1,23 +1,13 @@
 <div class="span-24 last">
   <%= form_for(@transport_guide) do |f| %>
 
-    <% if @transport_guide.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@transport_guide.errors.count, "error") %> prohibited this transport_guide from being saved:</h2>
 
-        <ul>
-          <% @transport_guide.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
     <fieldset>
       <legend>
         Registrar Guia de Transporte
       </legend>
       <div class="msg" >
-        <label class="msg-input">
+        <label class="msg-label">
           <%=  notice%>
         </label>
 
@@ -154,6 +144,7 @@
           </div>
 
 <script type="text/javascript">
+
             $('.limpiar').click(function() {
               $('input[type=text]').val("");
               $('input[type=number]').val("");

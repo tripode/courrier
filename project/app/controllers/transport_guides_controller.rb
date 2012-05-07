@@ -40,9 +40,10 @@ class TransportGuidesController < ApplicationController
   # GET /transport_guides/new
   # GET /transport_guides/new.json
   def new
-
-    @cities = City.find(:all)
-    @customers = Customer.find(:all)
+    @@cities = City.find(:all)
+    @cities = @@cities
+    @@customers = Customer.find(:all)
+    @customers = @@customers;
     @transport_guide = TransportGuide.new
     @transport_guide_detail=TransportGuideDetail.new
     #    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
@@ -86,22 +87,23 @@ class TransportGuidesController < ApplicationController
 
         end
       end
-
       respond_to do |format|
         format.html { redirect_to new_transport_guide_path, notice: "Guardado Correctamente!"}
         format.json { head :no_content}
       end
-
-    rescue => e
+    rescue ActiveRecord::StatementInvalid
+      manejo_error_pg(@transport_guide)
+    rescue
       respond_to do |format|
-        format.html { redirect_to new_transport_guide_path, 
-                      notice: "Error en la transaccion, no se guardo la guia de transporte"}
+        format.html { redirect_to new_transport_guide_path,
+                      notice: "Error en la transaccion, no se guardo la Guia de Transporte"}
         format.json { head :no_content}
       end
 
     end
     
   end
+
 
   # PUT /transport_guides/1
   # PUT /transport_guides/1.json
@@ -142,6 +144,21 @@ class TransportGuidesController < ApplicationController
       format.html { redirect_to transport_guides_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def manejo_error_pg(transport_guide)
+    transport_guide.num_guide=''
+    @tranport_guide=transport_guide
+    @cities = @@cities
+    @customers = @@customers
+    @transport_guide_detail=TransportGuideDetail.new
+    @transport_guide_details = TransportGuideDetail.where(transport_guide_id: 0)
+    respond_to do |format| 
+        format.html { redirect_to new_transport_guide_path,
+                      notice: "ERROR, Numero de Guia de Transporte ingresado ya existe"}
+        format.json { head :no_content }
+      end
   end
 
 
