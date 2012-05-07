@@ -18,6 +18,7 @@
     <%= stylesheet_link_tag "validate" %>
     <%= javascript_include_tag "jquery"%>
 <%#= javascript_include_tag "jqueryslidemenu"%>
+    <%= javascript_include_tag "jquery.hotkeys-0.7.9.min"%>
     <%= javascript_include_tag "livevalidation_prototype"%>
     <%= javascript_include_tag "livevalidation_standalone"%>
     <%= javascript_include_tag "jquery.dataTables"%>
@@ -28,6 +29,7 @@
     <%= csrf_meta_tags %>
     <script charset="utf-8" type="text/javascript">
       $(document).ready(function() {
+       
         $('table[class*=tablaIndex]').dataTable({
           "bScrollCollapse" : true,
           "sPaginationType" : "full_numbers",

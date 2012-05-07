@@ -62,12 +62,10 @@ textarea {
 }
 #header .navigation .container{
     position: fixed;
-    text-align: center;
     top: 0;
     height: 35px !important;
-    width: 100%;
     z-index: 9;
-    
+
 }
 
 /*CSS DEL MENU*/
@@ -75,26 +73,27 @@ textarea {
  * Esto afecta al div que esta
  en la esquina superior derecha
  que muestra el nombre del usuario
- */
+*/
 #header .navigation .container .current-user{
-	background: none repeat scroll 0 0 #414141;
-	font-weight: bold;
-	font-size: 11px;
+    background: none repeat scroll 0 0 #414141;
+    font-weight: bold;
+    font-size: 11px;
     color: white;
     display: block;
     padding: 6px 6px;
     text-decoration: none;
     text-align: right;
+    width: 100%;
 }
 
 #header .navigation .container .current-user p{
-	margin-right: 10px;
-	display: inline;
+    margin-right: 10px;
+    display: inline;
 }
 
 #header .navigation .container .current-user a{
-	float: right;
-	margin: 0 3px 0 3px;
+    float: right;
+    margin: 0 3px 0 3px;
 }
 
 
@@ -113,15 +112,15 @@ textarea {
     margin-left: 20px;
     float: left;
     width: 45%;
-	list-style: none;
+    list-style: none;
 
 }
 #content  fieldset ul > li label, div fieldset ul > li label { /* li debe ser hijo directo de ul*/
-    margin-right: 5px !important;
-    text-align: right !important;
-    width: 100px !important;
-    display: inline-block !important;
-    font-size: 12px;
+                                                               margin-right: 5px !important;
+                                                               text-align: right !important;
+                                                               width: 100px !important;
+                                                               display: inline-block !important;
+                                                               font-size: 12px;
 
 }
 #content  fieldset input[type="text"],
@@ -325,7 +324,7 @@ button.ui-datepicker-trigger {
 
 /*Pequeña tabla local, se usa en manifiesto de carga*/
 #content div#tablaLocal_wrapper tabla tbody tr.odd td{
-/*    border-bottom-color: #000000 !important;*/
+    /*    border-bottom-color: #000000 !important;*/
     border-bottom-style: solid !important;
     border-bottom-width: medium !important;
 }
@@ -365,16 +364,16 @@ button.ui-datepicker-trigger {
 
 /*
  * Formulario Usuario
- */
+*/
 #content fieldset ul.field-list li{width: 100%;}
 
 /*
  * Aplicado a los roles de usuarios dentro de la
  * interfaz Usuario.
- */
+*/
 #content  fieldset ul.field-list li label{
-	text-align: left !important;/*must be left*/
-	margin-right: 5px !important;
+    text-align: left !important;/*must be left*/
+    margin-right: 5px !important;
     width: 100px;
     display: inline-block !important;
     font-size: 12px;

@@ -46,9 +46,13 @@
     $('#cant_productos').val(cant_productos);
     return false;
   }
-
+  //Cuando se realiza la combinación de Ctrl + a realizara un click
+  // sobre el boton add para agregar un campo a la tabla productos
+   $(document).bind('keydown', 'ctrl+a', function(){
+          $("#add_product").click();
+   });
   $("#add_product").click(function(){
-        <%#*agregarFila(document.getElementById('cant_campos'));%>
+
            var product_type = $("#lista2_product_type_id").val();
            var weight =$("#weight").val();
             var amount =$("#amount").val();
@@ -61,144 +65,19 @@
              }else {
                href= href_temp;
              }
-             $(this).attr("href",href +
+             if(isNaN(weight)|| isNaN(amount)){
+               alert("Solo numero en los campos Cantidad y Peso")
+             }else {
+               $(this).attr("href",href +
                 "?weight="+weight +
                 "&amount="+amount+
                 "&product_type_id="+product_type+
                 "&cant_product="+cant_product);
               cant_product++;
               $('#cant_productos').val(cant_product);
+             }
+             
   });
-  <%#*$(function() {%>
-    //parase como que no hace nada salta  y val al metodo
- //       <%#*if(<%= @transport_guide_details.nil? %> == false){%>
-          <%#*agregarFila_Arreglo(document.getElementById('cant_campos'));%>
-        <%#*}%>
-  <%#*});%>
-  
-  <%#*function eliminarFila(){%>
-    <%#*var cant_productos = $('#cant_productos').val();%>
-    <%#*cant_productos--;%>
-    <%#*$('#cant_productos').val(cant_productos);%>
-    <%#*return false;%>
-  <%#*}%>
-  //Lee la funcion pasando sobre el if
-  <%#*function agregarFila_Arreglo(obj){%>
-    <%#*//tengo que solucionar esto, debo crear si o si un transport_guide_details vacio para que%>
-    <%#*//funcione este es malo%>
-      <%# @transport_guide_details.each do |detail|  %>
-          <%#*$("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);%>
-          <%#*var oId = $("#cant_campos").val();%>
-
-          <%#*//MALA PRACTICA DE PROGRAMACIÓN, RESOLVER LUEGO%>
-          <%#product_type = ProductType.find(detail.product_type_id) %>
-    //      <%#*var product_type_name = <%= detail.product_type_id %>;%>
-     //     <%#*var product_type_id = <%= detail.product_type_id %>;%>
-   //       <%#*var amount = <%= detail.amount %>;%>
-   //       <%#*var weight = <%= detail.weight %>;%>
-    //      <%#*var transport_guide_id = <%= detail.transport_guide_id %>;%>
-    //      <%#*var id = <%= detail.id %>
-
-          <%#*var strHtml1 = "<td>" + product_type_name + '<input type="hidden" id="hdnProduct_type_id_' + oId + '" name="lista[' + oId + '][product_type_id]" value="' + product_type_id + '"/></td>';%>
-          <%#*var strHtml2 = "<td>" + amount + '<input type="hidden" id="hdnAmount_' + oId + '" name="lista[' + oId + '][amount]" value="' + amount + '"/></td>' ;%>
-          <%#*var strHtml3 = "<td>" + weight + '<input type="hidden" id="hdnWeight_' + oId + '" name="lista[' + oId + '][weight]" value="' + weight + '"/></td>' ;%>
-          <%#*var strHtml4 = '<input type="hidden" id="hdnTransport_guide_id_' + oId + '" name="lista[' + oId + '][transport_guide_id]" value="' + transport_guide_id + '"/>' ;%>
-          <%#*var strHtml5 = '<input type="hidden" id="hdnTransport_guide_detail_id_' + oId + '" name="lista[' + oId + '][id]" value="' + id + '"/>' ;%>
-
-          <%#*var strHtml6 = '<td><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila2(' + oId + ');}"/> </td>';%>
-          <%#*//strHtml6 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';%>
-          <%#*var strHtmlTr = "<tr id='rowDetail_" + oId + "'></tr>";%>
-          <%#*var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6;%>
-          <%#*//tambien se puede agregar todo el HTML de una sola vez.%>
-          <%#*//var strHtmlTr = "<tr id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 +"</tr>";%>
-          <%#*$("#tbDetail").append(strHtmlTr);%>
-          <%#*//si se agrega el HTML de una sola vez se debe comentar la linea siguiente.%>
-          <%#*$("#rowDetail_" + oId).html(strHtmlFinal);%>
-
-          <%#*//aun no funciona bien%>
-          <%#*var cant = $("#cant_productos_").val();%>
-          <%#*cant++;%>
-          <%#*$("#cant_productos_").val(cant);%>
-      <%#end%>
-    <%#*return false;%>
-  <%#*}%>
-  <%#*function eliminarFila2(oId){%>
-    <%#*var marcarFila = '<input type="hidden" id="hdnDestroy' + oId + '" name="lista[' + oId + '][destroy]" value="' + 1 + '"/>' ;%>
-    <%#*$("#rowDetail_" + oId).append(marcarFila);%>
-    <%#*$("#rowDetail_" + oId).hide();%>
-    <%#*return false;%>
-  <%#*}%>
-
-
-
-  <%#*function agregarFila(obj){%>
-    <%#*$("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);%>
-    <%#*var oId = $("#cant_campos").val();%>
-    <%#*var product_type_name = $('#lista2_product_type_id option:selected').text();%>
-    <%#*var product_type_id = $('#lista2_product_type_id option:selected').val();%>
-    <%#*if(product_type_id==0){%>
-      <%#*alert("No es un producto");%>
-      <%#*return;%>
-    <%#*}%>
-    <%#*var amount = $("#amount").val();%>
-    <%#*var weight = $("#weight").val();%>
-  <%#*//  var  transport_guide_id = $("#transport_guide_id").val();%>
-   <%#*var transport_guide_id = 7;%>
-   
-    <%#*var strHtml1 = "<td>" + product_type_name + '<input type="hidden" id="hdnProduct_type_id_' + oId + '" name="lista[' + oId + '][product_type_id]" value="' + product_type_id + '"/></td>';%>
-    <%#*var strHtml2 = "<td>" + amount + '<input type="hidden" id="hdnAmount_' + oId + '" name="lista[' + oId + '][amount]" value="' + amount + '"/></td>' ;%>
-    <%#*var strHtml3 = "<td>" + weight + '<input type="hidden" id="hdnWeight_' + oId + '" name="lista[' + oId + '][weight]" value="' + weight + '"/></td>' ;%>
-    <%#*var strHtml4 = '<input type="hidden" id="hdnTransport_guide_id_' + oId + '" name="lista[' + oId + '][transport_guide_id]" value="' + transport_guide_id + '"/>' ;%>
-    
-    <%#*var strHtml6 = '<td><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="if(confirm(\'Realmente desea eliminar este detalle?\')){eliminarFila(' + oId + ');}"/>';%>
-    <%#*//strHtml6 += '<input type="hidden" id="hdnIdCampos_' + oId +'" name="hdnIdCampos[]" value="' + oId + '" /></td>';%>
-    <%#*var strHtmlTr = "<tr id='rowDetail_" + oId + "'></tr>";%>
-    <%#*var strHtmlFinal = strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml6;%>
-    <%#*//tambien se puede agregar todo el HTML de una sola vez.%>
-    <%#*//var strHtmlTr = "<tr id='rowDetalle_" + oId + "'>" + strHtml1 + strHtml2 + strHtml3 + strHtml4 + strHtml5 + strHtml6 +"</tr>";%>
-    <%#*$("#tbDetail").append(strHtmlTr);%>
-    <%#*//si se agrega el HTML de una sola vez se debe comentar la linea siguiente.%>
-    <%#*$("#rowDetail_" + oId).html(strHtmlFinal);%>
-
-    <%#*//no funciona muy bien aun%>
-    <%#*var cant = $("#cant_productos_").val();%>
-    <%#*cant++;%>
-    <%#*$("#cant_productos_").val(cant);%>
-
-
-    <%#*return false;%>
-  <%#*}%>
-  <%#*function eliminarFila(oId){%>
-    <%#*$("#rowDetail_" + oId).remove();%>
-    <%#*return false;%>
-  <%#*}%>
-  <%#*function cancelar(){%>
-    <%#*$("#tbDetail").html("");%>
-    <%#*return false;%>
-  <%#*}%>
-  <%#*function add_detail_product(obj){%>
-     <%#*$("#cant_campos").val(parseInt($("#cant_campos").val()) + 1);%>
-    <%#*var oId = $("#cant_campos").val();%>
-    <%#*var product_type_name = $('#lista2_product_type_id option:selected').text();%>
-    <%#*var product_type_id = $('#lista2_product_type_id option:selected').val();%>
-    <%#*if(product_type_id==0){%>
-      <%#*alert("No es un producto");%>
-      <%#*return;%>
-    <%#*}%>
-    <%#*var amount = $("#amount").val();%>
-    <%#*var weight = $("#weight").val();%>
-    //
-
-    <%#*$("#button_generate_manifests").click(function(){%>
-            <%#*var origin = $("#origin_city_id_hidden").val();%>
-            <%#*var destiny =$("#destination_city_id_hidden").val();%>
-            <%#*var href= $(this).attr("href");%>
-            <%#*$(this).attr("href",href +%>
-            <%#*"?origin="+origin +%>
-            <%#*"&destiny="+destiny);%>
-          <%#*});%>
-
-  <%#*}%>
   
 </script>
 
