@@ -125,7 +125,7 @@ class TransportGuidesController < ApplicationController
 
     respond_to do |format|
       if value
-        format.html { redirect_to new_transport_guide_path, notice: "GT Nº#{@transport_guide.num_guide} Actualizado Correctamente!"}
+        format.html { redirect_to new_transport_guide_path, notice: "GT N&#176#{@transport_guide.num_guide} Actualizado Correctamente!"}
         format.json { head :no_content}
       else
         format.html { render action: "edit" }
