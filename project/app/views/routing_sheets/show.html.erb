@@ -1,30 +1,46 @@
-<p id="notice"><%= notice %></p>
+<div class="span-24 left">
+	<fieldset>
+		<legend>
+			Hoja de Ruta
+		</legend>
 
-<p>
-  <b>Area:</b>
-  <%= @routing_sheet.area_id %>
-</p>
+	  <ul>
+	  	<li>
+	    	<label>Nro:</label>
+	    	<input type="text" value="<%= @routing_sheet.number%>" size="15" disabled="true" />
+	  	</li>
+	  	<li>
+	  		<label>Fecha:</label>
+	  		<input type="text" value="<%= @routing_sheet.date%>" size="15" disabled="true"/>
+	  	</li>
+	  	<div class="clear"></div>
+	  	<li>
+	    	<label>Repartidor:</label>
+	    	<input id="employee" type="text" value="<%= @routing_sheet.employee.last_name + ' ' + @routing_sheet.employee.name  %>" style="width: 60%" disabled="true" />
+	    	
+	  	</li>
+	  	<li>
+	  		<label>Zona:</label>
+	  		<input type="text" value="<%=@routing_sheet.area.area_name %>" disabled="true" />
+	  	</li>
+	  	<div class="clear"></div>
+	  	<li style="width: 100%">
+	    	<label>Comentario:</label>
+	    	<input type="text" value="<%=@routing_sheet.commentary %>"  disabled="true" size="88" />
+	    	
+	  	</li>
+	 	<li>
+	    	<label>Estado:</label>
+	    	<input type="text" value="<%= @routing_sheet.routing_sheet_state.state_name %>" />
+	  	</li>
+	  
+	  	
+	  </ul>
+	  </fieldset>
+	 
+</div>
+<div>
+	<%= render 'routing_sheet_detail' %>
+</div>
 
-<p>
-  <b>Employee:</b>
-  <%= @routing_sheet.employee_id %>
-</p>
-
-<p>
-  <b>Date:</b>
-  <%= @routing_sheet.date %>
-</p>
-
-<p>
-  <b>Total amount:</b>
-  <%= @routing_sheet.total_amount %>
-</p>
-
-<p>
-  <b>Routing sheet state:</b>
-  <%= @routing_sheet.routing_sheet_state_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_routing_sheet_path(@routing_sheet) %> |
-<%= link_to 'Back', routing_sheets_path %>
+<%= link_to 'Regresar', routing_sheets_path %>

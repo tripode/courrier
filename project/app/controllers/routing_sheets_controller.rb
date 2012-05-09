@@ -33,7 +33,7 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/1.json
   def show
     @routing_sheet = RoutingSheet.find(params[:id])
-
+    @routing_sheets_details= RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @routing_sheet }
