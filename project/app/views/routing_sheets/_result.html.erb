@@ -1,0 +1,36 @@
+<table
+	columnClasses="center,center,center,center,center,center,center,center,center,center"
+	headerClass="center"
+	rowClasses="odd gradeC" cellpadding="0" cellspacing="0"
+	border="1" class="tablaIndex display"  bgcolor="white">
+	<thead>
+	  <tr>
+	  	<th>Numero</th>
+	    <th>Zona</th>
+	    <th>Repartidor</th>
+	    <th>Date</th>
+	    <th>Total</th>
+	    <th>Estado</th>
+	    
+	    <th></th>
+	    <th></th>
+	    <th></th>
+	  </tr>
+	</thead>
+	<tbody>
+	<% @routing_sheets.each do |routing_sheet| %>
+	  <tr>
+	  	<td><%= routing_sheet.number %></td>
+	    <td><%= if routing_sheet.area_id!=nil then routing_sheet.area.area_name end %></td>
+	    <td><%= if routing_sheet.employee_id!=nil then routing_sheet.employee.last_name + ' ' + routing_sheet.employee.name  end  %></td>
+	    <td><%= routing_sheet.date %></td>
+	    <td><%= routing_sheet.total_amount %></td>
+	    <td><%= if routing_sheet.routing_sheet_state_id!= nil  then routing_sheet.routing_sheet_state.state_name end %></td>
+	   
+	    <td><%= link_to 'Show', routing_sheet %></td>
+	    <td><%= link_to 'Edit', edit_routing_sheet_path(routing_sheet) %></td>
+	    <td><%= link_to 'Destroy', routing_sheet, confirm: 'Are you sure?', method: :delete %></td>
+	  </tr>
+	  </tbody>
+	<% end %>
+</table>

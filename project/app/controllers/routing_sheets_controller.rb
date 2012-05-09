@@ -18,8 +18,11 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets
   # GET /routing_sheets.json
   def index
-    @routing_sheets = RoutingSheet.all
-
+    @routing_sheets = Array.new
+    @routing_sheet=RoutingSheet.new
+    @area = Area.new
+    @routing_states= RoutingSheetState.new
+    @employees=Employee.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @routing_sheets }
@@ -149,4 +152,52 @@ class RoutingSheetsController < ApplicationController
     end
   end
   
+  ## Post search: busca productos pasandole parametros
+  def search
+    @number=params[:number]
+    @employee_id=params[:employee_id]
+    @area_id=params[:area_id]
+    @state_id=params[:routing_sheet_state_id]
+    @date_start=params[:date_start]
+    @date_end=params[:date_end]
+   
+  
+    #filtro por las fechas de inicio y fin
+    valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_start)
+    valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_end)
+    
+    if (valid_inited_at != nil and valid_finished_at != nil) then
+      @sql=" 1=1 "  
+      valid_number=/\d+/.match(@number)
+      if(valid_number!=nil) then
+        @sql = @sql + " and number=" + @number
+      end
+      valid_employee=/\d+/.match(@employee_id)
+      if(valid_employee!=nil) then
+        @sql = @sql + "and employee_id=" + @employee_id
+      end
+      valid_area=/\d+/.match(@area_id)
+      if(valid_area!= nil) then
+        @sql = @sql + " and area_id=" + @area_id
+      end
+      valid_state=/\d+/.match(@state_id)
+      if(valid_state!= nil) then
+        @sql = @sql + " and routing_sheet_state_id=" + @state_id
+      end
+      
+      @sql = @sql + " and date between '" + @date_start + "' and '" + @date_end + "'"
+      @routing_sheets= RoutingSheet.where(@sql)
+      if(@routing_sheets== nil) then @routing_sheets=Array.new end 
+    else
+      @routing_sheets=Array.new
+    end
+    
+    @routing_sheet=RoutingSheet.new
+    @area = Area.new
+    @routing_states= RoutingSheetState.new
+    @employees=Employee.all
+    respond_to do |format|
+      format.js
+    end
+  end
 end

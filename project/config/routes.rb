@@ -84,6 +84,7 @@ Project::Application.routes.draw do
     end
     collection do
       post 'add_product'
+      post 'search'
       
     end
   end
