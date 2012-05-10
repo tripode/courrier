@@ -99,6 +99,45 @@
       f1.add( Validate.Presence, { failureMessage: " " } );
       var f2 = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
       f2.add( Validate.Presence, { failureMessage: " " } );
+      
+      
+	//autocomplete para ciudades
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @cities.each do |c| %>
+		 	list[i]={
+		 		label: "<%= c.name %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		//if el id del cliente es vacio se carga la lista para mostrar el autocomplete
+		$("#city").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#h-city").val(ui.item.id); 
+			}
+		});
+		if($("#h-city").val()!= "") {
+			
+			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
+			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
+			$("#save_button").val("Actualizar");
+			$("#retire_note_state").show();
+			var id=$("#h-city").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del empleado en el campo employee
+			$("#city").val(name);
+		}
+	});
+      
 </script>
 <script>
 	/*
@@ -147,40 +186,4 @@
 		alert('hehe');
 	}
 	
-	//autocomplete para ciudades
-	$(function() {
-		var list =[];
-		var i=0;
-		<% @cities.each do |c| %>
-		 	list[i]={
-		 		label: "<%= c.name %>",
-		 		id: <%= c.id %>};
-			i=i+1;
-		<% end %>
-		//if el id del cliente es vacio se carga la lista para mostrar el autocomplete
-		$("#city").autocomplete({
-			source: list,
-			select: function(event, ui) { 
-				$("#h-city").val(ui.item.id); 
-			}
-		});
-		if($("#h-city").val()!= "") {
-			
-			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
-			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
-			$("#save_button").val("Actualizar");
-			$("#retire_note_state").show();
-			var id=$("#h-city").val();
-			var name= ""
-			// busca el empleado dentro de la lista
-			$(list).each(function(index,element){
-				if(element.id == id){
-					name=element.label
-					return true
-				}
-			})
-			//setea el nombre del empleado en el campo employee
-			$("#city").val(name);
-		}
-	});
 </script>

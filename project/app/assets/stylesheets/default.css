@@ -493,3 +493,9 @@ div#popin input[type="submit"],
 div#popin a.button{
 	font-size: 12px;
 }
+
+.ui-widget-overlay {
+   background: #AAA url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+   opacity: .30;
+   filter: Alpha(Opacity=30);
+}
