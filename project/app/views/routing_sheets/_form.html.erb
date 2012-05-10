@@ -34,7 +34,7 @@
 	  	</li>
 	  	<li>
 	  		<label>Zona:</label>
-   			<%= f.select :area_id,@area.getAreas(), prompt: 'Seleccionar' %>
+   			<%= f.select :area_id,@area.getAreas(), prompt: 'Seleccionar', id:'area_id' %>
 	  	</li>
 	  	<div class="clear"></div>
 	  	<li style="width: 100%">
@@ -56,3 +56,14 @@
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
  </div>
 <% end %>
+<script>
+	var f1 = new LiveValidation('routing_sheet_area_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f1.add( Validate.Presence, { failureMessage: " " } );
+    var f2 = new LiveValidation('employee', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: " " } );
+    var f3 = new LiveValidation('routing_sheet_number', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f3.add( Validate.Numericality, { notANumberMessage: " " } );
+        f3.add( Validate.Presence, { failureMessage: " " } );
+    var f4 = new LiveValidation('routing_sheet_date', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f4.add( Validate.Presence, { failureMessage: " " } );
+</script>
