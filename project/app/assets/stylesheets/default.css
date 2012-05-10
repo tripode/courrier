@@ -222,7 +222,10 @@ intermedios de las intefaces grandes */
 /* Buttom general de todo el sistema*/
 #content input[type="submit"], 
 #content a.button, 
-#content button.button{
+#content button.button,
+div#popin input[type="button"],
+div#popin input[type="submit"],
+div#popin a.button{
     background: url(button-grad.png) repeat-x;
     color: #fff;
     font-weight: bold;
@@ -470,6 +473,29 @@ div#popin div li input{
 div#popin div fieldset form div{
 	width: 240px;
 }
+div#popin div fieldset form div > div{
+	padding-left: 185px;
+}
+div#popin div fieldset form div > div.subtitle{
+	margin: 10px 0 -5px 0;
+	padding-left: 150px;
+}
 div#popin div fieldset form div h4{
 	font-size: 12px;
+	margin: 0;
+	padding 0;
+}
+div#popin div fieldset form div table{
+	font-size: 12px;
+}
+div#popin input[type="button"],
+div#popin input[type="submit"],
+div#popin a.button{
+	font-size: 12px;
+}
+
+.ui-widget-overlay {
+   background: #AAA url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
+   opacity: .30;
+   filter: Alpha(Opacity=30);
 }

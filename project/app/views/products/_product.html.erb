@@ -99,6 +99,15 @@
 </div>
 
 <script>
+
+	// pop in para agregar destinatarios
+	$(document).ready(function(){
+		$("#add_receiver").click(function(event){
+			event.preventDefault();
+			$("#popin").dialog({ title: "Nuevo Destinatario", width: 630});
+		});	
+	});
+	
 	//focus en el formulario
     $("form:not(.filter) :input:visible:enabled:first").focus();
 	$('.limpiar').click(function() {
@@ -314,10 +323,4 @@
      //Validacion de las direcciones
      var f5 = new LiveValidation('product_receiver_address_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f5.add( Validate.Presence, { failureMessage: " " } );
-	
-	// pop in para agregar destinatarios
-	$("#add_receiver").click(function(event){
-		event.preventDefault();
-		$("#popin").dialog({ title: "Nuevo Destinatario", width: 600});
-	});	
 </script>
