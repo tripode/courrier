@@ -442,3 +442,34 @@ table.ui-datepicker-calendar .ui-state-highlight{
 
 /*FIN DE FORMULARIO USUARIO*/
 
+/*#################################################################
+##########Css de popin agregar usuarios############################
+###################################################################*/
+
+div#popin div{
+	width:600px;
+}
+div#popin div ul{
+	margin: 1px;
+	padding: 1px;
+}
+div#popin div li{
+	text-align: right;
+	width: 280px;
+	font-size: 11px;
+	font-weight: normal;
+}
+div#popin div li label{
+	text-align: right;
+}
+div#popin div li input{
+	float: right;
+	width: 145px;
+	margin: 0.5px;
+}
+div#popin div fieldset form div{
+	width: 240px;
+}
+div#popin div fieldset form div h4{
+	font-size: 12px;
+}

@@ -48,7 +48,7 @@
 			<li>
 				<label for="receiver">* Destinatario:</label>
 			    <input id="receiver" type="text" size="27" />
-			    <%= link_to ' ', new_receiver_path, :id => "add_receiver", :class => "add" %>
+			    <%= link_to image_tag('add.png') , new_receiver_path, :id => "add_receiver", %>
 				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
 			</li>
 			<div class="clear"></div>
@@ -90,6 +90,14 @@
 	
 	<% end %>
 </div>
+
+
+<div style="display:none;">
+	<div id="popin">
+		<%= render 'receivers/form' %>
+    </div>	
+</div>
+
 <script>
 	//focus en el formulario
     $("form:not(.filter) :input:visible:enabled:first").focus();
@@ -307,4 +315,9 @@
      var f5 = new LiveValidation('product_receiver_address_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f5.add( Validate.Presence, { failureMessage: " " } );
 	
+	// pop in para agregar destinatarios
+	$("#add_receiver").click(function(event){
+		event.preventDefault();
+		$("#popin").dialog({ title: "Nuevo Destinatario", width: 600});
+	});	
 </script>

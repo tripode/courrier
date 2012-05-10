@@ -33,7 +33,7 @@
 					<li>
 	
 						<%= label_tag :city, "* Ciudad" %>
-						<input id="city" type="text" style="width: 203px" class="i_autocomplit"  />
+						<input id="city" type="text" size="30" class="i_autocomplit"  />
 						<%= hidden_field_tag :city_id,nil, id: 'h-city' %>   
  
 					</li>
@@ -71,7 +71,7 @@
 								</td>
 								<td>
 									<%= address.address %>
-									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][address]' value='<%= address.address %>'>
+					8				<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][address]' value='<%= address.address %>'>
 								</td>
 								<td><%= link_to_function('x', "delete()", :href => 'delete') %></td>
 							</tr>

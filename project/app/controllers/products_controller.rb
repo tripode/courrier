@@ -43,7 +43,9 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
-   
+    @receiver = Receiver.new
+    @cities = City.all
+    
     $product = Product.new
     $products=Array.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
