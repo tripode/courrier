@@ -31,7 +31,7 @@
 	  	</li>
 	 	<li>
 	    	<label>Estado:</label>
-	    	<input type="text" value="<%= @routing_sheet.routing_sheet_state.state_name %>" />
+	    	<input type="text" value="<%= @routing_sheet.routing_sheet_state.state_name %>" disabled="true" />
 	  	</li>
 	  
 	  	
@@ -44,3 +44,4 @@
 </div>
 
 <%= link_to 'Regresar', routing_sheets_path %>
+<%= link_to 'Imprimir' %>

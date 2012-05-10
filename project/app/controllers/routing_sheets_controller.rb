@@ -58,14 +58,25 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/1/edit
   def edit
     @routing_sheet = RoutingSheet.find(params[:id])
+    @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
+    $products=Array.new
+   
+    @routing_sheets_details.each do |detail|
+      @product=Product.where("id=?", detail.product_id).first
+      $products.push(@product)
+    end
+    $total=$products.length
+    puts $total 
+    @area= Area.new
   end
 
   # POST /routing_sheets
   # POST /routing_sheets.json
   def create
+  
     @routing_sheet = RoutingSheet.new(params[:routing_sheet])
     @routing_sheet.employee_id=current_user.employee.id #Seteo el user logueado
-    @routing_sheet.routing_sheet_state_id = 1 # Por defecto el estado es "En Proceso", id: 1
+    @routing_sheet.routing_sheet_state_id = RoutingSheetState.where("state_name='En Proceso'").first.id # Por defecto el estado es "En Proceso", id: 1
     @routing_sheet.total_amount=$total
     @routing_sheet.number = $number.to_i + 1
     respond_to do |format|
@@ -82,7 +93,7 @@ class RoutingSheetsController < ApplicationController
             product.update_attribute(:product_state_id,  @new_product_state_id)
           end
         end
-        format.html { redirect_to @routing_sheet, notice: 'Routing sheet was successfully created.' }
+        format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se guardo con exito.' }
         format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
       rescue
         format.html { render action: "new" }
@@ -94,13 +105,41 @@ class RoutingSheetsController < ApplicationController
   # PUT /routing_sheets/1
   # PUT /routing_sheets/1.json
   def update
+  
     @routing_sheet = RoutingSheet.find(params[:id])
 
     respond_to do |format|
-      if @routing_sheet.update_attributes(params[:routing_sheet])
-        format.html { redirect_to @routing_sheet, notice: 'Routing sheet was successfully updated.' }
-        format.json { head :no_content }
-      else
+      begin
+         RoutingSheet.transaction do
+           ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
+           @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",@routing_sheet.id)
+           @routing_sheets_details.each do |detail|
+             ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
+             @product=Product.where("id=?",detail.product_id).first
+             @old_product_state_id=ProductState.where("state_name='No enviado'").first.id
+             @product.update_attribute(:product_state_id,  @old_product_state_id)
+             #Elimino el detalle de la base de datos
+             detail.destroy
+           end
+           
+           @routing_sheet.update_attributes(params[:routing_sheet])
+           ##Creo los nuevos detalles de la hoja de ruta actualizada e inserto en la base de datos
+           $products.each do |product| #guardo los nuevos detalles
+             @routing_sheet_detail=RoutingSheetDetail.new
+             @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
+             @routing_sheet_detail.product_id=product.id
+             @routing_sheet_detail.save
+            
+             @new_product_state_id=ProductState.where("state_name='Enviado'").first.id
+             @product=Product.where("id=?",product.id).first
+             @product.update_attribute(:product_state_id,  @new_product_state_id)
+            
+          end
+          
+          format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se actualizo correctamente.' }
+          format.json { head :no_content }
+        end
+      rescue
         format.html { render action: "edit" }
         format.json { render json: @routing_sheet.errors, status: :unprocessable_entity }
       end
@@ -144,6 +183,7 @@ class RoutingSheetsController < ApplicationController
     @product=Product.where("id=?",params[:id]).first
     if $products.include?(@product)
       $products.delete(@product)
+      $total = $total - 1
     end
     respond_to do |format|
       #format.html { redirect_to routing_sheets_url }
