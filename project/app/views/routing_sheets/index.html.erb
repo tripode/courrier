@@ -1,33 +1,11 @@
-<h1>Listing routing_sheets</h1>
 
-<table>
-  <tr>
-    <th>Area</th>
-    <th>Employee</th>
-    <th>Date</th>
-    <th>Total amount</th>
-    <th>Routing sheet state</th>
-    <th>Package type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @routing_sheets.each do |routing_sheet| %>
-  <tr>
-    <td><%= routing_sheet.area_id %></td>
-    <td><%= routing_sheet.employee_id %></td>
-    <td><%= routing_sheet.date %></td>
-    <td><%= routing_sheet.total_amount %></td>
-    <td><%= routing_sheet.routing_sheet_state_id %></td>
-    <td><%= routing_sheet.package_type_id %></td>
-    <td><%= link_to 'Show', routing_sheet %></td>
-    <td><%= link_to 'Edit', edit_routing_sheet_path(routing_sheet) %></td>
-    <td><%= link_to 'Destroy', routing_sheet, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+<div id="div_search">
+	<%= render 'search'%>
+</div>
+<div id="div_result">
+	<%= render 'result'%>
+</div>
 
 <br />
 
-<%= link_to 'New Routing sheet', new_routing_sheet_path %>
+<%= link_to 'Nueva Hoja de Ruta', new_routing_sheet_path %>

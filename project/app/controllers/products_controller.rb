@@ -269,7 +269,7 @@ class ProductsController < ApplicationController
         
         #Si es distinto de nil es un numero
         valid_number=/\d+/.match(@retire_note_number)
-        puts valid_number
+
         if(valid_number!= nil) then
         
           @retire_note=RetireNote.where("number=?",valid_number.to_s).first
@@ -302,7 +302,6 @@ class ProductsController < ApplicationController
         valid_customer_id=/\d+/.match(@customer_id)
         puts valid_customer_id
         if(valid_customer_id!=nil) then
-          puts "cliente"
           $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
           " inner join customers c on c.id=r.customer_id  where c.id="+valid_customer_id.to_s + " and " + @sql)
         else

@@ -3,13 +3,7 @@
 #asi no borramos todos los datos y volvemos a correr load-total y solo corremos
 # la que necesitamos. recuerden que este archivo solo espara bd completamente
 #vacias osea bd nuevas
-Area.transaction do
 
-    Area.create(:area_name=>"ENC-CALLE-PRIN", :description=>"xxxxx")
-    Area.create(:area_name=>"ENC-Z-CIRCUITO", :description=>"xxxx")
-    Area.create(:area_name=>"ENC-Z-QUITERIA", :description=>"xxxx")
-
-end
 FunctionType.transaction do
 
     FunctionType.create(:description=>"Administrador")
@@ -166,6 +160,13 @@ City.transaction do
   City.create(:name => "Coronel Bogado", :province_id => 1)
   City.create(:name => "Cambyreta", :province_id => 1)
 end
+Area.transaction do
+
+    Area.create(:area_name=>"ENC-CALLE-PRIN", :description=>"xxxxx", :city_id => 1)
+    Area.create(:area_name=>"ENC-Z-CIRCUITO", :description=>"xxxx", :city_id => 1)
+    Area.create(:area_name=>"ENC-Z-QUITERIA", :description=>"xxxx", :city_id => 1)
+
+end
 Receiver.transaction do
   Receiver.create(:receiver_name => "Villalba Teresa",:document=> "3539120")
   Receiver.create(:receiver_name => "Ocampo Rober",  :document=> "4500632")
@@ -206,6 +207,11 @@ User.transaction do
                 :employee_id  => Employee.first.id,
                 :role_ids     => Role.where(:name => 'Administrator').first.id
                )
+end
+RoutingSheetState.transaction do
+  RoutingSheetState.create(:state_name => "En Proceso", :description => "Actualmente entregando los productos de esta hoja de ruta")
+  RoutingSheetState.create(:state_name => "Procesado", :description => "Los productos de la hoja de ruta fueron entregados")
+  RoutingSheetState.create(:state_name => "Cancelado", :description => "La hoja de ruta ha sido cancelada")
 end
 #si van a crear otra tabla, aca datos agreguenle aca y creen un archivo
 #llamado load_xxxx.rb xxxx es el nombre del modelado que crearon
