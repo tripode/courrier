@@ -41,16 +41,7 @@ Project::Application.routes.draw do
     end
   end
 
-  resources :routing_sheets
-
-  resources :retire_note_details
-
-
-  resources :retire_notes
-
   resources :foreign_companies
-
-  resources :rounting_sheets
 
   resources :employees
 
@@ -81,13 +72,18 @@ Project::Application.routes.draw do
   resources :routing_sheets do
     member do
       get 'delete_product'
+   
     end
     collection do
+      get 'report'
       post 'add_product'
       post 'search'
-      
+      post 'get_details'
+      post 'save_edited_details'
     end
   end
+
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

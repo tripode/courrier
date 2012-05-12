@@ -1,3 +1,6 @@
+<!--En esta tabla se van cargando los datos de quien recibio el producto, tambien 
+	en caso de no recibirse se carga el motivo por el cual no se entrego el producto-->
+<%= form_tag({:action => 'save_edited_details'}, :remote => true) do  %>
 <table
 	columnClasses="center,center,center,center,center,center,center,center,center,center"
 	headerClass="center"
@@ -11,21 +14,27 @@
 	    <th>Destinatario</th>
 	    <th>Direccion</th>
 	    <th>Recibido por</th>
-	  
+	 
 	  </tr>
 	</thead>
 	<tbody>
-	<% @routing_sheets_details.each do |detail| %>
+	<% $routing_sheets_details.each do |detail| %>
 	  <tr>
-	  	<td><%= @routing_sheets_details.index(detail) + 1 %></td>
+	  	<td><%= $routing_sheets_details.index(detail) + 1 %></td>
 	  	<td><%= detail.product.bar_code%></td>
 	  	<td><%= detail.product.product_type.description %></td>
 	  	<td><%= detail.product.receiver.receiver_name%></td>
 	  	<td><%= detail.product.receiver_address.address%></td>
-	  	<td><%= detail.who_received %> </td>
-	  	
+	  	<td><%= text_field_tag 'who_received_' + ($routing_sheets_details.index(detail) + 1).to_s %> </td>
+
 	  </tr>
 	<% end %>
 	</tbody>
 </table>
-<
+<div class="span-24 center last" >
+		<%= submit_tag 'Guardar'%>	
+		<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+</div>
+
+
+<%end%>
