@@ -11,7 +11,7 @@
 	    <th>Destinatario</th>
 	    <th>Direccion</th>
 	    <th>Recibido por</th>
-	  
+	  	<th>Motivo No Entrega</th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -23,9 +23,9 @@
 	  	<td><%= detail.product.receiver.receiver_name%></td>
 	  	<td><%= detail.product.receiver_address.address%></td>
 	  	<td><%= detail.who_received %> </td>
-	  	
+	  	<td><%= if detail.reason_id!=nil then detail.reason.description end %> </td>
 	  </tr>
 	<% end %>
 	</tbody>
 </table>
-<
+

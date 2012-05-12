@@ -93,8 +93,11 @@ ProductState.transaction do
                         :description=>"Productos perdidos en el proceso de envio")
     ProductState.create(:state_name=>"Pendiente", 
                         :description=>"Producto que aun no han sido enviados")
-     ProductState.create(:state_name=>"Entregado", 
-                        :description=>"Producto que se entrego al destinatario")
+    ProductState.create(:state_name=>"Recibido", 
+                        :description=>"Producto que se entrego al destinatario")                     
+    ProductState.create(:state_name=>"No Recibido", 
+                        :description=>"Producto que no fue recibido por ninguna persona en la direccion dada")
+    
 
 end
 ProductType.transaction do

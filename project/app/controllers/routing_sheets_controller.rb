@@ -271,15 +271,24 @@ class RoutingSheetsController < ApplicationController
       @routing_sheet_id= -1
       $routing_sheets_details.each do  |detail|
         @who_received=params['who_received_' + ($routing_sheets_details.index(detail) + 1).to_s]
+        @reason_id=params['reason_id_' + ($routing_sheets_details.index(detail) + 1).to_s]
+        puts "rason" + @reason_id.to_s
         @detail_to_update=detail
-        @detail_to_update.who_received=@who_received
-        ##Actualizo el detalle
-        @detail_to_update.update_attribute(:who_received, @who_received)
-        @detail_to_update.update_attribute(:received,'s') ## s= fue recibido el producto
-        ##Actualizo el estado del producto a "Entregado" y la fecha en que recibio el producto
         @product=Product.where("id=?", detail.product_id).first
-        @product.update_attribute(:product_state_id,6)  ## id 6="Entregado" ProductState.where("state_name='Entregado'").first.id
-        @product.update_attribute(:received_at, @product.format_admission_date)
+        valid_received=/\s*[A-Za-z]+\s*/.match(@who_received)
+        if(valid_received!=nil) then
+          ##Actualizo el detalle
+          @detail_to_update.update_attribute(:who_received, @who_received)
+          @detail_to_update.update_attribute(:received,'s') ## s= fue recibido el producto
+          ##Actualizo el estado del producto a "Entregado" y la fecha en que recibio el producto
+          
+          @product.update_attribute(:product_state_id,6)  ## id 6="Recibido" ProductState.where("state_name='Recibido'").first.id
+          @product.update_attribute(:received_at, @product.format_admission_date)
+        else
+          #Actualizo el motivo por el cual no se entrego el producto
+          @detail_to_update.update_attribute(:reason_id, @reason_id)
+          @product.update_attribute(:product_state_id,7) ## id 7= No recibido
+        end
         
         ##Obtengo el id de la hoja de ruta 
         @routing_sheet_id=detail.routing_sheet_id
@@ -291,9 +300,10 @@ class RoutingSheetsController < ApplicationController
       end
     end
     
-    puts params[:who_received] 
     respond_to do |format|
-      format.js
+      #format.js
+       format.html { redirect_to @routing_sheet, notice: 'Los detalles se actualizaron correctamente' }
+       format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
     end
   end
 end
