@@ -205,12 +205,18 @@ class RetireNotesController < ApplicationController
      @product_type_id=params[:product_type_id]
      @state_id=params[:retire_note_state_id]
        begin
-         if @number!="" then @sql = @sql + " and number=" + @number end
-         if @customer_id!="" then @sql = @sql + " and customer_id=" + @customer_id end
-         if @register_date != "" then @sql= @sql + " and date='" + @register_date +"'" end
-         if @expiration_date != "" then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
-         if @state_id != "" then @sql=@sql + " and retire_note_state_id=" + @state_id end
-         if @product_type_id != "" then @sql=@sql + " and product_type_id=" + @product_type_id end
+         valid_number=/^\d+$/.match(@number)
+         if valid_number!= nil then @sql = @sql + " and number=" + @number end
+         valid_customer_id=/^\d+$/.match(@customer_id)
+         if valid_customer_id!=nil then @sql = @sql + " and customer_id=" + @customer_id end
+         valid_register_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@register_date)
+         if valid_register_date!=nil then @sql= @sql + " and date='" + @register_date +"'" end
+         valid_expiration_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@expiration_date)
+         if valid_expiration_date != nil then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
+         valid_state_id=/^\d+$/.match(@state_id)
+         if valid_state_id!=nil then @sql=@sql + " and retire_note_state_id=" + @state_id end
+         valid_product_type_id=/^\d+$/.match(@product_type_id)
+         if valid_product_type_id!=nil then @sql=@sql + " and product_type_id=" + @product_type_id end
          #Genero la consulta
          
            if(@sql!="1=1") 

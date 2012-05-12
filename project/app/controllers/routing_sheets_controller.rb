@@ -218,19 +218,19 @@ class RoutingSheetsController < ApplicationController
     
     if (valid_inited_at != nil and valid_finished_at != nil) then
       @sql=" 1=1 "  
-      valid_number=/\d+/.match(@number)
+      valid_number=/^\d+$/.match(@number)
       if(valid_number!=nil) then
         @sql = @sql + " and number=" + @number
       end
-      valid_employee=/\d+/.match(@employee_id)
+      valid_employee=/^\d+$/.match(@employee_id)
       if(valid_employee!=nil) then
         @sql = @sql + "and employee_id=" + @employee_id
       end
-      valid_area=/\d+/.match(@area_id)
+      valid_area=/^\d+$/.match(@area_id)
       if(valid_area!= nil) then
         @sql = @sql + " and area_id=" + @area_id
       end
-      valid_state=/\d+/.match(@state_id)
+      valid_state=/^\d+$/.match(@state_id)
       if(valid_state!= nil) then
         @sql = @sql + " and routing_sheet_state_id=" + @state_id
       end
@@ -253,7 +253,7 @@ class RoutingSheetsController < ApplicationController
   #post search details by routing_sheet id
   def get_details
     @routing_sheet_id=params[:routing_sheet_id]
-    valid_routing_sheet_id=/\d+/.match(@routing_sheet_id)
+    valid_routing_sheet_id=/^\d+$/.match(@routing_sheet_id)
       if(valid_routing_sheet_id!=nil) then
           $routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?", @routing_sheet_id)    
       else
@@ -275,7 +275,7 @@ class RoutingSheetsController < ApplicationController
         puts "rason" + @reason_id.to_s
         @detail_to_update=detail
         @product=Product.where("id=?", detail.product_id).first
-        valid_received=/\s*[A-Za-z]+\s*/.match(@who_received)
+        valid_received=/^\D{4,35}$/.match(@who_received)
         if(valid_received!=nil) then
           ##Actualizo el detalle
           @detail_to_update.update_attribute(:who_received, @who_received)

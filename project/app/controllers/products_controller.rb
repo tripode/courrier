@@ -272,7 +272,7 @@ class ProductsController < ApplicationController
     
         
         #Si es distinto de nil es un numero
-        valid_number=/\d+/.match(@retire_note_number)
+        valid_number=/^\d+$/.match(@retire_note_number)
 
         if(valid_number!= nil) then
         
@@ -282,28 +282,29 @@ class ProductsController < ApplicationController
           end
         end
         #Si se selecciono algun tipo de producto entonces agrego a la consulta
-        if(@product_type_id!="") then
+        valid_product_type_id=/^\d+$/.match(@product_type_id)
+        if(valid_product_type_id!=nil) then
           @sql = @sql + " and products.product_type_id=" + @product_type_id.to_s
         end
         #Si se selecciono algun tipo de estado entonces agrego a la consulta
-        valid_product_state_id=/\d+/.match(@product_state_id)
+        valid_product_state_id=/^\d+$/.match(@product_state_id)
         if(valid_product_state_id!=nil)then
           @sql = @sql + " and products.product_state_id=" + valid_product_state_id.to_s
         end
         
          #Si se selecciono algun destinatario agrego a la consulta
-        valid_receiver_id=/\d+/.match(@receiver_id)
+        valid_receiver_id=/^\d+$/.match(@receiver_id)
         if(valid_receiver_id!=nil) then
          @sql = @sql + " and receiver_id=" + valid_receiver_id.to_s
         end
         #Si hay codigo de barras agrego a la consulta
-        valid_barcode=/\d+/.match(@bar_code)
+        valid_barcode=/^\d+$/.match(@bar_code)
         if(valid_barcode!=nil) then
           @sql = @sql + " and products.bar_code='" + valid_barcode.to_s + "'"
         end
         
         #Si hay cliente agrego a la consulta
-        valid_customer_id=/\d+/.match(@customer_id)
+        valid_customer_id=/^\d+$/.match(@customer_id)
         puts valid_customer_id
         if(valid_customer_id!=nil) then
           $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
