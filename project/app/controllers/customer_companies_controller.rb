@@ -62,6 +62,8 @@ class CustomerCompaniesController < ApplicationController
   def create
     @customer_company = Customer.new(params[:customer])
     @customer_company.customer_type_id =CustomerType.where("type_name='Empresa' ").first.id
+    @customer_company.name=''
+    @customer_company.last_name=''
     @notice=""
     respond_to do |format|
       begin 

@@ -71,6 +71,10 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
+    #Variables para inicializar popin destinatario
+    @receiver = Receiver.new
+    @cities = City.all
+    #Variables de la clase
     $product = Product.new(params[:product])
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id

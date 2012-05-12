@@ -47,8 +47,8 @@ Employee.transaction do
     (1..10).each do |t|
       Employee.create(
         :email=>"empleado_#{t}@server.com",
-        :name=>"empleado_nombre_#{t}",
-        :last_name =>"empleado_apellido_#{t}",
+        :name=>"e_nombre_#{t}",
+        :last_name =>"e_apellido_#{t}",
         :num_identity => "#{t*10000}",
         :address=>"calle cualquiera numero #{t}",
         :admission_date=>date,
