@@ -22,16 +22,23 @@ Project::Application.routes.draw do
 
   resources :transport_guide_details do
     member do
+      
      
     end
     collection do
       post 'add_detail_product'
       post 'delete_detail_product'
+     
+      
        
     end
   end
 
-  resources :transport_guides
+  resources :transport_guides do
+    collection do
+       get 'searching'
+    end
+  end
 
   resources :products
 
