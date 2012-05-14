@@ -47,6 +47,12 @@ class RoutingSheetsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @routing_sheet }
+      format.pdf do
+        pdf = RoutingSheetPdf.new(@routing_sheet,@routing_sheets_details)
+        send_data pdf.render, filename: "hoja_de_ruta_#{@routing_sheet.id}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
     end
   end
 

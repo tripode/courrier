@@ -45,6 +45,6 @@
 </div>
 <div class="span-24 center last" >
 		<%= link_to 'Regresar', routing_sheets_path %>
-		<%= link_to 'Imprimir' %>
+		<%= link_to 'Imprimir',routing_sheet_path(@routing_sheet, :format => "pdf")  %>
 </div>
 
