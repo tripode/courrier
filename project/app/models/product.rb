@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   has_many :routing_sheet_details
   
    validates :retire_note_id, :receiver_id, :remitter, :product_type_id,
-    :fragile, :product_state_id,:bar_code,:created_at, :presence =>true
+    :product_state_id,:bar_code,:created_at, :presence =>true
     
   def format_admission_date
     admission_date=Date.today

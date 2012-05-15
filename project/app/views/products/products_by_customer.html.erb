@@ -1,0 +1,84 @@
+<div class="span-24 left">
+
+	<fieldset>
+		<legend>
+			Informe productos por cliente
+		</legend>
+		<%= form_tag({:action => 'generate_inform'}, :remote => true) do  %>
+		
+		<ul>
+			<li>
+				<label>Inicio:</label>
+				<%= text_field_tag :inited_at,@product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12, id: 'inited_at' %>
+			</li>
+			<li>
+				<label>Fin:</label>
+				<%= text_field_tag :finished_at,@product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12, id:'finished_at' %>
+			</li>
+		</ul>
+		<ul>
+			<div class="clear"></div>
+			<li>
+			    <label>Cliente:</label>
+			    <input id="customer"  type="text" style="width: 60%" class="i_autocomplit"  />
+			    <%= hidden_field_tag :customer_id,nil,id: 'customer_id_hidden' %>    
+			</li>
+			<li>
+			    <label>Estado Producto:</label>
+			    <%= select_tag :product_state_id, options_from_collection_for_select(ProductState.where("id=6 or id=7"),"id","state_name"), prompt: "-- Todos--", id:'product_state_id' %>
+			</li>
+		</ul>
+		
+	
+	</fieldset>
+	<div class="span-24 center last" >
+		
+			<%= submit_tag 'Generar', id: 'button_generate_id'%>
+			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+	</div>
+	
+	<% end %>
+</div>
+<div id="list_products" class="span-24 left">
+	<%= render 'list_products_by_customer' %>
+</div>
+<script>
+	//focus en el formulario
+   $("#customer").focus();
+	$('.limpiar').click(function() {
+		$('input[type=text]').val("");
+		$('input[type=number]').val("");
+		$('input[type=hidden]').val("");
+	});
+	
+	 //Autocomplite de clientes
+	$(function() {
+		var list =[];
+		var i=0;
+		<% @customers.each do |c| %>
+		 	list[i]={
+		 		label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		$("#customer").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#customer_id_hidden").val(ui.item.id); 
+			}
+		});
+	});
+	
+	
+	
+	//Validaciones
+     
+     //Validaciones fechas
+     var f5 = new LiveValidation('inited_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f5.add( Validate.Presence, { failureMessage: " " } );
+     var f6 = new LiveValidation('finished_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f6.add( Validate.Presence, { failureMessage: " " } );   
+     
+
+</script>

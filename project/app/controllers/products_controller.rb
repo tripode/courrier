@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
    $addresses=Array.new
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @products }
+      format.json { render json: $products }
     end
   end
 
@@ -52,8 +52,6 @@ class ProductsController < ApplicationController
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
     $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
     $receivers = Receiver.find(:all)
-    $product_state=ProductState.new
-    $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
     
     $addresses=Array.new
     $item = 1
@@ -76,6 +74,7 @@ class ProductsController < ApplicationController
     @cities = City.all
     #Variables de la clase
     $product = Product.new(params[:product])
+    $product.product_state_id = 2 #Estado por defecto del producto es No enviado id = 2
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
     @retire_note=RetireNote.find(@retire_note_id)
@@ -112,9 +111,7 @@ class ProductsController < ApplicationController
             #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
             $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
             $receivers = Receiver.find(:all)
-            $product_state=ProductState.new
-            $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
-            
+           
             $addresses=Array.new
             $item = 1
             ##----------
@@ -314,6 +311,63 @@ class ProductsController < ApplicationController
         end  
     else
        $products=Array.new
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  
+  ## Metodo que redirige a la pagina products_by_customer
+  def products_by_customer
+    @product=Product.new
+    @details=Array.new
+    @customers=Customer.all
+    respond_to do |format|
+      format.html # products_by_customer.html.erb
+      format.json { render json: @products }
+    end
+  end
+  
+  #Post method: Este metodo genera el informe para el cliente de los products
+  #entregados entre un rango de fecha
+  def generate_inform
+    @customer_id=params[:customer_id]
+    @inited_at = params[:inited_at]
+    @finished_at = params[:finished_at]
+    @state_id= params[:product_state_id]
+    @details= Array.new
+    valid_customer_id=/^\d+$/.match(@customer_id)
+    valid_state_id=/^\d+$/.match(@state_id)
+    valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
+    valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
+    if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) then
+      #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
+      @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
+      if(@routing_sheets!= nil) then
+        #Por cada hoja de ruta obtengo obtengo los detalles
+        @routing_sheets.each{|r|
+           @details_by_routing_sheet = RoutingSheetDetail.where("routing_sheet_id=?", r.id)
+           if(@details_by_routing_sheet!= nil) then
+              @details_by_routing_sheet.each{|detail|
+                # Si se selecciona algun estado del producto para el informe, solo se mostraran los productos con esos estados
+                if valid_state_id != nil then
+                  puts @state_id
+                  puts detail.product.product_state_id
+                  if detail.product.product_state_id == @state_id.to_i then
+                     @details.push(detail)
+                  end
+                  puts "no entro"
+                # Caso contrario se muestran todos
+                else
+                  @details.push(detail)
+                end
+                
+              }
+           end
+        }
+       
+      end
     end
     respond_to do |format|
       format.js

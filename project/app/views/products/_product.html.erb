@@ -60,25 +60,17 @@
 				<label>Ciudad:</label>
 				<input id="city_id" type="text" size="20" />
 			</li>
-			
 			<div class="clear"></div>
-			<li>
-				<label>Fragil:</label>
-				<%= f.select :fragile,["si","no"],id:'fragile_id', size:'5'%>
-			</li>
 			<li>
 				<label>Descripcion:</label>
 				<%=f.text_field :description, size:'30',id: 'description_id',:maxlength => 100  %>
 			</li>
-			<div class="clear"></div>
-			<li>
-				<label>Estado:</label>
-				<%=f.select :product_state_id, $product_state.getProductStates,prompt: "-- Seleccionar--", id:'product_state_id' %>
-			</li>
+			
 			<li>
 				<label>*Codigo de Barra:</label>
 				<%= f.text_field :bar_code, id: 'bar_code',size: '20', :maxlength => 25%>
 			</li>
+			
 			<div class="clear"></div>
 		</ul>
 	</fieldset>
