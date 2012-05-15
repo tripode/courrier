@@ -104,7 +104,14 @@ class RoutingSheetsController < ApplicationController
     @routing_sheet.employee_id=current_user.employee.id #Seteo el user logueado
     @routing_sheet.routing_sheet_state_id = 1 ## Por defecto el estado es "En Proceso", id: 1
     @routing_sheet.total_amount=$total
-    @routing_sheet.number = $number.to_i + 1
+    $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
+    #La primera ves que se registra una hoja de ruta se setea como numero 1
+    if(@start_value.to_i==$number.to_i) then
+      $number= 1
+      @routing_sheet.number= $number.to_i #
+    else
+      @routing_sheet.number=$number.to_i + 1
+    end
     respond_to do |format|
       begin
         RoutingSheet.transaction do

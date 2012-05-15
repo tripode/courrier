@@ -2,9 +2,9 @@
 
 	<fieldset>
 		<legend>
-			Informe productos por cliente
+			Informe de Entrega
 		</legend>
-		<%= form_tag({:action => 'generate_inform'}, :remote => true) do  %>
+		<%= form_tag({:action => 'generate_delivery_report_pdf',:format=> "pdf"}) do  %>
 		
 		<ul>
 			<li>
@@ -23,10 +23,7 @@
 			    <input id="customer"  type="text" style="width: 60%" class="i_autocomplit"  />
 			    <%= hidden_field_tag :customer_id,nil,id: 'customer_id_hidden' %>    
 			</li>
-			<li>
-			    <label>Estado Producto:</label>
-			    <%= select_tag :product_state_id, options_from_collection_for_select(ProductState.where("id=6 or id=7"),"id","state_name"), prompt: "-- Todos--", id:'product_state_id' %>
-			</li>
+			
 		</ul>
 		
 	
@@ -34,7 +31,6 @@
 	<div class="span-24 center last" >
 		
 			<%= submit_tag 'Generar', id: 'button_generate_id'%>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	
@@ -75,10 +71,11 @@
 	//Validaciones
      
      //Validaciones fechas
-     var f5 = new LiveValidation('inited_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
-     f5.add( Validate.Presence, { failureMessage: " " } );
-     var f6 = new LiveValidation('finished_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
-     f6.add( Validate.Presence, { failureMessage: " " } );   
-     
+     var f1 = new LiveValidation('inited_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f1.add( Validate.Presence, { failureMessage: " " } );
+     var f2 = new LiveValidation('finished_at', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+     f2.add( Validate.Presence, { failureMessage: " " } );   
+     var f3 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: " " } );
 
 </script>

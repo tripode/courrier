@@ -319,7 +319,7 @@ class ProductsController < ApplicationController
   
   
   ## Metodo que redirige a la pagina products_by_customer
-  def products_by_customer
+  def delivery_report
     @product=Product.new
     @details=Array.new
     @customers=Customer.all
@@ -331,14 +331,12 @@ class ProductsController < ApplicationController
   
   #Post method: Este metodo genera el informe para el cliente de los products
   #entregados entre un rango de fecha
-  def generate_inform
+  def generate_delivery_report_pdf
     @customer_id=params[:customer_id]
     @inited_at = params[:inited_at]
     @finished_at = params[:finished_at]
-    @state_id= params[:product_state_id]
     @details= Array.new
     valid_customer_id=/^\d+$/.match(@customer_id)
-    valid_state_id=/^\d+$/.match(@state_id)
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) then
@@ -350,17 +348,14 @@ class ProductsController < ApplicationController
            @details_by_routing_sheet = RoutingSheetDetail.where("routing_sheet_id=?", r.id)
            if(@details_by_routing_sheet!= nil) then
               @details_by_routing_sheet.each{|detail|
-                # Si se selecciona algun estado del producto para el informe, solo se mostraran los productos con esos estados
-                if valid_state_id != nil then
-                  puts @state_id
-                  puts detail.product.product_state_id
-                  if detail.product.product_state_id == @state_id.to_i then
-                     @details.push(detail)
-                  end
-                  puts "no entro"
-                # Caso contrario se muestran todos
-                else
-                  @details.push(detail)
+                #obtengo el producto del detalle
+                @product=Product.where("id=?", detail.product_id).first
+                #obtengo la nota de retiro  a la cual pertenece este producto
+                @retire_note= RetireNote.where("id=?", @product.retire_note_id).first
+                #obtengo el cliente que hace referencia a esta nota de retiro
+                @get_customer_id = @retire_note.customer_id
+                if (@get_customer_id.to_i == @customer_id.to_i) then # Si pertenece al cliente requerido al informe, agrego 
+                    @details.push(detail)
                 end
                 
               }
@@ -368,9 +363,20 @@ class ProductsController < ApplicationController
         }
        
       end
+      @customer=Customer.where("id=?", @customer_id).first
+      @employee=current_user.employee
+      
+      
     end
     respond_to do |format|
-      format.js
+      format.pdf do
+        create_date=Date.today
+        create_date.strftime("%d-%m-%Y") if create_date
+        pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details)
+        send_data pdf.render, filename: "informe_#{@customer.company_name + ' ' + @customer.last_name + ' ' + @customer.name}_#{create_date}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
     end
   end
 end
