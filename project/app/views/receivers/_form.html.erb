@@ -3,17 +3,17 @@
 		<legend>
 			Destinatario
 		</legend>
-		<%= form_for(@receiver) do |f| %>
+		
 		<div class="span-10">
 			<ul class="field-list">
 				<div>
 					<li>
-						<%= f.label :receiver_name, "* Nombre y Apellido"%>
-		    			<%= f.text_field :receiver_name , :id => 'receiver-name'%>
+                                          <%= f.label :receiver_name, "* Nombre y Apellido"%>
+                                          <%= f.text_field :receiver_name , :id => 'receiver-name'%>
 					</li>
 					<li>
-						<%= f.label :document, "Nº de Documento" %>
-		    			<%= f.text_field :document, :id => 'document' %>
+                                          <%= f.label :document, "Nº de Documento" %>
+                                          <%= f.text_field :document, :id => 'document' %>
 					</li>					
 				</div>
 			</ul>
@@ -82,16 +82,8 @@
 			</table>
 		</div>
 	</fieldset>
-	<div class="span-24 center last" >
-			<% if @receiver.id %>
-				<%= f.submit 'Actualizar' %>
-			<% else %>
-				<%= f.submit 'Guardar' %>
-			<% end %>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
-			<%= link_to 'Cancelar','#', class: 'button'%>
-	</div>
-	<% end %>
+	
+	
 </div>
 
 <script type="text/javascript">
@@ -179,11 +171,6 @@
 			event.preventDefault();
 			$(this).parent().parent().remove();
 		});
-	}
-	
-	function delete(event){
-		event.preventDefault();
-		alert('hehe');
 	}
 	
 </script>

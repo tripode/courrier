@@ -48,7 +48,6 @@ class ReceiversController < ApplicationController
 
   # GET /receivers/1/edit
   def edit
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@editttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     @receiver = Receiver.find(params[:id])
     @cities = City.all
     respond_to do |format|
@@ -59,23 +58,25 @@ class ReceiversController < ApplicationController
   # POST /receivers
   # POST /receivers.json
   def create
+    puts params.to_yaml
     @receiver = Receiver.new(:receiver_name => params[:receiver][:receiver_name], :document => params[:receiver][:document])
     respond_to do |format|
       if @receiver.save
         @receiver_addresses = params[:receiver][:receiver_addresses_attributes]
         @receiver_addresses.each do |address|
-          puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@guardando addressees"
-          puts address[0]
-          puts address[1][:label]
           ReceiverAddress.create(:receiver_id => @receiver.id, 
                                  :label => address[1][:label],
                                  :address => address[1][:address],
                                  :city_id => address[1][:city_id])  
         end
-        puts "chega ate aqui @@@@@@@@@@@@@@@@"
         flash[:notice] = "guardado."
-        format.html { redirect_to @receiver, algo: flash[:notice]}
-        format.json { render json: @receiver, status: :created, location: @receiver }
+        if params[:from][:products]
+          #redirect to products via js
+          format.js {}
+        else
+          format.html { redirect_to @receiver, algo: flash[:notice]}
+          format.json { render json: @receiver, status: :created, location: @receiver }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @receiver.errors, status: :unprocessable_entity }
