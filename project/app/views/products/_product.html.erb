@@ -103,40 +103,10 @@
     <% end %>
   </div>	
 </div>
-<script>
-  $('form').submit(function() {  
-    var valuesToSubmit = $(this).serialize();
-    $.ajax({
-        url: $(this).attr('action'), //sumbits it to the given url of the form
-        data: valuesToSubmit,
-        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-    }).success(function(json){
-        alert('hello');
-    });
-  return false; // prevents normal behaviour
-</script>
+
 <script>
 
-	// pop in para agregar destinatarios
-	$(document).ready(function(){
-                //this is for receive popin to send data to the server via ajax
-                $('#b-save-receiver').click(function(event){
-                  event.preventDefault();
-                  var valuesToSubmit = $('#new_receiver').serialize();
-                  alert(valuesToSubmit);
-                  $.ajax({
-                      url: $('#new_receiver').attr('action'), //sumbits it to the given url of the form
-                      data: valuesToSubmit,
-                      type: "post",
-                      dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-                  });
-                  $("#popin").dialog("close");
-                });
-		$("#add_receiver").click(function(event){
-			event.preventDefault();
-			$("#popin").dialog({ title: "Nuevo Destinatario", width: 630});
-		});	
-	});
+	
 	
 	//focus en el formulario
     $("form:not(.filter) :input:visible:enabled:first").focus();
