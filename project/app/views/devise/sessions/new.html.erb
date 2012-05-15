@@ -11,7 +11,11 @@
   			<%= f.label :password %><br />
   			<%= f.password_field :password %>
   		</div>
-  		
+                <div style="color: red; background: gray; text-align: center;">
+                  <% flash.each do |name, msg| %>
+                    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+                  <% end %>
+                </div>
   		<% if devise_mapping.rememberable? -%>
     		<div class="field">
     			<%= f.check_box :remember_me %> 
