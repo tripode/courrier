@@ -40,7 +40,6 @@ Project::Application.routes.draw do
     end
   end
 
-  resources :products
 
   resources :receivers do
     collection do
@@ -67,6 +66,8 @@ Project::Application.routes.draw do
       post 'getCity'
       post 'search'
       post 'getListProducts'
+      post 'generate_inform'
+      get 'products_by_customer'
     end
   end
   
