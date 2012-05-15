@@ -22,10 +22,10 @@
 	  	<td><%= $products.index(product) + 1 %></td>
 	  	<td><%= product.bar_code%></td>
 	  	<td><%= product.product_type.description %></td>
-	  	<td><%= product.receiver.receiver_name%></td>
-	  	<td><%= product.receiver_address.city.name %></td>
-	  	<td><%= product.receiver_address.label%></td>
-	  	<td><%= product.receiver_address.address%></td>
+	  	<td><%= if product.receiver.id != nil then product.receiver.receiver_name end%></td>
+	  	<td><%= if product.receiver_address_id != nil then product.receiver_address.city.name end%></td>
+	  	<td><%= if product.receiver_address_id != nil then product.receiver_address.label end%></td>
+	  	<td><%= if product.receiver_address_id != nil then product.receiver_address.address end%></td>
 	  	<td>
 			<div>
 				<%= link_to image_tag('borrar2.gif'),delete_product_routing_sheet_path(id: product.id), remote:true%>

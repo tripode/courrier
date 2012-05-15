@@ -27,9 +27,9 @@
 	    <td><%= routing_sheet.total_amount %></td>
 	    <td><%= if routing_sheet.routing_sheet_state_id!= nil  then routing_sheet.routing_sheet_state.state_name end %></td>
 	   
-	    <td><%= link_to 'Show', routing_sheet %></td>
-	    <td><%= link_to 'Edit', edit_routing_sheet_path(routing_sheet) %></td>
-	    <td><%= link_to 'Destroy', routing_sheet, confirm: 'Are you sure?', method: :delete %></td>
+	    <td><%= link_to 'Mostrar', routing_sheet %></td>
+	    <td><%= link_to 'Editar', if routing_sheet.routing_sheet_state_id == 1 then edit_routing_sheet_path(routing_sheet) else '#' end %></td>
+	    <td><%= link_to 'Borrar', routing_sheet, confirm: if routing_sheet.routing_sheet_state_id == 1 then 'Estas Seguro?' else 'No se puede eliminar esta Hoja de Ruta.!!!' end, method: :delete %></td>
 	  </tr>
 	  </tbody>
 	<% end %>

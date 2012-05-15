@@ -10,14 +10,22 @@ class RoutingSheetPdf< Prawn::Document
     text "Zona:#{@routing_sheet.area.area_name}"
     text "OBS:#{@routing_sheet.commentary}"
     @routing_sheets_details=details.collect{|detail| 
-      [detail.product.bar_code,
+      [details.index(detail) + 1,
+      detail.product.bar_code,
       detail.product.product_type.description,
-      detail.product.receiver.receiver_name,
-      detail.product.receiver_address.address,
+      if detail.product.receiver_id != nil then detail.product.receiver.receiver_name end,
+      if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address end,
       detail.who_received,
       if detail.reason_id!= nil then detail.reason.description end]
     }
-    table(@routing_sheets_details)
+    header_data=[["Item","Codigo","Tipo Producto","Destinatario","Direccion","Recibio","Motivo no entrega"]]
+    t=header_data.concat(@routing_sheets_details)
+    t=make_table(header_data,:cell_style => { :size => 11})
+    move_down 30
+    t.draw
+    move_down 30
+    text "Firma Mensajero:____________________"
+    
   end
 
 end

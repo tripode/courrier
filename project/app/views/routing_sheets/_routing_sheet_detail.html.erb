@@ -20,8 +20,8 @@
 	  	<td><%= @routing_sheets_details.index(detail) + 1 %></td>
 	  	<td><%= detail.product.bar_code%></td>
 	  	<td><%= detail.product.product_type.description %></td>
-	  	<td><%= detail.product.receiver.receiver_name%></td>
-	  	<td><%= detail.product.receiver_address.address%></td>
+	  	<td><%= if detail.product.receiver_id != nil then detail.product.receiver.receiver_name end%></td>
+	  	<td><%= if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address end%></td>
 	  	<td><%= detail.who_received %> </td>
 	  	<td><%= if detail.reason_id!=nil then detail.reason.description end %> </td>
 	  </tr>

@@ -3,7 +3,12 @@
 		<legend>
 			Hoja de Ruta
 		</legend>
+		<div class="msg" >
+	      <label class="msg-input">
+	        <%=  notice%>
+	      </label>
 	
+	    </div>
 	<%= form_for(@routing_sheet) do |f| %>
 	  <% if @routing_sheet.errors.any? %>
 	    <div id="error_explanation">

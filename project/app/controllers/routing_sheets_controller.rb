@@ -63,8 +63,16 @@ class RoutingSheetsController < ApplicationController
     $products= Array.new
     @area= Area.new
     $total=0;
+    @start_value=ActiveRecord::Base.connection.execute("select start_value from routing_sheets_id_seq").first["start_value"]
     $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
-    @routing_sheet.number=$number.to_i + 1
+    #La primera ves que se registra una hoja de ruta se setea como numero 1
+    if(@start_value.to_i==$number.to_i) then
+      $number= 1
+      @routing_sheet.number= $number.to_i #
+    else
+      @routing_sheet.number=$number.to_i + 1
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @routing_sheet }
@@ -74,15 +82,17 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/1/edit
   def edit
     @routing_sheet = RoutingSheet.find(params[:id])
-    @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
-    $products=Array.new
-   
-    @routing_sheets_details.each do |detail|
-      @product=Product.where("id=?", detail.product_id).first
-      $products.push(@product)
+    ##Solo se puede editar una hoja de ruta cuyo estado sea "En Proceso" id = 1
+    if @routing_sheet.routing_sheet_state_id == 1 then
+      @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
+      $products=Array.new
+     
+      @routing_sheets_details.each do |detail|
+        @product=Product.where("id=?", detail.product_id).first
+        $products.push(@product)
+      end
+      $total=$products.length
     end
-    $total=$products.length
-    puts $total 
     @area= Area.new
   end
 
@@ -166,11 +176,37 @@ class RoutingSheetsController < ApplicationController
   # DELETE /routing_sheets/1.json
   def destroy
     @routing_sheet = RoutingSheet.find(params[:id])
-    @routing_sheet.destroy
-
+    
     respond_to do |format|
-      format.html { redirect_to routing_sheets_url }
-      format.json { head :no_content }
+      ##Solo se pueden eliminar las hojas de rutas cuyo estado en "En Proceso" id=1
+       if @routing_sheet.routing_sheet_state_id== 1 then
+           begin
+             RoutingSheet.transaction do
+               ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
+               @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",@routing_sheet.id)
+               @routing_sheets_details.each do |detail|
+                 ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
+                 @product=Product.where("id=?",detail.product_id).first
+                 @old_product_state_id= 2 ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
+                 @product.update_attribute(:product_state_id,  @old_product_state_id)
+                 #Elimino el detalle de la base de datos
+                 detail.destroy
+               end
+               #Se elimina la hoja de ruta de la base de datos
+               @routing_sheet.destroy
+           
+              format.html { redirect_to routing_sheets_url, notice: 'La hoja de ruta se ha eliminado' }
+              format.json { head :no_content }
+            end
+          rescue
+           format.html { redirect_to routing_sheets_url, notice: 'Error al intentar eliminar esta hoja de ruta. Puede estar siendo utilizada.' }
+           format.json { head :no_content }
+          end
+      else
+           format.html { redirect_to routing_sheets_url, notice: 'No se puede eliminar porque ya ha sido procesada.' }
+           format.json { head :no_content }
+      end
+      
     end
   end
   ## Agrega el producto a la lista, pasando como parametro el codigo de barra el producto
