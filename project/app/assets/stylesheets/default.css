@@ -464,28 +464,29 @@ div#popin div li{
 }
 div#popin div li label{
 	text-align: right;
+        font-size: 90%;
 }
 div#popin div li input{
 	float: right;
 	width: 145px;
 	margin: 0.5px;
 }
-div#popin div fieldset form div{
+div#popin div fieldset div{
 	width: 240px;
 }
-div#popin div fieldset form div > div{
+div#popin div fieldset div > div{
 	padding-left: 185px;
 }
-div#popin div fieldset form div > div.subtitle{
+div#popin div fieldset div > div.subtitle{
 	margin: 10px 0 -5px 0;
 	padding-left: 150px;
 }
-div#popin div fieldset form div h4{
+div#popin div fieldset div h4{
 	font-size: 12px;
 	margin: 0;
-	padding 0;
+	padding: 0;
 }
-div#popin div fieldset form div table{
+div#popin div div table, div#popin div fieldset div table th{
 	font-size: 12px;
 }
 div#popin input[type="button"],
@@ -499,3 +500,4 @@ div#popin a.button{
    opacity: .30;
    filter: Alpha(Opacity=30);
 }
+
