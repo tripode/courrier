@@ -86,13 +86,13 @@ class CargoManifestsController < ApplicationController
         }      
       end
       respond_to do |format|
-        format.html { render new_cargo_manifest_path, flash[:msg]= "Guardado Correctamente!"}
+        format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
         format.json { head :no_content}
-#        format.json { render json: @msg}
+
       end
     rescue
       respond_to do |format|
-        format.html { redirect_to new_cargo_manifest_path,flash[:msg]= "Error al guardar!"}
+        format.html { redirect_to new_cargo_manifest_path,notice: "Error al guardar!"}
         format.json { render json: @cargo_manifest.errors, status: :unprocessable_entity }
       end
 
