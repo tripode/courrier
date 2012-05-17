@@ -1,5 +1,5 @@
 class DeliveryReportPdf< Prawn::Document
-  def initialize(inited_at,finished_at,customer,employee,details)
+  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url)
     super()
     text "Informe de Entrega"
     text "Cliente:#{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
@@ -19,10 +19,10 @@ class DeliveryReportPdf< Prawn::Document
     }
     header_data=[["Item","Codigo","Tipo Producto","Destinatario","Direccion","Recibio","Motivo no entrega"]]
     t=header_data.concat(@routing_sheets_details)
-    t=make_table(header_data,:cell_style => { :size => 11})
+    t=make_table(header_data,:cell_style => { :font => "Times-Roman", :font_style => :italic, :size => 10}) #:underline_header
     move_down 30
     t.draw
     move_down 30
-    
+    text "<u><link href='#'>Enviar</link></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
   end
 end
