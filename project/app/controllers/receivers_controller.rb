@@ -70,13 +70,13 @@ class ReceiversController < ApplicationController
                                  :city_id => address[1][:city_id])  
         end
         flash[:notice] = "guardado."
-        if params[:from][:products]
+        #if params[:from][:products]
           #redirect to products via js
-          format.js {}
-        else
+         # format.js {}
+        #else
           format.html { redirect_to @receiver, algo: flash[:notice]}
           format.json { render json: @receiver, status: :created, location: @receiver }
-        end
+        #end
       else
         format.html { render action: "new" }
         format.json { render json: @receiver.errors, status: :unprocessable_entity }

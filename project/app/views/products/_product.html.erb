@@ -39,16 +39,15 @@
 				<input id='product_type' type="text" size="20"/>
 				<%= f.hidden_field :product_type_id, id: 'product_type_id_hidden' %>
 			</li>
-			<div class="clear"></div>
+			
 			<li>
 				<label>*Remitente:</label>
 				<%= f.text_field :remitter, id:'remitter_id', value: "" ,style: 'width: 50%',:maxlength => 50 %>
 			</li>
-			
 			<li>
 				<label for="receiver">* Destinatario:</label>
-			    <input id="receiver" type="text" size="27" />
-			    <%= link_to image_tag('add.png') , new_receiver_path, :id => "add_receiver", %>
+				<input id="receiver" type="text" size="27" />
+				<%= link_to image_tag('add.png') , new_receiver_path, :id => "add_receiver", %>
 				<%= f.hidden_field :receiver_id, id: 'receiver_id_hidden' %>
 			</li>
 			<div class="clear"></div>
@@ -103,13 +102,25 @@
                 $('#b-save-receiver').click(function(event){
                   event.preventDefault();
                   var valuesToSubmit = $('#new_receiver').serialize();
-                  alert(valuesToSubmit);
                   $.ajax({
                       url: $('#new_receiver').attr('action'), //sumbits it to the given url of the form
                       data: valuesToSubmit,
                       type: "post",
                       dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
                   });
+                  //Actualiza el autocomplete de receivers de la pagina de producs
+                  $.post("<%= update_new_receiver_products_path %>",{"receiver_id": null},
+					function(receivers){
+						var list=[];
+						$(receivers).each(function(index,element){
+							list[index]={
+					 			label: element.receiver_name,
+					 			id: element.id}
+						});
+						//Actualizo la nueva lista
+						$( "#receiver" ).autocomplete({ source: list });
+				},"json");
+				//Cierra el popin
                   $("#popin").dialog("close");
                 });
 		$("#add_receiver").click(function(event){
@@ -249,8 +260,8 @@
 		
 		
 	});
-	
 	//Autocomplite de destinatarios
+		
 	$(function() {
 		var list =[];
 		var i=0;
@@ -304,6 +315,7 @@
 		
 		}
 	});
+
 	//Cuando cambia la direccion se actualiza el label city
 	$("#product_receiver_address_id").change(function(){
 		$.post("<%= getCity_products_path %>",{"address_id": $(this).val()},

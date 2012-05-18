@@ -69,6 +69,7 @@ Project::Application.routes.draw do
       post 'generate_delivery_report_pdf'
       get 'delivery_report'
       get 'send_email'
+      post 'update_new_receiver'
     end
   end
   

@@ -191,6 +191,19 @@ class ProductsController < ApplicationController
     end
   end
   
+  #post Este metodo se encarga de actualizar la lista de receivers, devuelve la lista
+  # para que sea procesada en la  pagina para el autocomplete
+  def update_new_receiver
+    
+    @receiver_added = Receiver.last
+    $receivers.push(@receiver_added)
+    respond_to do |format|
+      format.html
+      format.json {render json: $receivers}
+    end
+  end
+  
+  
   #post
   #Metodod que retorna un objecto que contiene las direcciones del destinatario
   #Busca las direcciones con el id del destinatario que se le pasa por parametro
