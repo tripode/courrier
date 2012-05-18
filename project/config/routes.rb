@@ -68,6 +68,7 @@ Project::Application.routes.draw do
       post 'getListProducts'
       post 'generate_delivery_report_pdf'
       get 'delivery_report'
+      get 'send_email'
     end
   end
   

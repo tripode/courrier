@@ -372,9 +372,10 @@ class ProductsController < ApplicationController
       format.pdf do
         create_date=Date.today
         create_date.strftime("%d-%m-%Y") if create_date
-        pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url)
+        @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name + '_' + @customer.last_name + '_' + @customer.name}_#{create_date}.pdf"
+        pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
         begin
-        pdf.render_file("#{Rails.root}/app/views/reports/informe_#{@customer.company_name + ' ' + @customer.last_name + ' ' + @customer.name}_#{create_date}.pdf")
+        pdf.render_file(@file_path)
         rescue
           #no se guardo el archivo
         end
@@ -383,6 +384,20 @@ class ProductsController < ApplicationController
                               disposition: "inline"
         
       end
+    end
+  end
+   
+  ##
+  # Envia el pdf al email del cliente
+  # 
+  def send_email
+    @costumer_id = params[:customer_id]
+    @file_path = params[:file_path]
+    @costumer = Customer.find(@costumer_id)
+    EmailSender.eemail(@costumer.email, @file_path).deliver
+    respond_to do |format|
+      format.html {redirect_to  delivery_report_products_path}
+      format.json { head :no_content }
     end
   end
 end

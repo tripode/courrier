@@ -1,5 +1,5 @@
 class DeliveryReportPdf< Prawn::Document
-  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url)
+  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path)
     super()
     text "Informe de Entrega"
     text "Cliente:#{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
@@ -23,6 +23,6 @@ class DeliveryReportPdf< Prawn::Document
     move_down 30
     t.draw
     move_down 30
-    text "<u><link href='#'>Enviar</link></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
+    text "<u><a href='http://localhost:3000/products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
   end
 end

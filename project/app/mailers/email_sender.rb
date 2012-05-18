@@ -4,9 +4,12 @@ class EmailSender < ActionMailer::Base
   ##
   # Este metodo es el encargado de preparar los destinatarios, asunto y adjuntos.
   #
-  def send_email(customer) 
-    attachments["testeeeeee.pdf"] = File.read("C:/test.pdf")
-    mail(:to => customer.email, :subject => 'Informe') do |format|
+  def eemail(email, file_path) 
+    puts "llega al email sender"
+    puts email
+    puts file_path
+    attachments["testeeeeee.pdf"] = File.read(file_path)
+    mail(:to => email, :subject => 'Informe') do |format|
       format.text do
         render :text => 'Este es un test de envio de email'
       end
