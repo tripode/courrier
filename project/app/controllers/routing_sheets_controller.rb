@@ -268,7 +268,7 @@ class RoutingSheetsController < ApplicationController
   def search
     @number=params[:number]
     @employee_id=params[:employee_id]
-    @area_id=params[:area_id]
+    @area_id=params[:city_id]
     @state_id=params[:routing_sheet_state_id]
     @date_start=params[:date_start]
     @date_end=params[:date_end]

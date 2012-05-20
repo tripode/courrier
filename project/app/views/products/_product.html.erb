@@ -273,6 +273,7 @@
 		<% end %>
 		//receiver autocomplete
 		$("#receiver").autocomplete({
+			minLength: 2,
 			source: list,
 			select: function(event, ui) { 
 				$("#receiver_id_hidden").val(ui.item.id);
