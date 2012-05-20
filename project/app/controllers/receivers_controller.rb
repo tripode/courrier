@@ -38,7 +38,7 @@ class ReceiversController < ApplicationController
   # GET /receivers/new.json
   def new
     @receiver = Receiver.new
-    @receivers = Receiver.all
+    @receivers = Receiver.order('created_at DESC').limit 10
     @cities = City.all
     respond_to do |format|
       format.html # new.html.erb
