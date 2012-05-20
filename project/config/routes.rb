@@ -37,6 +37,7 @@ Project::Application.routes.draw do
   resources :transport_guides do
     collection do
        get :tg_searching
+       post :get_transport_guides
     end
   end
 

@@ -21,12 +21,10 @@
       <th>Fecha Creación</th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @transport_guides.each do |transport_guide| %>
-
       <tr>
         <td><%= transport_guide.num_guide %></td>
         <td><%= transport_guide.destination_person %></td>
@@ -40,7 +38,6 @@
         <td><%= City.find(transport_guide.origin_city_id).name   %></td>
         <td><%= transport_guide.transport_guide_state.name_state %></td>
         <td><%= transport_guide.created_at %></td>
-        <td><%= link_to 'Show',  transport_guide %></td>
         <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
         <td><%= link_to image_tag('borrar2.gif'), transport_guide, confirm: 'Are you sure?', method: :delete %></td>
       </tr>
