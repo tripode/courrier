@@ -55,8 +55,6 @@ Project::Application.routes.draw do
   resources :customers
   
   resources :customer_companies
-  
-  devise_for :users
 
   resources :products do
     collection do
