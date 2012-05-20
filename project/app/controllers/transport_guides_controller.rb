@@ -145,12 +145,20 @@ class TransportGuidesController < ApplicationController
     end
   end
 
-  #post
+  #get
   def tg_searching
+    @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+    @customers= Customer.find(:all)
+    @cities= City.find(:all)
+    @transport_guides= TransportGuide.where(id: 0)
     respond_to do |format|
       format.html #{ redirect_to transport_guides_url }
       format.json { head :no_content }
     end
+
+  end
+  #post
+  def get_transport_guides
 
   end
 

@@ -1,33 +1,147 @@
 <div class="span-24 last">
-  <fieldset>
-    <legend>Buscar Guias de Transportes</legend>
-    <ul>
-      <li>
-        <label>Numero de Guia:</label>
-        <input type="text" size="6" maxlength="6"></input>
-      </li>
-      <li>
-        <label>Fecha De Creación:</label>
-        <input type="text" size="12" maxlength="12" class="i_fecha"></input>
-      </li>
-      <div class="clear"></div>
-       <li>
-        <label>Cliente:</label>
-        <input type="text" size="20" maxlength="20" class="i_autocomplit"></input>
-      </li>
-      <li>
-        <label>Estado:</label>
-        <select></select>
-      </li>
-       <div class="clear"></div>
-      <li>
-        <label>Origen:</label>
-        <input type="text" size="20" maxlength="20" class="i_autocomplit"></input>
-      </li>
-      <li>
-        <label>Destino:</label>
-        <input type="text" size="20" maxlength="20" class="i_autocomplit"></input>
-      </li>
-    </ul>
-  </fieldset>
-</div>
+  <%= form_tag({:action=> 'get_transport_guides'}) do |f| %>
+
+    <fieldset>
+      <legend>Buscar Guias de Transportes</legend>
+      <ul>
+        <li>
+          <label>Numero de Guia:</label>
+          <input type="text" size="6" maxlength="6"></input>
+        </li>
+        <li>
+          <label>Fecha De Creación:</label>
+          <%= text_field 'search', 'date', class: 'i_fecha'%>
+        </li>
+        <div class="clear"></div>
+        <li>
+          <label>Cliente:</label>
+          <input id="customer" type="text" size="20" maxlength="20" class="i_autocomplit"></input>
+          <%=hidden_field 'search', 'customer_id'%>
+        </li>
+        <li>
+          <label>Estado:</label>
+          <%=select( 'search',"transport_guide_state_id", @transport_guide_states )%>
+        </li>
+        <div class="clear"></div>
+        <li>
+          <label>Origen:</label>
+          <input id="origin_city" type="text" size="20" maxlength="20" class="i_autocomplit"></input>
+          <%=hidden_field 'search', 'origin_city_id'%>
+        </li>
+        <li>
+          <label>Destino:</label>
+          <input id="destination_city" type="text" size="20" maxlength="20" class="i_autocomplit"></input>
+          <%=hidden_field 'search', 'destination_city_id'%>
+        </li>
+      </ul>
+      <div class="span-24 center prepend-top last" >
+        <%= submit_tag 'Buscar', id: 'search_button' %>
+        <%= link_to 'Limpiar','#', class: 'limpiar button'%>
+          <%= link_to 'Cancelar' ,'../main_page/index' ,class: 'button', id: 'cancel_button'%>
+          </div>
+
+
+        </fieldset>
+      <%end%>
+      <table columnClasses="center,center,center,center,center,center,center,center,center,center,center,center,center,center,center"
+             headerClass="center"
+             rowClasses="odd gradeC" cellpadding="0" cellspacing="0"
+             border="1" class="tablaIndex display"  bgcolor="white">
+        <thead>
+          <tr>
+            <th>N&#176;</th>
+            <th>Destinatario</th>
+
+            <th>Remitente</th>
+
+            <th>Cliente</th>
+
+            <th>Tipo de Servicio</th>
+
+            <th>Destino</th>
+            <th>Origen</th>
+            <th>Estado</th>
+            <th>Fecha Creación</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transport_guides.each do |transport_guide| %>
+
+            <tr>
+              <td><%= transport_guide.num_guide %></td>
+              <td><%= transport_guide.destination_person %></td>
+              <td><%= transport_guide.remitter_person %></td>
+
+              <td><%= transport_guide.customer.company_name %></td>
+
+              <td><%= transport_guide.service_type.description %></td>
+
+              <td><%= City.find(transport_guide.destination_city_id).name  %></td>
+              <td><%= City.find(transport_guide.origin_city_id).name   %></td>
+              <td><%= transport_guide.transport_guide_state.name_state %></td>
+              <td><%= transport_guide.created_at %></td>
+              <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
+              <td><%= link_to image_tag('borrar2.gif'), transport_guide, confirm: 'Are you sure?', method: :delete %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <script charset="utf-8" type="text/javascript">
+    <%#*$(document).ready(function() {%>
+    <%#*$('table[class*=tablaIndex]').dataTable({%>
+    <%#*"bScrollCollapse" : true,%>
+    <%#*"sPaginationType" : "full_numbers",%>
+    <%#*"aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]%>
+    <%#*});%>
+      //focus en el formulario
+      $("form:not(.filter) :input:visible:enabled:first").focus();
+      //Autocomplite de clientes (clientes)
+      $(function() {
+        var list =[];
+        var i=0;
+    <% @customers.each do |c| %>
+          list[i]={
+            label: "<%= if c.customer_type_id == 2 then c.last_name + " " + c.name  else c.company_name end %>",
+            id: <%= c.id %>};
+          i=i+1;
+    <% end %>
+        $("#customer").autocomplete({
+          source: list,
+          select: function(event, ui) {
+            $("#search_customer_id").val(ui.item.id);
+
+          }
+
+        });
+
+      });
+      $(function(){
+        //AutoComplite de Origenes y destino
+        var list =[];
+        var i=0;
+    <% @cities.each do |c| %>
+          list[i]={
+            label: "<%= c.name%>",
+            id: <%= c.id %> };
+          i=i+1;
+    <% end %>
+        $("#origin_city").autocomplete({
+          source: list,
+          select: function(event, ui) {
+            $("#search_origin_city_id").val(ui.item.id);
+
+          }
+        });
+        $("#destination_city").autocomplete({
+          source: list,
+          select: function(event, ui) {
+            $("#search_destination_city_id").val(ui.item.id);
+
+          }
+        });
+      });
+
+    </script>
