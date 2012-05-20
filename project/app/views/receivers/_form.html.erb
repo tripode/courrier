@@ -44,7 +44,8 @@
 			    </div>
 			</ul> 
 			<div class="prepend-7">
-				<%= button_to_function "Agregar", "add()"%>
+                                <%= link_to_function "Agregar", "add()", class: 'limpiar button' %>
+				
 			</div> 
 		</div>
 		
@@ -73,7 +74,7 @@
 									<%= address.address %>
 					8				<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][address]' value='<%= address.address %>'>
 								</td>
-								<td><%= link_to_function('x', "delete()", :href => 'delete') %></td>
+								<td><%= link_to_function( image_tag('borrar2.gif'), "delete()", :href => 'delete') %></td>
 							</tr>
 							<% counter+=1 %>
 					<% end %>
@@ -156,7 +157,7 @@
 		"<td>"+place+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][label]' value='"+place+"'></td>"+
 		"<td>"+city+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][city_id]' value='"+city_id+"'></td>"+
 		"<td>"+address+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][address]' value='"+address+"'></td>"+
-		"<td><a id='"+place+city+address+"' href='delete'>x</a></td>"+
+		"<td><a id='"+place+city+address+"' href='delete'><img src='/assets/borrar2.gif'></a></td>"+
 		"</tr>"
 		$('#addresses').append(string);
 		counter++;

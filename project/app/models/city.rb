@@ -7,6 +7,7 @@ class City < ActiveRecord::Base
   has_many :receiver_addresses
   has_many :areas
 
+
   #retorna una lista de todos las ciudades dentro de la BD
   def self.get_all_cities
     all.collect { |item|[item.name, item.id]  }

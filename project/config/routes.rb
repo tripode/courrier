@@ -94,7 +94,11 @@ Project::Application.routes.draw do
     end
   end
 
-  
+  resources :areas do
+    collection do
+      post 'create'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
