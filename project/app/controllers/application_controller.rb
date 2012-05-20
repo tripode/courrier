@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-  rescue_from ActiveRecord::RecordNotFound ,  :with => :invalid_method
+  rescue_from ActiveRecord::RecordNotFound ,  :with => :route_not_found
   rescue_from ActionController::RoutingError, :with => :route_not_found
   rescue_from ActionController::MethodNotAllowed, :with => :invalid_method
 

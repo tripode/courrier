@@ -145,6 +145,15 @@ class TransportGuidesController < ApplicationController
     end
   end
 
+  #post
+  def tg_searching
+    respond_to do |format|
+      format.html #{ redirect_to transport_guides_url }
+      format.json { head :no_content }
+    end
+
+  end
+
   private
   def manejo_error_pg(transport_guide)
     transport_guide.num_guide=''
