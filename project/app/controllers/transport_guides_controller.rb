@@ -174,7 +174,7 @@ class TransportGuidesController < ApplicationController
     puts @consult.to_a
     puts @transport_guides.to_a
     respond_to do |format|
-      format.html{render "tg_searching"}
+      format.js
     end
 
 
