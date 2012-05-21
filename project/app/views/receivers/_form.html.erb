@@ -44,8 +44,7 @@
 			    </div>
 			</ul> 
 			<div class="prepend-7">
-                                <%= link_to_function "Agregar", "add()", class: 'limpiar button' %>
-				
+                                <%= link_to_function "Agregar", "add()", class: 'button' %>
 			</div> 
 		</div>
 		
@@ -112,7 +111,7 @@
 			}
 		});
 		if($("#h-city").val()!= "") {
-			
+			alert('aqui');
 			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
 			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
 			$("#save_button").val("Actualizar");
@@ -152,7 +151,6 @@
 		address_obj.attr('value','');
 		city_id_obj.attr('value','');
 		
-		
 		var string = "<tr>"+
 		"<td>"+place+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][label]' value='"+place+"'></td>"+
 		"<td>"+city+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][city_id]' value='"+city_id+"'></td>"+
@@ -161,7 +159,8 @@
 		"</tr>"
 		$('#addresses').append(string);
 		counter++;
-		updateDeleteLinks();
+                
+                updateDeleteLinks();
 	}
 	/* esta funcion es la encargada de eliminar las 
 	 * filas de las tablas de las direcciones 

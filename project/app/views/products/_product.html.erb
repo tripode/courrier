@@ -122,6 +122,9 @@
 				},"json");
 				//Cierra el popin
                   $("#popin").dialog("close");
+                  $("#receiver-name").attr('value','');
+                  $("#document").attr('value','');
+                  $("#addresses").children().remove();
                 });
 		$("#add_receiver").click(function(event){
 			event.preventDefault();

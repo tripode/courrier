@@ -95,7 +95,7 @@ class TransportGuidesController < ApplicationController
     rescue
       respond_to do |format|
         format.html { redirect_to new_transport_guide_path,
-                      notice: "Error en la transaccion, no se guardo la Guia de Transporte"}
+          notice: "Error en la transaccion, no se guardo la Guia de Transporte"}
         format.json { head :no_content}
       end
 
@@ -145,12 +145,38 @@ class TransportGuidesController < ApplicationController
     end
   end
 
-  #post
+  #get
   def tg_searching
+
+    @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+    @customers= Customer.find(:all)
+    @cities= City.find(:all)
+    @transport_guides= TransportGuide.where(id: 0)
     respond_to do |format|
-      format.html #{ redirect_to transport_guides_url }
+      format.html
       format.json { head :no_content }
     end
+
+  end
+  #get
+  def get_list_tg
+    @consult= Hash.new
+    @customers= Customer.find(:all)
+    @cities= City.find(:all)
+     @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+    params[:search].each do |k,v|
+      if(v!="")
+        @consult[k]=v
+      end
+    end
+    #    puts params[:search]
+    @transport_guides=TransportGuide.where(@consult)
+    puts @consult.to_a
+    puts @transport_guides.to_a
+    respond_to do |format|
+      format.html{render "tg_searching"}
+    end
+
 
   end
 
@@ -163,10 +189,10 @@ class TransportGuidesController < ApplicationController
     @transport_guide_detail=TransportGuideDetail.new
     @transport_guide_details = TransportGuideDetail.where(transport_guide_id: 0)
     respond_to do |format| 
-        format.html { redirect_to new_transport_guide_path,
-                      notice: "ERROR, Numero de Guia de Transporte ingresado ya existe"}
-        format.json { head :no_content }
-      end
+      format.html { redirect_to new_transport_guide_path,
+        notice: "ERROR, Numero de Guia de Transporte ingresado ya existe"}
+      format.json { head :no_content }
+    end
   end
 
 

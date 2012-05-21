@@ -37,6 +37,7 @@ Project::Application.routes.draw do
   resources :transport_guides do
     collection do
        get :tg_searching
+       post :get_list_tg
     end
   end
 
@@ -54,8 +55,6 @@ Project::Application.routes.draw do
   resources :customers
   
   resources :customer_companies
-  
-  devise_for :users
 
   resources :products do
     collection do
