@@ -145,10 +145,24 @@ class CargoManifestsController < ApplicationController
       @@origin=origin
       @@destiny=destiny
       @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
+      @@transport_guides=@transport_guides
     end
     respond_to do |format|
       format.js
     end
+  end
+  def delete_detail
+    @transport_guides= Set.new
+    @@transport_guides.each do |item|
+      if item.id != params[:id].to_i
+        @transport_guides.add(item);
+      end
+      respond_to do |format|
+        format.js 
+      end
+
+    end
+
   end
 
   

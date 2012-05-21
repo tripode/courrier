@@ -6,6 +6,9 @@ Project::Application.routes.draw do
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
   resources :cargo_manifests do
+    member do
+      post :delete_detail
+    end
     collection do
       post 'get_transport_guides'
     end

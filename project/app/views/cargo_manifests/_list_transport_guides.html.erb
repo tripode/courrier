@@ -47,7 +47,7 @@
               </td>
 
               <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
-              <td><%= link_to image_tag('borrar2.gif')%></td>
+              <td><%= link_to image_tag('borrar2.gif'), delete_detail_cargo_manifest_path(transport_guide), method: 'post', remote: 'true'%></td>
             </tr>
           <% end %>
         </tbody>
