@@ -6,8 +6,8 @@
 	<thead>
 		<tr>
 			<th>Nombre</th>
-			<th>Descripcion</th>
 			<th>Ciudad</th>
+			<th>Descripcion</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -15,9 +15,8 @@
 		<% @areas.each do |area| %>
 		<tr>
 			<td><%= area.area_name %></td>
-			<td><%= area.description %></td>
 			<td><%= area.city.name %></td>
-			
+			<td><%= area.description %></td>
 			<td>
 				<div>
 					<%= link_to image_tag('borrar2.gif'), area, confirm: 'Deseas eliminar  la zona?', method: :delete %>
