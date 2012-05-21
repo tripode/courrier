@@ -60,5 +60,13 @@
 			}
 		});
 	});
-	
+	var f1 = new LiveValidation('number', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f1.add( Validate.Presence, { failureMessage: " " } );
+    var f2 = new LiveValidation('employee', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: " " } );
+    var f3 = new LiveValidation('zone', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f3.add( Validate.Numericality, { notANumberMessage: " " } );
+        f3.add( Validate.Presence, { failureMessage: " " } );
+    var f4 = new LiveValidation('state', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
+        f4.add( Validate.Presence, { failureMessage: " " } );
 </script>
