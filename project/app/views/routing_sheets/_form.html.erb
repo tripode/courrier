@@ -54,12 +54,12 @@
 	  	
 	  </ul>
 	  </fieldset>
-	 
-</div>
-  <div class="span-24 center last" >
+	 <div class="span-24 center last" >
 			<%= f.submit 'Guardar', id: 'button_save_id'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
- </div>
+ 	</div>
+</div>
+  
 <% end %>
 <script>
 	var f1 = new LiveValidation('routing_sheet_area_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });

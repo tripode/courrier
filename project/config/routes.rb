@@ -95,9 +95,10 @@ Project::Application.routes.draw do
     end
   end
 
-  resources :areas do
+  resources :areas 
+  resources :cities do
     collection do
-      post 'create'
+      post 'getCountry'
     end
   end
 

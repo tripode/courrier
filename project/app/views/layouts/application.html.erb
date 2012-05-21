@@ -107,6 +107,9 @@
                   <% if can? :manage, Area %>
                     	<li><%= link_to 'Zonas', new_area_path %></li>
                   <% end %>
+                  <% if can? :manage, City %>
+                    	<li><%= link_to 'Ciudades', new_city_path %></li>
+                  <% end %>
                   <% if can? :manage, User %>
                     	<li><%= link_to "Usuarios", new_user_registration_path %></li>
                   <% end %>
