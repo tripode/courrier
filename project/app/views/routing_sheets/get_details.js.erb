@@ -1,7 +1,7 @@
 $("#form_report_detail").html("<%= escape_javascript (render 'edit_routing_sheet_detail')%>");
 $('table[class*=tablaIndex]').dataTable({
-		 "iDisplayLength" : 500,
+		 "iDisplayLength" : 100,
           "bScrollCollapse" : true,
           "sPaginationType" : "full_numbers",
-          "aLengthMenu" : [[500], [500]]
+          "aLengthMenu" : [[100], [100]]
  });
