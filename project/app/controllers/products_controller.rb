@@ -386,14 +386,14 @@ class ProductsController < ApplicationController
       format.pdf do
         create_date=Date.today
         create_date.strftime("%d-%m-%Y") if create_date
-        @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name + '_' + @customer.last_name + '_' + @customer.name}_#{create_date}.pdf"
+        @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
         pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
         begin
         pdf.render_file(@file_path)
         rescue
           #no se guardo el archivo
         end
-        send_data pdf.render, filename: "informe_#{@customer.company_name + ' ' + @customer.last_name + ' ' + @customer.name}_#{create_date}.pdf",
+        send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
         
