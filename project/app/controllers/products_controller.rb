@@ -352,28 +352,29 @@ class ProductsController < ApplicationController
     valid_customer_id=/^\d+$/.match(@customer_id)
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
-    if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) then
+    if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
-      if(@routing_sheets!= nil) then
+      if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
-        @routing_sheets.each{|r|
+        @routing_sheets.each do|r|
            @details_by_routing_sheet = RoutingSheetDetail.where("routing_sheet_id=?", r.id)
-           if(@details_by_routing_sheet!= nil) then
-              @details_by_routing_sheet.each{|detail|
+           if(!@details_by_routing_sheet.empty?) 
+              @details_by_routing_sheet.each do |detail|
                 #obtengo el producto del detalle
                 @product=Product.where("id=?", detail.product_id).first
                 #obtengo la nota de retiro  a la cual pertenece este producto
                 @retire_note= RetireNote.where("id=?", @product.retire_note_id).first
                 #obtengo el cliente que hace referencia a esta nota de retiro
                 @get_customer_id = @retire_note.customer_id
-                if (@get_customer_id.to_i == @customer_id.to_i) then # Si pertenece al cliente requerido al informe, agrego 
+                 # Si pertenece al cliente requerido al informe, agrego 
+                if (@get_customer_id.to_i == @customer_id.to_i) 
                     @details.push(detail)
                 end
                 
-              }
+              end
            end
-        }
+        end
        
       end
       @customer=Customer.where("id=?", @customer_id).first
