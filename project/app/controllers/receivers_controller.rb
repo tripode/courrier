@@ -107,7 +107,7 @@ class ReceiversController < ApplicationController
     @receiver.destroy
 
     respond_to do |format|
-      format.html { redirect_to receivers_url }
+      format.html { redirect_to new_receiver_url }
       format.json { head :no_content }
     end
   end
