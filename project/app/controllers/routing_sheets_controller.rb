@@ -66,10 +66,10 @@ class RoutingSheetsController < ApplicationController
     @start_value=ActiveRecord::Base.connection.execute("select start_value from routing_sheets_id_seq").first["start_value"]
     $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
     #La primera ves que se registra una hoja de ruta se setea como numero 1
-    if(@start_value.to_i==$number.to_i) then
-      @first_id=RoutingSheet.first.id
-      puts @first_id
-      if(@first_id!= nil) then
+    if(@start_value.to_i == $number.to_i) 
+      @first=RoutingSheet.first
+
+      if(@first!= nil) 
         $number= 2
       else
         $number= 1
@@ -89,7 +89,7 @@ class RoutingSheetsController < ApplicationController
   def edit
     @routing_sheet = RoutingSheet.find(params[:id])
     ##Solo se puede editar una hoja de ruta cuyo estado sea "En Proceso" id = 1
-    if @routing_sheet.routing_sheet_state_id == 1 then
+    if (@routing_sheet.routing_sheet_state_id == 1 )
       @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
       $products=Array.new
      
@@ -113,9 +113,9 @@ class RoutingSheetsController < ApplicationController
     @start_value=ActiveRecord::Base.connection.execute("select start_value from routing_sheets_id_seq").first["start_value"]
     $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
     #La primera ves que se registra una hoja de ruta se setea como numero 1
-    if(@start_value.to_i==$number.to_i) then
-      @first_id=RoutingSheet.first.id 
-      if(@first_id!= nil) then
+    if(@start_value.to_i==$number.to_i) 
+      @first=RoutingSheet.first
+      if(@first!= nil) 
         $number= 2
       else
         $number= 1
@@ -199,7 +199,7 @@ class RoutingSheetsController < ApplicationController
     
     respond_to do |format|
       ##Solo se pueden eliminar las hojas de rutas cuyo estado en "En Proceso" id=1
-       if @routing_sheet.routing_sheet_state_id== 1 then
+       if (@routing_sheet.routing_sheet_state_id == 1 )
            begin
              RoutingSheet.transaction do
                ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
@@ -278,28 +278,30 @@ class RoutingSheetsController < ApplicationController
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_start)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_end)
     
-    if (valid_inited_at != nil and valid_finished_at != nil) then
+    if (valid_inited_at != nil and valid_finished_at != nil) 
       @sql=" 1=1 "  
       valid_number=/^\d+$/.match(@number)
-      if(valid_number!=nil) then
+      if(valid_number!=nil) 
         @sql = @sql + " and number=" + @number
       end
       valid_employee=/^\d+$/.match(@employee_id)
-      if(valid_employee!=nil) then
+      if(valid_employee!=nil) 
         @sql = @sql + "and employee_id=" + @employee_id
       end
       valid_area=/^\d+$/.match(@area_id)
-      if(valid_area!= nil) then
+      if(valid_area!= nil) 
         @sql = @sql + " and area_id=" + @area_id
       end
       valid_state=/^\d+$/.match(@state_id)
-      if(valid_state!= nil) then
+      if(valid_state!= nil) 
         @sql = @sql + " and routing_sheet_state_id=" + @state_id
       end
       
       @sql = @sql + " and date between '" + @date_start + "' and '" + @date_end + "'"
       @routing_sheets= RoutingSheet.where(@sql)
-      if(@routing_sheets== nil) then @routing_sheets=Array.new end 
+      if(@routing_sheets == nil) 
+         @routing_sheets=Array.new 
+      end 
     else
       @routing_sheets=Array.new
     end
@@ -316,7 +318,7 @@ class RoutingSheetsController < ApplicationController
   def get_details
     @routing_sheet_id=params[:routing_sheet_id]
     valid_routing_sheet_id=/^\d+$/.match(@routing_sheet_id)
-      if(valid_routing_sheet_id!=nil) then
+      if(valid_routing_sheet_id!=nil) 
           $routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?", @routing_sheet_id)    
       else
           $routing_sheets_details=Array.new
@@ -337,7 +339,7 @@ class RoutingSheetsController < ApplicationController
         @detail_to_update=detail
         @product=Product.where("id=?", detail.product_id).first
         valid_received=/^\D{4,35}$/.match(@who_received)
-        if(valid_received!=nil) then
+        if(valid_received!=nil) 
           ##Actualizo el detalle
           @detail_to_update.update_attribute(:who_received, @who_received)
           @detail_to_update.update_attribute(:received,'s') ## s= fue recibido el producto
