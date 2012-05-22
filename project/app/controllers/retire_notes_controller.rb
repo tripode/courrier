@@ -235,5 +235,23 @@ class RetireNotesController < ApplicationController
       end
    end
    
-        
+   #Este metodo permite setear obtener el precio para la nota de retiro
+   #teniendo en cuenta el cliente, el tipo de producto y la ciudad     
+   def getPrice
+     @customer_id = params[:customer_id]
+     @product_type_id = params[:product_type_id]
+     @city_id = params[:city_id]
+     @current_date = params[:current_date]
+     @from_date = @current_date.to_date - 1.month    
+     @retire_note = RetireNote.where("customer_id=? and product_type_id=? and city_id=? and date between ? and ?", @customer_id,@product_type_id, @city_id,@from_date.to_s,@current_date.to_date).last
+     @price = 0
+     if @retire_note != nil then
+       @price = @retire_note.unit_price
+     end
+     @the_price = {"value" => @price}
+     respond_to do |format|
+      format.html # 
+      format.json { render json: @the_price }
+    end
+   end
 end
