@@ -78,6 +78,7 @@ Project::Application.routes.draw do
   resources :retire_notes do
     collection do
       post 'search'
+      post 'getPrice'
     end
   end
 

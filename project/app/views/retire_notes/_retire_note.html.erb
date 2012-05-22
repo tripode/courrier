@@ -22,7 +22,7 @@
 		  </li>
 		  <li>
 		    <label>* Fecha Vence:</label>
-		    <%= f.text_field :expiration_date, id:'expiration_date',value: @retire_note.format_date,style: 'width: 28%', class:'i_fecha'%>
+		    <%= f.text_field :expiration_date, id:'expiration_date',value: nil,style: 'width: 28%', class:'i_fecha'%>
 		  </li>
 		  <div class="clear"></div>
 		  <li>
@@ -45,11 +45,11 @@
 			<br />
 			<li>
 		    	<label>* Tipo Producto:</label>
-		    	<%= f.select :product_type_id, @retire_note.getTipoProductos, prompt: "-- Seleccionar--"%>
+		    	<%= f.select :product_type_id, @retire_note.getTipoProductos, prompt: "-- Seleccionar--", id:'product_type_id'%>
 		  	</li>
 		  	<li>
 		  		<label>* Ciudad:</label>
-		    	<%= f.select :city_id, @retire_note.getCiudades, prompt: "-- Seleccionar--"%>
+		    	<%= f.select :city_id, @retire_note.getCiudades, prompt: "-- Seleccionar--", id:'city_id'%>
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>
@@ -87,18 +87,7 @@
 		$('input[type=number]').val("");
 		$('#form_msg').hide();
 	});
-	$("input[class*=i_fecha]").datepicker({
-		altField : '#actualDate',
-		appendText : '(dd-mm-yyyy)',
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : 'dd-mm-yy',
-		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
-		gotoCurrent : true,
-		yearRange : '1900:2012',
-		showOn : "button"
-
-	});
+	
 	$("#retire_note_state").hide();
     //Autocomplite de clientes
 	$(function() {
@@ -139,7 +128,20 @@
 	//Onfocus para que el cursor este sobre el input numero de retiro
 	$('#number_id').focus();
 
-	
+	//Cuando cambia se selecciona la ciudad se setea el precio por defecto
+	//teniendo el cuenta el customer_id, el product_type_id y el city_id
+	$("#retire_note_city_id").change(function(){
+		alert($(this).val());
+		$.post("<%= getPrice_retire_notes_path %>",
+		{"city_id": $(this).val(), 
+		"customer_id": $("#customer_id_hidden").val(), 
+		"product_type_id": $("#retire_note_product_type_id").val(),
+		"current_date": $("#date").val() },
+		function(price){
+			$("#unit_price_id").val(price.value);
+			
+		},"json");
+	});
 	
 		//Validaciones
         var f1 = new LiveValidation('number_id', { validMessage: " ",wait: 100 });
