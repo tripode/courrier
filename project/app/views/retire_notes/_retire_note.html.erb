@@ -131,7 +131,6 @@
 	//Cuando cambia se selecciona la ciudad se setea el precio por defecto
 	//teniendo el cuenta el customer_id, el product_type_id y el city_id
 	$("#retire_note_city_id").change(function(){
-		alert($(this).val());
 		$.post("<%= getPrice_retire_notes_path %>",
 		{"city_id": $(this).val(), 
 		"customer_id": $("#customer_id_hidden").val(), 
