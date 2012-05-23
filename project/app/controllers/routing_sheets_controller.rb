@@ -67,9 +67,10 @@ class RoutingSheetsController < ApplicationController
     $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
     #La primera ves que se registra una hoja de ruta se setea como numero 1
     if(@start_value.to_i==$number.to_i) then
-      @first_id=RoutingSheet.first.id
-      puts @first_id
-      if(@first_id!= nil) then
+      puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      @first = RoutingSheet.find(1) #RoutingSheet.first.id
+      puts @first
+      unless @first
         $number= 2
       else
         $number= 1
@@ -114,8 +115,8 @@ class RoutingSheetsController < ApplicationController
     $number=ActiveRecord::Base.connection.execute("select last_value from routing_sheets_id_seq").first["last_value"]
     #La primera ves que se registra una hoja de ruta se setea como numero 1
     if(@start_value.to_i==$number.to_i) then
-      @first_id=RoutingSheet.first.id 
-      if(@first_id!= nil) then
+      @first = RoutingSheet.first
+      unless @first 
         $number= 2
       else
         $number= 1
