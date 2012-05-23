@@ -299,7 +299,7 @@ class RoutingSheetsController < ApplicationController
       
       @sql = @sql + " and date between '" + @date_start + "' and '" + @date_end + "'"
       @routing_sheets= RoutingSheet.where(@sql)
-      if(@routing_sheets == nil) 
+      if(@routing_sheets.empty?) 
          @routing_sheets=Array.new 
       end 
     else

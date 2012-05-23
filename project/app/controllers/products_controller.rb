@@ -357,7 +357,7 @@ class ProductsController < ApplicationController
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
-        @routing_sheets.each do|r|
+        @routing_sheets.each do |r|
            @details_by_routing_sheet = RoutingSheetDetail.where("routing_sheet_id=?", r.id)
            if(!@details_by_routing_sheet.empty?) 
               @details_by_routing_sheet.each do |detail|
