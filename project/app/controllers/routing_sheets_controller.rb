@@ -43,7 +43,7 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/1.json
   def show
     @routing_sheet = RoutingSheet.find(params[:id])
-    @routing_sheets_details= RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
+    @routing_sheets_details= RoutingSheetDetail.where(routing_sheet_id: params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @routing_sheet }
@@ -90,12 +90,12 @@ class RoutingSheetsController < ApplicationController
     @routing_sheet = RoutingSheet.find(params[:id])
     ##Solo se puede editar una hoja de ruta cuyo estado sea "En Proceso" id = 1
     if (@routing_sheet.routing_sheet_state_id == 1 )
-      @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",params[:id])
+      @routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: params[:id])
       $products=Array.new
      
       @routing_sheets_details.each do |detail|
-        @product=Product.where("id=?", detail.product_id).first
-        $products.push(@product)
+        @product=Product.where(id: detail.product_id).first
+        $products << @product
       end
       $total=$products.length
     end
