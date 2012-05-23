@@ -6,33 +6,33 @@
       <div class='span-11'>
         <ul class="field-list">
           <li>
-            <%= f.label :employee%>
+            <%= f.label :employee, 'Empleado'%>
             <%= collection_select(resource_name, :employee_id, Employee.all, :id, "#{:full_name_24_length}") %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :username %>
+            <%= f.label :username, 'Usuario' %>
             <%= f.text_field :username, :id => 'i_username' %>
           </li>
           <li>
-            <%= f.label :email %>
+            <%= f.label :email, 'Email' %>
             <%= f.email_field :email %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :password %>
+            <%= f.label :password, 'Contraseña'%>
             <%= f.password_field :password %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :password_confirmation, 'Password' %>
+            <%= f.label :password_confirmation, 'Confirmar Contraseña' %>
             <%= f.password_field :password_confirmation %>
           </li>
           <div class="clear"></div>
         </ul>
       </div>
       <div class='span-11'>
-        <%= f.label :roles%>
+        <%= f.label :roles, 'Roles'%>
         <ul class="field-list">
           <div>
             <% Role.all.each do |role| %>

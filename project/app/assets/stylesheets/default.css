@@ -125,6 +125,7 @@ textarea {
 
 }
 #content  fieldset input[type="text"],
+#content  fieldset input[type="email"],
 #content  fieldset input[type="password"], 
 #content  fieldset ul li select {
     border: 1px solid #414141;
