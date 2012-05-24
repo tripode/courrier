@@ -6,26 +6,30 @@
       <div class='span-11'>
         <ul class="field-list">
           <li>
-            <%= f.label :employee, 'Empleado'%>
-            <%= collection_select(resource_name, :employee_id, Employee.all, :id, "#{:full_name_24_length}") %>
+            
+            <%= label_tag :employee, "* Empleado" %>
+            <input id="employee" type="text" size="30" class="i_autocomplit"  />
+            <%= hidden_field_tag :employee_id,nil, id: 'h-employee' %>   
+            
+            <%#= collection_select(resource_name, :employee_id, Employee.all, :id, "#{:full_name_24_length}") %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :username, 'Usuario' %>
+            <%= f.label :username, '* Usuario' %>
             <%= f.text_field :username, :id => 'i_username' %>
           </li>
           <li>
-            <%= f.label :email, 'Email' %>
+            <%= f.label :email, '* Email' %>
             <%= f.email_field :email %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :password, 'Contraseña'%>
+            <%= f.label :password, '* Contraseña'%>
             <%= f.password_field :password %>
           </li>
           <div class="clear"></div>
           <li>
-            <%= f.label :password_confirmation, 'Confirmar Contraseña' %>
+            <%= f.label :password_confirmation, '* Confirmar Contraseña' %>
             <%= f.password_field :password_confirmation %>
           </li>
           <div class="clear"></div>
@@ -61,6 +65,43 @@
       });
       //Onfocus para que el cursor este sobre el input email
       $('#i_username').focus();
-	
+
+      //autocomplete para ciudades
+	$(function(){
+		var list =[];
+		var i=0;
+		<% @employees.each do |c| %>
+		 	list[i]={
+		 		label: "<%= c.name %>",
+		 		id: <%= c.id %>};
+			i=i+1;
+		<% end %>
+		//if el id del cliente es vacio se carga la lista para mostrar el autocomplete
+		$("#employee").autocomplete({
+			source: list,
+			select: function(event, ui) { 
+				$("#h-employee").val(ui.item.id); 
+			}
+		});
+		if($("#h-employee").val()!= "") {
+			alert('aqui');
+			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
+			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
+			$("#save_button").val("Actualizar");
+			$("#retire_note_state").show();
+			var id=$("#h-employee").val();
+			var name= ""
+			// busca el empleado dentro de la lista
+			$(list).each(function(index,element){
+				if(element.id == id){
+					name=element.label
+					return true
+				}
+			})
+			//setea el nombre del empleado en el campo employee
+			$("#employee").val(name);
+		}
+	});  
+
     </script>
 

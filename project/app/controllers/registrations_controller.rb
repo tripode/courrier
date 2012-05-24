@@ -20,6 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
     #
     def new
       if current_user
+        @employees = Employee.all
         super
       else
         redirect_to root_path

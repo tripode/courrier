@@ -502,3 +502,6 @@ div#popin a.button{
    filter: Alpha(Opacity=30);
 }
 
+.large-label{
+    width: 120px !important;
+}

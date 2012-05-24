@@ -8,37 +8,39 @@
 			<ul class="field-list">
 				<div>
 					<li>
-                                          <%= f.label :receiver_name, "* Nombre y Apellido"%>
+                                          <%= f.label :receiver_name, "* Nombre y Apellido", :class => 'large-label'%>
                                           <%= f.text_field :receiver_name , :id => 'receiver-name'%>
 					</li>
 					<li>
-                                          <%= f.label :document, "Nº de Documento" %>
+                                          <%= f.label :document, "Nº de Documento", :class => 'large-label' %>
                                           <%= f.text_field :document, :id => 'document' %>
 					</li>					
 				</div>
 			</ul>
- 			<div class="subtitle">
+                  
+ 			<div class="subtitle span-10 prepend-5 prepend-top">
 				<h4>Dirección</h4>
 			</div>		
+                  
 	    	<ul class="field-list">
 				<div>
 					<li>
 						<p>
 							
 						</p>
-						<%= label_tag :place, "* Lugar" %>
+						<%= label_tag :place, "* Lugar", :class => 'large-label' %>
 						<%= text_field_tag :place, nil, :id => 'i-place', :size => '30'%>
 						
 					</li>
 					<li>
 	
-						<%= label_tag :city, "* Ciudad" %>
+						<%= label_tag :city, "* Ciudad", :class => 'large-label' %>
 						<input id="city" type="text" size="30" class="i_autocomplit"  />
 						<%= hidden_field_tag :city_id,nil, id: 'h-city' %>   
  
 					</li>
 					<li>
-						<%= label_tag :address, "* Dirección" %>
+						<%= label_tag :address, "* Dirección", :class => 'large-label' %>
 						<%= text_field_tag :address, nil, :id => 'i-address', :size => '30'%>
 					</li>
 			    </div>
@@ -172,5 +174,12 @@
 			$(this).parent().parent().remove();
 		});
 	}
-	
+        
+	/* validaciones */
+        var first_and_last_name = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        first_and_last_name.add( Validate.Presence, { failureMessage: " " } );
+        
+        var document = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        document.add( Validate.Presence, { failureMessage: " " } );
+        
 </script>
