@@ -336,6 +336,8 @@ class ProductsController < ApplicationController
   #Post method: Este metodo genera el informe para el cliente de los products
   #entregados entre un rango de fecha
   def generate_delivery_report_pdf
+    puts "Tiempo:"
+    
     @customer_id=params[:customer_id]
     @inited_at = params[:inited_at]
     @finished_at = params[:finished_at]
@@ -345,6 +347,7 @@ class ProductsController < ApplicationController
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
+    puts Benchmark.realtime{
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
@@ -368,12 +371,45 @@ class ProductsController < ApplicationController
         end
        
       end
+    }
       @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
       
       
     end
     respond_to do |format|
+      format.csv do
+        create_date=Date.today
+        create_date.strftime("%d-%m-%Y") if create_date
+        #csv_string = DeliveryReportCsv.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path).to_s
+        csv_string = CSV.generate do |csv|  
+        # header row 
+          csv << ["Informe de Entrega"]
+          csv << ["Fecha Inicio:", @inited_at]
+          csv << ["Fecha Fin:", @finished_at]
+          csv << ["Empleado:", @employee.last_name + " "+ @employee.name]
+          csv << [" A continuacion se listan todos los detalles del informe.."]
+          csv << ["Item;Codigo;Tipo Producto;Destinatario;Direccion;Recibio;Motivo no entrega"] 
+          # data rows 
+          
+          @details.collect do |detail| 
+            item=(@details.index(detail) + 1).to_s
+            code=detail.product.bar_code
+            desc=detail.product.product_type.description
+            name=if detail.product.receiver_id != nil then detail.product.receiver.receiver_name else "" end
+            address=if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address else "" end
+            who= if detail.who_received!= nil then detail.who_received  else "" end
+            reason= if detail.reason_id!= nil then detail.reason.description  else "" end
+            new_row=item + ";" + code + ";" + desc + ";" + name + ";" + address + ";" + who + ";" + reason
+            csv << [new_row]
+          end
+        end
+          # send it to the browsah
+        send_data csv_string, 
+                  :type => 'text/csv; charset=iso-8859-1; header=present', 
+                  :disposition => "attachment; filename=informe_#{@customer.company_name + @customer.last_name + @customer.name + "_" + create_date.to_s}.csv" 
+      end
+      
       format.pdf do
         create_date=Date.today
         create_date.strftime("%d-%m-%Y") if create_date
@@ -387,7 +423,6 @@ class ProductsController < ApplicationController
         send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
-        
       end
     end
   end
