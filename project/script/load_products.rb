@@ -6,7 +6,7 @@ Product.transaction do
         :bar_code=>"#{t}",
         :description=>"",
         :product_type_id => 1,
-        :retire_note_id=> 8,
+        :retire_note_id=> 5,
         :remitter=>"wildo monges",
         :product_state_id=>2,
         :receiver_id=>4,

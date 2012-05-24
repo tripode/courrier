@@ -78,7 +78,7 @@ class ProductsController < ApplicationController
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
     @retire_note=RetireNote.find(@retire_note_id)
-    @amount=RetireNote.where("id=?",@retire_note_id).first.amount
+    @amount=RetireNote.where(id: @retire_note_id).first.amount
     respond_to do |format|
       if $product.save
         $products.push($product)
@@ -98,7 +98,6 @@ class ProductsController < ApplicationController
           format.js
          else
             $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
-            #$products = Product.where("retire_note_id=?", @retire_note_id)
             #Cambio de estado la nota de retiro registrado de "En Proceso" a "Procesado"
             begin
               @state_id=RetireNoteState.where("state_name='Procesado'").first.id
@@ -117,13 +116,6 @@ class ProductsController < ApplicationController
             ##----------
             format.js
          end
-        
-       
-        
-        #format.html {render action: "new"}# { redirect_to $product, notice: 'Product was successfully created.' }
-        #format.json {render json: $product}
-        
-        #format.json { render json: $product, status: :created, location: $product }
       else
         #init all--------------
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
@@ -148,7 +140,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.html { redirect_to @product, notice: 'El producto ha sido actualizado' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -162,14 +154,14 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @retire_note_id=@product.retire_note_id
-    @retire_note=RetireNote.where("id=?", @retire_note_id).first
+    @retire_note=RetireNote.where(id:  @retire_note_id).first
     @amount_processed=@retire_note.amount_processed
     if @product.destroy 
       ##Actualizo la cantidad de productos registrados de la nota de retiro. Se elimino un producto , se resta 1
       @amount_processed=@amount_processed - 1
       @retire_note.update_attribute(:amount_processed, @amount_processed) 
     end
-    $products=Product.where("retire_note_id=?",@retire_note_id);
+    $products=Product.where(retire_note_id: @retire_note_id)
     respond_to do |format|
       format.js
       #format.html { redirect_to new_product_path }
@@ -183,7 +175,7 @@ class ProductsController < ApplicationController
   #pasado como parametro
   
   def getProductType
-   @product_type_description=ProductType.where("id=?",params[:id]).first.description
+   @product_type_description=ProductType.where(id: params[:id]).first.description
    @product_type={description: @product_type_description}
    respond_to do |format|
          format.html #need for ajax with html datatype 
@@ -196,7 +188,7 @@ class ProductsController < ApplicationController
   def update_new_receiver
     
     @receiver_added = Receiver.last
-    $receivers.push(@receiver_added)
+    $receivers << @receiver_added
     respond_to do |format|
       format.html
       format.json {render json: $receivers}
@@ -209,7 +201,7 @@ class ProductsController < ApplicationController
   #Busca las direcciones con el id del destinatario que se le pasa por parametro
   def getReceiverAddress
    
-    $addresses= ReceiverAddress.where("receiver_id=?",params[:id]);
+    $addresses= ReceiverAddress.where(receiver_id: params[:id]);
    respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: $addresses }#need for ajax with json datatyp
@@ -220,7 +212,7 @@ class ProductsController < ApplicationController
   #Metodo que retorna un customer. Procesa el id del customer 
   #que recibe dentro de params. Es invocado via ajax desde el form _product
   def getCustomer
-    @customer=Customer.where("id=?",params[:id]).first
+    @customer=Customer.where(id: params[:id]).first
    respond_to do |format|
          format.html #need for ajax with html datatype 
          format.json { render json: @customer }#need for ajax with json datatyp 
@@ -231,7 +223,7 @@ class ProductsController < ApplicationController
   #Metodo que retorna el item correcspondiente al producto que se va a registrar
   def getItem
     @amount=params[:amount]
-    @amount_processed=RetireNote.where("id=?",params[:id]).first.amount_processed
+    @amount_processed=RetireNote.where(id: params[:id]).first.amount_processed
     $item=@amount_processed
     if ($item.to_i < @amount.to_i)
       $item= $item + 1
@@ -245,8 +237,7 @@ class ProductsController < ApplicationController
   #post
   #Metodo para buscar los productos de la nota de retiro de retiro si ya existe en la base de datos
   def getListProducts
-    @retire_note_id=params[:id]
-    $products=Product.where("retire_note_id=?",@retire_note_id)
+    $products=Product.where(retire_note_id: params[:id])
     respond_to do |format|
          format.js
     end
@@ -254,8 +245,8 @@ class ProductsController < ApplicationController
   #post
   #Metodo que retorna la ciudad correcspondiente a una direccion
   def getCity
-    @city_id=ReceiverAddress.where("id=?",params[:address_id]).first.city_id
-    @city=City.where("id=?",@city_id).first
+    @city_id=ReceiverAddress.where(id: params[:address_id]).first.city_id
+    @city=City.where(id: @city_id).first
     respond_to do |format|
       format.html
       format.json {render json: @city}
@@ -286,7 +277,7 @@ class ProductsController < ApplicationController
 
         if(valid_number!= nil) 
         
-          @retire_note=RetireNote.where("number=?",valid_number.to_s).first
+          @retire_note=RetireNote.where(number: valid_number.to_s).first
           if (@retire_note!=nil) 
             @sql = @sql + " and products.retire_note_id=" + @retire_note.id.to_s
           end
@@ -345,6 +336,8 @@ class ProductsController < ApplicationController
   #Post method: Este metodo genera el informe para el cliente de los products
   #entregados entre un rango de fecha
   def generate_delivery_report_pdf
+    puts "Tiempo:"
+    
     @customer_id=params[:customer_id]
     @inited_at = params[:inited_at]
     @finished_at = params[:finished_at]
@@ -354,22 +347,23 @@ class ProductsController < ApplicationController
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
+    puts Benchmark.realtime{
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
         @routing_sheets.each do |r|
-           @details_by_routing_sheet = RoutingSheetDetail.where("routing_sheet_id=?", r.id)
+           @details_by_routing_sheet = RoutingSheetDetail.where(routing_sheet_id: r.id)
            if(!@details_by_routing_sheet.empty?) 
               @details_by_routing_sheet.each do |detail|
                 #obtengo el producto del detalle
-                @product=Product.where("id=?", detail.product_id).first
+                @product=Product.where(id: detail.product_id).first
                 #obtengo la nota de retiro  a la cual pertenece este producto
-                @retire_note= RetireNote.where("id=?", @product.retire_note_id).first
+                @retire_note= RetireNote.where(id: @product.retire_note_id).first
                 #obtengo el cliente que hace referencia a esta nota de retiro
                 @get_customer_id = @retire_note.customer_id
                  # Si pertenece al cliente requerido al informe, agrego 
                 if (@get_customer_id.to_i == @customer_id.to_i) 
-                    @details.push(detail)
+                    @details << detail
                 end
                 
               end
@@ -377,26 +371,58 @@ class ProductsController < ApplicationController
         end
        
       end
-      @customer=Customer.where("id=?", @customer_id).first
+    }
+      @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
       
       
     end
     respond_to do |format|
+      format.csv do
+        create_date=Date.today
+        create_date.strftime("%d-%m-%Y") if create_date
+        #csv_string = DeliveryReportCsv.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path).to_s
+        csv_string = CSV.generate do |csv|  
+        # header row 
+          csv << ["Informe de Entrega"]
+          csv << ["Fecha Inicio:", @inited_at]
+          csv << ["Fecha Fin:", @finished_at]
+          csv << ["Empleado:", @employee.last_name + " "+ @employee.name]
+          csv << [" A continuacion se listan todos los detalles del informe.."]
+          csv << ["Item;Codigo;Tipo Producto;Destinatario;Direccion;Recibio;Motivo no entrega"] 
+          # data rows 
+          
+          @details.collect do |detail| 
+            item=(@details.index(detail) + 1).to_s
+            code=detail.product.bar_code
+            desc=detail.product.product_type.description
+            name=if detail.product.receiver_id != nil then detail.product.receiver.receiver_name else "" end
+            address=if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address else "" end
+            who= if detail.who_received!= nil then detail.who_received  else "" end
+            reason= if detail.reason_id!= nil then detail.reason.description  else "" end
+            new_row=item + ";" + code + ";" + desc + ";" + name + ";" + address + ";" + who + ";" + reason
+            csv << [new_row]
+          end
+        end
+          # send it to the browsah
+        send_data csv_string, 
+                  :type => 'text/csv; charset=iso-8859-1; header=present', 
+                  :disposition => "attachment; filename=informe_#{@customer.company_name + @customer.last_name + @customer.name + "_" + create_date.to_s}.csv" 
+      end
+      
       format.pdf do
         create_date=Date.today
         create_date.strftime("%d-%m-%Y") if create_date
         @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
         pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
         begin
-        pdf.render_file(@file_path)
+          pdf.render_file(@file_path)
         rescue
           #no se guardo el archivo
         end
         send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                               type: "application/pdf",
                               disposition: "inline"
-        
       end
     end
   end

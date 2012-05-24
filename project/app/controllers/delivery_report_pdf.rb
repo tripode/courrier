@@ -1,6 +1,7 @@
 class DeliveryReportPdf< Prawn::Document
   def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path)
     super()
+    
     text "Informe de Entrega"
     text "Cliente:#{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
     text "Administrador:#{employee.last_name + ' ' + employee.name}"
