@@ -267,7 +267,7 @@ class ProductsController < ApplicationController
    #filtro por las fechas de inicio y fin
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
-    if(valid_inited_at != nil && valid_finished_at!= nil) 
+    if(!valid_inited_at.nil? && !valid_finished_at.nil?) 
       @sql=" 1=1 "
       @sql = @sql + " and products.created_at between '" + @inited_at.to_s + "' and '" + @finished_at.to_s + "'"
     
@@ -275,41 +275,40 @@ class ProductsController < ApplicationController
         #Si es distinto de nil es un numero
         valid_number=/^\d+$/.match(@retire_note_number)
 
-        if(valid_number!= nil) 
+        if(!valid_number.nil?) 
         
-          @retire_note=RetireNote.where(number: valid_number.to_s).first
-          if (@retire_note!=nil) 
+          @retire_note=RetireNote.where(number: @retire_note_number).first
+          if (!@retire_note.nil?) 
             @sql = @sql + " and products.retire_note_id=" + @retire_note.id.to_s
           end
         end
         #Si se selecciono algun tipo de producto entonces agrego a la consulta
         valid_product_type_id=/^\d+$/.match(@product_type_id)
-        if(valid_product_type_id!=nil) 
+        if(!valid_product_type_id.nil?) 
           @sql = @sql + " and products.product_type_id=" + @product_type_id.to_s
         end
         #Si se selecciono algun tipo de estado entonces agrego a la consulta
         valid_product_state_id=/^\d+$/.match(@product_state_id)
-        if(valid_product_state_id!=nil)
-          @sql = @sql + " and products.product_state_id=" + valid_product_state_id.to_s
+        if(!valid_product_state_id.nil?)
+          @sql = @sql + " and products.product_state_id=" + @product_state_id.to_s
         end
         
          #Si se selecciono algun destinatario agrego a la consulta
         valid_receiver_id=/^\d+$/.match(@receiver_id)
-        if(valid_receiver_id!=nil) 
-         @sql = @sql + " and receiver_id=" + valid_receiver_id.to_s
+        if(!valid_receiver_id.nil?) 
+         @sql = @sql + " and receiver_id=" + @receiver_id.to_s
         end
         #Si hay codigo de barras agrego a la consulta
         valid_barcode=/^\d+$/.match(@bar_code)
-        if(valid_barcode!=nil) 
-          @sql = @sql + " and products.bar_code='" + valid_barcode.to_s + "'"
+        if(!valid_barcode.nil?) 
+          @sql = @sql + " and products.bar_code='" + @bar_code.to_s + "'"
         end
         
         #Si hay cliente agrego a la consulta
         valid_customer_id=/^\d+$/.match(@customer_id)
-        puts valid_customer_id
-        if(valid_customer_id!=nil) 
+        if(!valid_customer_id.nil?) 
           $products=Product.joins("inner join retire_notes r on r.id=products.retire_note_id" +
-          " inner join customers c on c.id=r.customer_id  where c.id="+valid_customer_id.to_s + " and " + @sql)
+          " inner join customers c on c.id=r.customer_id  where c.id=" + @customer_id.to_s + " and " + @sql)
         else
           $products=Product.where(@sql)
         end  
@@ -335,8 +334,8 @@ class ProductsController < ApplicationController
   
   #Post method: Este metodo genera el informe para el cliente de los products
   #entregados entre un rango de fecha
-  def generate_delivery_report_pdf
-    puts "Tiempo:"
+  def generate_delivery_report
+  
     
     @customer_id=params[:customer_id]
     @inited_at = params[:inited_at]
@@ -345,9 +344,9 @@ class ProductsController < ApplicationController
     valid_customer_id=/^\d+$/.match(@customer_id)
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
-    if(valid_customer_id!= nil and valid_inited_at != nil and valid_finished_at!= nil) 
+    if(!valid_customer_id.nil? and !valid_inited_at.nil? and !valid_finished_at.nil?) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
-    puts Benchmark.realtime{
+   
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
@@ -371,60 +370,43 @@ class ProductsController < ApplicationController
         end
        
       end
-    }
+    
       @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
-      
-      
     end
-    respond_to do |format|
-      format.csv do
-        create_date=Date.today
-        create_date.strftime("%d-%m-%Y") if create_date
-        #csv_string = DeliveryReportCsv.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path).to_s
-        csv_string = CSV.generate do |csv|  
-        # header row 
-          csv << ["Informe de Entrega"]
-          csv << ["Fecha Inicio:", @inited_at]
-          csv << ["Fecha Fin:", @finished_at]
-          csv << ["Empleado:", @employee.last_name + " "+ @employee.name]
-          csv << [" A continuacion se listan todos los detalles del informe.."]
-          csv << ["Item;Codigo;Tipo Producto;Destinatario;Direccion;Recibio;Motivo no entrega"] 
-          # data rows 
-          
-          @details.collect do |detail| 
-            item=(@details.index(detail) + 1).to_s
-            code=detail.product.bar_code
-            desc=detail.product.product_type.description
-            name=if detail.product.receiver_id != nil then detail.product.receiver.receiver_name else "" end
-            address=if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address else "" end
-            who= if detail.who_received!= nil then detail.who_received  else "" end
-            reason= if detail.reason_id!= nil then detail.reason.description  else "" end
-            new_row=item + ";" + code + ";" + desc + ";" + name + ";" + address + ";" + who + ";" + reason
-            csv << [new_row]
-          end
+    ## Comparo si la vista pide un archivo csv o pdf
+      if params[:commit]=="Descargar Excel"
+         respond_to do |format|
+            format.csv do
+              create_date=Date.today
+              create_date.strftime("%d-%m-%Y") if create_date
+              csv_report = DeliveryReportCsv.new(@inited_at,@finished_at,@customer,@employee,@details,@file_path)
+              csv_string = csv_report.getCSV
+                # envia al browser
+              send_data csv_string, 
+                        :type => 'text/csv; charset=iso-8859-1; header=present', 
+                        :disposition => "attachment; filename=informe_#{@customer.company_name + @customer.last_name + @customer.name + "_" + create_date.to_s}.csv" 
+            end
+         end
+      else  if params[:commit]=="Generar PDF"
+           respond_to do |format|
+              format.pdf do
+                create_date=Date.today
+                create_date.strftime("%d-%m-%Y") if create_date
+                @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
+                pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
+                begin
+                  pdf.render_file(@file_path)
+                rescue
+                  #no se guardo el archivo
+                end
+                send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
+                                      type: "application/pdf",
+                                      disposition: "inline"
+              end
+           end
         end
-          # send it to the browsah
-        send_data csv_string, 
-                  :type => 'text/csv; charset=iso-8859-1; header=present', 
-                  :disposition => "attachment; filename=informe_#{@customer.company_name + @customer.last_name + @customer.name + "_" + create_date.to_s}.csv" 
       end
-      
-      format.pdf do
-        create_date=Date.today
-        create_date.strftime("%d-%m-%Y") if create_date
-        @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
-        pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
-        begin
-          pdf.render_file(@file_path)
-        rescue
-          #no se guardo el archivo
-        end
-        send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
-      end
-    end
   end
    
   ##

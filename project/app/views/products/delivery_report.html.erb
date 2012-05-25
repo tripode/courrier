@@ -1,11 +1,11 @@
+<!-- Esta pagina sirve para generar los reportes que se envian al cliente 
+	Permite generar el archivo como pdf y tambien descagar el archivo como csv-->
 <div class="span-24 left">
-
 	<fieldset>
 		<legend>
 			Informe de Entrega
 		</legend>
-		<%= form_tag({:action => 'generate_delivery_report_pdf',:format=> "pdf"}) do  %>
-		
+		<%= form_tag({:action => 'generate_delivery_report', format: 'pdf'}, id:'form') do  %>
 		<ul>
 			<li>
 				<label>Inicio:</label>
@@ -23,20 +23,17 @@
 			    <input id="customer"  type="text" style="width: 60%" class="i_autocomplit"  />
 			    <%= hidden_field_tag :customer_id,nil,id: 'customer_id_hidden' %>    
 			</li>
-			
 		</ul>
-		
-	
 	</fieldset>
 	<div class="span-24 center last" >
 		
-			<%= submit_tag 'Generar', id: 'button_generate_id'%>
+			<%= submit_tag 'Generar PDF',id: 'button_pdf_id'%>
+			<%= submit_tag 'Descargar Excel',id: 'button_csv_id'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	
 	<% end %>
 </div>
-
 <script>
 	//focus en el formulario
    $("#customer").focus();
@@ -64,8 +61,14 @@
 		});
 	});
 	
+	//Si se hace click sobre el boton csv se setea el form como .csv sino .pdf
+	$("#button_csv_id").click(function(){
+		$("#form").attr({action: "/products/generate_delivery_report.csv"});
+	});
 	
-	
+	$("#button_pdf_id").click(function(){
+		$("#form").attr({action: "/products/generate_delivery_report.pdf"});
+	});
 	//Validaciones
      
      //Validaciones fechas

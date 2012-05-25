@@ -7,7 +7,7 @@ class AreasController < ApplicationController
   before_filter :check_permissions
   skip_before_filter :require_no_authentication
   #
-  # Llama a este metodo y verifica los permisos que tiene para Employee
+  # Llama a este metodo y verifica los permisos que tiene para Area
   #
   def check_permissions
     authorize! :create, Area

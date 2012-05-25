@@ -6,7 +6,7 @@ class CitiesController < ApplicationController
   before_filter :check_permissions
   skip_before_filter :require_no_authentication
   #
-  # Llama a este metodo y verifica los permisos que tiene para Employee
+  # Llama a este metodo y verifica los permisos que tiene para City
   #
   def check_permissions
     authorize! :create, City

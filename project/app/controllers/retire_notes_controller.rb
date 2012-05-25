@@ -153,8 +153,6 @@ class RetireNotesController < ApplicationController
   # DELETE /retire_notes/1.json
   def destroy
     @retire_note = RetireNote.find(params[:id])
-    @notice=""
-
     respond_to do |format|
       begin
         @retire_note.destroy
@@ -171,8 +169,6 @@ class RetireNotesController < ApplicationController
             @employees = Employee.find(:all)
             #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
             @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
-            
-       
        format.js 
       end
     end
@@ -194,32 +190,31 @@ class RetireNotesController < ApplicationController
      @state_id=params[:retire_note_state_id]
        begin
          valid_number=/^\d+$/.match(@number)
-         if valid_number!= nil then @sql = @sql + " and number=" + @number end
+         if !valid_number.nil? then @sql = @sql + " and number=" + @number end
          valid_customer_id=/^\d+$/.match(@customer_id)
-         if valid_customer_id!=nil then @sql = @sql + " and customer_id=" + @customer_id end
+         if !valid_customer_id.nil? then @sql = @sql + " and customer_id=" + @customer_id end
          valid_register_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@register_date)
-         if valid_register_date!=nil then @sql= @sql + " and date='" + @register_date +"'" end
+         if !valid_register_date.nil? then @sql= @sql + " and date='" + @register_date +"'" end
          valid_expiration_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@expiration_date)
-         if valid_expiration_date != nil then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
+         if !valid_expiration_date.nil? then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
          valid_state_id=/^\d+$/.match(@state_id)
-         if valid_state_id!=nil then @sql=@sql + " and retire_note_state_id=" + @state_id end
+         if !valid_state_id.nil? then @sql=@sql + " and retire_note_state_id=" + @state_id end
          valid_product_type_id=/^\d+$/.match(@product_type_id)
-         if valid_product_type_id!=nil then @sql=@sql + " and product_type_id=" + @product_type_id end
+         if !valid_product_type_id.nil? then @sql=@sql + " and product_type_id=" + @product_type_id end
          #Genero la consulta
          
-           if(@sql!="1=1") 
-              @retire_notes=RetireNote.where(@sql)
-           end
-           respond_to do |format|
-            #format.html {render action:"index"}# index.html.erb
-            #format.json { head :no_content}
+         if(@sql!="1=1") 
+            @retire_notes=RetireNote.where(@sql)
+         end
+         flash[:notice]=""
+         respond_to do |format|
+           format.js
+         end
+       rescue 
+         flash[:error]="Error al buscar los productos"
+          respond_to do |format|
             format.js
           end
-       rescue Exception
-         respond_to do |format|
-          format.html {redirect_to retire_notes_path}# index.html.erb
-          format.json { head :no_content}
-        end 
       end
    end
    
@@ -233,13 +228,13 @@ class RetireNotesController < ApplicationController
      @from_date = @current_date.to_date - 1.month    
      @retire_note = RetireNote.where("customer_id=? and product_type_id=? and city_id=? and date between ? and ?", @customer_id,@product_type_id, @city_id,@from_date.to_s,@current_date.to_date).last
      @price = 0
-     if @retire_note != nil then
+     if !@retire_note.nil? 
        @price = @retire_note.unit_price
      end
      @the_price = {"value" => @price}
      respond_to do |format|
-      format.html # 
-      format.json { render json: @the_price }
+        format.html # 
+        format.json { render json: @the_price }
     end
    end
 end

@@ -179,7 +179,7 @@
         var first_and_last_name = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         first_and_last_name.add( Validate.Presence, { failureMessage: " " } );
         
-        var document = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
-        document.add( Validate.Presence, { failureMessage: " " } );
+        var _document = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
+        _document.add( Validate.Presence, { failureMessage: " " } );
         
 </script>

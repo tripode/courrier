@@ -1,3 +1,5 @@
+## Esta clase genera en formato pdf la hoja de ruta para que el repartidor imprima
+## y salga a repartir los productos
 class RoutingSheetPdf< Prawn::Document
 
   def initialize(routing_sheet, details)
@@ -13,10 +15,10 @@ class RoutingSheetPdf< Prawn::Document
       [details.index(detail) + 1,
       detail.product.bar_code,
       detail.product.product_type.description,
-      if detail.product.receiver_id != nil then detail.product.receiver.receiver_name end,
-      if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address end,
+      if !detail.product.receiver_id.nil? then detail.product.receiver.receiver_name end,
+      if !detail.product.receiver_address_id.nil? then detail.product.receiver_address.address end,
       detail.who_received,
-      if detail.reason_id!= nil then detail.reason.description end]
+      if !detail.reason_id.nil? then detail.reason.description end]
     }
     header_data=[["Item","Codigo","Tipo Producto","Destinatario","Direccion","Recibio","Motivo no entrega"]]
     t=header_data.concat(@routing_sheets_details)

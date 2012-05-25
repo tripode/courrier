@@ -8,6 +8,7 @@
 	  <tr>
 	  	<th>Codigo</th>
 	    <th>Producto</th>
+	    <th>Estado</th>
 	    <th>Cliente</th>
 	    <th>Destinatario</th>
 	    <th>Ciudad</th>
@@ -21,6 +22,7 @@
 	  <tr>
 	  	<td><%= product.bar_code%></td>
 	  	<td><%= product.product_type.description %></td>
+	  	<td><%= product.product_state.state_name %></td>
 	  	<td><%= product.retire_note.customer.company_name + " " +
 	  		 product.retire_note.customer.last_name + " " + 
 	  		 product.retire_note.customer.name %></td>

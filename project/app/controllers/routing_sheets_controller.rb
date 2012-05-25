@@ -69,7 +69,7 @@ class RoutingSheetsController < ApplicationController
     if(@start_value.to_i == $number.to_i) 
       @first=RoutingSheet.first
 
-      if(@first!= nil) 
+      if(!@first.nil?) 
         $number= 2
       else
         $number= 1
@@ -115,7 +115,7 @@ class RoutingSheetsController < ApplicationController
     #La primera ves que se registra una hoja de ruta se setea como numero 1
     if(@start_value.to_i==$number.to_i) 
       @first=RoutingSheet.first
-      if(@first!= nil) 
+      if(!@first.nil?) 
         $number= 2
       else
         $number= 1
@@ -158,10 +158,10 @@ class RoutingSheetsController < ApplicationController
       begin
          RoutingSheet.transaction do
            ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
-           @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",@routing_sheet.id)
+           @routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: @routing_sheet.id)
            @routing_sheets_details.each do |detail|
              ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
-             @product=Product.where("id=?",detail.product_id).first
+             @product=Product.where(id: detail.product_id).first
              @old_product_state_id= 2 ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
              @product.update_attribute(:product_state_id,  @old_product_state_id)
              #Elimino el detalle de la base de datos
@@ -177,7 +177,7 @@ class RoutingSheetsController < ApplicationController
              @routing_sheet_detail.save
             
              @new_product_state_id= 1 ## id 1 ="Enviado" ProductState.where("state_name='Enviado'").first.id
-             @product=Product.where("id=?",product.id).first
+             @product=Product.where(id: product.id).first
              @product.update_attribute(:product_state_id,  @new_product_state_id)
             
           end
@@ -186,8 +186,8 @@ class RoutingSheetsController < ApplicationController
           format.json { head :no_content }
         end
       rescue
-        format.html { render action: "edit" }
-        format.json { render json: @routing_sheet.errors, status: :unprocessable_entity }
+        format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se pudo actualizar' }
+        format.json { head :no_content }
       end
     end
   end
@@ -203,10 +203,10 @@ class RoutingSheetsController < ApplicationController
            begin
              RoutingSheet.transaction do
                ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
-               @routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?",@routing_sheet.id)
+               @routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: @routing_sheet.id)
                @routing_sheets_details.each do |detail|
                  ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
-                 @product=Product.where("id=?",detail.product_id).first
+                 @product=Product.where(id: detail.product_id).first
                  @old_product_state_id= 2 ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
                  @product.update_attribute(:product_state_id,  @old_product_state_id)
                  #Elimino el detalle de la base de datos
@@ -232,34 +232,28 @@ class RoutingSheetsController < ApplicationController
   ## Agrega el producto a la lista, pasando como parametro el codigo de barra el producto
   def add_product
     @bar_code=params[:bar_code]
-    @product_state_id= 2 ## id 2="No enviado" ProductState.where("state_name='No enviado'").first.id
+    @product_state_id = 2 ## id 2="No enviado" ProductState.where("state_name='No enviado'").first.id
     @product=Product.where("bar_code=? and product_state_id=?",@bar_code, @product_state_id).first
     if !@product.nil?
         #Verifica si el producto ya fue cargado en lalista
       if !$products.include?(@product)
-        $products.push(@product)
+        $products << @product
         $total=$total + 1  
       end
     end
-    
-    
     respond_to do |format|
-      #format.html { redirect_to routing_sheets_url }
-      #format.json { head :no_content }
       format.js
     end
   end
   
   ## Get Elimina el producto de la lista
   def delete_product
-    @product=Product.where("id=?",params[:id]).first
+    @product=Product.where(id: params[:id]).first
     if $products.include?(@product)
       $products.delete(@product)
       $total = $total - 1
     end
     respond_to do |format|
-      #format.html { redirect_to routing_sheets_url }
-      #format.json { head :no_content }
       format.js
     end
   end
@@ -278,22 +272,22 @@ class RoutingSheetsController < ApplicationController
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_start)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@date_end)
     
-    if (valid_inited_at != nil and valid_finished_at != nil) 
+    if (!valid_inited_at.nil? and !valid_finished_at.nil?) 
       @sql=" 1=1 "  
       valid_number=/^\d+$/.match(@number)
-      if(valid_number!=nil) 
+      if(!valid_number.nil?) 
         @sql = @sql + " and number=" + @number
       end
       valid_employee=/^\d+$/.match(@employee_id)
-      if(valid_employee!=nil) 
+      if(!valid_employee.nil?) 
         @sql = @sql + "and employee_id=" + @employee_id
       end
       valid_area=/^\d+$/.match(@area_id)
-      if(valid_area!= nil) 
+      if(!valid_area.nil?) 
         @sql = @sql + " and area_id=" + @area_id
       end
       valid_state=/^\d+$/.match(@state_id)
-      if(valid_state!= nil) 
+      if(!valid_state.nil?) 
         @sql = @sql + " and routing_sheet_state_id=" + @state_id
       end
       
@@ -318,8 +312,8 @@ class RoutingSheetsController < ApplicationController
   def get_details
     @routing_sheet_id=params[:routing_sheet_id]
     valid_routing_sheet_id=/^\d+$/.match(@routing_sheet_id)
-      if(valid_routing_sheet_id!=nil) 
-          $routing_sheets_details=RoutingSheetDetail.where("routing_sheet_id=?", @routing_sheet_id)    
+      if(!valid_routing_sheet_id.nil?) 
+          $routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: @routing_sheet_id)    
       else
           $routing_sheets_details=Array.new
       end
@@ -331,15 +325,14 @@ class RoutingSheetsController < ApplicationController
   
   def save_edited_details
     RoutingSheetDetail.transaction do
-      @routing_sheet_id= -1
+      @routing_sheet_id = -1
       $routing_sheets_details.each do  |detail|
         @who_received=params['who_received_' + ($routing_sheets_details.index(detail) + 1).to_s]
         @reason_id=params['reason_id_' + ($routing_sheets_details.index(detail) + 1).to_s]
-        puts "rason" + @reason_id.to_s
         @detail_to_update=detail
-        @product=Product.where("id=?", detail.product_id).first
+        @product=Product.where(id: detail.product_id).first
         valid_received=/^\D{4,35}$/.match(@who_received)
-        if(valid_received!=nil) 
+        if(!valid_received.nil?) 
           ##Actualizo el detalle
           @detail_to_update.update_attribute(:who_received, @who_received)
           @detail_to_update.update_attribute(:received,'s') ## s= fue recibido el producto
@@ -356,15 +349,14 @@ class RoutingSheetsController < ApplicationController
         ##Obtengo el id de la hoja de ruta 
         @routing_sheet_id=detail.routing_sheet_id
       end
-      if(@routing_sheet_id!= -1)
-        @routing_sheet=RoutingSheet.where("id=?",@routing_sheet_id).first
+      if(@routing_sheet_id != -1)
+        @routing_sheet=RoutingSheet.where(id: @routing_sheet_id).first
         ##Cambio el estado de la hoja de ruta a procesado.
         @routing_sheet.update_attribute(:routing_sheet_state_id, 2 ) ## id 2 ="Procesado"
       end
     end
     
     respond_to do |format|
-      #format.js
        format.html { redirect_to @routing_sheet, notice: 'Los detalles se actualizaron correctamente' }
        format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
     end

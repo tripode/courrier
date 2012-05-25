@@ -68,7 +68,7 @@ Project::Application.routes.draw do
       post 'getCity'
       post 'search'
       post 'getListProducts'
-      post 'generate_delivery_report_pdf'
+      post 'generate_delivery_report'
       get 'delivery_report'
       get 'send_email'
       post 'update_new_receiver'

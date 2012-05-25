@@ -1,18 +1,18 @@
 require "csv"
 class DeliveryReportCsv
-  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path)
-   csv_string = CSV.generate do |csv|  
+  def initialize(inited_at,finished_at,customer,employee,details, file_path)
+   $csv_string = CSV.generate do |csv|  
         # header row 
           csv << ["Informe de Entrega"]
-          csv << ["Fecha Inicio:", @inited_at]
-          csv << ["Fecha Fin:", @finished_at]
-          csv << ["Empleado:", @employee.last_name + " "+ @employee.name]
+          csv << ["Fecha Inicio:", inited_at]
+          csv << ["Fecha Fin:", finished_at]
+          csv << ["Empleado:", employee.last_name + " "+ employee.name]
           csv << [" A continuacion se listan todos los detalles del informe.."]
           csv << ["Item;Codigo;Tipo Producto;Destinatario;Direccion;Recibio;Motivo no entrega"] 
           # data rows 
           
-          @details.collect do |detail| 
-            item=(@details.index(detail) + 1).to_s
+          details.collect do |detail| 
+            item=(details.index(detail) + 1).to_s
             code=detail.product.bar_code
             desc=detail.product.product_type.description
             name=if detail.product.receiver_id != nil then detail.product.receiver.receiver_name else "" end
@@ -23,5 +23,9 @@ class DeliveryReportCsv
             csv << [new_row]
           end
         end
+  end
+  public
+  def getCSV
+    return $csv_string
   end
 end

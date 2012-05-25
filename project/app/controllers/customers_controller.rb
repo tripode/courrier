@@ -53,9 +53,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @customer_types = CustomerType.all
     respond_to do |format|
-      # format.html { render action: "index" }
       format.js
-      # format.json { render json: @customer }
     end
   end
 
