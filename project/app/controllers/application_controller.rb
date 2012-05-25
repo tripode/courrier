@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def route_not_found
-    render :text => 'No se encontro la ruta pedida', :status => :not_found
+     redirect_to '/500.html'
   end
 
   def invalid_method
