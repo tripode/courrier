@@ -62,6 +62,7 @@ class RetireNotesController < ApplicationController
 
   # GET /retire_notes/1/edit
   def edit
+    flash[:notice]=""
     @retire_note = RetireNote.find(params[:id])
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
@@ -74,11 +75,13 @@ class RetireNotesController < ApplicationController
   # POST /retire_notes.json
   def create
     @retire_note = RetireNote.new(params[:retire_note])
+ 
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
     @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
     @retire_note.employee_id=current_user.employee.id
     @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
+ 
     respond_to do |format|
       begin
           if @retire_note.save
@@ -103,7 +106,12 @@ class RetireNotesController < ApplicationController
             flash[:notice]="No se pudo guardar la nota de retiro."
           end
       rescue
-        flash[:notice]="No se pudo guardar la nota de retiro."
+        @exits_retire_note=RetireNote.where(number: @retire_note.number).first
+        if !@exits_retire_note.nil?
+          flash[:notice]="No se pudo guardar. El numero de nota ya existe."
+        else
+          flash[:notice]="Error al guardar. Verifique los datos ingresados."
+        end
       ensure
          format.js
       end
@@ -114,7 +122,11 @@ class RetireNotesController < ApplicationController
   # PUT /retire_notes/1.json
   def update
     @retire_note = RetireNote.find(params[:id])
-
+    @customers = Customer.find(:all)
+    @employees = Employee.find(:all)
+    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    @retire_note.employee_id=current_user.employee.id
+    @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
     respond_to do |format|
       begin
           if @retire_note.update_attributes(params[:retire_note])
@@ -142,7 +154,12 @@ class RetireNotesController < ApplicationController
        
           end
       rescue
-        flash[:notice]='Error:No se pudo actualizar el nota de retiro'
+        @exits_retire_note=RetireNote.where(number: @retire_note.number).first
+        if !@exits_retire_note.nil?
+          flash[:notice]="No se pudo actualizar. El numero de nota ya existe."
+        else
+          flash[:notice]="Error al actualizar, verifique los datos ingresados."
+        end
       ensure
          format.js
       end
@@ -180,36 +197,43 @@ class RetireNotesController < ApplicationController
      @retire_notes=Array.new
      @retire_note=RetireNote.new # inicializo para usar metodos de formato de fecha que tiene nota de retiro
      @customers = Customer.find(:all) #necesito para el autocomplite
-     @sql="1=1"
+     
      #Obtengo los parametros para la consulta
      @number=params[:number]
      @customer_id=params[:customer_id]
-     @register_date=params[:date]
-     @expiration_date=params[:expiration_date]
+     @start_date=params[:start_date]
+     @end_date=params[:end_date]
      @product_type_id=params[:product_type_id]
      @state_id=params[:retire_note_state_id]
+     #Verifico que se hayan ingresados los rangos de fechas de registros para realizar la busqueda
+      valid_start_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@start_date)
+      valid_end_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@end_date)
+     
        begin
-         valid_number=/^\d+$/.match(@number)
-         if !valid_number.nil? then @sql = @sql + " and number=" + @number end
-         valid_customer_id=/^\d+$/.match(@customer_id)
-         if !valid_customer_id.nil? then @sql = @sql + " and customer_id=" + @customer_id end
-         valid_register_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@register_date)
-         if !valid_register_date.nil? then @sql= @sql + " and date='" + @register_date +"'" end
-         valid_expiration_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@expiration_date)
-         if !valid_expiration_date.nil? then @sql= @sql + " and expiration_date='" + @expiration_date + "'" end
-         valid_state_id=/^\d+$/.match(@state_id)
-         if !valid_state_id.nil? then @sql=@sql + " and retire_note_state_id=" + @state_id end
-         valid_product_type_id=/^\d+$/.match(@product_type_id)
-         if !valid_product_type_id.nil? then @sql=@sql + " and product_type_id=" + @product_type_id end
-         #Genero la consulta
-         
-         if(@sql!="1=1") 
-            @retire_notes=RetireNote.where(@sql)
-         end
-         flash[:notice]=""
-         respond_to do |format|
-           format.js
-         end
+         if (!valid_start_date.nil? and !valid_end_date.nil?)
+             @sql= " date between '" + @start_date + "' and '" + @end_date + "'"
+             
+             valid_number=/^\d+$/.match(@number)
+             if !valid_number.nil? then @sql = @sql + " and number=" + @number end
+             
+             valid_customer_id=/^\d+$/.match(@customer_id)
+             if !valid_customer_id.nil? then @sql = @sql + " and customer_id=" + @customer_id end
+       
+             valid_state_id=/^\d+$/.match(@state_id)
+             if !valid_state_id.nil? then @sql=@sql + " and retire_note_state_id=" + @state_id end
+             
+             valid_product_type_id=/^\d+$/.match(@product_type_id)
+             if !valid_product_type_id.nil? then @sql=@sql + " and product_type_id=" + @product_type_id end
+             #Genero la consulta
+             @retire_notes=RetireNote.where(@sql)
+             if @retire_notes.empty? 
+                @retire_notes = Array.new
+             end
+             flash[:notice]=""
+             respond_to do |format|
+               format.js
+             end
+          end
        rescue 
          flash[:error]="Error al buscar los productos"
           respond_to do |format|
@@ -231,7 +255,7 @@ class RetireNotesController < ApplicationController
      if !@retire_note.nil? 
        @price = @retire_note.unit_price
      end
-     @the_price = {"value" => @price}
+     @the_price = {"value" => @price.to_i}
      respond_to do |format|
         format.html # 
         format.json { render json: @the_price }

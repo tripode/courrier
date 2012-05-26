@@ -5,25 +5,25 @@
 		</legend>
 		<%= form_tag({:action => 'search'}, :remote => true)  do %>
 		<ul>
-	      <li>
-		    <label>N°:</label>
-		    <%= text_field_tag :number,"",id: 'number_id', style: 'width: 20%', :maxlength => 7 %>
+		  <li>
+		    <label>* Desde Fecha:</label>
+		    <%= text_field_tag :start_date, @retire_note.format_date,id: 'start_date',style: 'width: 28%',class:'i_fecha' %>
 		  </li>
 		  <li>
-		    <label>Fecha Registro:</label>
-		    <%= text_field_tag :date,nil,id: 'date',style: 'width: 28%',class:'i_fecha' %>
+		    <label>* Hasta Fecha:</label>
+		    <%= text_field_tag :end_date,@retire_note.format_date,id:'end_date',style: 'width: 28%', class:'i_fecha'%>
 		  </li>
 		  <div class="clear"></div>
-		  
+		  <li>
+		    <label>N°:</label>
+		    <%= text_field_tag :number,"",id: 'number_id', style: 'width: 20%', :maxlength => 10 %>
+		  </li>
 		  <li>
 		    <label for="customer">Cliente:</label>
 		    <input id="customer" type="text" style="width: 60%" class="i_autocomplit"  />
 			<%= hidden_field_tag :customer_id,"",id: 'customer_id_hidden' %>         
 		  </li>
-		  <li>
-		    <label>Fecha Vence:</label>
-		    <%= text_field_tag :expiration_date,nil, id:'expiration_date',style: 'width: 28%', class:'i_fecha'%>
-		  </li>
+		  
 		  <div class="clear"></div>
 		  
 		  <br />
@@ -60,18 +60,37 @@
 		$('#form_msg').hide();
 	});
 	$("input[class*=i_fecha]").datepicker({
-		altField : '#actualDate',
-		appendText : '(dd-mm-yyyy)',
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : 'dd-mm-yy',
-		dayNamesMin : ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
-		gotoCurrent : true,
-		yearRange : '1900:2012',
-		showOn : "button"
-
+          altField: '#actualDate',
+          changeMonth: true,
+          changeYear: true,
+          dateFormat: 'dd-mm-yy',
+          monthNamesShort: ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul',
+                            'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
+          dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
+          gotoCurrent: true,
+          yearRange: '1900:2040'
+							  
+        });
+	// place holder para fechas
+        $("input[class*=i_fecha]").attr({
+          'placeholder':'(dd-mm-aaaa)...',
+          'size':'12',
+          'maxlength':'12'
+        });
+	
+	
+	$(document).ready(function(){
+     	//Comprueba que se teclee solo numeros
+		$("#number_id").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
 	});
-
+	
     //Autocomplite de clientes
 	$(function() {
 		var list =[];
@@ -89,29 +108,14 @@
 				$("#customer_id_hidden").val(ui.item.id); 
 			}
 		});
-		if($("#customer_id_hidden").val()!= "") {
-			
-			//Cuando el id del cliente no es vacio se setea el nombre del cliente en el campo
-			//Esto se usa cuando se edita la nota de retiro, al hacer click en edit setea el nombre del cliente 
-			$("#save_button").val("Actualizar");
-			$("#retire_note_state").show();
-			var id=$("#customer_id_hidden").val();
-			var name= ""
-			// busca el empleado dentro de la lista
-			$(list).each(function(index,element){
-				if(element.id == id){
-					name=element.label
-					return true
-				}
-			})
-			//setea el nombre del empleado en el campo employee
-			$("#customer").val(name);
-		}
 	});
 	//Onfocus para que el cursor este sobre el input numero de retiro
 	$('#number_id').focus();
 	
 	var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
         f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
-     
+    var f2 = new LiveValidation('start_date', { validMessage: " ", wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: "Ingrese fecha" } ); 
+    var f3 = new LiveValidation('end_date', { validMessage: " ", wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: "Ingrese fecha" } );  
 </script>

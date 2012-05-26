@@ -13,13 +13,14 @@ gem 'devise'
 #Authorization
 gem 'cancan'
 
-#Authentication
-gem 'devise'
-#Authorization
-gem 'cancan'
-
+#Gemas para conversion PDF
 gem 'prawn'
 gem 'prawnto'
+
+#Gema del servidor thin
+gem 'thin'
+
+
 
 # Gems used only for assets and not required
 # in production environments by default.

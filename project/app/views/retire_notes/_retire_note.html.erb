@@ -10,7 +10,7 @@
 		<ul>
 	      <li>
 		    <label>* N°:</label>
-		    <%= f.text_field :number, id: 'number_id', style: 'width: 20%', :maxlength => 7 %>
+		    <%= f.text_field :number, id: 'number_id', style: 'width: 20%', :maxlength => 10 %>
 		  </li>
 		  <li>
 		    <label>* Fecha Registro:</label>
@@ -168,6 +168,37 @@
 	 $("input").focus(function () {
          $("#notice").val("");
      });
+     
+     $(document).ready(function(){
+     	//Comprueba que se teclee solo numeros
+		$("#number_id").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+		
+		$("#amount_id").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+		
+		$("#unit_price_id").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+	});
+     
 		//Validaciones
         var f1 = new LiveValidation('number_id', { validMessage: " ",wait: 100 });
         f1.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );

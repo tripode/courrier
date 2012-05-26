@@ -346,7 +346,8 @@ class ProductsController < ApplicationController
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(!valid_customer_id.nil? and !valid_inited_at.nil? and !valid_finished_at.nil?) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
-   
+      puts "Tiempo:"
+   puts Benchmark.realtime(){
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
@@ -370,7 +371,7 @@ class ProductsController < ApplicationController
         end
        
       end
-    
+    }
       @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
     end
