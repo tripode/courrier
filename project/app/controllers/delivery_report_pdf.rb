@@ -24,6 +24,6 @@ class DeliveryReportPdf< Prawn::Document
     move_down 30
     t.draw
     move_down 30
-    text "<u><a href='http://localhost:3000/products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
+    text "<u><a href='#{root_url}products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
   end
 end
