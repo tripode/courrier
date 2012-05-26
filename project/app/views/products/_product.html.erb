@@ -128,8 +128,11 @@
                 });
 		$("#add_receiver").click(function(event){
 			event.preventDefault();
-			$("#popin").dialog({ title: "Nuevo Destinatario", width: 630});
-		});	
+			$("#popin").dialog({modal: true, overlay: {opacity: 0.9, background: "black" }, 
+                          title: "Nuevo Destinatario", width: 630
+                      });
+		});
+                
 	});
 	
 	//focus en el formulario
