@@ -33,5 +33,12 @@ class User < ActiveRecord::Base
     end
     r
   end
+  
+  ##
+  # Este metodo retorna en el timeout para todos usuarios
+  #
+  def timeout_in
+    30.seconds
+  end
  
 end

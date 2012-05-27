@@ -74,7 +74,7 @@ class ReceiversController < ApplicationController
           #redirect to products via js
          # format.js {}
         #else
-          format.html { redirect_to @receiver, algo: flash[:notice]}
+          format.html { redirect_to new_receiver_path }
           format.json { render json: @receiver, status: :created, location: @receiver }
         #end
       else
@@ -91,7 +91,7 @@ class ReceiversController < ApplicationController
     @receiver.receiver_addresses.destroy_all
     respond_to do |format|
       if @receiver.update_attributes(params[:receiver])
-        format.html { redirect_to @receiver, notice: 'Receiver was successfully updated.' }
+        format.html { redirect_to new_receiver_path, notice: 'Receiver was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
