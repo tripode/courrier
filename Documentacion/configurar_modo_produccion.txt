@@ -1,0 +1,21 @@
+Estos son los pasos para levantar el proyecto courier en modo produccion con el servidor "thin"
+
+1) Primero instalar las siguientes gemas:
+
+Pasos para instalar thin
+gem install rack
+gem install eventmachine --pre
+gem install thin
+
+Agregar thin al gemfile
+require 'thin'
+
+Ejecutar bundle install
+
+2) Entrar en config/environments/production.rb
+config.assets.compile = true
+
+3) Ejecutar rake assets:precompile --trace RAILS_ENV=production
+
+4)Levanta el servidor por defecto en thin, pero para produccion hacer 
+rails server -e production
