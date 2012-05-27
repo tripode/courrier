@@ -1,0 +1,61 @@
+<div class="span-24 left">
+<fieldset>
+		<legend>
+			Editar Producto
+		</legend>
+		<div class="msg">
+			<%= notice%>
+		</div>
+		<ul>
+			<%= form_for(@product, remote: true) do |f| %>
+			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div> 
+			<li>
+				<label>Tipo de Producto:</label>
+				<input type="text" value="<%=@product.product_type.description %>" />
+				
+			</li>
+			
+			<li>
+				<label>Remitente:</label>
+				<input type="text" value="<%= @product.remitter %>" />
+				
+			</li>
+			<li>
+				<label for="receiver">Destinatario:</label>
+				<input type="text" value="<%= @product.receiver.receiver_name %>" />
+				
+			</li>
+			<li>
+				<label>Direccion:</label>
+				<input type="text" value="<%= @product.receiver_address.label + " " + @product.receiver_address.address %>" />
+				
+			</li>
+			<div class="clear"></div>
+			<li>
+				<label>Descripcion:</label>
+				<input type="text" value="<%=@product.description %>" />
+				
+			</li>
+			
+			<li>
+				<label>Codigo de Barra:</label>
+				<input type="text" value="<%= @product.bar_code%>" />
+				
+			</li>
+			
+			<div class="clear"></div>
+			<div class="subtitle">
+            	<h4>Cambiar de Estado</h4>
+          	</div>
+          	<li>
+				<label>Estado:</label>
+				<%= f.select :product_state_id, @product_state.getProductStates, prompt: 'Seleccionar'%>
+			</li>
+		</ul>
+	</fieldset>
+	<div class="span-24 center last" >
+			<%= f.submit 'Actualizar', id: 'button_save_id'%>
+			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+	</div>
+<% end %>
+</div>
