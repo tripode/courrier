@@ -14,7 +14,7 @@
 	    <th>Ciudad</th>
 	    <th>Lugar</th>
 	    <th>Direccion</th>
-	   
+	    <th></th>
 	  </tr>
 	</thead>
 	<tbody>
@@ -30,6 +30,11 @@
 	  	<td><%= product.receiver_address.city.name %></td>
 	  	<td><%= product.receiver_address.label%></td>
 	  	<td><%= product.receiver_address.address%></td>
+	  	<td>
+           <div>
+            	<%= link_to image_tag('editar.gif'), edit_product_path(product) %>
+           </div>
+        </td>
 	  </tr>
 	<% end %>
 	</tbody>

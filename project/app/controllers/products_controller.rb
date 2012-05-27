@@ -63,6 +63,8 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+    flash[:notice]=""
+    @product_state= ProductState.new
     @product = Product.find(params[:id])
   end
 
@@ -137,14 +139,17 @@ class ProductsController < ApplicationController
   # PUT /products/1.json
   def update
     @product = Product.find(params[:id])
-
+    @product_state= ProductState.new
     respond_to do |format|
-      if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'El producto ha sido actualizado' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+      begin
+        if @product.update_attributes(params[:product])
+          flash[:notice]="El producto ha sido actualizado"
+          format.js
+        end
+      rescue
+        flash[:notice]="El producto no pudo ser actualizado."
+      ensure
+        format.js
       end
     end
   end
