@@ -322,7 +322,7 @@ class RoutingSheetsController < ApplicationController
       format.js
     end  
   end
-  
+  ##Este metodo permite guardar los detalles
   def save_edited_details
     RoutingSheetDetail.transaction do
       @routing_sheet_id = -1
@@ -342,8 +342,16 @@ class RoutingSheetsController < ApplicationController
           @product.update_attribute(:received_at, @product.format_admission_date)
         else
           #Actualizo el motivo por el cual no se entrego el producto
-          @detail_to_update.update_attribute(:reason_id, @reason_id)
-          @product.update_attribute(:product_state_id,7) ## id 7= No recibido
+          #En caso de que el motivo sea "Producto Extraviado en el reparto
+          #actualizo el estado del producto a extraviado, sino a "No recibido"
+           @detail_to_update.update_attribute(:reason_id, @reason_id)
+           
+          if @reason_id == 14 # Rason de "Producto Extraviado"
+            @product.update_attribute(:product_state_id,4) ## id 4= Extraviado
+          else
+            @product.update_attribute(:product_state_id,7) ## id 7= No recibido  
+          end
+          
         end
         
         ##Obtengo el id de la hoja de ruta 
@@ -355,7 +363,6 @@ class RoutingSheetsController < ApplicationController
         @routing_sheet.update_attribute(:routing_sheet_state_id, 2 ) ## id 2 ="Procesado"
       end
     end
-    
     respond_to do |format|
        format.html { redirect_to @routing_sheet, notice: 'Los detalles se actualizaron correctamente' }
        format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }

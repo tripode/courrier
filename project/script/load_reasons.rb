@@ -13,6 +13,7 @@ Reason.transaction do
     Reason.create(:description=>"De reposo")
     Reason.create(:description=>"Casa en refacción/Casa Desocupada")
     Reason.create(:description=>"Falta Nº de local/Bloque")
+    Reason.create(:description=>"Producto extraviado en el reparto")
     Reason.create(:description=>"Otros")
 
 end

@@ -66,6 +66,11 @@ class ProductsController < ApplicationController
     flash[:notice]=""
     @product_state= ProductState.new
     @product = Product.find(params[:id])
+    #El producto no puede ser editado si su estado es recibido
+    if @product.product_state_id = 6 
+      flash[:notice]="Este producto no puede ser editado."
+    end
+    
   end
 
   # POST /products
@@ -142,10 +147,16 @@ class ProductsController < ApplicationController
     @product_state= ProductState.new
     respond_to do |format|
       begin
-        if @product.update_attributes(params[:product])
-          flash[:notice]="El producto ha sido actualizado"
-          format.js
+        ##Si el estado del producto es Recibido o No Recibido, no se puede actualizar porque
+        ## los productos ya se procesaron
+        if @product.product_state_id != 6 
+          if @product.update_attributes(params[:product])
+            flash[:notice]="El producto ha sido actualizado"
+          end
+        else
+          flash[:notice]="El producto no pudo ser actualizado"
         end
+         format.js
       rescue
         flash[:notice]="El producto no pudo ser actualizado."
       ensure
