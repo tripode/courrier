@@ -23,7 +23,7 @@
 		<ul>
 			<li>
 			    <label for="retire_note">Nota Retiro N°:</label>
-			    <%= text_field_tag :retire_note_number,nil, id:'retire_note_number' %>
+			    <%= text_field_tag :retire_note_number,nil, id:'retire_note_number', style: 'width: 20%', :maxlength => 10 %>
 			  
 			</li>
 			<li>
@@ -111,6 +111,27 @@
 		});
 	});
 	
+	
+	$(document).ready(function(){
+     	//Comprueba que se teclee solo numeros
+		$("#bar_code").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+		
+		$("#retire_note_number").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+	});
 	
 	//Validaciones
 	//Validacion del nro de la nota de retiro

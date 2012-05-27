@@ -67,7 +67,17 @@
 		
 	});
 
-	
+	$(document).ready(function(){
+     	//Comprueba que se teclee solo numeros
+		$("#number_id").keypress(function (e)
+		{
+		  //if the letter is not digit then display error and don't type anything
+		  if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+		  {
+		    return false;
+		  }
+		});
+	});
 	var f1 = new LiveValidation('number_id', { validMessage: " ", onlyOnSubmit: true,wait: 500 });
         f1.add( Validate.Numericality, { notANumberMessage: "Ingresar numero" } );
 </script>
