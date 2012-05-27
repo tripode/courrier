@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   belongs_to :employee
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :timeoutable
 
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   # Este metodo retorna en el timeout para todos usuarios
   #
   def timeout_in
-    30.seconds
+    10.minutes
   end
  
 end
