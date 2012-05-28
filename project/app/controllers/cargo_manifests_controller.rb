@@ -157,6 +157,7 @@ class CargoManifestsController < ApplicationController
       if item.id != params[:id].to_i
         @transport_guides.add(item);
       end
+      @@transport_guides=@transport_guides
       respond_to do |format|
         format.js 
       end

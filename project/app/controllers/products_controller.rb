@@ -67,7 +67,7 @@ class ProductsController < ApplicationController
     @product_state= ProductState.new
     @product = Product.find(params[:id])
     #El producto no puede ser editado si su estado es recibido
-    if @product.product_state_id = 6 
+    if @product.product_state_id == ProductState.recibido 
       flash[:notice]="Este producto no puede ser editado."
     end
     
@@ -81,7 +81,7 @@ class ProductsController < ApplicationController
     @cities = City.all
     #Variables de la clase
     $product = Product.new(params[:product])
-    $product.product_state_id = 2 #Estado por defecto del producto es No enviado id = 2
+    $product.product_state_id = ProductState.no_enviado #Estado por defecto del producto es No enviado id = 2
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
     @retire_note=RetireNote.find(@retire_note_id)
@@ -99,9 +99,9 @@ class ProductsController < ApplicationController
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
           $item= $item + 1
-          $product.retire_note_id=@retire_note_id
-          $product.product_type_id=@product_type_id
-          $product.product_state_id= ProductState.where("state_name='No enviado'").first.id
+          $product.retire_note_id = @retire_note_id
+          $product.product_type_id = @product_type_id
+          $product.product_state_id = ProductState.no_enviado #ProductState.where("state_name='No enviado'").first.id
           format.js
          else
             $item= 1 #seteo item a 1 para los productos de una nueva nota de retior
@@ -127,10 +127,10 @@ class ProductsController < ApplicationController
         #init all--------------
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
             #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-            $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            $retire_notes = RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
             $receivers = Receiver.find(:all)
-            $product_state=ProductState.new
-            $product.product_state_id= ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
+            $product_state = ProductState.new
+            $product.product_state_id = ProductState.no_enviado #ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
             
             $addresses=Array.new
             $item = 1
@@ -147,9 +147,9 @@ class ProductsController < ApplicationController
     @product_state= ProductState.new
     respond_to do |format|
       begin
-        ##Si el estado del producto es Recibido o No Recibido, no se puede actualizar porque
+        ##Si el estado del producto es Recibido  no se puede actualizar porque
         ## los productos ya se procesaron
-        if @product.product_state_id != 6 
+        if @product.product_state_id != ProductState.recibido 
           if @product.update_attributes(params[:product])
             flash[:notice]="El producto ha sido actualizado"
           end
@@ -362,8 +362,7 @@ class ProductsController < ApplicationController
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(!valid_customer_id.nil? and !valid_inited_at.nil? and !valid_finished_at.nil?) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
-      puts "Tiempo:"
-   puts Benchmark.realtime(){
+  
       @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
@@ -387,7 +386,7 @@ class ProductsController < ApplicationController
         end
        
       end
-    }
+    
       @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
     end

@@ -42,7 +42,7 @@
           changeYear: true,
           dateFormat: 'dd-mm-yy',
           monthNamesShort: ['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul',
-                            'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
+            'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
           dayNamesMin: ['Do', 'Lu', 'Ma', 'Mie', 'Ju', 'Vie', 'Sa'],
           gotoCurrent: true,
           yearRange: '1900:2040'
@@ -71,7 +71,7 @@
         });
 
 				
-  });
+      });
 
     </script>
   </head>
@@ -106,14 +106,12 @@
                     </li>
                   <% end %>
                   <% if can? :manage, Area %>
-                    	<li><%= link_to 'Zonas', new_area_path %></li>
+                    <li><%= link_to 'Zonas', new_area_path %></li>
                   <% end %>
                   <% if can? :manage, City %>
-                    	<li><%= link_to 'Ciudades', new_city_path %></li>
+                    <li><%= link_to 'Ciudades', new_city_path %></li>
                   <% end %>
-                  <% if can? :manage, User %>
-                    	<li><%= link_to "Usuarios", new_user_registration_path %></li>
-                  <% end %>
+
                 </ul>
               </li>
               <li><a href="#">Notas</a>
@@ -139,7 +137,7 @@
                       <ul>
                         <li><%= link_to 'Crear Hoja Ruta', new_routing_sheet_path %></li>
                         <li><%= link_to 'Buscar Hojas Ruta', routing_sheets_path %></li>
-                         <li><%= link_to 'Cargar Informe del Repartidor', report_routing_sheets_path %></li>
+                        <li><%= link_to 'Cargar Informe del Repartidor', report_routing_sheets_path %></li>
                       </ul>
                     </li>
                   <% end %>
@@ -163,10 +161,17 @@
                 </ul>
               </li>
               <li><a href="#">Informes</a>
-              		<ul>
-                        <li><%= link_to 'Informe de Entrega', delivery_report_products_path %></li>
-                   </ul>
+                <ul>
+                  <li><%= link_to 'Informe de Entrega', delivery_report_products_path %></li>
+                </ul>
               </li>
+              <% if can? :manage, User %>
+              <li><a href="#">Administración</a>
+                <ul>
+                  <li><%= link_to "Usuarios", new_user_registration_path %></li>
+                </ul>
+              </li>
+              <% end %>
             </ul>
           </div>
           <div class='current-user'>
