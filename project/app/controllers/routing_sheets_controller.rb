@@ -135,7 +135,7 @@ class RoutingSheetsController < ApplicationController
             @routing_sheet_detail.product_id=product.id
           
             @routing_sheet_detail.save
-            @new_product_state_id= 1 # id 1="Enviado" ProductState.where("state_name='Enviado'").first.id
+            @new_product_state_id= ProductState.enviado # id 1="Enviado" ProductState.where("state_name='Enviado'").first.id
             product.update_attribute(:product_state_id,  @new_product_state_id)
           end
         end
@@ -162,7 +162,7 @@ class RoutingSheetsController < ApplicationController
            @routing_sheets_details.each do |detail|
              ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
              @product=Product.where(id: detail.product_id).first
-             @old_product_state_id= 2 ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
+             @old_product_state_id = ProductState.no_enviado ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
              @product.update_attribute(:product_state_id,  @old_product_state_id)
              #Elimino el detalle de la base de datos
              detail.destroy
@@ -176,7 +176,7 @@ class RoutingSheetsController < ApplicationController
              @routing_sheet_detail.product_id=product.id
              @routing_sheet_detail.save
             
-             @new_product_state_id= 1 ## id 1 ="Enviado" ProductState.where("state_name='Enviado'").first.id
+             @new_product_state_id = ProductState.enviado ## id 1 ="Enviado" ProductState.where("state_name='Enviado'").first.id
              @product=Product.where(id: product.id).first
              @product.update_attribute(:product_state_id,  @new_product_state_id)
             
@@ -207,7 +207,7 @@ class RoutingSheetsController < ApplicationController
                @routing_sheets_details.each do |detail|
                  ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
                  @product=Product.where(id: detail.product_id).first
-                 @old_product_state_id= 2 ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
+                 @old_product_state_id = ProductState.no_enviado ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
                  @product.update_attribute(:product_state_id,  @old_product_state_id)
                  #Elimino el detalle de la base de datos
                  detail.destroy
@@ -232,7 +232,7 @@ class RoutingSheetsController < ApplicationController
   ## Agrega el producto a la lista, pasando como parametro el codigo de barra el producto
   def add_product
     @bar_code=params[:bar_code]
-    @product_state_id = 2 ## id 2="No enviado" ProductState.where("state_name='No enviado'").first.id
+    @product_state_id = ProductState.no_enviado ## id 2="No enviado" ProductState.where("state_name='No enviado'").first.id
     @product=Product.where("bar_code=? and product_state_id=?",@bar_code, @product_state_id).first
     if !@product.nil?
         #Verifica si el producto ya fue cargado en lalista
@@ -338,7 +338,7 @@ class RoutingSheetsController < ApplicationController
           @detail_to_update.update_attribute(:received,'s') ## s= fue recibido el producto
           ##Actualizo el estado del producto a "Entregado" y la fecha en que recibio el producto
           
-          @product.update_attribute(:product_state_id,6)  ## id 6="Recibido" ProductState.where("state_name='Recibido'").first.id
+          @product.update_attribute(:product_state_id,ProductState.recibido)  ## id 6="Recibido" ProductState.where("state_name='Recibido'").first.id
           @product.update_attribute(:received_at, @product.format_admission_date)
         else
           #Actualizo el motivo por el cual no se entrego el producto
@@ -346,12 +346,13 @@ class RoutingSheetsController < ApplicationController
           #actualizo el estado del producto a extraviado, sino a "No recibido"
            @detail_to_update.update_attribute(:reason_id, @reason_id)
            
-          if @reason_id == 14 # Rason de "Producto Extraviado"
-            @product.update_attribute(:product_state_id,4) ## id 4= Extraviado
+          if @reason_id.to_i == 14 # Rason de "Producto Extraviado"
+            @product.update_attribute(:product_state_id,ProductState.extraviado) ## id 4= Extraviado
           else
-            @product.update_attribute(:product_state_id,7) ## id 7= No recibido  
+            @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
           end
-          
+          puts "reason_id"
+          puts @reason_id
         end
         
         ##Obtengo el id de la hoja de ruta 

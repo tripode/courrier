@@ -4,7 +4,7 @@
 			Editar Producto
 		</legend>
 		<div class="msg">
-			<%= notice%>
+			<font color="green"><%= notice%></font>
 		</div>
 		<ul>
 			<%= form_for(@product, remote: true) do |f| %>
@@ -55,7 +55,7 @@
 	</fieldset>
 	<div class="span-24 center last" >
 			<%= f.submit 'Actualizar', id: 'button_save_id'%>
-			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+			<%= link_to 'Cancelar',root_url + 'main_page/index' ,class: 'button'%>
 	</div>
 <% end %>
 </div>
