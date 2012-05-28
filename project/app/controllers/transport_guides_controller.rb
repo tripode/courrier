@@ -108,26 +108,28 @@ class TransportGuidesController < ApplicationController
   # PUT /transport_guides/1.json
   def update
     @transport_guide = TransportGuide.find(params[:id])
-    value=nil
-    TransportGuide.transaction do
-      value=@transport_guide.update_attributes(params[:transport_guide])
-      @transport_guide_details=TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
-      @transport_guide_details.each do |item|
-        item.destroy
+    begin
+      TransportGuide.transaction do
+        @transport_guide.update_attributes(params[:transport_guide])
+        @transport_guide_details=TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+        @transport_guide_details.each do |item|
+          item.destroy
+        end
+        params[:details].each do |k,v|
+          v[:transport_guide_id] =@transport_guide.id
+          @transport_guide_detail =TransportGuideDetail.new(v)
+          @transport_guide_detail.save
+        end
       end
-      params[:details].each do |k,v|
-        v[:transport_guide_id] =@transport_guide.id
-        @transport_guide_detail =TransportGuideDetail.new(v)
-        @transport_guide_detail.save
-      end
-    end
-
-    respond_to do |format|
-      if value
-        format.html { redirect_to new_transport_guide_path, notice: "GT N&#176#{@transport_guide.num_guide} Actualizado Correctamente!"}
+      respond_to do |format|
+        format.html { redirect_to new_transport_guide_path, notice: "GT# #{@transport_guide.num_guide} Actualizado Correctamente!"}
         format.json { head :no_content}
-      else
-        format.html { render action: "edit" }
+      end
+    rescue ActiveRecord::StatementInvalid
+      manejo_error_pg(@transport_guide)
+    rescue
+      respond_to do |format|
+        format.html { redirect_to new_transport_guide_path,  action: "new" }
         format.json { render json: @transport_guide.errors, status: :unprocessable_entity }
       end
     end
@@ -163,16 +165,15 @@ class TransportGuidesController < ApplicationController
     @consult= Hash.new
     @customers= Customer.find(:all)
     @cities= City.find(:all)
-     @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+    @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+    
     params[:search].each do |k,v|
       if(v!="")
         @consult[k]=v
       end
     end
-    #    puts params[:search]
+    puts @consult.to_s
     @transport_guides=TransportGuide.where(@consult)
-    puts @consult.to_a
-    puts @transport_guides.to_a
     respond_to do |format|
       format.js
     end

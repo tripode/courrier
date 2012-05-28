@@ -89,11 +89,6 @@
 
         </div>
         <script type="text/javascript">
-          $("input[type=text]").click(function(){
-        <%#@msg=nil%>
-        <%#*$(".msg-input").text("");%>
-
-          });
           var f1 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
           f1.add( Validate.Presence, { failureMessage: " " } );
           var f2 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
