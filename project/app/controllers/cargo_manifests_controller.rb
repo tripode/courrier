@@ -90,6 +90,8 @@ class CargoManifestsController < ApplicationController
         format.json { head :no_content}
 
       end
+    rescue ActiveRecord::StatementInvalid
+      manejo_error_pg(@cargo_manifest)
     rescue
       respond_to do |format|
         format.html { redirect_to new_cargo_manifest_path,notice: "Error al guardar!"}
@@ -144,7 +146,7 @@ class CargoManifestsController < ApplicationController
     else
       @@origin=origin
       @@destiny=destiny
-      @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
+      @transport_guides=TransportGuide.where(origin_city_id: origin, destination_city_id: destiny, transport_guide_state_id: 1)
       @@transport_guides=@transport_guides
     end
     respond_to do |format|
@@ -164,6 +166,14 @@ class CargoManifestsController < ApplicationController
 
     end
 
+  end
+  private
+  def manejo_error_pg(cargo_manifest)
+    respond_to do |format|
+      format.html { redirect_to new_cargo_manifest_path,
+        notice: "ERROR, Numero de Manfiesto de carga ingresado ya existe"}
+      format.json { head :no_content }
+    end
   end
 
   
