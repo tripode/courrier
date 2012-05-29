@@ -4,7 +4,7 @@ class CargoManifestReportPdf < Prawn::Document
     text "Manifiesto de carga"
     text "Empleado:#{employee.last_name + ' ' + employee.name}"
     text "Trayecto: #{cargo_manifest.origin_city_id} - #{cargo_manifest.destiny_city_id}"
-    text "Fecha de creación: #{create_date}"
+    text "Fecha de creacion: #{create_date}"
     move_down 20
     text "A continuacion se listan todos los detalles.."
     cargo_manifest_detail = CargoManifestDetail.where(cargo_manifest_id: cargo_manifest.id);
