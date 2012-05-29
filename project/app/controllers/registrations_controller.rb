@@ -29,8 +29,6 @@ class RegistrationsController < Devise::RegistrationsController
 
  
  def create
-   puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-   puts params.to_yaml
     build_resource
     resource.employee_id = params[:employee_id]
     if resource.save
