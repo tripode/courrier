@@ -9,17 +9,45 @@ class Ability
        #iterate over each role, a user can has many.
        user.roles.each do |role|
          
-         if(role.name == 'Administrator')
+         if(role.name == 'Administrador')
             can :manage, :all
-         elsif role.name == 'Deliver'
-            #can :manage, Employee
-            can :manage, RetireNote
-            can :manage, User
+         elsif role.name == 'Repartidor'
             can :manage, RoutingSheet
-            can :manage, TransportGuide
-            can :manage, TransportGuideDetail
-         elsif role.name == 'Secretary'
-           can :manage, Employee 
+            can :manage, RoutingSheetDetail
+            can :manage, RoutingSheetState
+            
+            
+            
+         elsif role.name == 'Secretaria'
+           can :manage, Area
+           can :manage, CargoManifest
+           can :anage, CargoManifestDetail 
+           can :manage, City 
+           can :manage, Country 
+           can :manage, Customer 
+           can :manage, CustomerType 
+           can :manage, Employee
+           can :manage, FunctionType
+           can :manage, PaymentMethod
+           can :manage, Product
+           can :manage, ProductState
+           can :manage, ProductType
+           can :manage, Province
+           can :manage, Reason
+           can :manage, Receiver
+           can :manage, ReceiverAddress
+           can :manage, RetireNote 
+           can :manage, RetireNoteState 
+           can :manage, Role 
+           can :manage, RoutingSheet 
+           can :manage, RoutingSheetDetail 
+           can :manage, RoutingSheetState 
+           can :manage, ServiceType 
+           can :manage, TransportGuide 
+           can :manage, TransportGuideDetail 
+           can :manage, TransportGuideState 
+           can :manage, User
+           
            #permissions for secretary role
          end
          
