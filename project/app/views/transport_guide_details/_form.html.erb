@@ -16,7 +16,7 @@
     <% end %>
     <ul>
       <li style="width: 100%">
-        <%#*<input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>%>
+  <%#*<input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>%>
         <label>Tipo de Producto:</label>
         <%=select("lista2", "product_type_id", ProductType.get_list_product_types, {:prompt => '-- Seleccionar --'}) %>
         <label>Cantidad:</label>
@@ -24,56 +24,63 @@
         <label>Peso (kg):</label>
         <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
         <%= link_to '', add_detail_product_transport_guide_details_path, {id: 'add_product', class: 'add', remote: 'true', method: 'post'} %>
-        <input type="hidden" id="cant_productos" value="0"></input>
-      </li>
-      <div class="clear"></div>
-      <li>
-        <%= f.hidden_field :transport_guide_id%>
-      </li>
-    </ul>
+          <input type="hidden" id="cant_productos" value="0"></input>
+        </li>
+        <div class="clear"></div>
+        <li>
+          <%= f.hidden_field :transport_guide_id%>
+        </li>
+      </ul>
 
-  <%end%>
+    <%end%>
 
 
 
-</div>
+  </div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  function eliminarFila(){
-    var cant_productos = $('#cant_productos').val();
-    cant_productos--;
-    $('#cant_productos').val(cant_productos);
-    return false;
-  }
+    function eliminarFila(){
+      var cant_productos = $('#cant_productos').val();
+      cant_productos--;
+      $('#cant_productos').val(cant_productos);
+      return false;
+    }
 
-  $("#add_product").click(function(){
+    $("#add_product").click(function(){
 
-           var product_type = $("#lista2_product_type_id").val();
-           var weight =$("#weight").val();
-            var amount =$("#amount").val();
-            var href_temp= $(this).attr("href");
-             var index = href_temp.indexOf("?");
-             var cant_product=$('#cant_productos').val();
-             var href;
-             if(index>0){
-               href=href_temp.substring(0, index);
-             }else {
-               href= href_temp;
-             }
-             if(isNaN(weight)|| isNaN(amount)){
-               alert("Solo numero en los campos Cantidad y Peso")
-             }else {
-               $(this).attr("href",href +
-                "?weight="+weight +
-                "&amount="+amount+
-                "&product_type_id="+product_type+
-                "&cant_product="+cant_product);
-              cant_product++;
-              $('#cant_productos').val(cant_product);
-             }
+      var product_type = $("#lista2_product_type_id").val();
+      var weight =$("#weight").val();
+      var amount =$("#amount").val();
+      var href_temp= $(this).attr("href");
+      var index = href_temp.indexOf("?");
+      var cant_product=$('#cant_productos').val();
+      if(product_type=="" || weight=="" || amount=="") {
+        alert("Tipo de producto, peso o cantidad no pueden ser nulos");
+      }
+      else{
+        var href;
+        if(index>0){
+          href=href_temp.substring(0, index);
+        }else {
+          href= href_temp;
+        }
+        if(isNaN(weight)|| isNaN(amount)){
+          alert("Solo numero en los campos Cantidad y Peso")
+        }else {
+          $(this).attr("href",href +
+            "?weight="+weight +
+            "&amount="+amount+
+            "&product_type_id="+product_type+
+            "&cant_product="+cant_product);
+          cant_product++;
+          $('#cant_productos').val(cant_product);
+        }
              
-  });
+
+      }
+            
+    });
   
-</script>
+  </script>
 
