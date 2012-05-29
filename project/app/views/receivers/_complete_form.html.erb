@@ -1,0 +1,20 @@
+
+<%= form_for(@receiver) do |f| %>
+      <%= render :partial => 'form', :locals => { :f => f } %>
+
+<div class="span-24 center last" >
+
+
+      <% if @receiver.id %>
+              <%= f.submit 'Actualizar' %>
+      <% else %>
+              <%= f.submit 'Guardar', id: 'save_new_receiver_button' %>
+      <% end %>
+      <%= link_to 'Limpiar','#', class: 'limpiar button'%>
+      <%= link_to 'Cancelar','#', class: 'button'%>
+
+</div>
+<% end %>
+
+
+
