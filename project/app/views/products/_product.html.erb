@@ -95,7 +95,10 @@
   </div>	
 </div>
 <script>
-
+	//Resetea el valor donde se muestra la noticia al hacer click en cualquier campo
+	 $("input").focus(function () {
+         $("#notice").val("");
+     });
 	// pop in para agregar destinatarios
 	$(document).ready(function(){
                 //this is for receive popin to send data to the server via ajax

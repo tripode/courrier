@@ -43,14 +43,15 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
+    flash[:notice]=""
     @receiver = Receiver.new
     @cities = City.all
     
     $product = Product.new
     $products=Array.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
-    #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-    $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+    #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
+    $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
     $receivers = Receiver.find(:all)
     
     $addresses=Array.new
@@ -76,6 +77,7 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
+    flash[:notice]=""
     #Variables para inicializar popin destinatario
     @receiver = Receiver.new
     @cities = City.all
@@ -87,6 +89,7 @@ class ProductsController < ApplicationController
     @retire_note=RetireNote.find(@retire_note_id)
     @amount=RetireNote.where(id: @retire_note_id).first.amount
     respond_to do |format|
+    begin  
       if $product.save
         $products.push($product)
         $product=Product.new
@@ -94,7 +97,7 @@ class ProductsController < ApplicationController
         begin
           @retire_note.update_attribute(:amount_processed, $item)
         rescue
-          
+          flash[:notice]="No se pudo actualizar la cantidad de la nota"
         end
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
@@ -110,12 +113,13 @@ class ProductsController < ApplicationController
               @state_id=RetireNoteState.where("state_name='Procesado'").first.id
               @retire_note.update_attribute(:retire_note_state_id, @state_id)
             rescue
+              flash[:notice]="Esta nota se ha procesado con exito."
             end
             $product = Product.new
             #init all--------------
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
-            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-            $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
+            $retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
             $receivers = Receiver.find(:all)
            
             $addresses=Array.new
@@ -126,8 +130,8 @@ class ProductsController < ApplicationController
       else
         #init all--------------
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
-            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-            $retire_notes = RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-20 and current_date")
+            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
+            $retire_notes = RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
             $receivers = Receiver.find(:all)
             $product_state = ProductState.new
             $product.product_state_id = ProductState.no_enviado #ProductState.where("state_name='No enviado'").first.id ##Por defecto el estado es "No Enviado"
@@ -137,6 +141,10 @@ class ProductsController < ApplicationController
             ##----------
         format.js
       end
+    rescue
+      flash[:notice]="Atencion!!El codigo ingresado ya fue registrado.."
+      format.js
+    end
     end
   end
 
