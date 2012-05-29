@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
+  
   belongs_to :employee
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -39,6 +40,16 @@ class User < ActiveRecord::Base
   #
   def timeout_in
     10.minutes
+  end
+  
+  ##
+  # Este metodo recibe un string que representa el rol,
+  # luego verifica si el usuario tiene este rol, devuelve
+  # true si lo tiene, false en caso contrario
+  #
+  def has_role(rol)
+    r = Role.where(:name => rol).first
+    roles.include?(r)
   end
  
 end

@@ -95,7 +95,10 @@
   </div>	
 </div>
 <script>
-
+	//Resetea el valor donde se muestra la noticia al hacer click en cualquier campo
+	 $("input").focus(function () {
+         $("#notice").val("");
+     });
 	// pop in para agregar destinatarios
 	$(document).ready(function(){
                 //this is for receive popin to send data to the server via ajax
@@ -298,7 +301,7 @@
 					});
 					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label+": "+addresses[index].address+"</option>");
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].address+"</option>");
 					});
 
 					$('#address_id').focus();
