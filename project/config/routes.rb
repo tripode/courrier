@@ -11,6 +11,7 @@ Project::Application.routes.draw do
     end
     collection do
       post 'get_transport_guides'
+      post :generate_cargo_manifest_pdf
     end
   end
 
