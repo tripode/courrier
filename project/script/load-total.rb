@@ -220,9 +220,9 @@ RetireNoteState.transaction do
 end
 Role.transaction do
 
-    Role.create(:name=> 'Administrador')
-    Role.create(:name=> 'Repartidor')
-    Role.create(:name=> 'Secretaria')
+    Role.create(:name=> "Administrador")
+    Role.create(:name=> "Repartidor")
+    Role.create(:name=> "Secretaria")
 
 end
 User.transaction do
