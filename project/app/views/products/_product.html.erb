@@ -53,7 +53,7 @@
 			<div class="clear"></div>
 			<li>
 				<label>Direccion:</label>
-				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id'%>
+				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id' %>
 			</li>
 			<li>
 				<label>Ciudad:</label>
@@ -301,7 +301,7 @@
 					});
 					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].address+"</option>");
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
 					});
 
 					$('#address_id').focus();
@@ -357,6 +357,7 @@
 		});
 	});
 	
+	$("#product_receiver_address_id").attr({style: 'width: 150px'});
 	//Validaciones
 	//Validacion del nro de la nota de retiro
 	 var f1 = new LiveValidation('retire_note', { validMessage: " ",onlyOnSubmit: true,wait: 500 });

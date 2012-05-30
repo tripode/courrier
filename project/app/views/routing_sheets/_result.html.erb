@@ -21,11 +21,11 @@
 	<% @routing_sheets.each do |routing_sheet| %>
 	  <tr>
 	  	<td><%= routing_sheet.number %></td>
-	    <td><%= if routing_sheet.area_id!=nil then routing_sheet.area.area_name end %></td>
-	    <td><%= if routing_sheet.employee_id!=nil then routing_sheet.employee.last_name + ' ' + routing_sheet.employee.name  end  %></td>
-	    <td><%= routing_sheet.date %></td>
+	    <td><%= if !routing_sheet.area_id.nil? then routing_sheet.area.area_name end %></td>
+	    <td><%= if !routing_sheet.employee_id.nil? then routing_sheet.employee.last_name + ' ' + routing_sheet.employee.name  end  %></td>
+	    <td><%= routing_sheet.date.strftime("%d-%m-%Y") %></td>
 	    <td><%= routing_sheet.total_amount %></td>
-	    <td><%= if routing_sheet.routing_sheet_state_id!= nil  then routing_sheet.routing_sheet_state.state_name end %></td>
+	    <td><%= if !routing_sheet.routing_sheet_state_id.nil?  then routing_sheet.routing_sheet_state.state_name end %></td>
 	   
 	    <td><%= link_to 'Mostrar', routing_sheet %></td>
 	    <td><%= link_to 'Editar', if routing_sheet.routing_sheet_state_id == 1 then edit_routing_sheet_path(routing_sheet) else '#' end %></td>
