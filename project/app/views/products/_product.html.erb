@@ -99,6 +99,14 @@
 	 $("input").focus(function () {
          $("#notice").val("");
      });
+     //Submit cuando se presiona enter en el campo bar_code
+     $("#bar_code").keypress(function(e) {
+        if(e.which == 13) {
+            jQuery(this).blur();
+            jQuery('#button_save_id').focus().click();
+        }
+      });
+     
 	// pop in para agregar destinatarios
 	$(document).ready(function(){
                 //this is for receive popin to send data to the server via ajax
