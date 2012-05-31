@@ -44,7 +44,6 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     flash[:notice]=""
-    @receiver = Receiver.new
     @cities = City.all
     
     $product = Product.new
