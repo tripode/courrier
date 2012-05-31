@@ -1,6 +1,8 @@
+<div class="span-24 left">
+<div class="subtitle">
+	 <h4>Descripcion completa del cliente</h4>
+</div>
 <p id="notice"><%= notice %></p>
-
-
 <p>
   <b>Empresa:</b>
   <%= @customer_company.company_name %>
@@ -34,7 +36,8 @@
 
 <p>
   <b>Tipo de Cliente:</b>
-  <%= if @customer_company.customer_type.type_name != nil then @customer_company.customer_type.type_name end %>
+  <%= @customer_company.customer_type.type_name%>
 </p>
 
 <%= link_to 'Regresar', new_customer_company_path %>
+</div>

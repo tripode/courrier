@@ -85,11 +85,26 @@ class CargoManifestsController < ApplicationController
           cargo_manifest_detail.save
         }      
       end
-      respond_to do |format|
-        format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
-        format.json { head :no_content}
+#      if(params[:pdf]==nil)
+#        respond_to do |format|
+#          format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
+#          format.json { head :no_content}
+#
+#        end
+#
+#      else
+#        generate_cargo_manifest_pdf(@cargo_manifest)
+        respond_to do |format|
+          format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
+          format.json { head :no_content}
 
-      end
+        end
+        
+
+#      end
+      
+    rescue ActiveRecord::StatementInvalid
+      manejo_error_pg(@cargo_manifest)
     rescue
       respond_to do |format|
         format.html { redirect_to new_cargo_manifest_path,notice: "Error al guardar!"}
@@ -144,7 +159,7 @@ class CargoManifestsController < ApplicationController
     else
       @@origin=origin
       @@destiny=destiny
-      @transport_guides=TransportGuide.where("origin_city_id = ? AND destination_city_id = ? AND transport_guide_state_id = ?",origin, destiny, 1)
+      @transport_guides=TransportGuide.where(origin_city_id: origin, destination_city_id: destiny, transport_guide_state_id: 1)
       @@transport_guides=@transport_guides
     end
     respond_to do |format|
@@ -164,6 +179,51 @@ class CargoManifestsController < ApplicationController
 
     end
 
+  end
+  def generate_cargo_manifest_pdf#(cargo_manifest)
+    #    (employee,cargo_manifest,url_new, root_url, file_path)
+    cargo_manifest = CargoManifest.find(params[:id]);
+    respond_to do |format|
+      format.pdf do
+        create_date=Date.today
+        create_date.strftime("%d-%m-%Y") if create_date
+        @file_path = "#{Rails.root}/app/views/reports/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
+        employee= Employee.find(cargo_manifest.employee_id)
+        pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest,new_cargo_manifest_url, root_url, @file_path)
+        begin
+          pdf.render_file(@file_path)
+        rescue
+          #no se guardo el archivo
+        end
+      end
+    end
+
+  end
+  #  else  if params[:commit]=="Generar PDF"
+  #           respond_to do |format|
+  #              format.pdf do
+  #                create_date=Date.today
+  #                create_date.strftime("%d-%m-%Y") if create_date
+  #                @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
+  #                pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
+  #                begin
+  #                  pdf.render_file(@file_path)
+  #                rescue
+  #                  #no se guardo el archivo
+  #                end
+  #                send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
+  #                                      type: "application/pdf",
+  #                                      disposition: "inline"
+  #              end
+  #           end
+  #        end
+  private
+  def manejo_error_pg(cargo_manifest)
+    respond_to do |format|
+      format.html { redirect_to new_cargo_manifest_path,
+        notice: "ERROR, Numero de Manfiesto de carga ingresado ya existe"}
+      format.json { head :no_content }
+    end
   end
 
   

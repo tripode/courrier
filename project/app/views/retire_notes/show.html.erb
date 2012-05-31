@@ -12,16 +12,16 @@
 		  </li>
 		  <li>
 		    <label>Fecha Registro:</label>
-		    <input type="text" value="<%= @retire_note.date %>" size="10" />
+		    <input type="text" value="<%= @retire_note.date.strftime("%d-%m-%Y") %>" size="10" />
 		  </li>
 		  <div class="clear"></div>
 		  <li>
 		    <label>Cliente:</label>
-		    <input type="text" disabled="true" size="34" value=" <%= if @retire_note.customer_id!= nil then @retire_note.customer.last_name + ' ' + @retire_note.customer.name + ' ' + @retire_note.customer.company_name end %>"   /> 
+		    <input type="text" disabled="true" size="34" value=" <%= if !@retire_note.customer_id.nil? then @retire_note.customer.last_name + ' ' + @retire_note.customer.name + ' ' + @retire_note.customer.company_name end %>"   /> 
 		  </li>
 		  <li>
 		    <label>Fecha Vence:</label>
-		    <input type="text" value="<%= @retire_note.expiration_date %>" size="10" />
+		    <input type="text" value="<%= @retire_note.expiration_date.strftime("%d-%m-%Y") %>" size="10" />
 		  </li>
 		  <div class="clear"></div>
 		  <li>
@@ -32,7 +32,7 @@
 		   
 		  <li>
 		    <label>Servicio:</label>
-		   <input type="text" disabled="true" value="<%= if @retire_note.service_type_id != nil then @retire_note.service_type.description end %>" />
+		   <input type="text" disabled="true" value="<%= if !@retire_note.service_type_id.nil? then @retire_note.service_type.description end %>" />
 		  </li>
 		  <br />
 		   <div class="clear"></div>
@@ -43,11 +43,11 @@
 			<br />
 			<li>
 		    	<label>Tipo Producto:</label>
-		    	<input type="text" disabled="true" value=" <%= if @retire_note.product_type_id != nil then @retire_note.product_type.description end%>" />
+		    	<input type="text" disabled="true" value=" <%= if !@retire_note.product_type_id.nil? then @retire_note.product_type.description end%>" />
 		  	</li>
 		  	<li>
 		  		<label>Ciudad:</label>
-		    	<input type="text" disabled="true" size="15" value="<%= if @retire_note.city_id != nil then @retire_note.city.name end%>" />
+		    	<input type="text" disabled="true" size="15" value="<%= if !@retire_note.city_id.nil? then @retire_note.city.name end%>" />
 		  	</li>
 		  	<div class="clear"></div>
 		  	<li>

@@ -1,28 +1,33 @@
 class CargoManifestReportPdf < Prawn::Document
-  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path)
+  def initialize(create_date,employee,cargo_manifest,url_new, root_url, file_path)
     super()
-    text "Informe de Entrega"
-    text "Cliente:#{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
-    text "Administrador:#{employee.last_name + ' ' + employee.name}"
-    text "Fecha: desde el #{inited_at} hasta el #{finished_at}"
+    text "Manifiesto de carga"
+    text "Empleado:#{employee.last_name + ' ' + employee.name}"
+    text "Trayecto: #{cargo_manifest.origin_city_id} - #{cargo_manifest.destiny_city_id}"
+    text "Fecha de creacion: #{create_date}"
     move_down 20
-    text "A continuacion se listan todos los detalles del informe.."
-    
-    @routing_sheets_details=details.collect{|detail| 
-      [details.index(detail) + 1,
-      detail.product.bar_code,
-      detail.product.product_type.description,
-      if detail.product.receiver_id != nil then detail.product.receiver.receiver_name end,
-      if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address end,
-      detail.who_received,
-      if detail.reason_id!= nil then detail.reason.description end]
+    text "A continuacion se listan todos los detalles.."
+    cargo_manifest_detail = CargoManifestDetail.where(cargo_manifest_id: cargo_manifest.id);
+#    tg_detail=Set.new
+#    cargo_manifest_detail.each do |t|
+#      tg_detail.add(TransportGuideDetail.where(transport_guide_id: t.id))
+#    end
+
+    @cargo_manifest_details=cargo_manifest_detail.collect{|d|
+      detail = TransportGuide.find(d.transport_guide_id)
+#      arreglo = Hash.new
+      [ cargo_manifest_detail.index(d) + 1,
+        detail.remitter_person,
+        detail.destination_person,
+        detail.customer.company_name,
+      ]
     }
-    header_data=[["Item","Codigo","Tipo Producto","Destinatario","Direccion","Recibio","Motivo no entrega"]]
-    t=header_data.concat(@routing_sheets_details)
+    header_data=[["N#","Remitente","Destinatario","Cliente"]]
+    t=header_data.concat(@cargo_manifest_details)
     t=make_table(header_data,:cell_style => { :font => "Times-Roman", :font_style => :italic, :size => 10}) #:underline_header
     move_down 30
     t.draw
     move_down 30
-    text "<u><a href='http://localhost:3000/products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
+    text "<u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
   end
 end

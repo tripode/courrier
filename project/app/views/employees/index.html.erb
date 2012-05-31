@@ -29,12 +29,12 @@
 			<td><div><%= link_to 'Mostrar',  employee %></div></td>
 			<td>
 				<div>
-					<%= link_to image_tag('editar.gif'), edit_employee_path(employee), remote: true %>
+					<%= link_to image_tag('editar.gif'), edit_employee_path(employee), remote: true, title: 'Editar' %>
 				</div>
 			</td>
 			<td>
 				<div>
-					<%= link_to image_tag('borrar2.gif'), employee, confirm: 'Deseas eliminar el empleado?', method: :delete %>
+					<%= link_to image_tag('borrar2.gif'), employee, confirm: 'Deseas eliminar el empleado?', method: :delete, title: 'Borrar' %>
 				</div>
 			</td>
 		</tr>

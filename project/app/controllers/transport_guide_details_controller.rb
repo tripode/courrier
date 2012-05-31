@@ -42,10 +42,8 @@ class TransportGuideDetailsController < ApplicationController
     index=0
     tgd=Set.new
     if(params[:transport_guide_id].nil?)
-      puts "aca1"
       tgd=@@transport_guide_details;
     else
-      puts "aca3"
       params[:details].each do |item|
         tgd.add(TransportGuideDetail.find(item.to_i));      
       end
@@ -69,17 +67,21 @@ class TransportGuideDetailsController < ApplicationController
   #  @@transport_guide_details=Array.new
   #post
   def add_detail_product
-    puts "entro en add_Detail_product"
-
     @transport_guide_detail=TransportGuideDetail.new
     @transport_guide_detail.amount=params[:amount]
     @transport_guide_detail.weight=params[:weight]
     @transport_guide_detail.product_type_id=params[:product_type_id]
 
-    @@transport_guide_details=Array.new if params[:cant_product].to_i==0
-    @@transport_guide_details.insert(params[:cant_product].to_i, @transport_guide_detail)
-   
-    @transport_guide_details=@@transport_guide_details
+    
+    if(@transport_guide_detail.product_type_id!=nil)
+      @@transport_guide_details=Array.new if params[:cant_product].to_i==0
+      @@transport_guide_details.insert(params[:cant_product].to_i, @transport_guide_detail)
+      @transport_guide_details=@@transport_guide_details
+    elsif(params[:cant_product].to_i==0)
+      @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
+
+    end
+    
     respond_to do |format|
       format.js
     end

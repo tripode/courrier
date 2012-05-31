@@ -53,7 +53,7 @@
 			<div class="clear"></div>
 			<li>
 				<label>Direccion:</label>
-				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id'%>
+				<%= f.collection_select :receiver_address_id, $addresses, :id, :address, prompt: 'Seleccionar', id:'product_receiver_address_id' %>
 			</li>
 			<li>
 				<label>Ciudad:</label>
@@ -84,6 +84,17 @@
 
 
 <script>
+	//Resetea el valor donde se muestra la noticia al hacer click en cualquier campo
+	 $("input").focus(function () {
+         $("#notice").val("");
+     });
+     //Submit cuando se presiona enter en el campo bar_code
+     $("#bar_code").keypress(function(e) {
+        if(e.which == 13) {
+            jQuery(this).blur();
+            jQuery('#button_save_id').focus().click();
+        }
+      });
         /* esta funcion se encarga de cerrar el popup y
          * actualizar el autocomplete para destinatarios
          */
@@ -277,7 +288,7 @@
 					});
 					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label+": "+addresses[index].address+"</option>");
+						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
 					});
 
 					$('#address_id').focus();
@@ -333,6 +344,7 @@
 		});
 	});
 	
+	$("#product_receiver_address_id").attr({style: 'width: 150px'});
 	//Validaciones
 	//Validacion del nro de la nota de retiro
         /**
