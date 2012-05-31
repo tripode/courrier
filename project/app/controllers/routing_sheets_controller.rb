@@ -126,24 +126,29 @@ class RoutingSheetsController < ApplicationController
       @routing_sheet.number=$number.to_i + 1
     end
     respond_to do |format|
-      begin
-        RoutingSheet.transaction do
-        @routing_sheet.save #Guardo la cabecera
-        $products.each do |product| #Guardo los detalles
-            @routing_sheet_detail=RoutingSheetDetail.new
-            @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
-            @routing_sheet_detail.product_id=product.id
-          
-            @routing_sheet_detail.save
-            @new_product_state_id= ProductState.enviado # id 1="Enviado" ProductState.where("state_name='Enviado'").first.id
-            product.update_attribute(:product_state_id,  @new_product_state_id)
+      if $products.empty?
+          format.html { redirect_to new_routing_sheet_path, notice: 'Prohibido guardar sin agregar algun producto..' }
+          format.json { head :no_content }
+      else
+        begin
+          RoutingSheet.transaction do
+          @routing_sheet.save #Guardo la cabecera
+          $products.each do |product| #Guardo los detalles
+              @routing_sheet_detail=RoutingSheetDetail.new
+              @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
+              @routing_sheet_detail.product_id=product.id
+            
+              @routing_sheet_detail.save
+              @new_product_state_id= ProductState.enviado # id 1="Enviado" ProductState.where("state_name='Enviado'").first.id
+              product.update_attribute(:product_state_id,  @new_product_state_id)
+            end
           end
+          format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se guardo con exito.' }
+          format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
+        rescue
+          format.html { redirect_to new_routing_sheet_path, notice: 'No se pudo guardar la hoja de ruta..' }
+          format.json { head :no_content }
         end
-        format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se guardo con exito.' }
-        format.json { render json: @routing_sheet, status: :created, location: @routing_sheet }
-      rescue
-        format.html { render action: "new" }
-        format.json { render json: @routing_sheet.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -155,39 +160,46 @@ class RoutingSheetsController < ApplicationController
     @routing_sheet = RoutingSheet.find(params[:id])
 
     respond_to do |format|
-      begin
-         RoutingSheet.transaction do
-           ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
-           @routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: @routing_sheet.id)
-           @routing_sheets_details.each do |detail|
-             ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
-             @product=Product.where(id: detail.product_id).first
-             @old_product_state_id = ProductState.no_enviado ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
-             @product.update_attribute(:product_state_id,  @old_product_state_id)
-             #Elimino el detalle de la base de datos
-             detail.destroy
-           end
-           
-           @routing_sheet.update_attributes(params[:routing_sheet])
-           ##Creo los nuevos detalles de la hoja de ruta actualizada e inserto en la base de datos
-           $products.each do |product| #guardo los nuevos detalles
-             @routing_sheet_detail=RoutingSheetDetail.new
-             @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
-             @routing_sheet_detail.product_id=product.id
-             @routing_sheet_detail.save
+      if $products.empty?
+        format.html { redirect_to edit_routing_sheet_path, notice: 'Prohibido actualizar sin productos..' }
+        format.json { head :no_content }
+      else
+        begin
+           RoutingSheet.transaction do
+             ##Primero elimino los detalles de la hoja de ruta actualizada de la base de datos
+             @routing_sheets_details=RoutingSheetDetail.where(routing_sheet_id: @routing_sheet.id)
+             @routing_sheets_details.each do |detail|
+               ##Actaulizo el estado del producto a No enviado porque se elimina el detalle que hace referencia a el
+               @product=Product.where(id: detail.product_id).first
+               @old_product_state_id = ProductState.no_enviado ## id 2= "No enviado" ProductState.where("state_name='No enviado'").first.id
+               @product.update_attribute(:product_state_id,  @old_product_state_id)
+               #Elimino el detalle de la base de datos
+               detail.destroy
+             end
+             
+             @routing_sheet.update_attributes(params[:routing_sheet])
+             @routing_sheet.update_attribute(:total_amount, $products.length)
+             
+             ##Creo los nuevos detalles de la hoja de ruta actualizada e inserto en la base de datos
+             $products.each do |product| #guardo los nuevos detalles
+               @routing_sheet_detail=RoutingSheetDetail.new
+               @routing_sheet_detail.routing_sheet_id=@routing_sheet.id
+               @routing_sheet_detail.product_id=product.id
+               @routing_sheet_detail.save
+              
+               @new_product_state_id = ProductState.enviado ## id 1 ="Enviado" ProductState.where("state_name='Enviado'").first.id
+               @product=Product.where(id: product.id).first
+               @product.update_attribute(:product_state_id,  @new_product_state_id)
+              
+            end
             
-             @new_product_state_id = ProductState.enviado ## id 1 ="Enviado" ProductState.where("state_name='Enviado'").first.id
-             @product=Product.where(id: product.id).first
-             @product.update_attribute(:product_state_id,  @new_product_state_id)
-            
+            format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se actualizo correctamente.' }
+            format.json { head :no_content }
           end
-          
-          format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se actualizo correctamente.' }
+        rescue
+          format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta no se pudo actualizar.' }
           format.json { head :no_content }
         end
-      rescue
-        format.html { redirect_to @routing_sheet, notice: 'La Hoja de Ruta se pudo actualizar' }
-        format.json { head :no_content }
       end
     end
   end
@@ -351,8 +363,6 @@ class RoutingSheetsController < ApplicationController
           else
             @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
           end
-          puts "reason_id"
-          puts @reason_id
         end
         
         ##Obtengo el id de la hoja de ruta 
