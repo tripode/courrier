@@ -43,7 +43,6 @@ class ProductsController < ApplicationController
   # GET /products/new
   # GET /products/new.json
   def new
-    @receiver = Receiver.new
     @cities = City.all
     
     $product = Product.new
@@ -77,7 +76,6 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     #Variables para inicializar popin destinatario
-    @receiver = Receiver.new
     @cities = City.all
     #Variables de la clase
     $product = Product.new(params[:product])
@@ -438,4 +436,30 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  ##
+  # Este metodo guarda un nuevo receiver
+  #
+  def save_receiver
+    
+    # se limpia los datos y se guarda el nuevo destinatario
+    name = params[:receiver_name]
+    document = params[:document]
+    Receiver.transaction do 
+      receiver = Receiver.create(receiver_name: name, document: document );
+      
+        addresses = []
+        params[:addresses].each do |address|
+          number = address[0]
+          place = address[1][:place]
+          city_id = address[1][:city_id]
+          address = address[1][:address]
+          
+          address = ReceiverAddress.create(label: place, address: address, city_id: city_id, receiver_id: receiver.id)
+        end
+    end
+    
+  end
+  
 end

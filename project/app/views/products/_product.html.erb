@@ -83,33 +83,14 @@
 </div>
 
 
-<div style="display:none;">
-  <div id="popin">
-    <%= form_for(@receiver) do |f| %>
-        <%= hidden_field :from, :products, :value => :true %>
-        <%= render :partial => 'receivers/form', :locals => { :f => f } %>
-        <div style="text-align: center;">
-          <%= f.submit 'Guardar', :id => 'b-save-receiver' %>
-        </div>
-    <% end %>
-  </div>	
-</div>
 <script>
-
-	// pop in para agregar destinatarios
-	$(document).ready(function(){
-                //this is for receive popin to send data to the server via ajax
-                $('#b-save-receiver').click(function(event){
-                  event.preventDefault();
-                  var valuesToSubmit = $('#new_receiver').serialize();
-                  $.ajax({
-                      url: $('#new_receiver').attr('action'), //sumbits it to the given url of the form
-                      data: valuesToSubmit,
-                      type: "post",
-                      dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-                  });
-                  //Actualiza el autocomplete de receivers de la pagina de producs
-                  $.post("<%= update_new_receiver_products_path %>",{"receiver_id": null},
+        /* esta funcion se encarga de cerrar el popup y
+         * actualizar el autocomplete para destinatarios
+         */
+        function cerrarYActualizar(){
+          $("#popup").dialog("close");
+          $("#popup").html("<%= escape_javascript (render 'popup_receiver')%>");
+          $.post("<%= update_new_receiver_products_path %>",{"receiver_id": null},
 					function(receivers){
 						var list=[];
 						$(receivers).each(function(index,element){
@@ -120,17 +101,15 @@
 						//Actualizo la nueva lista
 						$( "#receiver" ).autocomplete({ source: list });
 				},"json");
-				//Cierra el popin
-                  $("#popin").dialog("close");
-                  $("#receiver-name").attr('value','');
-                  $("#document").attr('value','');
-                  $("#addresses").children().remove();
-                });
+        }
+	// pop in para agregar destinatarios
+	$(document).ready(function(){
+                /* este es el evento onclick para el boton mas de agregar destinatarios */
 		$("#add_receiver").click(function(event){
-			event.preventDefault();
-			$("#popin").dialog({modal: true, overlay: {opacity: 0.9, background: "black" }, 
-                          title: "Nuevo Destinatario", width: 630
-                      });
+                    event.preventDefault();
+                    $("#popup").dialog({modal: true, overlay: {opacity: 0.9, background: "black" }, 
+                        title: "Nuevo Destinatario", width: 600, height: 590
+                    });
 		});
                 
 	});
@@ -356,6 +335,7 @@
 	
 	//Validaciones
 	//Validacion del nro de la nota de retiro
+        /**
 	 var f1 = new LiveValidation('retire_note', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
         f1.add( Validate.Numericality, { notANumberMessage: " " } );
         f1.add( Validate.Presence, { failureMessage: " " } );
@@ -373,5 +353,5 @@
         
      //Validacion de las direcciones
      var f5 = new LiveValidation('product_receiver_address_id', { validMessage: " ",onlyOnSubmit: true,wait: 500 });
-        f5.add( Validate.Presence, { failureMessage: " " } );
+        f5.add( Validate.Presence, { failureMessage: " " } );*/
 </script>

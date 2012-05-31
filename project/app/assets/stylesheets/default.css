@@ -127,7 +127,8 @@ textarea {
 #content  fieldset input[type="text"],
 #content  fieldset input[type="email"],
 #content  fieldset input[type="password"], 
-#content  fieldset ul li select {
+#content  fieldset ul li select,
+div#popup{
     border: 1px solid #414141;
     background-color: #FFFFFF;
     padding: 3px 5px;
@@ -224,9 +225,9 @@ intermedios de las intefaces grandes */
 #content input[type="submit"], 
 #content a.button, 
 #content button.button,
-div#popin input[type="button"],
-div#popin input[type="submit"],
-div#popin a.button{
+div#popup input[type="button"],
+div#popup input[type="submit"],
+div#popup a.button{
     background: url(button-grad.png) repeat-x;
     color: #fff;
     font-weight: bold;
@@ -242,7 +243,11 @@ div#popin a.button{
     margin-left: 4px;
 
 }
-
+div#popup p.subtitle{
+    color:#0B3861;
+    font-size: 14px;
+    font-weight: bolder;
+}
 /*Botones class ADD. Agrega campos a una tabla*/
 #content  fieldset a.add,
 #content  fieldset input.add {
@@ -449,52 +454,6 @@ table.ui-datepicker-calendar .ui-state-highlight{
 /*#################################################################
 ##########Css de popin agregar usuarios############################
 ###################################################################*/
-
-div#popin div{
-	width:600px;
-}
-div#popin div ul{
-	margin: 1px;
-	padding: 1px;
-}
-div#popin div li{
-	text-align: right;
-	width: 280px;
-	font-size: 11px;
-	font-weight: normal;
-}
-div#popin div li label{
-	text-align: right;
-        font-size: 90%;
-}
-div#popin div li input{
-	float: right;
-	width: 145px;
-	margin: 0.5px;
-}
-div#popin div fieldset div{
-	width: 240px;
-}
-div#popin div fieldset div > div{
-	padding-left: 185px;
-}
-div#popin div fieldset div > div.subtitle{
-	margin: 10px 0 -5px 0;
-	padding-left: 150px;
-}
-div#popin div fieldset div h4{
-	font-size: 12px;
-	margin: 0;
-	padding: 0;
-}
-div#popin div div table, div#popin div fieldset div table th{
-	font-size: 12px;
-}
-div#popin input[type="button"],
-div#popin input[type="submit"],
-div#popin a.button{
-	font-size: 12px;
-}
 .ui-widget-overlay{
   opacity: .50 !important; /* Make sure to change both of these, as IE only sees the second one */
   filter: Alpha(Opacity=50) !important;

@@ -58,7 +58,6 @@ class ReceiversController < ApplicationController
   # POST /receivers
   # POST /receivers.json
   def create
-    puts params.to_yaml
     @receiver = Receiver.new(:receiver_name => params[:receiver][:receiver_name], :document => params[:receiver][:document])
     respond_to do |format|
       if @receiver.save
