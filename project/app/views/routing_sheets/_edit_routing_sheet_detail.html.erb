@@ -1,3 +1,5 @@
+<div class="span-24 last">
+	
 <!--En esta tabla se van cargando los datos de quien recibio el producto, tambien 
 	en caso de no recibirse se carga el motivo por el cual no se entrego el producto-->
 <%= form_tag({:action => 'save_edited_details'}) do  %>
@@ -36,6 +38,6 @@
 		<%= submit_tag 'Guardar'%>	
 		<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 </div>
-
-
 <%end%>
+
+</div>
