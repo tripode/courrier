@@ -184,6 +184,7 @@ class ProductsController < ApplicationController
       @retire_note.update_attribute(:amount_processed, @amount_processed) 
     end
     $products=Product.where(retire_note_id: @retire_note_id)
+    @cities= City.all
     respond_to do |format|
       format.js
       #format.html { redirect_to new_product_path }
@@ -466,6 +467,11 @@ class ProductsController < ApplicationController
           
           address = ReceiverAddress.create(label: place, address: address, city_id: city_id, receiver_id: receiver.id)
         end
+    end
+    @object={success: 1}
+    respond_to do |format|
+      format.html 
+      format.json { render json: @object}
     end
     
   end
