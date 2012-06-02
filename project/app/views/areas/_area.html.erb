@@ -3,8 +3,8 @@
 		<legend>
 			Registrar Nueva Zona
 		</legend>
-		<div>
-			<%= notice%>
+		<div id="form_notice"> 
+			<input id="notice" size="50" value="<%= notice %>" style="background:none; border:none; color: green" />
 		</div>
 		<%= form_for(@area) do |f| %>
 		  <% if @area.errors.any? %>
@@ -69,6 +69,11 @@
 		
 		
 	});
+	
+	//Resetea el valor donde se muestra la noticia al hacer click en cualquier campo
+	 $("input").focus(function () {
+         $("#notice").val("");
+     });
 	//validaciones
         var f1 = new LiveValidation('i_name', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         f1.add( Validate.Presence, { failureMessage: " " } );
