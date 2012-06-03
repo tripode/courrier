@@ -9,11 +9,11 @@
 				<div>
 					<li>
                                           <%= f.label :receiver_name, "* Nombre y Apellido", :class => 'large-label'%>
-                                          <%= f.text_field :receiver_name , :id => 'receiver-name'%>
+                                          <%= f.text_field :receiver_name , :id => 'receiver-name', :maxlength => '50', :size => '30'%>
 					</li>
 					<li>
                                           <%= f.label :document, "Nº de Documento", :class => 'large-label' %>
-                                          <%= f.text_field :document, :id => 'document' %>
+                                          <%= f.text_field :document, :id => 'document', :maxlength => '20', :size => '30' %>
 					</li>					
 				</div>
 			</ul>
@@ -29,7 +29,7 @@
 							
 						</p>
 						<%= label_tag :place, "* Lugar"%>
-						<%= text_field_tag :place, nil, :id => 'i-place', :size => '30'%>
+						<%= text_field_tag :place, nil, :id => 'i-place', :maxlength => '15', :size => '30'%>
 						
 					</li>
 					<li>

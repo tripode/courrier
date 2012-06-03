@@ -49,22 +49,24 @@
       $('#add-address-link').click(function(event){
         event.preventDefault();
         var place = $('#receiver_place').val();
-        var city_name = $('#city').val();
-        var city_id = $('#h-city').val();
-        var address = $('#receiver_address').val();
-	      	//alert('sera');
-	        //"<td>"+place+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][label]' value='"+place+"'></td>";
-	        var html = "<tr><td>"+place+"<input type='hidden' class='addresses' name='addresses["+counter+"][place]' value='"+place+"'/></td>"+
-	                       "<td>"+city_name+"<input type='hidden' class='addresses' name='addresses["+counter+"][city_id]' value='"+city_id+"'/></td>"+
-	                       "<td>"+address+"<input type='hidden' class='addresses' name='addresses["+counter+"][address]' value='"+address+"'/></td>"+
-	                       "<td>"+"<%= escape_javascript(link_to(image_tag('borrar2.gif'),'#', class: 'pullout'))%>"+"</td></tr>";
-	        $('#all-address').append(html);
-	        $('#receiver_place').val('');
-	        $('#city').val('');
-	        $('#h-city').val('');
-	        $('#receiver_address').val('');
-	        counter++;
-	        updateDeleteLinks();
+        if(place!=''){
+            var city_name = $('#city').val();
+            var city_id = $('#h-city').val();
+            var address = $('#receiver_address').val();
+                    //alert('sera');
+                    //"<td>"+place+"<input type='hidden' name='receiver[receiver_addresses_attributes]["+counter+"][label]' value='"+place+"'></td>";
+                    var html = "<tr><td>"+place+"<input type='hidden' class='addresses' name='addresses["+counter+"][place]' value='"+place+"'/></td>"+
+                                   "<td>"+city_name+"<input type='hidden' class='addresses' name='addresses["+counter+"][city_id]' value='"+city_id+"'/></td>"+
+                                   "<td>"+address+"<input type='hidden' class='addresses' name='addresses["+counter+"][address]' value='"+address+"'/></td>"+
+                                   "<td>"+"<%= escape_javascript(link_to(image_tag('borrar2.gif'),'#', class: 'pullout'))%>"+"</td></tr>";
+                    $('#all-address').append(html);
+                    $('#receiver_place').val('');
+                    $('#city').val('');
+                    $('#h-city').val('');
+                    $('#receiver_address').val('');
+                    counter++;
+                    updateDeleteLinks();
+            }
 	    
       });
       //Funcion que guarda el receiver nuevo
@@ -108,4 +110,5 @@
 			}
 		});
 	});
+        
     </script>

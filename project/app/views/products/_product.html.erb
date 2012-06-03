@@ -118,6 +118,7 @@
                 /* este es el evento onclick para el boton mas de agregar destinatarios */
 		$("#add_receiver").click(function(event){
                     event.preventDefault();
+                    ready=true;
                     $("#popup").dialog({modal: true, overlay: {opacity: 0.9, background: "black" }, 
                         title: "Nuevo Destinatario", width: 600, height: 590
                     });

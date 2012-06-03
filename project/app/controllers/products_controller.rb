@@ -451,7 +451,6 @@ class ProductsController < ApplicationController
   # Este metodo guarda un nuevo receiver
   #
   def save_receiver
-    
     # se limpia los datos y se guarda el nuevo destinatario
     name = params[:receiver_name]
     document = params[:document]

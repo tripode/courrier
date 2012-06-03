@@ -26,7 +26,7 @@ class Ability
            can :manage, Country 
            can :manage, Customer 
            can :manage, CustomerType 
-           can :manage, Employee
+           #can :manage, Employee
            can :manage, FunctionType
            can :manage, PaymentMethod
            can :manage, Product
@@ -46,7 +46,6 @@ class Ability
            can :manage, TransportGuide 
            can :manage, TransportGuideDetail 
            can :manage, TransportGuideState 
-           can :manage, User
            
            #permissions for secretary role
          end
