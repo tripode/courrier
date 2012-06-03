@@ -1,5 +1,5 @@
 <div>
-  <%= form_for(@cargo_manifest) do |f| %>
+  <%= form_for(@cargo_manifest, format: "pdf") do |f| %>
     <fieldset>
       <legend>Crear Manifiesto de Carga</legend>
       <div class="msg" >
@@ -77,7 +77,7 @@
             <div class="span-11 center prepend-top las">
                 <%= f.submit 'Guardar', id:'save_button' %>
                 <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-                <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id:1), class: 'button', method: 'post'%>
+                <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id:1, format: "pdf"), class: 'button', method: 'post'%>
                 <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
             </div>
 
