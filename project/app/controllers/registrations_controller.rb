@@ -1,15 +1,15 @@
 class RegistrationsController < Devise::RegistrationsController
-   #
+ #
   # Antes de hacer cualquier cosa con este controler,
   # se verifica si hay permiso para el usuario logueado
   #
-  before_filter :check_permissions
+  before_filter :check_permissions, :only => [:new, :create, :delete_user]
   skip_before_filter :require_no_authentication
   #
-  # Llama a este metodo y verifica los permisos que tiene para Employee
+  # Llama a este metodo y verifica los permisos que tiene para City
   #
   def check_permissions
-    authorize! :create, Customer
+    puts authorize! :create, User
   end
   
   layout "application" 
@@ -69,5 +69,9 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     new_user_registration_path
   end 
+  
+  def edit
+    super
+  end
   
 end 

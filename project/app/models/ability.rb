@@ -17,7 +17,6 @@ class Ability
             can :manage, RoutingSheetState
             
             
-            
          elsif role.name == 'Secretaria'
            can :manage, Area
            can :manage, CargoManifest
@@ -26,8 +25,6 @@ class Ability
            can :manage, Country 
            can :manage, Customer 
            can :manage, CustomerType 
-           #can :manage, Employee
-           can :manage, FunctionType
            can :manage, PaymentMethod
            can :manage, Product
            can :manage, ProductState
@@ -38,16 +35,13 @@ class Ability
            can :manage, ReceiverAddress
            can :manage, RetireNote 
            can :manage, RetireNoteState 
-           can :manage, Role 
            can :manage, RoutingSheet 
            can :manage, RoutingSheetDetail 
            can :manage, RoutingSheetState 
            can :manage, ServiceType 
            can :manage, TransportGuide 
            can :manage, TransportGuideDetail 
-           can :manage, TransportGuideState 
-           
-           #permissions for secretary role
+           can :manage, TransportGuideState
          end
          
          
