@@ -102,6 +102,25 @@
 			$("#employee").val(name);
 		}
 	});  
-
+          
+        //validaciones
+        var f1 = new LiveValidation('user_password', { validMessage: " ", wait: 500 });
+        f1.add( Validate.Presence, { failureMessage: " " } );
+        
+        var f2 = new LiveValidation('user_password_confirmation', { validMessage: " ", wait: 500 });
+        f2.add( Validate.Presence, { failureMessage: " " } );
+        f2.add( Validate.Confirmation, { match: 'user_password', failureMessage: " " });
+        
+        var f3 = new LiveValidation('i_username', { validMessage: " ", wait: 500 });
+        f3.add( Validate.Presence, { failureMessage: " " } );
+        
+        var f4 = new LiveValidation('user_email', { validMessage: " ", wait: 500 });
+        f4.add( Validate.Presence, { failureMessage: " " } );
+        
+        var f5 = new LiveValidation('employee', { validMessage: " ", wait: 500 });
+        f5.add( Validate.Presence, { failureMessage: " " } );
+        
+        
+        
     </script>
 

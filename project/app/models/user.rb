@@ -51,5 +51,18 @@ class User < ActiveRecord::Base
     r = Role.where(:name => rol).first
     roles.include?(r)
   end
+  
+  ##
+  # Se reescribe el metodo para eliminar
+  # el comportamiento de hacer downcase cuando guarda en la base de datos
+  #
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["username = :value OR email = :value", { :value => login}]).first
+    else
+      where(conditions).first
+    end
+  end
  
 end
