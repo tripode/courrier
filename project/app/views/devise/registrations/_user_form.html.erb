@@ -20,7 +20,7 @@
           </li>
           <li>
             <%= f.label :email, '* Email' %>
-            <%= f.email_field :email, :maxlength => '50', :size => '30' %>
+            <%= f.text_field :email, :maxlength => '50', :size => '30' %>
           </li>
           <div class="clear"></div>
           <li>
@@ -116,11 +116,33 @@
         
         var f4 = new LiveValidation('user_email', { validMessage: " ", wait: 500 });
         f4.add( Validate.Presence, { failureMessage: " " } );
+        f4.add( Validate.Email, { failureMessage: " " } );
         
         var f5 = new LiveValidation('employee', { validMessage: " ", wait: 500 });
         f5.add( Validate.Presence, { failureMessage: " " } );
         
-        
+        function verifyFields(){
+          var valid_class = "LV_valid_field";
+          var employee = $("#employee").hasClass(valid_class);
+          var username = $("#i_username").hasClass(valid_class);
+          var email = $("#user_email").hasClass(valid_class);
+          var password = $("#user_password").hasClass(valid_class);
+          var confirmation = $("#user_password_confirmation").hasClass(valid_class);
+          
+          if(employee && username && email && password && confirmation){
+            $("input[value='Guardar']").addClass("disabled").attr('disabled',true);
+          }else{
+          }
+          enableOrDisableButton("input[value='Guardar']", (employee && username && email && password && confirmation));
+      }
+      function enableOrDisableButton(button, enable){
+        if(enable){
+          $(button).removeClass("disabled").attr('disabled',false);
+        }else{
+          $(button).addClass("disabled").attr('disabled',true);
+        }
+      }
+      
+      setInterval('verifyFields()',1000);
         
     </script>
-
