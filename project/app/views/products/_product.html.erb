@@ -124,6 +124,28 @@
                     });
 		});
                 
+                //Funcion que guarda el receiver nuevo
+                $('#save-receiver-link').click(function(event){
+                  alert('test');
+                  event.preventDefault();
+                  var receiver_name = "receiver_name="+$("#receiver_full_name").val()+"&";
+                  var document = "document="+$("#receiver_document_number").val()+"&";
+                  var data = receiver_name+document;
+                  $("input.addresses").each(function(){
+                    data+=$(this).attr('name')+"="+$(this).val()+"&";
+                  });
+                  //Este metodo llama a la funcion para guardar el receiver
+                  $.post("<%= save_receiver_products_path %>",
+                                          data,
+                                          function(response){
+                                                  //Si tuvo exito se actualiza
+                                                  cerrarYActualizar();
+                                          },"json");
+
+
+
+                });
+                
 	});
 	
 	//focus en el formulario
@@ -289,7 +311,18 @@
 					});
 					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-						$('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                                                if(index==0){
+                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"' selected='selected'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                                                  
+                                                  $.post("<%= getCity_products_path %>",{"address_id": addresses[index].id},
+                                                      function(city){
+                                                              $("#city_id").val(city.name);
+                                                              $("#bar_code").focus();
+                                                      },"json");
+                                                }
+                                                else{
+                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                                                }
 					});
 
 					$('#address_id').focus();

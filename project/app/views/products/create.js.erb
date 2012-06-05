@@ -1,5 +1,6 @@
-$("#form_product").html("<%= escape_javascript (render 'product')%>");
+
 $("#popup").html("<%= escape_javascript (render 'popup_receiver')%>");
+$("#form_product").html("<%= escape_javascript (render 'product')%>");
 $("#form_list_product").html("<%= escape_javascript (render 'list')%>");
 $('table[class*=tablaIndex]').dataTable({
           "bScrollCollapse" : true,
