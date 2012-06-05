@@ -137,12 +137,12 @@ ServiceType.transaction do
   ServiceType.create(:description=> "Nacional")
 end
 TransportGuideState.transaction do
-  TransportGuideState.create(:name_state=> "En Espera",
-      :description=> "Cuando la Guia de tranporte aun no ha sido enviada"
+  TransportGuideState.create(:name_state=> "En Proceso",
+      :description=> "Cuando la GT  fue creado y aun no fue cargado a un manifiesto de carga"
   )
 
-  TransportGuideState.create(:name_state=> "Enviado",
-      :description=> "Cuando la Guia de tranporte ha sido enviada"
+  TransportGuideState.create(:name_state=> "Procesado",
+      :description=> "Cuando la GT fua anexada a un manifiesto de carga"
   )
 
   TransportGuideState.create(:name_state=> "Cancelado",

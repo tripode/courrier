@@ -50,6 +50,7 @@ class TransportGuidesController < ApplicationController
     #mala practica de programación pero lo hago para el metodo js agregarFila_Arreglo
     #no me tire error en el each vere como puedo depurar luego
     @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
+    @hide_state = 'hide'
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @transport_guide }
@@ -64,6 +65,7 @@ class TransportGuidesController < ApplicationController
     
     @transport_guide = TransportGuide.find(params[:id])
     @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
+    @hide_state = ''
     respond_to do |format|
       format.html { render action: "new" }
       #        format.js
@@ -78,6 +80,7 @@ class TransportGuidesController < ApplicationController
       TransportGuide.transaction do
 
         @transport_guide = TransportGuide.new(params[:transport_guide])
+        @transport_guide.transport_guide_state_id= TransportGuideState.find_by_name_state('En Proceso').id
         @transport_guide.save
         params[:details].each do |k,v|
           v[:transport_guide_id] =@transport_guide.id
@@ -138,13 +141,13 @@ class TransportGuidesController < ApplicationController
   # DELETE /transport_guides/1
   # DELETE /transport_guides/1.json
   def destroy
-    @transport_guide = TransportGuide.find(params[:id])
-    @transport_guide.destroy
-
-    respond_to do |format|
-      format.html { redirect_to transport_guides_url }
-      format.json { head :no_content }
-    end
+#    @transport_guide = TransportGuide.find(params[:id])
+#    @transport_guide.destroy
+#
+#    respond_to do |format|
+#      format.html { redirect_to transport_guides_url }
+#      format.json { head :no_content }
+#    end
   end
 
   #get

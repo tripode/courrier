@@ -1,5 +1,5 @@
 <div>
-  <%= form_for(@cargo_manifest, format: "pdf") do |f| %>
+  <%= form_for(@cargo_manifest) do |f| %>
     <fieldset>
       <legend>Crear Manifiesto de Carga</legend>
       <div class="msg" >
@@ -75,9 +75,9 @@
               <%= f.text_field :total_weight, maxlength: 5, size: 5, disabled: 'disabled' %>
             </li>
             <div class="span-11 center prepend-top las">
-                <%= f.submit 'Guardar', id:'save_button' %>
+                <%= f.submit @btt_guardar, id:'save_button' %>
                 <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-                <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id:1, format: "pdf"), class: 'button', method: 'post'%>
+                <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id:1, format: 'pdf'), class: 'button', method: 'post'%>
                 <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
             </div>
 
@@ -143,11 +143,12 @@
                 })
                 $("#origin_city").val(name);
               }
+
               if($("#destination_city_id_hidden").val()!= "") {
 
                 //Esto se usa cuando se edita la Guia de Transporte,
                 //al hacer click en edit setea La ciudad de destino
-                $("#save_button").val("Actualizar");
+                
                 var id=$("#destination_city_id_hidden").val();
                 var name= ""
                 $(list).each(function(index,element){

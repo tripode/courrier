@@ -5,7 +5,7 @@
         <th>Tipo de Producto</th>
         <th>Cantidad</th>
         <th>Peso</th>
-        <%#*<th><div style="width: 25px"></div></th>%>
+        <th>Precio Unitario</th>
         <th><div style="width: 25px"></div></th>
       </tr>
 
@@ -20,8 +20,9 @@
           <input type="hidden" name="details[<%=@cont%>][amount]" value="<%=detail.amount%>"></input>
           <td><%=detail.weight%></td>
           <input type="hidden" name="details[<%=@cont%>][weight]" value="<%=detail.weight%>"></input>
+          <td><%=detail.unit_cost%></td>
+          <input type="hidden" name="details[<%=@cont%>][unit_cost]" value="<%=detail.unit_cost%>"></input>
           <input type="hidden" name="details[<%=@cont%>][transport_guide_id]" value="<%=detail.transport_guide_id%>"></input>
-          <%#*<td><img src="/assets/borrar2.gif" style="cursor:pointer;" width="30" height="30" alt="Eliminar" onclick="eliminarFila()"/> </td>%>
           <td><%= link_to ' ', delete_detail_product_transport_guide_details_path(transport_guide_id: detail.transport_guide_id, amount: detail.amount, product_type_id: detail.product_type_id, weight: detail.weight, destroy: @cont , details: @transport_guide_details.to_a), method: 'post' , remote: 'true', onclick: 'eliminarFila()', class: 'delete'%></td>
           <%@cont+=1%>
       </tr>

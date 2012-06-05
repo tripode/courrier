@@ -14,23 +14,27 @@
         </ul>
       </div>
     <% end %>
-    <ul>
-      <li style="width: 100%">
-  <%#*<input id="cant_campos" type="hidden" value="3" name="cant_campos"></input>%>
-        <label>Tipo de Producto:</label>
-        <%=select("lista2", "product_type_id", ProductType.get_list_product_types, {:prompt => '-- Seleccionar --'}) %>
-        <label>Cantidad:</label>
-        <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
-        <label>Peso (kg):</label>
-        <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
-        <%= link_to '', add_detail_product_transport_guide_details_path, {id: 'add_product', class: 'add', remote: 'true', method: 'post'} %>
-          <input type="hidden" id="cant_productos" value="0"></input>
-        </li>
-        <div class="clear"></div>
-        <li>
-          <%= f.hidden_field :transport_guide_id%>
-        </li>
-      </ul>
+  <div id="form_tg_detail">
+
+      <ul>
+        <li style="width: 100%">
+
+          <label>Tipo de Producto:</label>
+          <%=select("lista2", "product_type_id", ProductType.get_list_product_types, {:prompt => '-- Seleccionar --'}) %>
+          <label>Cantidad:</label>
+          <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
+          <label>Peso (kg):</label>
+          <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
+          <label>Costo Unitario:</label>
+          <%= f.text_field :unit_cost, id: 'unit_cost',maxlegnth:10, size: 10%>
+          <%= link_to '', add_detail_product_transport_guide_details_path, {id: 'add_product', class: 'add', remote: 'true', method: 'post'} %>
+          </li>
+          <div class="clear"></div>
+          <li>
+            <%= f.hidden_field :transport_guide_id%>
+          </li>
+        </ul>
+      </div>
 
     <%end%>
 
@@ -52,11 +56,14 @@
       var product_type = $("#lista2_product_type_id").val();
       var weight =$("#weight").val();
       var amount =$("#amount").val();
+
+      var transport_guide_id = $("#transport_guide_id").val();
+      var unit_cost = $("#unit_cost").val();
       var href_temp= $(this).attr("href");
       var index = href_temp.indexOf("?");
       var cant_product=$('#cant_productos').val();
-      if(product_type=="" || weight=="" || amount=="") {
-        alert("Tipo de producto, peso o cantidad no pueden ser nulos");
+      if(product_type=="" || weight=="" || amount=="" || unit_cost=="") {
+        alert("Tipo de producto, peso , cantidad o costo no pueden ser nulos");
       }
       else{
         var href;
@@ -65,14 +72,16 @@
         }else {
           href= href_temp;
         }
-        if(isNaN(weight)|| isNaN(amount)){
-          alert("Solo numero en los campos Cantidad y Peso")
+        if(isNaN(weight)|| isNaN(amount) || isNaN(unit_cost)){
+          alert("Solo numero en los campos Cantidad , Peso y Costo")
         }else {
           $(this).attr("href",href +
             "?weight="+weight +
             "&amount="+amount+
             "&product_type_id="+product_type+
-            "&cant_product="+cant_product);
+            "&unit_cost="+unit_cost+
+            "&cant_product="+cant_product+
+             "&transport_guide_id="+transport_guide_id);
           cant_product++;
           $('#cant_productos').val(cant_product);
         }

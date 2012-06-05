@@ -451,6 +451,12 @@ table.ui-datepicker-calendar .ui-state-highlight{
 
 /*FIN DE FORMULARIO USUARIO*/
 
+
+/*ESTILO USADO EN EL INGRESO DE PRODUCTOS DE GUIA DE TRANSPORTE*/
+#content fieldset div#form_tg_detail  ul > li label{
+    width: auto !important;
+}
+
 /*#################################################################
 ##########Css de popin agregar usuarios############################
 ###################################################################*/

@@ -110,9 +110,12 @@
 
                 <%= f.select :payment_method_id, @transport_guide.get_list_payments_methods, prompt: "-- Seleccionar--"  %>
 
-                <label style="width:auto !important;">Estado:</label>
+                <div class="<%= @hide_state %>">
+                  <label style="width:auto !important;">Estado:</label>
 
-                <%= f.select :transport_guide_state_id, @transport_guide.get_list_state %>
+                  <%= f.select :transport_guide_state_id, @transport_guide.get_list_state %>
+                </div>
+
               </li>
             </ul>
             <div class="clear"></div>
@@ -122,7 +125,7 @@
             <div class="clear"></div>
 
 
-            <div id="form_transport_guide_detail" class="span-20 last">
+            <div id="form_transport_guide_detail" class="span-22 last">
               <%=render 'transport_guide_details/details'%>
               <div id="table_transport_guide_detail" class="span-11 prepend-1 last">
                 <%=render 'transport_guide_details/list_details'%>

@@ -46,6 +46,7 @@ class CargoManifestsController < ApplicationController
     @cargo_manifest_detail=CargoManifestDetail.new
     #    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
+    @btt_guardar='Guardar'
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,6 +57,25 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/1/edit
   def edit
     @cargo_manifest = CargoManifest.find(params[:id])
+    @cargo_manifest_detail=CargoManifestDetail.where(cargo_manifest_id: @cargo_manifest.id)
+    @transport_guides= Set.new
+    @cargo_manifest_detail.each do |cmd|
+      transport_guides=TransportGuide.find(cmd.transport_guide_id)
+      @transport_guides.add(transport_guides)
+    end
+  
+#    @transport_guides=TransportGuide.where(origin_city_id: @cargo_manifest.origin_city_id,
+#      destination_city_id: @cargo_manifest.destiny_city_id,
+#      transport_guide_state_id: TransportGuideState.find_by_name_state('Procesado').id )
+    @@transport_guides=@transport_guides
+    @cargo_manifest_detail=CargoManifestDetail.new
+    #    @transport_guide_details= TransportGuideDetail.all
+    @cities= City.find(:all)
+    @btt_guardar='Actualizar'
+    respond_to do |format|
+      format.html { render action: "new" }
+      format.json { render json: @transport_guide }
+    end
   end
 
   # POST /cargo_manifests
@@ -68,7 +88,7 @@ class CargoManifestsController < ApplicationController
 
       @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
       CargoManifest.transaction do
-     
+        @cargo_manifest.manifest_num= params[:cargo_manifest][:manifest_num].to_i
         @cargo_manifest.total_weight=params[:data][:total_weight]
         @cargo_manifest.total_products=params[:data][:total_products]
         @cargo_manifest.total_guides=params[:data][:total_guides]
@@ -78,31 +98,22 @@ class CargoManifestsController < ApplicationController
         @cargo_manifest.save
         #se cree el detalle
         cargo_manifest_details= params[:transport_guides_list]
-        cargo_manifest_details.each { |k,v|
-          cargo_manifest_detail = CargoManifestDetail.new
-          cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
-          cargo_manifest_detail.transport_guide_id=v.to_i
-          cargo_manifest_detail.save
-        }      
+        unless(cargo_manifest_details.nil?)
+          cargo_manifest_details.each do |k,v|
+            cargo_manifest_detail = CargoManifestDetail.new
+            cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
+            cargo_manifest_detail.transport_guide_id=v.to_i
+            transport_guide = TransportGuide.find(v.to_i)
+            transport_guide.update_attribute('transport_guide_state_id', TransportGuideState.find_by_name_state('Procesado').id )
+            cargo_manifest_detail.save
+          end
+        end
       end
-      #      if(params[:pdf]==nil)
-      #        respond_to do |format|
-      #          format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
-      #          format.json { head :no_content}
-      #
-      #        end
-      #
-      #      else
-      #        generate_cargo_manifest_pdf(@cargo_manifest)
       respond_to do |format|
         format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
         format.json { head :no_content}
 
       end
-        
-
-      #      end
-      
     rescue ActiveRecord::StatementInvalid
       manejo_error_pg(@cargo_manifest)
     rescue
@@ -118,17 +129,47 @@ class CargoManifestsController < ApplicationController
   # PUT /cargo_manifests/1
   # PUT /cargo_manifests/1.json
   def update
-    @cargo_manifest = CargoManifest.find(params[:id])
+    begin
+      @cargo_manifest = CargoManifest.find(params[:id])
+      CargoManifest.transaction do
+# MEJORAR!
+        @cargo_manifest.update_attribute('manifest_num', params[:cargo_manifest][:manifest_num].to_i)
+        @cargo_manifest.update_attribute('total_weight', params[:data][:total_weight])
+        @cargo_manifest.update_attribute('total_products', params[:data][:total_products])
+        @cargo_manifest.update_attribute('total_guides', params[:data][:total_guides])
+        #se crea el detalle
+        old_cargo_manifest_details= CargoManifestDetail.where(cargo_manifest_id: @cargo_manifest.id)
+        old_cargo_manifest_details.each do |e|
+          e.transport_guide.update_attribute('transport_guide_state_id', TransportGuideState.find_by_name_state('En Proceso').id)
+          e.destroy
+        end
+        cargo_manifest_details= params[:transport_guides_list]
+        cargo_manifest_details.each do |k,v|
+          cargo_manifest_detail = CargoManifestDetail.new
+          cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
+          cargo_manifest_detail.transport_guide_id=v.to_i
+          transport_guide = TransportGuide.find(v.to_i)
+          transport_guide.update_attribute('transport_guide_state_id', TransportGuideState.find_by_name_state('Procesado').id )
+          cargo_manifest_detail.save
+        end
 
-    respond_to do |format|
-      if @cargo_manifest.update_attributes(params[:cargo_manifest])
-        format.html { redirect_to @cargo_manifest, notice: 'Cargo manifest was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @cargo_manifest.errors, status: :unprocessable_entity }
       end
+      respond_to do |format|
+        format.html { redirect_to new_cargo_manifest_path, notice: "Actualizado Correctamente!"}
+        format.json { head :no_content}
+      end
+
+    rescue ActiveRecord::StatementInvalid
+      manejo_error_pg(@cargo_manifest)
+
+    rescue
+      respond_to do |format|
+        format.html { redirect_to new_cargo_manifest_path, notice: "Error en al actualizar el manifiesto de carga!"}
+        format.json { head :no_content}
+      end
+      
     end
+    
   end
 
   # DELETE /cargo_manifests/1
@@ -168,25 +209,27 @@ class CargoManifestsController < ApplicationController
   end
   def delete_detail
     @transport_guides= Set.new
+    transport_guides_deleted= Set.new
     @@transport_guides.each do |item|
       if item.id != params[:id].to_i
         @transport_guides.add(item);
+      else
+        transport_guides_deleted.add(item)
       end
     end
     @@transport_guides=@transport_guides
+
     respond_to do |format|
       format.js
     end
-
-    
-
   end
+  
   def generate_cargo_manifest_pdf#(cargo_manifest)
     cargo_manifest = CargoManifest.find(params[:id]);
     respond_to do |format|
       format.pdf do
         create_date=Date.today.strftime("%d-%m-%Y")
-       # @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
+        # @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
         employee= Employee.find(cargo_manifest.employee_id)
         pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest)#,new_cargo_manifest_url, root_url, @file_path)
         begin

@@ -39,7 +39,6 @@ class TransportGuideDetailsController < ApplicationController
   def delete_detail_product
     #    puts params[:details].to_s
     cont = 0
-    index=0
     tgd=Set.new
     if(params[:transport_guide_id].nil?)
       tgd=@@transport_guide_details;
@@ -48,13 +47,13 @@ class TransportGuideDetailsController < ApplicationController
         tgd.add(TransportGuideDetail.find(item.to_i));      
       end
     end   
-    @@transport_guide_details=Array.new
+    @@transport_guide_details=Set.new
     tgd.each do |detail|  
       if(params[:destroy].to_i!= cont)
         puts detail.product_type.description
-        @@transport_guide_details.insert(index, detail)
-        index+=1  
+        @@transport_guide_details.add(detail)
       end
+      
       cont+=1
     end  
     @transport_guide_details=@@transport_guide_details
@@ -63,19 +62,24 @@ class TransportGuideDetailsController < ApplicationController
     end
   end
 
-  @@index_product=0
-  #  @@transport_guide_details=Array.new
   #post
+  @@transport_guide_details=nil
   def add_detail_product
+    
+    if(params[:transport_guide_id] !=nil && @@transport_guide_details.nil? )
+      tg=TransportGuide.find(params[:transport_guide_id]);
+      @@transport_guide_details=Set.new(tg.transport_guide_details)
+    end
     @transport_guide_detail=TransportGuideDetail.new
     @transport_guide_detail.amount=params[:amount]
     @transport_guide_detail.weight=params[:weight]
+    @transport_guide_detail.unit_cost=params[:unit_cost]
     @transport_guide_detail.product_type_id=params[:product_type_id]
 
     
     if(@transport_guide_detail.product_type_id!=nil)
-      @@transport_guide_details=Array.new if params[:cant_product].to_i==0
-      @@transport_guide_details.insert(params[:cant_product].to_i, @transport_guide_detail)
+      @@transport_guide_details=Set.new if @@transport_guide_details.nil?
+      @@transport_guide_details.add(@transport_guide_detail)
       @transport_guide_details=@@transport_guide_details
     elsif(params[:cant_product].to_i==0)
       @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
