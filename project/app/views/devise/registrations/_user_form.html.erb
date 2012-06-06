@@ -128,12 +128,8 @@
           var email = $("#user_email").hasClass(valid_class);
           var password = $("#user_password").hasClass(valid_class);
           var confirmation = $("#user_password_confirmation").hasClass(valid_class);
-          
-          if(employee && username && email && password && confirmation){
-            $("input[value='Guardar']").addClass("disabled").attr('disabled',true);
-          }else{
-          }
-          enableOrDisableButton("input[value='Guardar']", (employee && username && email && password && confirmation));
+          var roles = ($("input[name='user[role_ids][]']:checked").length > 0);
+          enableOrDisableButton("input[value='Guardar']", (employee && username && email && password && confirmation && roles));
       }
       function enableOrDisableButton(button, enable){
         if(enable){
@@ -144,5 +140,10 @@
       }
       
       setInterval('verifyFields()',1000);
+      $("input").click(function(){
+        verifyFields();
+      }).keyup(function(){
+        verifyFields();
+      });
         
     </script>
