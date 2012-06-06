@@ -130,7 +130,7 @@
           var confirmation = $("#user_password_confirmation").hasClass(valid_class);
           var roles = ($("input[name='user[role_ids][]']:checked").length > 0);
           enableOrDisableButton("input[value='Guardar']", (employee && username && email && password && confirmation && roles));
-      }
+        }
       function enableOrDisableButton(button, enable){
         if(enable){
           $(button).removeClass("disabled").attr('disabled',false);
