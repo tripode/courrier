@@ -140,7 +140,7 @@ class ProductsController < ApplicationController
         format.js
       end
     rescue
-      flash[:notice]="Atencion!!El codigo ingresado ya fue registrado.."
+      flash[:notice]="Atencion!! El codigo ingresado ya fue registrado.. Introdusca otro codigo de barras por favor"
       format.js
     end
     end
