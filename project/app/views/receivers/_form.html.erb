@@ -46,7 +46,7 @@
 			    </div>
 			</ul> 
 			<div class="prepend-7">
-                                <%= link_to_function "Agregar", "add()", class: 'button' %>
+                                <%= link_to_function "Agregar", "add()", class: ['button', 'disabled'], disabled: true, id: 'link-add' %>
 			</div> 
 		</div>
 		
@@ -89,11 +89,15 @@
 </div>
 
 <script type="text/javascript">
-	  var f1 = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+      var f1 = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
       f1.add( Validate.Presence, { failureMessage: " " } );
-      var f2 = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
-      f2.add( Validate.Presence, { failureMessage: " " } );
       
+      $("#document").keypress(function (e){
+        //if the letter is not digit then display error and don't type anything
+        if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){
+          return false;
+        }
+      });
       
 	//autocomplete para ciudades
 	$(function() {
@@ -179,7 +183,31 @@
         var first_and_last_name = new LiveValidation('receiver-name', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
         first_and_last_name.add( Validate.Presence, { failureMessage: " " } );
         
-        var _document = new LiveValidation('document', { validMessage: " ",onlyOnSubmit: true, wait: 500 });
-        _document.add( Validate.Presence, { failureMessage: " " } );
-        
+</script>
+<script type="text/javascript">
+  function verify(){
+      var name = ($("#receiver-name").val().length > 0);
+      var place = ($("#i-place").val().length > 0);
+      var city = ($("#h-city").val().length > 0);
+      var address = ($("#i-address").val().length > 0);
+      var addresses = ($("#addresses").children().length > 0);
+      if(place && city && address){
+        $("#link-add").removeClass('disabled').attr('disabled',false);
+      }else{
+        $("#link-add").addClass('disabled').attr('disabled',true);
+      }
+      if(name && addresses){
+        $("#save_new_receiver_button").removeClass('disabled').attr('disabled',false);
+      }else{
+        $("#save_new_receiver_button").addClass('disabled').attr('disabled',true);
+      }
+    }
+  $(document).ready(function(){
+    
+    setInterval("verify()",1000);
+    
+    $("input:text").keyup(function(){
+      verify();
+    });
+  });
 </script>

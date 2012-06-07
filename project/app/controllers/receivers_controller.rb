@@ -37,6 +37,9 @@ class ReceiversController < ApplicationController
   # GET /receivers/new
   # GET /receivers/new.json
   def new
+    if(params[:messages])
+      @messages = params[:messages]
+    end
     @receiver = Receiver.new
     @receivers = Receiver.order('created_at DESC').limit 10
     @cities = City.all
@@ -58,27 +61,42 @@ class ReceiversController < ApplicationController
   # POST /receivers
   # POST /receivers.json
   def create
-    @receiver = Receiver.new(:receiver_name => params[:receiver][:receiver_name], :document => params[:receiver][:document])
-    respond_to do |format|
-      if @receiver.save
-        @receiver_addresses = params[:receiver][:receiver_addresses_attributes]
-        @receiver_addresses.each do |address|
-          ReceiverAddress.create(:receiver_id => @receiver.id, 
-                                 :label => address[1][:label],
-                                 :address => address[1][:address],
-                                 :city_id => address[1][:city_id])  
+    error = false
+    parameters = true
+    if params[:receiver] && 
+       params[:receiver][:receiver_addresses_attributes] && 
+      (params[:receiver][:receiver_addresses_attributes].size > 0)
+      begin
+        Receiver.transaction do
+          @receiver = Receiver.create(:receiver_name => params[:receiver][:receiver_name],
+                                   :document => params[:receiver][:document])
+
+          @receiver_addresses = params[:receiver][:receiver_addresses_attributes]
+          @receiver_addresses.each do |address|
+            ReceiverAddress.create(:receiver_id => @receiver.id, 
+                                   :label => address[1][:label],
+                                   :address => address[1][:address],
+                                   :city_id => address[1][:city_id])  
+          end
         end
-        flash[:notice] = "guardado."
-        #if params[:from][:products]
-          #redirect to products via js
-         # format.js {}
-        #else
-          format.html { redirect_to new_receiver_path }
+      rescue
+        error = true
+      end
+    else
+      @messages = {:error => "No se pudo guardar el destinatario. Debe tener al menos una direccion. Por favor, verifique los campos ingresados."}
+      parameters = false
+    end
+    
+    
+    respond_to do |format|
+      if (error and parameters) or (!error and !parameters)
+          @receivers = Receiver.order('created_at DESC').limit 10
+          @cities = City.all
+          format.html { render :action => :new }
           format.json { render json: @receiver, status: :created, location: @receiver }
-        #end
       else
-        format.html { render action: "new" }
-        format.json { render json: @receiver.errors, status: :unprocessable_entity }
+          format.html { redirect_to new_receiver_path, :messages => {:success => 'El destinatario se guardo correctamente.'}}
+          format.json { head :no_content }
       end
     end
   end
@@ -103,11 +121,25 @@ class ReceiversController < ApplicationController
   # DELETE /receivers/1.json
   def destroy
     @receiver = Receiver.find(params[:id])
-    @receiver.destroy
+    error = false
+    begin
+      @receiver.destroy
+    rescue
+      @messages = {:error => "No se pudo eliminar el destinatario."}
+      error = true
+    end
 
     respond_to do |format|
-      format.html { redirect_to new_receiver_url }
-      format.json { head :no_content }
+      if !error
+          format.html { redirect_to new_receiver_url }
+          format.json { head :no_content }
+      else
+        @receiver = Receiver.new
+        @receivers = Receiver.order('created_at DESC').limit 10
+        @cities = City.all
+        format.html { render :action => :new}
+          format.json { head :no_content }
+      end
     end
   end
   

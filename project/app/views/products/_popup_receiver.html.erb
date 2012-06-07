@@ -113,3 +113,32 @@
 	});
         
     </script>
+    <script type="text/javascript">
+        /* en estes script se habilita o desabilita los botones agregar o guardar*/
+        function enableButton(button,enable){
+          if(enable){
+            $(button).removeClass('disabled').attr('disabled',false);
+          }else{
+            $(button).addClass('disabled').attr('disabled',true);
+          }
+        }
+        function verify(){
+          var name = ($("#receiver_full_name").val().length > 0);
+          var place = ($("#receiver_place").val().length > 0);
+          var city = ($("#h-city").val().length > 0);
+          var address = ($("#receiver_address").val().length > 0);
+          var addresses = ($("#all-address").children().length > 0);
+
+          enableButton("#add-address-link", (city && address && place));
+          enableButton("#save-receiver-link",(name && addresses));
+        }
+        $(document).ready(function(){
+          $("input").click(function(){
+            verify();
+          }).keyup(function(){
+            verify();
+          });
+          
+          setInterval("verify()", 1000);
+        });
+    </script>
