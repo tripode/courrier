@@ -360,8 +360,12 @@ class RoutingSheetsController < ApplicationController
            
           if @reason_id.to_i == 14 # Rason de "Producto Extraviado"
             @product.update_attribute(:product_state_id,ProductState.extraviado) ## id 4= Extraviado
-          else
-            @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
+          else 
+            if @reason_id.to_i == 15 # Rason de "Cancelado a pedido del cliente"
+              @product.update_attribute(:product_state_id,ProductState.devuelto ) ## id 3= Devuelto
+            else
+              @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
+            end
           end
         end
         

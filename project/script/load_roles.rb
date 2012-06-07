@@ -1,7 +1,7 @@
 Role.transaction do
 
-    Role.create(:name=> 'Administrator')
-    Role.create(:name=> 'Deliver')
-    Role.create(:name=> 'Secretary')
+    Role.create(:name=> "Administrador")
+    Role.create(:name=> "Repartidor")
+    Role.create(:name=> "Secretaria")
 
 end

@@ -1,7 +1,7 @@
 Reason.transaction do
   
     Reason.create(:description=>"Se mudó")
-    Reason.create(:description=>"Fallecio")
+    Reason.create(:description=>"No atiende nadie en el lugar")
     Reason.create(:description=>"No existe Nº de casa")
     Reason.create(:description=>"Falta Nº de casa")
     Reason.create(:description=>"No quiere recibir")
@@ -14,6 +14,7 @@ Reason.transaction do
     Reason.create(:description=>"Casa en refacción/Casa Desocupada")
     Reason.create(:description=>"Falta Nº de local/Bloque")
     Reason.create(:description=>"Producto extraviado en el reparto")
+    Reason.create(:description=>"Producto cancelado a pedido del cliente")
     Reason.create(:description=>"Otros")
 
 end

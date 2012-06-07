@@ -1,33 +1,30 @@
 require 'date'
 Employee.transaction do
-    date= Time.now + 6.days
-    (1..10).each do |t|
-      Employee.create(
-        :email=>"empleado_#{t}@server.com",
-        :name=>"e_nombre_#{t}",
-        :last_name =>"e_apellido_#{t}",
-        :num_identity => "#{t*10000}",
-        :address=>"calle cualquiera numero #{t}",
-        :admission_date=>date,
-        :birthday=>date,
-        :salary=>1000000,
-        :mobile_number=>"(09xx)00000#{t}",
-        :phone_number=>"(071)00000#{t}",
-        :function_type_id=>3
-      )
-    end
+    date= Time.now 
     Employee.create(
-        :email=>"raulbeni@gmail.com",
-        :name=>"Raul",
-        :last_name =>"Benitez",
-        :num_identity => "3206015",
-        :address=>"Quiteria",
+        :email=>"setwildo31@gmail.com",
+        :name=>"Wildo",
+        :last_name =>"Monges",
+        :num_identity => 1,
+        :address=>"Barrio Kennedy",
         :admission_date=>date,
         :birthday=>date,
-        :salary=>10000000,
-        :mobile_number=>"(0975)603978",
-        :phone_number=>"(071)207157",
+        :salary=>0,
+        :mobile_number=>"(0985)163420",
+        :phone_number=>"(071)207865",
+        :function_type_id=>1
+     )
+    Employee.create(
+        :email=>"diego.courier@gmail.com",
+        :name=>"Diego",
+        :last_name =>"Silvero",
+        :num_identity => 2,
+        :address=>"Barrio Arroyo Pora",
+        :admission_date=>date,
+        :birthday=>date,
+        :salary=>1650000,
+        :mobile_number=>"(0985)741172",
+        :phone_number=>nil,
         :function_type_id=>1
       )
-
 end

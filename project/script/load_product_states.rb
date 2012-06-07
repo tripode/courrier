@@ -5,8 +5,7 @@ ProductState.transaction do
     ProductState.create(:state_name=>"No enviado", 
                         :description=>"El producto no se ruteo todavia")
     ProductState.create(:state_name=>"De vuelto", 
-                        :description=>"Son los productos no enviados, 
-                        que se devuelven al cliente")
+                        :description=>"Son los productos cancelados a pedido del cliente y devueltos")
     ProductState.create(:state_name=>"Extraviado", 
                         :description=>"Productos perdidos en el proceso de envio")
     ProductState.create(:state_name=>"Recibido", 
