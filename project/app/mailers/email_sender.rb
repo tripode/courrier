@@ -17,7 +17,7 @@ class EmailSender < ActionMailer::Base
     attachments[file_name] = File.read(file_path)
     mail(:to => email, :subject => "Informe #{month} de #{year}") do |format|
       format.text do
-        render :text => 'DS Representaciones agradece la preferencia. Por seguridad confirme la recepcion de este email con un ok. Gracias.'
+        render :text => 'DS Representaciones agradece la preferencia. Por seguridad confirme la recepcion de este email. Gracias.'
       end
     end 
   end
