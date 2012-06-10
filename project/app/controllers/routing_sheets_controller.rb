@@ -245,7 +245,7 @@ class RoutingSheetsController < ApplicationController
   def add_product
     @bar_code=params[:bar_code]
     @product_state_id = ProductState.no_enviado ## id 2="No enviado" ProductState.where("state_name='No enviado'").first.id
-    @product=Product.where("bar_code=? and product_state_id=?",@bar_code, @product_state_id).first
+    @product=Product.where("bar_code=? and (product_state_id=? or product_state_id=?)",@bar_code, @product_state_id, ProductState.pendiente).first
     if !@product.nil?
         #Verifica si el producto ya fue cargado en lalista
       if !$products.include?(@product)
@@ -341,6 +341,7 @@ class RoutingSheetsController < ApplicationController
       $routing_sheets_details.each do  |detail|
         @who_received=params['who_received_' + ($routing_sheets_details.index(detail) + 1).to_s]
         @reason_id=params['reason_id_' + ($routing_sheets_details.index(detail) + 1).to_s]
+        @to_route = params['to_route_' + ($routing_sheets_details.index(detail) + 1).to_s]
         @detail_to_update=detail
         @product=Product.where(id: detail.product_id).first
         valid_received=/^\D{4,35}$/.match(@who_received)
@@ -364,7 +365,13 @@ class RoutingSheetsController < ApplicationController
             if @reason_id.to_i == 15 # Rason de "Cancelado a pedido del cliente"
               @product.update_attribute(:product_state_id,ProductState.devuelto ) ## id 3= Devuelto
             else
-              @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
+              ## Si se marco la opcion para volver a rutear a "no", entonces coloco el estado a "no recibido"
+              if @to_route.to_s == "no"
+                @product.update_attribute(:product_state_id,ProductState.no_recibido) ## id 7= No recibido  
+              else
+                # Si se marco a "si", este producto cambia su estado a "Pendiente", y puede volver a rutearse
+                @product.update_attribute(:product_state_id,ProductState.pendiente)
+              end
             end
           end
         end
