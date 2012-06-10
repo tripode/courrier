@@ -4,7 +4,7 @@
 			Nota de Retiro
 		</legend>
 		<div id="form_notice"> 
-			<input id="notice" size="50" value="<%= notice %>" style="background:none; border:none; color: green; font-weight: bold" />
+			<input id="notice" size="100" value="<%= notice %>" style="background:none; border:none; color: green; font-weight: bold" />
 		</div>
 		<%= form_for(@retire_note, remote:true) do |f| %>
 		<ul>
@@ -63,7 +63,7 @@
 		  	</li>
 		  	<li id="retire_note_state">
 		  		<label>Estado:</label>
-		  		<%= f.select :retire_note_state_id, @retire_note.getEstados, prompt: "-- Seleccionar--"%>
+		  		<%= f.select :retire_note_state_id, @retire_note.getEstados().keep_if{|s|s[0].downcase == "en proceso" || s[0].downcase == "cancelado" }, prompt: "-- Seleccionar--"%>
 		  	</li>
 		  	<div class="clear"></div> 
 		  	
