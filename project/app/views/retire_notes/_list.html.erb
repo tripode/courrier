@@ -26,12 +26,12 @@
 			<td><div><%= link_to 'Mostrar',  note %></div></td>
 			<td>
 				<div>
-					<%= link_to image_tag('editar.gif'), edit_retire_note_path(note), remote: true %>
+					<%= if note.amount_processed.to_i == 0 then link_to image_tag('editar.gif'), edit_retire_note_path(note), remote: true, title: 'Editar' end %>
 				</div>
 			</td>
 			<td>
 				<div>
-					<%= link_to image_tag('borrar2.gif'), note, confirm: 'Deseas eliminar la nota de retiro?', method: :delete, remote:true %>
+					<%= if note.amount_processed.to_i == 0 then link_to image_tag('borrar2.gif'), note, confirm: 'Deseas eliminar la nota de retiro?', method: :delete, remote:true, title: 'Borrar' end %>
 				</div>
 			</td>
 		</tr>

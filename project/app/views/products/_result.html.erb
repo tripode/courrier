@@ -34,7 +34,7 @@
 	  	<td><%= link_to 'Mostrar', product %></td>
 	  	<td>
            <div>
-            	<%= link_to image_tag('editar.gif'), edit_product_path(product) %>
+            	<%= if product.product_state_id.to_i == ProductState.no_enviado || product.product_state_id.to_i == ProductState.extraviado then link_to image_tag('editar.gif'), edit_product_path(product) end %>
            </div>
         </td>
 	  </tr>

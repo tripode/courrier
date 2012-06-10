@@ -7,6 +7,7 @@ class ProductState < ActiveRecord::Base
   EXTRAVIADO = 4
   RECIBIDO = 5
   NO_RECIBIDO = 6
+  PENDIENTE = 7
   
   def self.enviado
     return ENVIADO
@@ -32,6 +33,9 @@ class ProductState < ActiveRecord::Base
     return NO_RECIBIDO
   end
   
+  def self.pendiente
+    return PENDIENTE
+  end
   
   # Estados Utilizados
   # 1 Enviado (Este estado es uando se encuentra en proceso de hoja de ruta)
@@ -40,6 +44,7 @@ class ProductState < ActiveRecord::Base
   # 4 Extraviado (Se perdio )
   # 5 Recibido (Producto recibido por el destinatario)
   # 6 No Recibido (Producto no entregado, no recibio el destinatario en horas de reparticion)
+  # 7 Pendiente (Producto que deber volver a rutearse porque no se ha entregado)
   def getProductStates
     ProductState.all.collect{|ps|[ps.state_name, ps.id]}
   end

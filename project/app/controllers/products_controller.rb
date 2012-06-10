@@ -178,10 +178,15 @@ class ProductsController < ApplicationController
     @retire_note_id=@product.retire_note_id
     @retire_note=RetireNote.where(id:  @retire_note_id).first
     @amount_processed=@retire_note.amount_processed
-    if @product.destroy 
-      ##Actualizo la cantidad de productos registrados de la nota de retiro. Se elimino un producto , se resta 1
-      @amount_processed=@amount_processed - 1
-      @retire_note.update_attribute(:amount_processed, @amount_processed) 
+    begin
+      if @product.destroy 
+        ##Actualizo la cantidad de productos registrados de la nota de retiro. Se elimino un producto , se resta 1
+        @amount_processed=@amount_processed - 1
+        @retire_note.update_attribute(:amount_processed, @amount_processed) 
+        flash[:notice]="El producto se ha eliminado."
+      end
+    rescue
+      flash[:notice]="Este producto no puede ser eliminado."
     end
     $products=Product.where(retire_note_id: @retire_note_id)
     @cities= City.all
@@ -303,6 +308,8 @@ class ProductsController < ApplicationController
           @retire_note=RetireNote.where(number: @retire_note_number).first
           if (!@retire_note.nil?) 
             @sql = @sql + " and products.retire_note_id=" + @retire_note.id.to_s
+          else
+            @sql = @sql + " and products.retire_note_id= -1" 
           end
         end
         #Si se selecciono algun tipo de producto entonces agrego a la consulta
@@ -364,13 +371,15 @@ class ProductsController < ApplicationController
     @inited_at = params[:inited_at]
     @finished_at = params[:finished_at]
     @details= Array.new
+    @products= Array.new
     valid_customer_id=/^\d+$/.match(@customer_id)
     valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
     valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
     if(!valid_customer_id.nil? and !valid_inited_at.nil? and !valid_finished_at.nil?) 
       #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
+      # y cuyo estado de hoja de ruta sea procesado ordenado de menor a mayor por fecha de creacion
   
-      @routing_sheets=RoutingSheet.where("date between ? and ?", @inited_at,@finished_at)
+      @routing_sheets=RoutingSheet.find(:all, :order => "id ASC", :conditions =>["date between ? and ? and routing_sheet_state_id=? ", @inited_at,@finished_at, 2]) #id 2 Procesado
       if(!@routing_sheets.empty? ) 
         #Por cada hoja de ruta obtengo obtengo los detalles
         @routing_sheets.each do |r|
@@ -384,8 +393,34 @@ class ProductsController < ApplicationController
                 #obtengo el cliente que hace referencia a esta nota de retiro
                 @get_customer_id = @retire_note.customer_id
                  # Si pertenece al cliente requerido al informe, agrego 
-                if (@get_customer_id.to_i == @customer_id.to_i) 
+                if (@get_customer_id.to_i == @customer_id.to_i)
+                  # si ya la lista de productos agregados ya contiene este mismo producto
+                  # quiere decir que el producto se ruteo dos veces, entonces
+                  # debo agregar solamente a los detalles el ultmimo detalle creado
+                  if @products.include?(@product)
+                    # elimino de los detalles el detalle cuyo producto ya ha sido agregado
+                    @details = @details.delete_if{|d| d.product_id.to_i == @product.id.to_i} 
+                    @products = @products.delete_if{|p| p.id.to_i == @product.id.to_i}
+                    # agrego el detalle mas actual par que aparesca en el informe
                     @details << detail
+                    @products << @product
+                  else
+                    @details << detail
+                    @products << @product
+                  end
+                  ##En caso de que se olvidaron de rutear un producto con estado = "Pendiente"(pendiente es cuando este producto puede volver a rutearse)
+                  ## que ya figura en una hoja de ruta
+                  if @product.product_state_id.to_i == ProductState.pendiente.to_i
+                    #Actualizo el estado del producto pendiente a "No Recibido", este producto ya esta agregado 
+                    #en los detalles que tendra el informe
+                    begin
+                      Product.transaction do
+                        @product.update_attribute(:product_state_id, ProductState.no_recibido)
+                      end
+                    rescue
+                      flash[:notice]="Ocurrio un error intentando actualizar el producto de pendiente a no recibido"
+                    end
+                  end
                 end
                 
               end

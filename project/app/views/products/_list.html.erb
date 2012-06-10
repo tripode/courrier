@@ -1,6 +1,6 @@
 <div class="span-24 left">
 	<div id="form_notice" width="100%"> 
-			<input id="notice" size="100" value="<%= notice %>" style="background:none; border:none; color: green" />
+			<input id="notice" size="100" value="<%= notice %>" style="background:none; border:none; color: green; font-weight: bold" />
 	</div>
 <table
 	columnClasses="center,center,center,center,center,center,center,center,center,center"
@@ -33,7 +33,7 @@
 	  	<td><%= product.receiver_address.address%></td>
 	  	<td>
 			<div>
-				<%= link_to image_tag('borrar2.gif'), product, confirm: 'Deseas eliminar el producto?', method: :delete, remote:true %>
+				<%= if product.product_state_id.to_i == ProductState.no_enviado then link_to image_tag('borrar2.gif'), product, confirm: 'Deseas eliminar el producto?', method: :delete, remote:true, title: 'Eliminar' end %>
 			</div>
 		</td>
 	  </tr>

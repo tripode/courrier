@@ -12,5 +12,7 @@ ProductState.transaction do
                         :description=>"Producto que se entrego al destinatario")
     ProductState.create(:state_name=>"No Recibido", 
                         :description=>"Producto que no fue recibido por ninguna persona en la direccion dada")
+    ProductState.create(:state_name=>"Pendiente", 
+                        :description=>"Producto que debe volver a ser ruteado por no ser entregado")
 
 end

@@ -11,35 +11,35 @@
 			<div class="hide"><%= f.hidden_field :retire_note_id, id: 'retire_note_id_hidden' %></div> 
 			<li>
 				<label>Tipo de Producto:</label>
-				<input type="text" value="<%=@product.product_type.description %>" />
+				<input type="text" value="<%=@product.product_type.description %>" disabled="true" />
 				
 			</li>
 			
 			<li>
 				<label>Remitente:</label>
-				<input type="text" value="<%= @product.remitter %>" />
+				<input type="text" value="<%= @product.remitter %>" disabled="true"/>
 				
 			</li>
 			<li>
 				<label for="receiver">Destinatario:</label>
-				<input type="text" value="<%= @product.receiver.receiver_name %>" />
+				<input type="text" value="<%= @product.receiver.receiver_name %>" disabled="true" />
 				
 			</li>
 			<li>
 				<label>Direccion:</label>
-				<input type="text" value="<%= @product.receiver_address.label + " " + @product.receiver_address.address %>" />
+				<input type="text" value="<%= @product.receiver_address.label + " " + @product.receiver_address.address %>" disabled="true" />
 				
 			</li>
 			<div class="clear"></div>
 			<li>
 				<label>Descripcion:</label>
-				<input type="text" value="<%=@product.description %>" />
+				<input type="text" value="<%=@product.description %>" disabled="true" />
 				
 			</li>
 			
 			<li>
 				<label>Codigo de Barra:</label>
-				<input type="text" value="<%= @product.bar_code%>" />
+				<input type="text" value="<%= @product.bar_code%>" disabled="true" />
 				
 			</li>
 			
@@ -49,7 +49,7 @@
           	</div>
           	<li>
 				<label>Estado:</label>
-				<%= f.select :product_state_id, @product_state.getProductStates, prompt: 'Seleccionar'%>
+				<%= f.select :product_state_id, @product_state.getProductStates().keep_if{|s|s[1].to_i == ProductState.no_enviado || s[1].to_i == ProductState.extraviado }, prompt: 'Seleccionar'%>
 			</li>
 		</ul>
 	</fieldset>

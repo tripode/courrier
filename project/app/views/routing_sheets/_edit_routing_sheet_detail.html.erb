@@ -17,6 +17,7 @@
 	    <th>Direccion</th>
 	    <th>Recibido por</th>
 	 	<th>No Entrega</th>
+	 	<th>¿Rutear.?</th>
 	  </tr>
 	</thead>
 	
@@ -26,10 +27,11 @@
 	  	<td><%= $routing_sheets_details.index(detail) + 1 %></td>
 	  	<td><%= detail.product.bar_code%></td>
 	  	<td><%= detail.product.product_type.description %></td>
-	  	<td><%= if detail.product.receiver_id != nil then detail.product.receiver.receiver_name end%></td>
-	  	<td><%= if detail.product.receiver_address_id!= nil then detail.product.receiver_address.address end%></td>
-	  	<td><%= text_field_tag 'who_received_' + ($routing_sheets_details.index(detail) + 1).to_s %> </td>
+	  	<td><%= detail.product.receiver.receiver_name %></td>
+	  	<td><%= detail.product.receiver_address.address %></td>
+	  	<td><%= text_field_tag 'who_received_' + ($routing_sheets_details.index(detail) + 1).to_s%> </td>
 		<td><%= select_tag 'reason_id_'+ ($routing_sheets_details.index(detail) + 1).to_s, options_from_collection_for_select(Reason.all,"id","description"), prompt: "--Motivo--"%></td>
+		<td><%= select_tag 'to_route_'+ ($routing_sheets_details.index(detail) + 1).to_s, options_for_select(["no","si"])%></td>
 	  </tr>
 	<% end %>
 	</tbody>
