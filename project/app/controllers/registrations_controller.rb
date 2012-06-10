@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   # Llama a este metodo y verifica los permisos que tiene para City
   #
   def check_permissions
-    puts authorize! :create, User
+    authorize! :create, :new, :delete_user, User
   end
   
   layout "application" 
