@@ -43,36 +43,33 @@ Customer.transaction do
 end
 require 'date'
 Employee.transaction do
-    date= Time.now + 6.days
-    (1..10).each do |t|
-      Employee.create(
-        :email=>"empleado_#{t}@server.com",
-        :name=>"e_nombre_#{t}",
-        :last_name =>"e_apellido_#{t}",
-        :num_identity => "#{t*10000}",
-        :address=>"calle cualquiera numero #{t}",
-        :admission_date=>date,
-        :birthday=>date,
-        :salary=>1000000,
-        :mobile_number=>"(09xx)00000#{t}",
-        :phone_number=>"(071)00000#{t}",
-        :function_type_id=>3
-      )
-    end
+    date= Time.now 
     Employee.create(
-        :email=>"raulbeni@gmail.com",
-        :name=>"Raul",
-        :last_name =>"Benitez",
-        :num_identity => "3206015",
-        :address=>"Quiteria",
+        :email=>"setwildo31@gmail.com",
+        :name=>"Wildo",
+        :last_name =>"Monges",
+        :num_identity => 3539120,
+        :address=>"Barrio Kennedy",
         :admission_date=>date,
         :birthday=>date,
-        :salary=>10000000,
-        :mobile_number=>"(0975)603978",
-        :phone_number=>"(071)207157",
+        :salary=>0,
+        :mobile_number=>"(0985)163420",
+        :phone_number=>"(071)207865",
+        :function_type_id=>1
+     )
+    Employee.create(
+        :email=>"diego.courier@gmail.com",
+        :name=>"Diego",
+        :last_name =>"Silvero",
+        :num_identity => 2,
+        :address=>"Barrio Arroyo Pora",
+        :admission_date=>date,
+        :birthday=>date,
+        :salary=>1650000,
+        :mobile_number=>"(0985)741172",
+        :phone_number=>nil,
         :function_type_id=>1
       )
-
 end
 
 PaymentMethod.transaction do
@@ -87,8 +84,7 @@ ProductState.transaction do
     ProductState.create(:state_name=>"No enviado", 
                         :description=>"El producto no se ruteo todavia")
     ProductState.create(:state_name=>"De vuelto", 
-                        :description=>"Son los productos no enviados, 
-                        que se devuelven al cliente")
+                        :description=>"Son los productos cancelados a pedido del cliente y devueltos")
     ProductState.create(:state_name=>"Extraviado", 
                         :description=>"Productos perdidos en el proceso de envio")
     ProductState.create(:state_name=>"Recibido", 
@@ -116,7 +112,7 @@ end
 Reason.transaction do
 
     Reason.create(:description=>"Se mudó")
-    Reason.create(:description=>"Fallecio")
+    Reason.create(:description=>"No atiende nadie en el lugar")
     Reason.create(:description=>"No existe Nº de casa")
     Reason.create(:description=>"Falta Nº de casa")
     Reason.create(:description=>"No quiere recibir")
@@ -129,6 +125,7 @@ Reason.transaction do
     Reason.create(:description=>"Casa en refacción/Casa Desocupada")
     Reason.create(:description=>"Falta Nº de local/Bloque")
     Reason.create(:description=>"Producto extraviado en el reparto")
+    Reason.create(:description=>"Producto cancelado a pedido del cliente")
     Reason.create(:description=>"Otros")
 
 end
@@ -226,11 +223,18 @@ Role.transaction do
 
 end
 User.transaction do
-  
+    ## User por defecto para entrar al sistema
     User.create(:username     => 'admin',
                 :email        => 'admin@admin.com',
                 :password     => 'pass',
-                :employee_id  => Employee.first.id,
+                :employee_id  => 1,
+                :role_ids     => Role.where(:name => 'Administrador').first.id
+               )
+    ## User de el dueno de la empresa Diego Silvero
+    User.create(:username     => 'diego',
+                :email        => 'diego.courier@gmail.com',
+                :password     => 'pass',
+                :employee_id  => 2,
                 :role_ids     => Role.where(:name => 'Administrador').first.id
                )
 end

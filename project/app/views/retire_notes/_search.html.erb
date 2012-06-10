@@ -48,17 +48,13 @@
 		</fieldset>
 	<div class="span-24 center last" >
 			<%= submit_tag 'Buscar'%>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Limpiar',retire_notes_path, class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	<% end %>
 </div>
 <script>
-	$('.limpiar').click(function() {
-		$('input[type=text]').val("");
-		$('input[type=number]').val("");
-		$('#form_msg').hide();
-	});
+	
 	$("input[class*=i_fecha]").datepicker({
           altField: '#actualDate',
           changeMonth: true,

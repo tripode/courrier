@@ -78,7 +78,7 @@ class RetireNotesController < ApplicationController
  
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
     @retire_note.employee_id=current_user.employee.id
     @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
  
@@ -120,7 +120,7 @@ class RetireNotesController < ApplicationController
     @retire_note = RetireNote.find(params[:id])
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
-    @retire_notes= RetireNote.find(:all, :conditions=> "date between current_date-10 and current_date")
+    @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
     @retire_note.employee_id=current_user.employee.id
     @retire_note.retire_note_state_id=RetireNoteState.where("state_name='En Proceso'").first.id
     respond_to do |format|

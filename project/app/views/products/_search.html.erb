@@ -59,7 +59,7 @@
 	<div class="span-24 center last" >
 		
 			<%= submit_tag 'Buscar', id: 'button_search_id'%>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Limpiar',products_path, class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	
@@ -68,11 +68,7 @@
 <script>
 	//focus en el formulario
     $("form:not(.filter) :input:visible:enabled:first").focus();
-	$('.limpiar').click(function() {
-		$('input[type=text]').val("");
-		$('input[type=number]').val("");
-		$('input[type=hidden]').val("");
-	});
+	
 	
 	 //Autocomplite de clientes
 	$(function() {

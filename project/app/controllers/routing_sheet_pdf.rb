@@ -4,6 +4,7 @@ class RoutingSheetPdf< Prawn::Document
 
   def initialize(routing_sheet, details, root_url)
     super()
+    
     @routing_sheet = routing_sheet
     text "Hoja de Ruta", :align => :center 
     text "Nro: #{@routing_sheet.number}"
@@ -29,6 +30,13 @@ class RoutingSheetPdf< Prawn::Document
     text "Firma Mensajero:____________________"
     move_down 30
     text "<u><link href='#{root_url}routing_sheets'>Regresar</link></u>", :inline_format => true
+    
+    number_pages "<page> de <total>", 
+                                         {:start_count_at => 1,
+                                          :page_filter => lambda{ |pg| pg != 0 },
+                                          :at => [bounds.right - 50, 0],
+                                          :align => :right,
+                                          :size => 14}
   end
 
 end

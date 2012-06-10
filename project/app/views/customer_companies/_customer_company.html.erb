@@ -4,17 +4,6 @@
 		Registrar Cliente Empresa
 	</legend>
 	<%= form_for @customer_company, :url => customer_companies_path  do |f| %>
-	  <% if @customer_company.errors.any? %>
-	    <div id="error_explanation">
-	      <h2><%= pluralize(@customer_company.errors.count, "error") %> prohibited this customer from being saved:</h2>
-	
-	      <ul>
-	      <% @customer_company.errors.full_messages.each do |msg| %>
-	        <li><%= msg %></li>
-	      <% end %>
-	      </ul>
-	    </div>
-	  <% end %>
 	<ul>
 		<li>
 			<label>* Empresa:</label>
@@ -51,7 +40,7 @@
 </fieldset>
 <div class="span-24 center last" >
 			<%= f.submit 'Guardar' %>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Limpiar',new_customer_company_path, class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 </div>
 <% end %>

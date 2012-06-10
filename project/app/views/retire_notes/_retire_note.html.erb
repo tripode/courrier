@@ -4,7 +4,7 @@
 			Nota de Retiro
 		</legend>
 		<div id="form_notice"> 
-			<input id="notice" size="50" value="<%= notice %>" style="background:none; border:none; color: green" />
+			<input id="notice" size="50" value="<%= notice %>" style="background:none; border:none; color: green; font-weight: bold" />
 		</div>
 		<%= form_for(@retire_note, remote:true) do |f| %>
 		<ul>
@@ -72,17 +72,12 @@
 	</fieldset>
 	<div class="span-24 center last" >
 			<%= f.submit 'Guardar', id: 'save_button' %>
-			<%= link_to 'Limpiar','#', class: 'limpiar button'%>
+			<%= link_to 'Limpiar',new_retire_note_path, class: 'limpiar button'%>
 			<%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
 	</div>
 	<% end %>
 </div>
 <script>
-	$('.limpiar').click(function() {
-		$('input[type=text]').val("");
-		$('input[type=number]').val("");
-		$('#form_msg').hide();
-	});
 	
 	$("input[class*=i_fecha]").datepicker({
           altField: '#actualDate',
