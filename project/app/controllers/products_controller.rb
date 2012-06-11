@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
     @cities = City.all
     
     $product = Product.new
+    $product.created_at=$product.format_admission_date
     $products=Array.new
     #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
     #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
@@ -82,6 +83,7 @@ class ProductsController < ApplicationController
     #Variables de la clase
     $product = Product.new(params[:product])
     $product.product_state_id = ProductState.no_enviado #Estado por defecto del producto es No enviado id = 2
+    $product.created_at=$product.format_admission_date
     @retire_note_id=$product.retire_note_id
     @product_type_id=$product.product_type_id
     @retire_note=RetireNote.find(@retire_note_id)
@@ -91,6 +93,7 @@ class ProductsController < ApplicationController
       if $product.save
         $products.push($product)
         $product=Product.new
+        $product.created_at=$product.format_admission_date
         #actualiza la amount_processed de nota de retiro
         begin
           @retire_note.update_attribute(:amount_processed, $item)
@@ -114,6 +117,7 @@ class ProductsController < ApplicationController
               flash[:notice]="Esta nota se ha procesado con exito."
             end
             $product = Product.new
+            $product.created_at=$product.format_admission_date
             #init all--------------
             #Obtengo la lista de notas de retiro para mostrar en el autocom´ete
             #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
