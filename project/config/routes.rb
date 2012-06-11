@@ -30,8 +30,8 @@ Project::Application.routes.draw do
      
     end
     collection do
-      post 'add_detail_product'
-      post 'delete_detail_product'
+      
+      post 'method_aux'
      
       
        
@@ -42,6 +42,9 @@ Project::Application.routes.draw do
     collection do
        get :tg_searching
        post :get_list_tg
+       post 'add_detail_product'
+       get 'add_detail_product'
+       post 'delete_detail_product'
     end
   end
 
