@@ -43,3 +43,40 @@
 <%end%>
 
 </div>
+
+<script type="text/javascript">
+  /* Este script valida el reporte de informes */
+  $(document).ready(function(){
+    $("input[name^='who_received_']").each(function(){
+      $(this).keyup(function(){
+        var value = $(this).val();
+        if($.trim(value).length > 0){
+          $(this).parent().parent().children(":nth-child(7)").children(":first").attr('disabled',true);
+          $(this).parent().parent().children(":nth-child(8)").children(":first").attr('disabled',true);
+        }else{
+          $(this).parent().parent().children(":nth-child(7)").children(":first").attr('disabled',false);
+          $(this).parent().parent().children(":nth-child(8)").children(":first").attr('disabled',false);
+        }
+      });
+    });
+    
+    $("select[name^='reason_id_']").each(function(){
+      $(this).click(function(){
+        var value = $(this).val();
+        if($.trim(value).length > 0){
+          $(this).parent().parent().children(":nth-child(6)").children(":first").attr('disabled',true);
+          if($(this).val()=='14' || $(this).val()=='15'){
+            $(this).parent().parent().children(":nth-child(8)").children(":first").attr('disabled',true);
+          }else{
+            $(this).parent().parent().children(":nth-child(8)").children(":first").attr('disabled',false);
+          }
+        }else{
+          $(this).parent().parent().children(":nth-child(6)").children(":first").attr('disabled',false);
+          $(this).parent().parent().children(":nth-child(8)").children(":first").attr('disabled',false);
+        }
+      });
+    });
+    
+  });
+  
+</script>
