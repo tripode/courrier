@@ -84,7 +84,7 @@
                     <%= link_to @btt_guardar, '#' , id:'save_link', class: 'button' %>
                     <%= f.submit @btt_guardar, id:'save_button' , class: 'hide'%>
                     <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-                    <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id: 7, format: 'pdf'), class: 'button', method: 'post'%>
+                    <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id: @cargo_manifest.id, format: 'pdf'), class: 'button', method: 'post'%>
                     <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
                     </div>
                 </fieldset>
