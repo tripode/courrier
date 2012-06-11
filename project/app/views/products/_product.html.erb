@@ -304,20 +304,20 @@
 					$("#product_receiver_address_id option").each(function(){
 						$(this).remove();
 					});
-					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
+					//$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-                                                if(index==0){
-                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"' selected='selected'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                           if(index==0){
+                              $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"' selected='selected'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
                                                   
-                                                  $.post("<%= getCity_products_path %>",{"address_id": addresses[index].id},
-                                                      function(city){
-                                                              $("#city_id").val(city.name);
-                                                              $("#bar_code").focus();
-                                                      },"json");
-                                                }
-                                                else{
-                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
-                                                }
+                              $.post("<%= getCity_products_path %>",{"address_id": addresses[index].id},
+                              function(city){
+                                  $("#city_id").val(city.name);
+                                  $("#bar_code").focus();
+                              },"json");
+                           }
+                           else{
+                              $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                           }
 					});
 
 					$('#address_id').focus();
