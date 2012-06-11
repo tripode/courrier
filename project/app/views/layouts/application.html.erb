@@ -85,7 +85,7 @@
         <div class="container">
           <div id="myslidemenu" class="jqueryslidemenu">
             <ul>
-              <li><%= link_to 'Inicio', '../main_page/index' %> </li>
+              <li><%= link_to 'Inicio', root_url + 'main_page/index' %> </li>
               <% if current_user.has_role("Administrador") || current_user.has_role("Secretaria")%>
                   <li><a href="#">Registros Varios</a>
                     <ul>

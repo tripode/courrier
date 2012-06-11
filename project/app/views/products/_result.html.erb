@@ -28,9 +28,9 @@
 	  		 product.retire_note.customer.last_name + " " + 
 	  		 product.retire_note.customer.name %></td>
 	  	<td><%= product.receiver.receiver_name%></td>
-	  	<td><%= product.receiver_address.city.name %></td>
-	  	<td><%= product.receiver_address.label%></td>
-	  	<td><%= product.receiver_address.address%></td>
+	  	<td><%= if !product.receiver_address_id.nil? then product.receiver_address.city.name end%></td>
+	  	<td><%= if !product.receiver_address_id.nil? then product.receiver_address.label end%></td>
+	  	<td><%= if !product.receiver_address_id.nil? then product.receiver_address.address end%></td>
 	  	<td><%= link_to 'Mostrar', product %></td>
 	  	<td>
            <div>
