@@ -25,6 +25,9 @@ class CargoManifestReportPdf < Prawn::Document
     cargo_manifest_detail.each{|d|
       tg = TransportGuide.find(d.transport_guide_id)
       tg_detail= TransportGuideDetail.where(transport_guide_id: tg.id)
+      if tg_detail.empty?
+        raise "No se puede generar pdf de GT sin detalles"
+      end
       inner_table= Array.new
       index=0
       tg_detail.each { |e|
@@ -37,7 +40,8 @@ class CargoManifestReportPdf < Prawn::Document
 
       }
       #      sub_header_data=[["Producto","Cantidad","Peso"]]
-      sub_table=make_table(inner_table)
+      sub_table=nil
+      sub_table=make_table(inner_table) 
       
         
 

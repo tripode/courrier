@@ -64,9 +64,9 @@ class CargoManifestsController < ApplicationController
       @transport_guides.add(transport_guides)
     end
   
-#    @transport_guides=TransportGuide.where(origin_city_id: @cargo_manifest.origin_city_id,
-#      destination_city_id: @cargo_manifest.destiny_city_id,
-#      transport_guide_state_id: TransportGuideState.find_by_name_state('Procesado').id )
+    #    @transport_guides=TransportGuide.where(origin_city_id: @cargo_manifest.origin_city_id,
+    #      destination_city_id: @cargo_manifest.destiny_city_id,
+    #      transport_guide_state_id: TransportGuideState.find_by_name_state('Procesado').id )
     @@transport_guides=@transport_guides
     @cargo_manifest_detail=CargoManifestDetail.new
     #    @transport_guide_details= TransportGuideDetail.all
@@ -84,45 +84,66 @@ class CargoManifestsController < ApplicationController
   # para guardalos en la BD.
   #
   def create
-    begin
+    #    begin
 
-      @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
-      CargoManifest.transaction do
-        @cargo_manifest.manifest_num= params[:cargo_manifest][:manifest_num].to_i
-        @cargo_manifest.total_weight=params[:data][:total_weight]
-        @cargo_manifest.total_products=params[:data][:total_products]
-        @cargo_manifest.total_guides=params[:data][:total_guides]
+    @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
+    CargoManifest.transaction do
+      @cargo_manifest.manifest_num= params[:cargo_manifest][:manifest_num].to_i
+      @cargo_manifest.total_weight=params[:data][:total_weight]
+      @cargo_manifest.total_products=params[:data][:total_products]
+      @cargo_manifest.total_guides=params[:data][:total_guides]
 
-        @cargo_manifest.origin_city_id=@@origin
-        @cargo_manifest.destiny_city_id=@@destiny
-        @cargo_manifest.save
-        #se cree el detalle
-        cargo_manifest_details= params[:transport_guides_list]
-        unless(cargo_manifest_details.nil?)
-          cargo_manifest_details.each do |k,v|
-            cargo_manifest_detail = CargoManifestDetail.new
-            cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
-            cargo_manifest_detail.transport_guide_id=v.to_i
-            transport_guide = TransportGuide.find(v.to_i)
-            transport_guide.update_attribute('transport_guide_state_id', TransportGuideState.find_by_name_state('Procesado').id )
-            cargo_manifest_detail.save
-          end
+      @cargo_manifest.origin_city_id=@@origin
+      @cargo_manifest.destiny_city_id=@@destiny
+      @cargo_manifest.save
+      #se cree el detalle
+      cargo_manifest_details= params[:transport_guides_list]
+      unless(cargo_manifest_details.nil?)
+        cargo_manifest_details.each do |k,v|
+          cargo_manifest_detail = CargoManifestDetail.new
+          cargo_manifest_detail.cargo_manifest_id=@cargo_manifest.id
+          cargo_manifest_detail.transport_guide_id=v.to_i
+          transport_guide = TransportGuide.find(v.to_i)
+          transport_guide.update_attribute('transport_guide_state_id', TransportGuideState.find_by_name_state('Procesado').id )
+          cargo_manifest_detail.save
         end
       end
+    end
+    if params[:data][:print]== 'yes'
+      puts "entro al print"
+      cargo_manifest = CargoManifest.find(@cargo_manifest.id);
+      respond_to do |format|
+        format.pdf do
+          create_date=Date.today.strftime("%d-%m-%Y")
+          @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
+          employee= Employee.find(cargo_manifest.employee_id)
+          pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest)#,new_cargo_manifest_url, root_url, @file_path)
+          begin
+            pdf.render_file(@file_path)
+          rescue
+            #no se guardo el archivo
+          end
+          send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
+            type: "application/pdf",
+            disposition: "inline"
+        end
+      end
+          
+    elsif params[:data][:print]== 'not'
       respond_to do |format|
         format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
         format.json { head :no_content}
-
       end
-    rescue ActiveRecord::StatementInvalid
-      manejo_error_pg(@cargo_manifest)
-    rescue
-      respond_to do |format|
-        format.html { redirect_to new_cargo_manifest_path,notice: "Error al guardar!"}
-        format.json { render json: @cargo_manifest.errors, status: :unprocessable_entity }
-      end
-
     end
+  rescue ActiveRecord::StatementInvalid
+    manejo_error_pg(@cargo_manifest)
+    #    rescue
+    #      respond_to do |format|
+    #        format.html { redirect_to new_cargo_manifest_path,notice: "Error al guardar!"}
+    #        format.json { render json: @cargo_manifest.errors, status: :unprocessable_entity }
+    #      end
+    #
+    #    end
   
   end
 
@@ -132,7 +153,7 @@ class CargoManifestsController < ApplicationController
     begin
       @cargo_manifest = CargoManifest.find(params[:id])
       CargoManifest.transaction do
-# MEJORAR!
+        # MEJORAR!
         @cargo_manifest.update_attribute('manifest_num', params[:cargo_manifest][:manifest_num].to_i)
         @cargo_manifest.update_attribute('total_weight', params[:data][:total_weight])
         @cargo_manifest.update_attribute('total_products', params[:data][:total_products])
@@ -229,7 +250,7 @@ class CargoManifestsController < ApplicationController
     respond_to do |format|
       format.pdf do
         create_date=Date.today.strftime("%d-%m-%Y")
-        # @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
+        @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
         employee= Employee.find(cargo_manifest.employee_id)
         pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest)#,new_cargo_manifest_url, root_url, @file_path)
         begin

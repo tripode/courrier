@@ -50,7 +50,7 @@ class TransportGuidesController < ApplicationController
     #mala practica de programación pero lo hago para el metodo js agregarFila_Arreglo
     #no me tire error en el each vere como puedo depurar luego
     @transport_guide_details= TransportGuideDetail.where(transport_guide_id: 0)
-    @hide_state = 'hide'
+    @hide_state = true
     @@transport_guide_details= nil
     respond_to do |format|
       format.html # new.html.erb
@@ -67,7 +67,7 @@ class TransportGuidesController < ApplicationController
     @transport_guide = TransportGuide.find(params[:id])
     @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
     @@transport_guide_details=@transport_guide_details.to_set
-    @hide_state = ''
+    @hide_state = false
     respond_to do |format|
       format.html { render action: "new" }
       #        format.js

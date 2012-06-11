@@ -456,6 +456,10 @@ table.ui-datepicker-calendar .ui-state-highlight{
 #content fieldset div#form_tg_detail  ul > li label{
     width: auto !important;
 }
+#content div#table_transport_guide_detail table#product_table tr{
+    font-size: 13px;
+
+}
 
 /*#################################################################
 ##########Css de popin agregar usuarios############################

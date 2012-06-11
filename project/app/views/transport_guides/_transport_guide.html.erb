@@ -110,9 +110,11 @@
 
                 <%= f.select :payment_method_id, @transport_guide.get_list_payments_methods, prompt: "-- Seleccionar--"  %>
 
+                <%if @hide_state==false%>
                   <label style="width:auto !important;" class="<%= @hide_state %>">Estado:</label>
-
                   <%= f.select :transport_guide_state_id, @transport_guide.get_list_state, class: @hide_state %>
+                <%end%>
+                  
 
               </li>
             </ul>
