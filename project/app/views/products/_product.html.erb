@@ -20,7 +20,7 @@
 			</li>
 			<li>
 				<label>Fecha:</label>
-				<%= f.text_field :created_at, {value: $product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12} %>
+				<%= f.text_field :created_at, {value: $product.format_admission_date, class:'i_fecha', size: 15, maxlength: 12, disabled: true} %>
 			</li>
 		</ul>
 	</fieldset>
@@ -287,7 +287,7 @@
 		<% end %>
 		//receiver autocomplete
 		$("#receiver").autocomplete({
-			minLength: 2,
+			minLength: 3,
 			source: list,
 			select: function(event, ui) { 
 				$("#receiver_id_hidden").val(ui.item.id);
@@ -304,20 +304,19 @@
 					$("#product_receiver_address_id option").each(function(){
 						$(this).remove();
 					});
-					$('#product_receiver_address_id').append("<option value>Seleccionar</option>");
 					$(addresses).each(function(index,value){
-                                                if(index==0){
-                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"' selected='selected'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                           if(index==0){
+                              $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"' selected='selected'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
                                                   
-                                                  $.post("<%= getCity_products_path %>",{"address_id": addresses[index].id},
-                                                      function(city){
-                                                              $("#city_id").val(city.name);
-                                                              $("#bar_code").focus();
-                                                      },"json");
-                                                }
-                                                else{
-                                                  $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
-                                                }
+                              $.post("<%= getCity_products_path %>",{"address_id": addresses[index].id},
+                              function(city){
+                                  $("#city_id").val(city.name);
+                                  $("#bar_code").focus();
+                              },"json");
+                           }
+                           else{
+                              $('#product_receiver_address_id').append("<option value='"+addresses[index].id+"'>"+addresses[index].label +":"+ addresses[index].address+"</option>");
+                           }
 					});
 
 					$('#address_id').focus();
