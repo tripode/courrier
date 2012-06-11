@@ -48,6 +48,7 @@ class RetireNotesController < ApplicationController
   def new
     flash[:notice]=""
     @retire_note = RetireNote.new
+    @retire_note.date = @retire_note.format_date
     @retire_note.employee_id=current_user.employee.id
     @customer = Customer.new
     @customers = Customer.find(:all)
@@ -75,7 +76,7 @@ class RetireNotesController < ApplicationController
   # POST /retire_notes.json
   def create
     @retire_note = RetireNote.new(params[:retire_note])
- 
+    @retire_note.date = @retire_note.format_date
     @customers = Customer.find(:all)
     @employees = Employee.find(:all)
     @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
@@ -84,23 +85,29 @@ class RetireNotesController < ApplicationController
  
     respond_to do |format|
       begin
-        if @retire_note.amount > 0
-          if @retire_note.save
-            flash[:notice]="La nota de retiro se guardo correctamente."
+        #Si la fecha de vencimiento es mayor o igual a la fecha de registrom entoces proceso
+        if Date.parse(@retire_note.expiration_date.to_s) >= Date.parse(@retire_note.date.to_s) 
+          if @retire_note.amount > 0
+            if @retire_note.save
+              flash[:notice]="La nota de retiro se guardo correctamente."
+            else
+              flash[:notice]="No se pudo guardar la nota de retiro."
+            end
+            #Initialize al variables
+              @retire_note = RetireNote.new
+              @retire_note.date = @retire_note.format_date
+              @retire_note.employee_id=current_user.employee.id
+              @customer = Customer.new
+              @customers = Customer.find(:all)
+              @employees = Employee.find(:all)
+              #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
+              @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
           else
-            flash[:notice]="No se pudo guardar la nota de retiro."
+            flash[:notice]="No se guardo. La cantidad debe ser mayor a cero."
           end
-          #Initialize al variables
-            @retire_note = RetireNote.new
-            @retire_note.employee_id=current_user.employee.id
-            @customer = Customer.new
-            @customers = Customer.find(:all)
-            @employees = Employee.find(:all)
-            #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 31 dias antes de la fecha actual
-            @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
-        else
-          flash[:notice]="No se guardo. La cantidad debe ser mayor a cero."
-        end
+       else
+         flash[:notice]="No se guardo. La fecha de vencimiento debe ser mayor o igual a la fecha de registro"
+       end
       rescue
         @exits_retire_note=RetireNote.where(number: @retire_note.number).first
         if !@exits_retire_note.nil?
@@ -127,28 +134,35 @@ class RetireNotesController < ApplicationController
       begin
         #Si todavia no se ha registrado ninguno de sus productos entonces puede ser editado
         if @retire_note.amount_processed.to_i == 0
-          # Si la cantiadad que se ingresa en mayor a cero es valido para ser actualizado
-          if params[:retire_note][:amount].to_i > 0
-            if @retire_note.update_attributes(params[:retire_note])
-              flash[:notice]='La nota de retiro ha sido actualizada'
+          #Si la fecha de vencimiento es mayor o igual a la fecha de registrom entoces proceso
+          if Date.parse(@retire_note.expiration_date.to_s) >= Date.parse(@retire_note.date.to_s) 
+            # Si la cantiadad que se ingresa en mayor a cero es valido para ser actualizado
+            if params[:retire_note][:amount].to_i > 0
+              if @retire_note.update_attributes(params[:retire_note])
+                flash[:notice]='La nota de retiro ha sido actualizada'
+              else
+                flash[:notice]='No se pudo actualizar el nota de retiro'
+              end
+              #Initialize al variables
+                @retire_note = RetireNote.new
+                @retire_note.date = @retire_note.format_date
+                @retire_note.employee_id=current_user.employee.id
+                @customer = Customer.new
+                @customers = Customer.find(:all)
+                @employees = Employee.find(:all)
+                #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
+                @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
             else
-              flash[:notice]='No se pudo actualizar el nota de retiro'
+              flash[:notice]="No se actualizo. La cantidad debe ser mayor a cero"
             end
-            #Initialize al variables
-              @retire_note = RetireNote.new
-              @retire_note.employee_id=current_user.employee.id
-              @customer = Customer.new
-              @customers = Customer.find(:all)
-              @employees = Employee.find(:all)
-              #En la lista muestro todas las notas de retiro no procesadas cuya fecha sea hasta 30 dias antes de la fecha actual
-              @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
           else
-            flash[:notice]="No se actualizo. La cantidad debe ser mayor a cero"
+            flash[:notice]="No se actualizo. La fecha de vencimiento debe ser mayor o igual a la fecha de registro"
           end
        else
          flash[:notice]="Esta nota no puede ser actualizada, algunos de sus productos ya fueron registrados.."
               #Initialize al variables
               @retire_note = RetireNote.new
+              @retire_note.date = @retire_note.format_date
               @retire_note.employee_id=current_user.employee.id
               @customer = Customer.new
               @customers = Customer.find(:all)
@@ -183,6 +197,7 @@ class RetireNotesController < ApplicationController
        
         #Initialize al variables
             @retire_note = RetireNote.new
+            @retire_note.date = @retire_note.format_date
             @retire_note.employee_id=current_user.employee.id
             @customer = Customer.new
             @customers = Customer.find(:all)
