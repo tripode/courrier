@@ -5,4 +5,7 @@ class TransportGuideState < ActiveRecord::Base
   def self.get_list_guide_state
     all.collect{|tp| [tp.name_state, tp.id]}
   end
+  def self.procesado
+    TransportGuideState.find_by_name_state('Procesado').id.to_i
+  end
 end

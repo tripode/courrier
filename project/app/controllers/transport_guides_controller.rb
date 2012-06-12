@@ -60,6 +60,7 @@ class TransportGuidesController < ApplicationController
 
   # GET /transport_guides/1/edit
   def edit
+
     @cities = City.find(:all)
     @customers = Customer.find(:all)
     @transport_guide_detail=TransportGuideDetail.new
@@ -68,11 +69,21 @@ class TransportGuidesController < ApplicationController
     @transport_guide_details = TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
     @@transport_guide_details=@transport_guide_details.to_set
     @hide_state = false
-    respond_to do |format|
-      format.html { render action: "new" }
-      #        format.js
-      format.json { render json: @transport_guide }
+    unless (@transport_guide.transport_guide_state.name_state== 'Procesado')
+      respond_to do |format|
+        format.html { render action: "new" }
+        #        format.js
+        format.json { render json: @transport_guide }
+      end
+    else
+      @transport_guide_states= TransportGuideState.all.collect { |item| [item.name_state,item.id] }
+      @transport_guides= TransportGuide.where(id: 0)
+      respond_to do |format|
+        format.html { redirect_to tg_searching_transport_guides_path, notice: "No se puede editar Guias de Transportes cuyo estado sea 'Procesado'" }
+        format.json { head :no_content }
+      end
     end
+    
   end
 
   # POST /transport_guides
@@ -113,9 +124,11 @@ class TransportGuidesController < ApplicationController
   # PUT /transport_guides/1.json
   def update
     @transport_guide = TransportGuide.find(params[:id])
-    #    {"utf8"=>"âœ“", "authenticity_token"=>"TWM6bgqoadV7ZBIDo3cxR3Lq4SuG7U0kbXim3dyjiSU=", "transport_guide"=>{"num_guide"=>"1", "id"=>"4", "created_at"=>"10-06-2012", "employee_id"=>"11", "origin_city_id"=>"1", "customer_id"=>"1", "remitter_person"=>"Jose", "remitter_address"=>"", "destination_city_id"=>"2", "receiver_company_id"=>"5", "destination_person"=>"Carlos", "destination_address"=>"", "service_type_id"=>"1", "payment_method_id"=>"1", "transport_guide_state_id"=>"1"}, "lista2"=>{"product_type_id"=>""}, "transport_guide_detail"=>{"amount"=>"", "weight"=>"", "unit_cost"=>"", "transport_guide_id"=>""}, "commit"=>"Actualizar", "id"=>"4"}
-    #    {"utf8"=>"âœ“", "authenticity_token"=>"TWM6bgqoadV7ZBIDo3cxR3Lq4SuG7U0kbXim3dyjiSU=", "transport_guide"=>{"num_guide"=>"1", "id"=>"4", "created_at"=>"10-06-2012", "employee_id"=>"11", "origin_city_id"=>"1", "customer_id"=>"1", "remitter_person"=>"Jose", "remitter_address"=>"", "destination_city_id"=>"2", "receiver_company_id"=>"5", "destination_person"=>"Carlos", "destination_address"=>"", "service_type_id"=>"1", "payment_method_id"=>"1", "transport_guide_state_id"=>"1"}, "lista2"=>{"product_type_id"=>""}, "transport_guide_detail"=>{"amount"=>"", "weight"=>"", "unit_cost"=>"", "transport_guide_id"=>""}, "details"=>{"0"=>{"product_type_id"=>"2", "amount"=>"1", "weight"=>"1.0", "unit_cost"=>"1000.0", "transport_guide_id"=>"4"}}, "commit"=>"Actualizar", "id"=>"4"}
+    
     begin
+      if (@transport_guide.transport_guide_state.name_state== 'Procesado')
+        raice "No se puede editar Guias de Transportes cuyo estado anterior sea 'Procesado'"
+      end
       TransportGuide.transaction do
         @transport_guide.update_attributes(params[:transport_guide])
         @transport_guide_details=TransportGuideDetail.where(transport_guide_id: @transport_guide.id)
@@ -137,9 +150,9 @@ class TransportGuidesController < ApplicationController
       end
     rescue ActiveRecord::StatementInvalid
       manejo_error_pg(@transport_guide)
-    rescue
+    rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to new_transport_guide_path,  action: "new" }
+        format.html { redirect_to new_transport_guide_path, notice: e}
         format.json { render json: @transport_guide.errors, status: :unprocessable_entity }
       end
     end
@@ -148,13 +161,15 @@ class TransportGuidesController < ApplicationController
   # DELETE /transport_guides/1
   # DELETE /transport_guides/1.json
   def destroy
-    #    @transport_guide = TransportGuide.find(params[:id])
-    #    @transport_guide.destroy
-    #
-    #    respond_to do |format|
-    #      format.html { redirect_to transport_guides_url }
-    #      format.json { head :no_content }
-    #    end
+    attr= TransportGuideState.find_by_name_state('En Proceso').id
+        @transport_guide = TransportGuide.find(params[:id])
+        num= @transport_guide.num_guide
+        @transport_guide.update_attributes('transport_guide_state_id', attr)
+    
+        respond_to do |format|
+          format.html { redirect_to tg_searching_transport_guides_path, notice: "La Guia de Transporte #{num} ha sido cancelada" }
+          format.json { head :no_content }
+        end
   end
 
   #get
