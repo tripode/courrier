@@ -37,7 +37,7 @@
             <label>* Origen: </label>
             <input id="origin_city" type="text" class="i_autocomplit"/>
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden',class: 'i_autocomplit' %>
-      <%#= f.select :origin_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+      
 
             </li>
             <li>
@@ -72,14 +72,14 @@
                 <label>* Destino:</label>
                 <input id="destination_city" type="text" class="i_autocomplit"/>
                 <%= f.hidden_field :destination_city_id, id: 'destination_city_id_hidden' %>
-        <%#= f.select :destination_city_id, @transport_guide.get_list_cities, prompt: "-- Seleccionar--" %>
+      
 
               </li>
               <li>
                 <label>* Empresa:</label>
                 <input id="receiver_company" type="text" size="15" class="i_autocomplit" />
                 <%= f.hidden_field :receiver_company_id, id: 'receiver_company_id_hidden' %>
-        <%#= f.text_field :receiver_company_id, size: 15 %>
+        
 
               </li>
               <div class="clear"></div>
@@ -277,8 +277,6 @@
             var f3 = new LiveValidation('customer', { validMessage: " ",onlyOnSubmit: true , wait: 500});
             f3.add( Validate.Presence, { failureMessage: " " } );
 
-            var f4 = new LiveValidation('transport_guide_remitter_person', { validMessage: " ",onlyOnSubmit: true , wait: 500});
-            f4.add( Validate.Presence, { failureMessage: " " } );
 
             //Datos del Destinatorio
             var f5 = new LiveValidation('destination_city', { validMessage: " ",onlyOnSubmit: true , wait: 500});
