@@ -47,6 +47,7 @@ class CargoManifestsController < ApplicationController
     #    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
     @btt_guardar='Guardar'
+    @option_print=false
 
     respond_to do |format|
       format.html # new.html.erb
@@ -72,6 +73,7 @@ class CargoManifestsController < ApplicationController
     #    @transport_guide_details= TransportGuideDetail.all
     @cities= City.find(:all)
     @btt_guardar='Actualizar'
+    @option_print=true
     respond_to do |format|
       format.html { render action: "new" }
       format.json { render json: @transport_guide }
@@ -113,19 +115,21 @@ class CargoManifestsController < ApplicationController
       puts "entro al print"
       cargo_manifest = CargoManifest.find(@cargo_manifest.id);
       respond_to do |format|
-        format.pdf do
+        format.html do
           create_date=Date.today.strftime("%d-%m-%Y")
           @file_path = "#{Rails.root}/app/views/reports/manifests/manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf"
           employee= Employee.find(cargo_manifest.employee_id)
           pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest)#,new_cargo_manifest_url, root_url, @file_path)
           begin
             pdf.render_file(@file_path)
+           
           rescue
             #no se guardo el archivo
           end
-          send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
-            type: "application/pdf",
-            disposition: "inline"
+#          send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
+#            type: "application/pdf",
+#            disposition: "inline"
+            redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"
         end
       end
           

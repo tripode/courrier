@@ -10,6 +10,7 @@ class CargoManifestReportPdf < Prawn::Document
     draw_text "  Manifiesto de Carga - DS Representaciones" ,:at => [180  , 730]
     move_down 20
     text "  Empleado:#{employee.name  + ' ' + employee.last_name}"
+    text "Manifiesto Numero: #{cargo_manifest.manifest_num}"
     origin_city= City.find(cargo_manifest.origin_city_id).name
     destiny_city= City.find(cargo_manifest.destiny_city_id).name
     text "  Trayecto: #{origin_city} - #{destiny_city}"
