@@ -37,7 +37,11 @@
         <td><%= City.find(transport_guide.origin_city_id).name   %></td>
         <td><%= transport_guide.transport_guide_state.name_state %></td>
         <td><%= transport_guide.created_at %></td>
-        <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
+        <%unless TransportGuideState.procesado == transport_guide.transport_guide_state_id.to_i%>
+          <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
+        <%else%>
+          <td></td>
+        <%end%>
         <td><%= link_to image_tag('borrar2.gif'), transport_guide, confirm: 'Are you sure?', method: :delete %></td>
       </tr>
     <% end %>
@@ -45,11 +49,11 @@
 </table>
 <script type="text/javascript">
   $(function() {
-            $('table[class*=tablaIndex]').dataTable({
-              "bScrollCollapse" : true,
-              "bRetrieve": true,
-              "sPaginationType" : "full_numbers",
-              "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
-            });
+    $('table[class*=tablaIndex]').dataTable({
+      "bScrollCollapse" : true,
+      "bRetrieve": true,
+      "sPaginationType" : "full_numbers",
+      "aLengthMenu" : [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+    });
   });
 </script>
