@@ -1,3 +1,5 @@
+<div class="span-24 left">
+
 <table
 	columnClasses="center,center,center,center,center,center,center,center,center,center"
 	headerClass="center"
@@ -11,7 +13,6 @@
 	    <th>Date</th>
 	    <th>Total</th>
 	    <th>Estado</th>
-	    
 	    <th></th>
 	    <th></th>
 	    <th></th>
@@ -26,11 +27,11 @@
 	    <td><%= routing_sheet.date.strftime("%d-%m-%Y") %></td>
 	    <td><%= routing_sheet.total_amount %></td>
 	    <td><%= if !routing_sheet.routing_sheet_state_id.nil?  then routing_sheet.routing_sheet_state.state_name end %></td>
-	   
 	    <td><%= link_to 'Mostrar', routing_sheet %></td>
 	    <td><%= if routing_sheet.routing_sheet_state_id == 1 then link_to image_tag('editar.gif'),  edit_routing_sheet_path(routing_sheet), title: 'Editar' end %></td>
 	    <td><%= if routing_sheet.routing_sheet_state_id == 1 then link_to image_tag('borrar2.gif'), routing_sheet, confirm:  'Estas Seguro?', method: :delete, title: 'Borrar' end %></td>
 	  </tr>
+	  <% end %>
 	  </tbody>
-	<% end %>
 </table>
+</div>
