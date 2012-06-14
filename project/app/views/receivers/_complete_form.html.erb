@@ -10,8 +10,8 @@
       <% else %>
               <%= f.submit 'Guardar', class: 'disabled', disabled: true, id: 'save_new_receiver_button' %>
       <% end %>
-      <%= link_to 'Limpiar','#', class: 'limpiar button'%>
-      <%= link_to 'Cancelar','#', class: 'button'%>
+      <%= link_to 'Limpiar',new_receiver_path, class: 'limpiar button'%>
+      <%= link_to 'Cancelar', root_url + 'main_page/index', class: 'button'%>
 
 </div>
 <% end %>
