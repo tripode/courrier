@@ -79,11 +79,13 @@ class ReceiversController < ApplicationController
                                    :city_id => address[1][:city_id])  
           end
         end
+        @messages = {:success => "El destinatario se guardo destinatario"}
       rescue
+        @messages = {:error => "No se pudo guardar el destinatario"}
         error = true
       end
     else
-      @messages = {:error => "No se pudo guardar el destinatario. Debe tener al menos una direccion. Por favor, verifique los campos ingresados."}
+      @messages = {:alert => "No se pudo guardar el destinatario. Debe tener al menos una direccion. Por favor, verifique los campos ingresados."}
       parameters = false
     end
     
@@ -107,9 +109,11 @@ class ReceiversController < ApplicationController
     @receiver = Receiver.find(params[:id])
     respond_to do |format|
       if @receiver.update_attributes(params[:receiver])
+        @messages = {:success => "El destinatario se ha actualizado correctamente"}
         format.html { redirect_to new_receiver_path, notice: 'Receiver was successfully updated.' }
         format.json { head :no_content }
       else
+        @messages = {:success => "El destinatario no se ha actualizado, por favor, verifique los datos ingresados"}
         format.html { render action: "edit" }
         format.json { render json: @receiver.errors, status: :unprocessable_entity }
       end
@@ -123,8 +127,9 @@ class ReceiversController < ApplicationController
     error = false
     begin
       @receiver.destroy
+      @messages = {:success => "El destinatario se ha eliminado correctamente"}
     rescue
-      @messages = {:error => "No se pudo eliminar el destinatario."}
+      @messages = {:error => "No se pudo eliminar el destinatario"}
       error = true
     end
 
