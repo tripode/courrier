@@ -105,7 +105,6 @@ class ReceiversController < ApplicationController
   # PUT /receivers/1.json
   def update
     @receiver = Receiver.find(params[:id])
-    @receiver.receiver_addresses.destroy_all
     respond_to do |format|
       if @receiver.update_attributes(params[:receiver])
         format.html { redirect_to new_receiver_path, notice: 'Receiver was successfully updated.' }
@@ -159,8 +158,4 @@ class ReceiversController < ApplicationController
       format.html { render @receiver, action ='new'}
     end
   end
-  
-  
-  
-  
 end
