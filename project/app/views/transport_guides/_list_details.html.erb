@@ -23,8 +23,7 @@
           <input type="hidden" name="details[<%=@cont%>][weight]" value="<%=detail.weight%>"></input>
           <td><%=detail.unit_cost%></td>
           <input type="hidden" name="details[<%=@cont%>][unit_cost]" value="<%=detail.unit_cost%>"></input>
-    <!--       <input type="hidden" name="details[<%=@cont%>][transport_guide_id]" value="<%=detail.transport_guide_id%>"></input>-->
-          <td><%= link_to ' ', delete_detail_product_transport_guides_path(transport_guide_id: detail.transport_guide_id, destroy: @cont, details: @transport_guide_details.to_a ), method: 'post' , remote: 'true', onclick: 'eliminarFila()', class: 'delete', id: 'delete_product'%></td>
+          <td><%= link_to '', delete_detail_product_transport_guides_path(transport_guide_id: detail.transport_guide_id, destroy: @cont, details: @transport_guide_details.to_a ), method: 'post' , remote: 'true', onclick: 'eliminarFila()', class: 'delete', id: 'delete_product'%></td>
           <%@cont+=1%>
           
       </tr>

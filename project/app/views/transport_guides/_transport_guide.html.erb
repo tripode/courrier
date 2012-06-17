@@ -15,7 +15,7 @@
       <ul>
         <li>
           <label>* N&#176;:</label>
-          <%= f.text_field :num_guide, maxlength: 6, size:6 %>
+          <%= f.text_field :num_guide, maxlength: 6, size:6, class: 'only_numbers' %>
 
           <%= f.hidden_field :id, id: "transport_guide_id"%>
         </li>
@@ -50,7 +50,7 @@
               <div class="clear"></div>
               <li>
 
-                <label>* Remitente: </label>
+                <label>Remitente: </label>
 
                 <%= f.text_field :remitter_person,  maxlength: 30,size: 30 %>
 

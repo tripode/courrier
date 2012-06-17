@@ -69,8 +69,15 @@
           $('input[type=number]').val("");
 
         });
-        //Mascara para la GT
-        <%#*$("input#transport_guide_num_guide").mask("999999");%>
+        //Comprueba que se teclee solo numeros
+        $("input.only_numbers").keypress(function (e)
+        {
+          //if the letter is not digit then display error and don't type anything
+          if( e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+          {
+            return false;
+          }
+        });
 
 				
       });
@@ -87,36 +94,36 @@
             <ul>
               <li><%= link_to 'Inicio', root_url + 'main_page/index' %> </li>
               <% if current_user.has_role("Administrador") || current_user.has_role("Secretaria")%>
-                  <li><a href="#">Registros Varios</a>
-                    <ul>
-                      <% if can? :manage, Customer %>
-                        <li><a href="#">Clientes</a>
-                          <ul>
-                            <li><%= link_to 'Por Empresa', new_customer_company_path %> </li>
-                            <li><%= link_to 'Por Persona', new_customer_path %></li>
-                          </ul>
-                        </li>
-                      <% end %>
-                      <% if can? :manage, Receiver %>
-                        <li><%= link_to 'Destinatario', new_receiver_path %></li>
-                      <% end %>
-                      <% if can? :manage, Employee %>
-                        <li><a href="#">Empleados</a>
-                          <ul>
-                            <li><%= link_to 'Crear Empleado', new_employee_path %></li>
-                            <li><%= link_to 'Listar Empleados', employees_path %></li>
-                          </ul>
-                        </li>
-                      <% end %>
-                      <% if can? :manage, Area %>
-                        <li><%= link_to 'Zonas', new_area_path %></li>
-                      <% end %>
-                      <% if can? :manage, City %>
-                        <li><%= link_to 'Ciudades', new_city_path %></li>
-                      <% end %>
+                <li><a href="#">Registros Varios</a>
+                  <ul>
+                    <% if can? :manage, Customer %>
+                      <li><a href="#">Clientes</a>
+                        <ul>
+                          <li><%= link_to 'Por Empresa', new_customer_company_path %> </li>
+                          <li><%= link_to 'Por Persona', new_customer_path %></li>
+                        </ul>
+                      </li>
+                    <% end %>
+                    <% if can? :manage, Receiver %>
+                      <li><%= link_to 'Destinatario', new_receiver_path %></li>
+                    <% end %>
+                    <% if can? :manage, Employee %>
+                      <li><a href="#">Empleados</a>
+                        <ul>
+                          <li><%= link_to 'Crear Empleado', new_employee_path %></li>
+                          <li><%= link_to 'Listar Empleados', employees_path %></li>
+                        </ul>
+                      </li>
+                    <% end %>
+                    <% if can? :manage, Area %>
+                      <li><%= link_to 'Zonas', new_area_path %></li>
+                    <% end %>
+                    <% if can? :manage, City %>
+                      <li><%= link_to 'Ciudades', new_city_path %></li>
+                    <% end %>
 
-                    </ul>
-                  </li>
+                  </ul>
+                </li>
               <% end %>
               <li><a href="#">Notas</a>
                 <ul>
@@ -165,18 +172,18 @@
                 </ul>
               </li>
               <% if current_user.has_role("Administrador") %>
-              <li><a href="#">Informes</a>
-                <ul>
-                  <li><%= link_to 'Informe de Entrega', delivery_report_products_path %></li>
-                </ul>
-              </li>
+                <li><a href="#">Informes</a>
+                  <ul>
+                    <li><%= link_to 'Informe de Entrega', delivery_report_products_path %></li>
+                  </ul>
+                </li>
               <% end %>
               <% if can? :manage, User %>
-              <li><a href="#">Administración</a>
-                <ul>
-                  <li><%= link_to "Usuarios", new_user_registration_path %></li>
-                </ul>
-              </li>
+                <li><a href="#">Administración</a>
+                  <ul>
+                    <li><%= link_to "Usuarios", new_user_registration_path %></li>
+                  </ul>
+                </li>
               <% end %>
             </ul>
           </div>
