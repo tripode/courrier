@@ -24,11 +24,11 @@
           <%=select("lista2", "product_type_id", ProductType.get_list_product_types, {:prompt => '-- Seleccionar --'}) %>
           <div class="clear"></div>
           <label>Cantidad:</label>
-          <%= f.text_field :amount,id: 'amount',maxlegnth:3, size: 3 %>
+          <%= f.text_field :amount,id: 'amount',maxlength: 3, size: 3, class: 'only_numbers'  %>
           <label>Peso (kg):</label>
-          <%= f.text_field :weight, id: 'weight',maxlegnth:3, size: 3%>
+          <%= f.text_field :weight, id: 'weight',maxlength: 3, size: 3, class: 'only_numbers' %>
           <label>Costo Unitario:</label>
-          <%= f.text_field :unit_cost, id: 'unit_cost',maxlegnth:10, size: 10%>
+          <%= f.text_field :unit_cost, id: 'unit_cost',maxlength:10, size: 10%>
           <%= link_to '', add_detail_product_transport_guides_path, {id: 'add_product', class: 'add', remote: 'true', method: 'post'} %>
           </li>
           <div class="clear"></div>

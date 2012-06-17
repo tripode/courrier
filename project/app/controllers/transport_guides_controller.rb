@@ -162,14 +162,14 @@ class TransportGuidesController < ApplicationController
   # DELETE /transport_guides/1.json
   def destroy
     attr= TransportGuideState.find_by_name_state('En Proceso').id
-        @transport_guide = TransportGuide.find(params[:id])
-        num= @transport_guide.num_guide
-        @transport_guide.update_attributes('transport_guide_state_id', attr)
+    @transport_guide = TransportGuide.find(params[:id])
+    num= @transport_guide.num_guide
+    @transport_guide.update_attributes('transport_guide_state_id', attr)
     
-        respond_to do |format|
-          format.html { redirect_to tg_searching_transport_guides_path, notice: "La Guia de Transporte #{num} ha sido cancelada" }
-          format.json { head :no_content }
-        end
+    respond_to do |format|
+      format.html { redirect_to tg_searching_transport_guides_path, notice: "La Guia de Transporte #{num} ha sido cancelada" }
+      format.json { head :no_content }
+    end
   end
 
   #get
@@ -197,11 +197,25 @@ class TransportGuidesController < ApplicationController
         @consult[k]=v
       end
     end
-    puts @consult.to_s
-    @transport_guides=TransportGuide.where(@consult)
-    respond_to do |format|
-      format.js
+    date_from = params[:date_range][:date_from]
+    date_to = params[:date_range][:date_to]
+    if( date_from != "" || date_to !="")
+      @consult[:created_at]=date_from..date_to
     end
+    puts @consult.to_s
+    begin
+      @transport_guides=TransportGuide.where(@consult)
+      respond_to do |format|
+        format.js
+      end
+    rescue
+      @transport_guides=TransportGuide.where(id: 0)
+      respond_to do |format|
+        format.js
+      end
+    end
+    
+    
 
 
   end
