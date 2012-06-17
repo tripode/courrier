@@ -155,9 +155,9 @@
                   <% if can? :manage, TransportGuide %>
                     <li><a href="#">Guia de Transporte</a>
                       <ul>
-                        <li><%= link_to 'Crear Guia de Tranporte', new_transport_guide_path %></li>
-                        <li><%= link_to 'Listar Guia de Tranporte', transport_guides_path %></li>
-                        <li><%= link_to 'Buscar Guia de Tranporte', tg_searching_transport_guides_path %></li>
+                        <li><%= link_to 'Crear Guia', new_transport_guide_path %></li>
+                       
+                        <li><%= link_to 'Buscar Guia', tg_searching_transport_guides_path %></li>
                       </ul>
                     </li>
                   <% end %>
@@ -203,9 +203,8 @@
       </div>
     </div>
     <div id="footer">
-      <div class="container">
-        <label>Copyright &copy; Tripodevs S.A. All Rigth Reserved </label>
-      </div>
+      <label>Copyright &copy; Tripodevs S.A. All Right Reserved </label>
+      
     </div>
   </body>
 </html>

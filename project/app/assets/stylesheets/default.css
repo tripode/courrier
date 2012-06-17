@@ -41,7 +41,7 @@ fieldset legend {
     margin-left: 10px;
 }
 html {
-    background: #c0c0c0;
+/*    background: #c0c0c0;*/
 }
 /*todos los textarea del proyecto tendran las mismas dimensiones
  y la misma posición en los formularios
@@ -101,11 +101,16 @@ textarea {
     margin-top: 10px;
     color: #444;
     font-size: 12px;
+    margin-left: 10px;
+
+    z-index: 9;
+     
 }
 
 #content {
     margin-top: 10px;
     background: none repeat scroll 0 0 #FFFFFF;
+    min-height: 600px;
 }
 
 #content fieldset  ul li {
@@ -305,6 +310,9 @@ Modificaciones de otros CSS Externos y privativos
     margin-bottom: 0 !important;
     font-weight: bold !important;
     font-size: 12px;
+}
+.no-sorting {
+    background: none;
 }
 
 /*Fin deCambios las tablas*/
