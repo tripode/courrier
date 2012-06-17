@@ -60,24 +60,19 @@
 					<th></th>
 				</thead>
 				<tbody id="addresses">
-					<% counter = 100 %>
 					<% @receiver.receiver_addresses.each do |address| %>
 							<tr>
 								<td>
 									<%= address.label %>
-									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][label]' value='<%= address.label%>'>
 								</td>
 								<td>
 									<%= address.city.name if address.city %>
-									<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][city_id]' value='<%= address.city.id %>'>
 								</td>
 								<td>
 									<%= address.address %>
-					8				<input type='hidden' name='receiver[receiver_addresses_attributes][<%=counter%>][address]' value='<%= address.address %>'>
 								</td>
-								<td><%= link_to_function( image_tag('borrar2.gif'), "delete()", :href => 'delete') %></td>
+								<td> </td>
 							</tr>
-							<% counter+=1 %>
 					<% end %>
 					
 				</tbody>
