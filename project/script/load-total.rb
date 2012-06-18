@@ -45,6 +45,19 @@ require 'date'
 Employee.transaction do
     date= Time.now 
     Employee.create(
+        :email=>"tripodevs@googlegroups.com",
+        :name=>"Tripodevs",
+        :last_name =>"Tripodevs",
+        :num_identity => 0000001,
+        :address=>"Encarnacion",
+        :admission_date=>date,
+        :birthday=>date,
+        :salary=>0,
+        :mobile_number=>"(xxxx)xxxxxx",
+        :phone_number=>"(xxx)xxxxxx",
+        :function_type_id=>1
+     )
+    Employee.create(
         :email=>"setwildo31@gmail.com",
         :name=>"Wildo",
         :last_name =>"Monges",
@@ -55,7 +68,7 @@ Employee.transaction do
         :salary=>0,
         :mobile_number=>"(0985)163420",
         :phone_number=>"(071)207865",
-        :function_type_id=>1
+        :function_type_id=>2
      )
     Employee.create(
         :email=>"diego.courier@gmail.com",
@@ -68,7 +81,7 @@ Employee.transaction do
         :salary=>1650000,
         :mobile_number=>"(0985)741172",
         :phone_number=>nil,
-        :function_type_id=>1
+        :function_type_id=>3
       )
 end
 
@@ -225,17 +238,23 @@ Role.transaction do
 end
 User.transaction do
     ## User por defecto para entrar al sistema
+    User.create(:username     => 'tripodevs',
+                :email        => 'tripodevs@googletroups.com',
+                :password     => 'tripodevsSA',
+                :employee_id  => 1,
+                :role_ids     => Role.where(:name => 'Administrador').first.id
+               )
     User.create(:username     => 'admin',
                 :email        => 'admin@admin.com',
                 :password     => 'pass',
-                :employee_id  => 1,
+                :employee_id  => 2,
                 :role_ids     => Role.where(:name => 'Administrador').first.id
                )
     ## User de el dueno de la empresa Diego Silvero
     User.create(:username     => 'diego',
                 :email        => 'diego.courier@gmail.com',
                 :password     => 'pass',
-                :employee_id  => 2,
+                :employee_id  => 3,
                 :role_ids     => Role.where(:name => 'Administrador').first.id
                )
 end

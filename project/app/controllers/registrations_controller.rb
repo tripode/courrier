@@ -19,6 +19,9 @@ class RegistrationsController < Devise::RegistrationsController
     # redirect to root_path otherwise.
     #
     def new
+      if(params[:messages])
+        @messages = params[:messages]
+      end
       if current_user
         @employees = Employee.all
         super
@@ -58,9 +61,21 @@ class RegistrationsController < Devise::RegistrationsController
   # This action controller delete a user.
   #
   def delete_user
-    @deleted_user = User.find(params[:id])
-    @deleted_user.destroy
-    respond_with resource, :location => after_sign_up_path_for(resource)
+    Rails.logger = Logger.new(STDOUT)
+    puts params.to_yaml
+    logger.info params.to_yaml
+    if(current_user.id.to_s != params[:id].to_s and params[:id].to_s!=1.to_s)
+      @deleted_user = User.find(params[:id])
+      begin
+        @deleted_user.destroy
+        @messages = {:success => "El usuario fue eliminado exitosamente"}
+      rescue Exception => e
+        @messages = {:error => "Hubo un error al intentar eliminar el usuario"}
+      end
+    else
+      @messages = {:alert => "No se puede eliminar este usuario"}
+    end
+    redirect_to new_user_registration_path(:messages => @messages)
   end
 
   protected
