@@ -25,7 +25,7 @@
       <ul>
         <li>
           <label>* N&#176;:</label>
-          <%= f.text_field :manifest_num, maxlength: 10, size:10 %>
+          <%= f.text_field :manifest_num, maxlength: 10, size:10 , disabled: 'disabled'%>
         </li>
         <li>
           <label>* Fecha:</label>
@@ -81,8 +81,8 @@
               <input type="hidden" id="hidden_print" value="not" name="data[print]"></input>
                 
                 <div class="span-11 center prepend-top las">
-                    <%= link_to @btt_guardar, '#' , id:'save_link', class: 'button' %>
-                    <%= f.submit @btt_guardar, id:'save_button' , class: 'hide'%>
+                   
+                    <%= f.submit @btt_guardar, id:'save_button'%>
                     <%= link_to 'Limpiar',new_cargo_manifest_path, class: 'limpiar button'%>
                   <%if @option_print==true%>
                     <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id: @cargo_manifest.id, format: 'pdf'), class: 'button', method: 'post'%>
@@ -105,15 +105,8 @@
               f3.add( Validate.Presence, { failureMessage: " " } );
 
               $(function() {
-                $('#save_link').click(function(){
-                  var resultado = confirm("Desea Generar PDF?");
-                  if(resultado==true){
-                    $('#hidden_print').val('yes')
-                    $('#save_button').click();
-                  }else{
-                    $('#hidden_print').val('not')
-                    $('#save_button').click();
-                  }
+                $('#save_button').click(function(){
+                  alert("Se generara el pdf del manifiesto");
                 });
 
 
@@ -150,7 +143,6 @@
             //Cuando el id de la Ciudad de origen no es vacio se setea el nombre de la ciudad en el campo
             //Esto se usa cuando se edita la Guia de Transporte,
             //al hacer click en edit setea La ciudad de origen
-            $("#save_button").val("Actualizar");
             var id=$("#origin_city_id_hidden").val();
             var name= ""
             // busca la ciudad dentro de la lista

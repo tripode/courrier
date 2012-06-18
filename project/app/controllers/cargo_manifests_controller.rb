@@ -40,8 +40,10 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new
   # GET /cargo_manifests/new.json
   def new
-
+    #   .find(:all, :conditions => "customer_type_id = 1") Customer.find(:all, :conditions => "customer_type_id = 1")
+    c_m = CargoManifest.find(:last).manifest_num
     @cargo_manifest = CargoManifest.new
+    @cargo_manifest.manifest_num =c_m.to_i + 1
     @transport_guides= TransportGuide.where(id: 0)
     @cargo_manifest_detail=CargoManifestDetail.new
     #    @transport_guide_details= TransportGuideDetail.all
@@ -111,8 +113,6 @@ class CargoManifestsController < ApplicationController
           end
         end
       end
-      if params[:data][:print]== 'yes'
-        puts "entro al print"
         cargo_manifest = CargoManifest.find(@cargo_manifest.id);
         respond_to do |format|
           format.html do
@@ -126,19 +126,12 @@ class CargoManifestsController < ApplicationController
             rescue
               #no se guardo el archivo
             end
-            #          send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
-            #            type: "application/pdf",
-            #            disposition: "inline"
-            redirect_to new_cargo_manifest_path, notice: "Guardado  Correctamente y se genero Correctamente el PDF!"
+            send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
+             type: "application/pdf",
+              disposition: "inline"
+#            redirect_to new_cargo_manifest_path, notice: "Guardado  Correctamente y se genero Correctamente el PDF!"
           end
         end
-          
-      elsif params[:data][:print]== 'not'
-        respond_to do |format|
-          format.html { redirect_to new_cargo_manifest_path, notice: "Guardado Correctamente!"}
-          format.json { head :no_content}
-        end
-      end
     rescue ActiveRecord::StatementInvalid
       manejo_error_pg(@cargo_manifest)
     rescue
