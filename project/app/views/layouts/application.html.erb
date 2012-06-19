@@ -191,6 +191,7 @@
             <p><%= "#{current_user.employee.full_name_length(20)}(#{current_user.username})  "%></p>
             <%= link_to image_tag('logout.png'), destroy_user_session_path, :method => :delete %>
             <%= link_to image_tag('config.png'), edit_user_registration_path%>
+            <%= link_to image_tag('help.png'), helps_path %>
           </div>
         </div>
       </div>

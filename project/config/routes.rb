@@ -1,6 +1,6 @@
 Project::Application.routes.draw do
   
-  
+  resources :helps
   resources :receiver_addresses
 
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
