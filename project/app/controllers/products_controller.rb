@@ -170,8 +170,9 @@ class ProductsController < ApplicationController
           flash[:notice]="El producto no pudo ser actualizado"
         end
          format.js
-         logger.error("No se pudo actualizar la cantidad de la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
+         logger.info("Se actualiza el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
       rescue
+        logger.error("Error al actualiza el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
         flash[:notice]="El producto no pudo ser actualizado."
       ensure
         format.js
@@ -193,7 +194,9 @@ class ProductsController < ApplicationController
         @retire_note.update_attribute(:amount_processed, @amount_processed) 
         flash[:notice]="El producto se ha eliminado."
       end
+      logger.info("Se borra el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
     rescue
+      logger.error("Error al borrar el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
       flash[:notice]="Este producto no puede ser eliminado."
     end
     $products=Product.where(retire_note_id: @retire_note_id)
@@ -424,8 +427,10 @@ class ProductsController < ApplicationController
                     begin
                       Product.transaction do
                         @product.update_attribute(:product_state_id, ProductState.no_recibido)
+                        logger.info("Se actualiza el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
                       end
                     rescue
+                      logger.error("Error al actualizar el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
                       flash[:notice]="Ocurrio un error intentando actualizar el producto de pendiente a no recibido"
                     end
                   end
@@ -465,6 +470,7 @@ class ProductsController < ApplicationController
                   pdf.render_file(@file_path)
                 rescue
                   #no se guardo el archivo
+                  logger.info("Error al crear pdf: #{pdf.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
                 end
                 send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                                       type: "application/pdf",
@@ -483,6 +489,7 @@ class ProductsController < ApplicationController
     @file_path = params[:file_path]
     @costumer = Customer.find(@costumer_id)
     EmailSender.eemail(@costumer.email, @file_path).deliver
+    logger.info("Se envia email a: #{@customer.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
     respond_to do |format|
       format.html {redirect_to  delivery_report_products_path}
       format.json { head :no_content }
@@ -509,6 +516,7 @@ class ProductsController < ApplicationController
           
           address = ReceiverAddress.create(label: place, address: address, city_id: city_id, receiver_id: receiver.id)
         end
+        logger.info("Se guarda el destinatario: #{receiver.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
     end
     @object={success: 1}
     respond_to do |format|
