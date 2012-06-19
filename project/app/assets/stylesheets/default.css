@@ -102,7 +102,7 @@ textarea {
     color: #444;
     font-size: 12px;
     margin-left: 10px;
-
+    text-align: center;
     z-index: 9;
      
 }
@@ -110,7 +110,7 @@ textarea {
 #content {
     margin-top: 10px;
     background: none repeat scroll 0 0 #FFFFFF;
-    min-height: 600px;
+    min-height: 650px;
     
 }
 
