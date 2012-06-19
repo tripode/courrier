@@ -35,6 +35,8 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource
     resource.employee_id = params[:employee_id]
     if resource.save
+      logger.info("Usuario creado: #{resource.name}, #{Time.now}")
+      @message = {:success => "El nuevo usuario fue creado exitosamente"}
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         #sign_in(resource_name, resource)
@@ -45,6 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
         respond_with resource, :location => after_inactive_sign_up_path_for(resource)
       end
     else
+      logger.error("No se pudo crear el usuario #{resource.name}, #{Time.now}")
       clean_up_passwords resource
       respond_with resource
     end
@@ -69,7 +72,9 @@ class RegistrationsController < Devise::RegistrationsController
       begin
         @deleted_user.destroy
         @messages = {:success => "El usuario fue eliminado exitosamente"}
+        logger.info("#{@deleted_user.inspect} fue borrado por #{current_user.inspect}, #{Time.now}")
       rescue Exception => e
+        logger.error("Error al intentar borrar el usuario #{@deleted_user.inspect}. Excepcion: #{e}, #{Time.now}")
         @messages = {:error => "Hubo un error al intentar eliminar el usuario"}
       end
     else
