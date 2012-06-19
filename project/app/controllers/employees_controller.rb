@@ -73,9 +73,11 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
+        logger.info("Se crea empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
         format.html { redirect_to new_employee_path, notice: 'Empleado Creado Exitosamente!' }
         format.json { render json: @employee, status: :created, location: @employee }
       else
+        logger.error("Error al crear empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
         format.html { render action: "new" }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
       end
@@ -91,9 +93,11 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
+        logger.info("Se actualiza empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
         format.html { redirect_to new_employee_path, notice: 'Empleado Actualizado Exitosamente!' }
         format.json { head :no_content }
       else
+        logger.error("Error al actualizar empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
         format.html { render action: "edit" }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
       end
@@ -107,8 +111,10 @@ class EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     begin
       @employee.destroy
+      logger.info("Se borra empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
     rescue ActiveRecord::StatementInvalid
       notice= 'Hubo un error'
+      logger.error("Error al borrar empleado: #{@employee}, usuario: #{current_user.inspect}, #{Time.now}")
     end
     
 

@@ -68,8 +68,10 @@ class CustomersController < ApplicationController
       begin 
          @customer.save
          @notice="El cliente se registro correctamente."
+         logger.info("Se crea cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       rescue
          @notice="No se pudo registrar el cliente."
+         logger.error("Error al crear cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       ensure
         format.html { redirect_to new_customer_path, notice: @notice }
         format.json { head :no_content } 
@@ -86,8 +88,10 @@ class CustomersController < ApplicationController
       begin 
          @customer.update_attributes(params[:customer])
          @notice="El cliente se actualizo correctamente."
+         logger.info("Se actualiza cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       rescue
          @notice="No se pudo actualizar el cliente."
+         logger.error("Error al actualizar cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       ensure
         format.html { redirect_to new_customer_path, notice:@notice }
         format.json { head :no_content } 
@@ -104,8 +108,10 @@ class CustomersController < ApplicationController
       begin
         @customer.destroy
         @notice="El cliente ha sido eliminado."
+        logger.info("Se elimina cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       rescue
         @notice="Este cliente no puede ser eliminado."
+        logger.error("Error al eliminar cliente persona: #{@customer}, usuario: #{current_user.inspect}, #{Time.now}")
       ensure
         format.html { redirect_to new_customer_path,  notice: @notice }
         format.json { head :no_content }

@@ -91,6 +91,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
     begin  
       if $product.save
+        logger.info("Se crea un producto: #{$product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
         $products.push($product)
         $product=Product.new
         $product.created_at=$product.format_admission_date
@@ -99,6 +100,7 @@ class ProductsController < ApplicationController
           @retire_note.update_attribute(:amount_processed, $item)
         rescue
           flash[:notice]="No se pudo actualizar la cantidad de la nota"
+          logger.error("No se pudo actualizar la cantidad de la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
         end
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
@@ -115,6 +117,7 @@ class ProductsController < ApplicationController
               @retire_note.update_attribute(:retire_note_state_id, @state_id)
             rescue
               flash[:notice]="Esta nota se ha procesado con exito."
+              logger.error("Error al procesar la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
             end
             $product = Product.new
             $product.created_at=$product.format_admission_date
@@ -157,7 +160,7 @@ class ProductsController < ApplicationController
     @product_state= ProductState.new
     respond_to do |format|
       begin
-        ##Si el estado del producto es Recibido  no se puede actualizar porque
+        ## Si el estado del producto es Recibido  no se puede actualizar porque
         ## los productos ya se procesaron
         if @product.product_state_id != ProductState.recibido 
           if @product.update_attributes(params[:product])
@@ -167,6 +170,7 @@ class ProductsController < ApplicationController
           flash[:notice]="El producto no pudo ser actualizado"
         end
          format.js
+         logger.error("No se pudo actualizar la cantidad de la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
       rescue
         flash[:notice]="El producto no pudo ser actualizado."
       ensure
