@@ -39,10 +39,12 @@
         <td><%= transport_guide.created_at %></td>
         <%unless TransportGuideState.procesado == transport_guide.transport_guide_state_id.to_i%>
           <td><%= link_to image_tag('editar.gif'), edit_transport_guide_path(transport_guide) %></td>
+          <td><%= link_to image_tag('borrar2.gif'), transport_guide, confirm: 'Are you sure?', method: :delete %></td>
         <%else%>
           <td></td>
+          <td></td>
         <%end%>
-        <td><%= link_to image_tag('borrar2.gif'), transport_guide, confirm: 'Are you sure?', method: :delete %></td>
+        
       </tr>
     <% end %>
   </tbody>
