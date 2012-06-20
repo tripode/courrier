@@ -9,7 +9,7 @@ class ReceiversController < ApplicationController
   # Llama a este metodo y verifica los permisos que tiene para Employee
   #
   def check_permissions
-    authorize! :create, Customer
+    authorize! :create, Receiver
   end
   
   # GET /receivers

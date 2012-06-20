@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   # Este metodo retorna en el timeout para todos usuarios
   #
   def timeout_in
-    15.minutes
+    1.minute
   end
   
   ##

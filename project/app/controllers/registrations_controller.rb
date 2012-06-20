@@ -3,14 +3,26 @@ class RegistrationsController < Devise::RegistrationsController
   # Antes de hacer cualquier cosa con este controler,
   # se verifica si hay permiso para el usuario logueado
   #
-  before_filter :check_permissions, :only => [:new, :create, :delete_user]
+  before_filter :login_require
   skip_before_filter :require_no_authentication
   #
-  # Llama a este metodo y verifica los permisos que tiene para City
+  # Llama a este metodo y verifica los permisos que tiene para User
   #
   def check_permissions
-    authorize! :create, :new, :delete_user, User
+    authorize! :create, User
   end
+  
+  def login_require
+    begin
+      current_user
+      check_permissions
+    rescue
+      redirect_to new_user_session_path
+    end
+  end
+  
+#  skip_before_filter :login_required, :authorize
+#  before_filter :login_required, :authorize
   
   layout "application" 
     #
