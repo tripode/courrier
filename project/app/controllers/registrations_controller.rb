@@ -44,24 +44,17 @@ class RegistrationsController < Devise::RegistrationsController
 
  
  def create
+   user = User.find_by_email params[:user][:email]
+   user2 = User.find_by_username(params[:user][:username])
     build_resource
     resource.employee_id = params[:employee_id]
-    if resource.save
-      logger.info("Usuario creado: #{resource.name}, #{Time.now}")
+    if !user and !user2 and resource.save
+      logger.info("Usuario creado: #{resource.username}, #{Time.now}")
       @message = {:success => "El nuevo usuario fue creado exitosamente"}
-      if resource.active_for_authentication?
-        set_flash_message :notice, :signed_up if is_navigational_format?
-        #sign_in(resource_name, resource)
-        respond_with resource, :location => after_sign_up_path_for(resource)
-      else
-        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-        expire_session_data_after_sign_in!
-        respond_with resource, :location => after_inactive_sign_up_path_for(resource)
-      end
+      redirect_to new_user_registration_path(:messages => @message)
     else
-      logger.error("No se pudo crear el usuario #{resource.name}, #{Time.now}")
-      clean_up_passwords resource
-      respond_with resource
+      logger.error("No se pudo crear el usuario #{resource.username}, #{Time.now}")
+      redirect_to new_user_registration_path(:messages => {:error => 'No se pudo guardar el usuario'})
     end
   end
   #def create
