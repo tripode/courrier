@@ -41,7 +41,12 @@ class CargoManifestsController < ApplicationController
   # GET /cargo_manifests/new.json
   def new
     #   .find(:all, :conditions => "customer_type_id = 1") Customer.find(:all, :conditions => "customer_type_id = 1")
-    c_m = CargoManifest.find(:last).manifest_num
+    last_cargo_manifest = CargoManifest.find(:last)
+    if last_cargo_manifest.nil?
+      c_m=0
+    else
+      c_m=last_cargo_manifest.manifest_num
+    end
     @cargo_manifest = CargoManifest.new
     @cargo_manifest.manifest_num =c_m.to_i + 1
     @transport_guides= TransportGuide.where(id: 0)
