@@ -92,6 +92,7 @@ class RetireNotesController < ApplicationController
               flash[:notice]="La nota de retiro se guardo correctamente."
             else
               flash[:notice]="No se pudo guardar la nota de retiro."
+              logger.error("No se pudo guardar la nota de retiro: #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
             end
             #Initialize al variables
               @retire_note = RetireNote.new
@@ -104,16 +105,20 @@ class RetireNotesController < ApplicationController
               @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
           else
             flash[:notice]="No se guardo. La cantidad debe ser mayor a cero."
+             logger.info("No se guardo. La cantidad debe ser mayor a cero: #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
           end
        else
          flash[:notice]="No se guardo. La fecha de vencimiento debe ser mayor o igual a la fecha de registro"
+         logger.info("No se guardo la nota de retiro. La fecha de vencimiento debe ser mayor o igual a la fecha de registro: #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
        end
       rescue
         @exits_retire_note=RetireNote.where(number: @retire_note.number).first
         if !@exits_retire_note.nil?
           flash[:notice]="No se pudo guardar. El numero de nota ya existe."
+          logger.error("No se guardo la nota de retiro. El numero de nota ya existe: #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
         else
           flash[:notice]="Error al guardar. Verifique los datos ingresados."
+          logger.error("Error al guardar. Verifique los datos ingresados: #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
         end
       ensure
          format.js
@@ -141,7 +146,8 @@ class RetireNotesController < ApplicationController
               if @retire_note.update_attributes(params[:retire_note])
                 flash[:notice]='La nota de retiro ha sido actualizada'
               else
-                flash[:notice]='No se pudo actualizar el nota de retiro'
+                flash[:notice]='No se pudo actualizar la nota de retiro'
+                logger.info("No se pudo actualizar la nota de retiro #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
               end
               #Initialize al variables
                 @retire_note = RetireNote.new
@@ -154,9 +160,11 @@ class RetireNotesController < ApplicationController
                 @retire_notes= RetireNote.find(:all, :conditions=> "retire_note_state_id= 2 and date between current_date-31 and current_date")
             else
               flash[:notice]="No se actualizo. La cantidad debe ser mayor a cero"
+              logger.info("No se pudo actualizar la nota de retiro. La cantidad debe ser mayor a cero #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
             end
           else
             flash[:notice]="No se actualizo. La fecha de vencimiento debe ser mayor o igual a la fecha de registro"
+            logger.info("No se pudo actualizar la nota de retiro. La fecha de vencimiento debe ser mayor o igual a la fecha de registro #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
           end
        else
          flash[:notice]="Esta nota no puede ser actualizada, algunos de sus productos ya fueron registrados.."
@@ -174,8 +182,10 @@ class RetireNotesController < ApplicationController
         @exits_retire_note=RetireNote.where(number: @retire_note.number).first
         if !@exits_retire_note.nil?
           flash[:notice]="No se pudo actualizar. El numero de nota ya existe."
+            logger.info("No se pudo actualizar la nota de retiro. El nro de nota ya existe #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
         else
           flash[:notice]="Error al actualizar, verifique los datos ingresados."
+            logger.info("No se pudo actualizar la nota de retiro.Verifique los datos ingresados #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
         end
       ensure
          format.js
@@ -193,6 +203,7 @@ class RetireNotesController < ApplicationController
         flash[:notice]="La nota de retiro ha sido eliminada.."
       rescue
         flash[:notice]="Esta nota de retiro no puede ser eliminada.."
+         logger.info("Esta nota de retiro no puede ser eliminada #{@retire_note.inspect}, usuario: #{current_user.username}, #{Time.now}")
       ensure
        
         #Initialize al variables
@@ -253,7 +264,8 @@ class RetireNotesController < ApplicationController
              end
           end
        rescue 
-         flash[:error]="Error al buscar los productos"
+         flash[:notice]="Error al buscar los productos"
+         logger.error("Error al buscar los productos, usuario: #{current_user.username}, #{Time.now}")
           respond_to do |format|
             format.js
           end

@@ -91,7 +91,6 @@ class ProductsController < ApplicationController
     respond_to do |format|
     begin  
       if $product.save
-        logger.info("Se crea un producto: #{$product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
         $products.push($product)
         $product=Product.new
         $product.created_at=$product.format_admission_date
@@ -100,7 +99,7 @@ class ProductsController < ApplicationController
           @retire_note.update_attribute(:amount_processed, $item)
         rescue
           flash[:notice]="No se pudo actualizar la cantidad de la nota"
-          logger.error("No se pudo actualizar la cantidad de la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
+          logger.error("No se pudo actualizar la cantidad de la nota de retiro: #{@retire_note}, usuario: #{current_user.username}, #{Time.now}")
         end
         #Controla que se ingreso todos los productos de la nota de retiro
          if ($item.to_i < @amount.to_i)
@@ -115,9 +114,9 @@ class ProductsController < ApplicationController
             begin
               @state_id=RetireNoteState.where("state_name='Procesado'").first.id
               @retire_note.update_attribute(:retire_note_state_id, @state_id)
-            rescue
               flash[:notice]="Esta nota se ha procesado con exito."
-              logger.error("Error al procesar la nota de retiro: #{@retire_note}, usuario: #{current_user.inspect}, #{Time.now}")
+            rescue
+              logger.error("Error al procesar la nota de retiro: #{@retire_note}, usuario: #{current_user.username}, #{Time.now}")
             end
             $product = Product.new
             $product.created_at=$product.format_admission_date
@@ -147,7 +146,8 @@ class ProductsController < ApplicationController
         format.js
       end
     rescue
-      flash[:notice]="Atencion!! El codigo ingresado ya fue registrado.. Introdusca otro codigo de barras por favor"
+      flash[:notice]="Atencion.!! El codigo ingresado ya fue registrado.. Introdusca otro codigo de barras por favor"
+      logger.error("Se intento guardar un producto con un codigo de barras repetido: #{$product.bar_code}, usuario: #{current_user.username}, #{Time.now}")
       format.js
     end
     end
@@ -162,17 +162,19 @@ class ProductsController < ApplicationController
       begin
         ## Si el estado del producto es Recibido  no se puede actualizar porque
         ## los productos ya se procesaron
-        if @product.product_state_id != ProductState.recibido 
+        if @product.product_state_id.to_i != ProductState.recibido.to_i 
           if @product.update_attributes(params[:product])
             flash[:notice]="El producto ha sido actualizado"
+             logger.info("Se actualiza el producto: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
           end
         else
-          flash[:notice]="El producto no pudo ser actualizado"
+           flash[:notice]="El producto no pudo ser actualizado"
+           logger.info("No se pudo actualizar el producto: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
         end
          format.js
-         logger.info("Se actualiza el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+        
       rescue
-        logger.error("Error al actualiza el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+        logger.error("Error al actualizar el producto: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
         flash[:notice]="El producto no pudo ser actualizado."
       ensure
         format.js
@@ -194,9 +196,9 @@ class ProductsController < ApplicationController
         @retire_note.update_attribute(:amount_processed, @amount_processed) 
         flash[:notice]="El producto se ha eliminado."
       end
-      logger.info("Se borra el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+      logger.info("Se borra el producto: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
     rescue
-      logger.error("Error al borrar el producto: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+      logger.error("Error al borrar el producto: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
       flash[:notice]="Este producto no puede ser eliminado."
     end
     $products=Product.where(retire_note_id: @retire_note_id)
@@ -427,10 +429,10 @@ class ProductsController < ApplicationController
                     begin
                       Product.transaction do
                         @product.update_attribute(:product_state_id, ProductState.no_recibido)
-                        logger.info("Se actualiza el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+                        logger.info("Se actualiza el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
                       end
                     rescue
-                      logger.error("Error al actualizar el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+                      logger.error("Error al actualizar el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
                       flash[:notice]="Ocurrio un error intentando actualizar el producto de pendiente a no recibido"
                     end
                   end
@@ -470,7 +472,7 @@ class ProductsController < ApplicationController
                   pdf.render_file(@file_path)
                 rescue
                   #no se guardo el archivo
-                  logger.info("Error al crear pdf: #{pdf.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+                  logger.info("Error al crear pdf: #{pdf.inspect}, usuario: #{current_user.username}, #{Time.now}")
                 end
                 send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                                       type: "application/pdf",
@@ -489,7 +491,7 @@ class ProductsController < ApplicationController
     @file_path = params[:file_path]
     @costumer = Customer.find(@costumer_id)
     EmailSender.eemail(@costumer.email, @file_path).deliver
-    logger.info("Se envia email a: #{@customer.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+    logger.info("Se envia email a: #{@customer.inspect}, usuario: #{current_user.username}, #{Time.now}")
     respond_to do |format|
       format.html {redirect_to  delivery_report_products_path}
       format.json { head :no_content }
@@ -516,7 +518,7 @@ class ProductsController < ApplicationController
           
           address = ReceiverAddress.create(label: place, address: address, city_id: city_id, receiver_id: receiver.id)
         end
-        logger.info("Se guarda el destinatario: #{receiver.inspect}, usuario: #{current_user.inspect}, #{Time.now}")
+        logger.info("Se guarda el destinatario: #{receiver.inspect}, usuario: #{current_user.username}, #{Time.now}")
     end
     @object={success: 1}
     respond_to do |format|
