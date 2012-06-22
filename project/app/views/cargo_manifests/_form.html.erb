@@ -25,7 +25,8 @@
       <ul>
         <li>
           <label>* N&#176;:</label>
-          <%= f.text_field :manifest_num, maxlength: 10, size:10 , disabled: 'disabled'%>
+          <input maxlength="10"  size="10" disabled="disabled" id="manifest_num_input" type="text"></input>
+          <%= f.hidden_field :manifest_num, id: 'manifest_num_hidden' %>
         </li>
         <li>
           <label>* Fecha:</label>
@@ -100,20 +101,22 @@
               f2.add( Validate.Presence, { failureMessage: " " } );
               var f3 = new LiveValidation('cargo_manifest_created_at', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
               f3.add( Validate.Presence, { failureMessage: " " } );
-              var f3 = new LiveValidation('cargo_manifest_manifest_num', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
-              f3.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
-              f3.add( Validate.Presence, { failureMessage: " " } );
+             // var f3 = new LiveValidation('cargo_manifest_manifest_num', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
+             // f3.add( Validate.Numericality, { notANumberMessage: "Debe ser un Numero" } );
+             // f3.add( Validate.Presence, { failureMessage: " " } );
 
               $(function() {
                 $('#save_button').click(function(){
                   alert("Se generara el pdf del manifiesto");
                 });
+                $('#manifest_num_input').val($('#manifest_num_hidden').val());
+
 
 
 
 
                 //focus en el formulario
-                $("form:not(.filter) :input:visible:enabled:first").focus();
+               // $("form:not(.filter) :input:visible:enabled:first").focus();
 
                 //AutoComplite de Origenes
                 var list =[];

@@ -97,7 +97,7 @@ class CargoManifestsController < ApplicationController
 
       @cargo_manifest = CargoManifest.new(params[:cargo_manifest])
       CargoManifest.transaction do
-        @cargo_manifest.manifest_num= params[:cargo_manifest][:manifest_num].to_i
+        @cargo_manifest.manifest_num= params[:cargo_manifest][:manifest_num]
         @cargo_manifest.total_weight=params[:data][:total_weight]
         @cargo_manifest.total_products=params[:data][:total_products]
         @cargo_manifest.total_guides=params[:data][:total_guides]
