@@ -25,7 +25,7 @@
         <td><%= cargo_manifest.total_guides %></td>
         <td><%= cargo_manifest.total_products %></td>
         <td><%= cargo_manifest.total_weight %></td>
-        <td><%= link_to image_tag('page_white_acrobat.png'), generate_cargo_manifest_pdf_cargo_manifests_path(id: cargo_manifest.id, format: 'pdf') %></td>
+        <td><%= link_to image_tag('page_white_acrobat.png'), generate_cargo_manifest_pdf_cargo_manifests_path(id: cargo_manifest.id, format: 'pdf'), method: :post %></td>
         <td><%= link_to image_tag('editar.gif'), edit_cargo_manifest_path(cargo_manifest) %></td>
         <td><%= link_to image_tag('borrar2.gif'), cargo_manifest, confirm: 'Estas Seguro?', method: :delete %></td>
       </tr>
