@@ -1,11 +1,19 @@
 class DeliveryReportPdf< Prawn::Document
-  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path)
+  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path, create_date)
     super()
+    stroke_color '0B3861'
+    line_width 2
     
-    text "Informe de Entrega", :align => :center
+    #    move_cursor_to 20
+    stroke_rectangle [0, 750], 550, 30
+    
+    draw_text "   Informe de Entrega" ,:at => [180  , 730]
+    move_down 20
+    
     text "Cliente: #{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
     text "Elaborado por: #{employee.last_name + ' ' + employee.name}"
-    text "Fecha: desde el #{inited_at} hasta el #{finished_at}"
+    text "Fecha de Elaboracion: #{create_date}"
+    text "Servicio: desde el #{inited_at} hasta el #{finished_at}"
     move_down 20
     text "A continuacion se listan todos los detalles del informe.."
     

@@ -467,7 +467,7 @@ class ProductsController < ApplicationController
                 create_date=Date.today
                 create_date.strftime("%d-%m-%Y") if create_date
                 @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
-                pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path)
+                pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path, create_date.strftime("%d-%m-%Y"))
                 begin
                   pdf.render_file(@file_path)
                 rescue
