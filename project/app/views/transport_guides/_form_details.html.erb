@@ -26,7 +26,7 @@
           <label>Cantidad:</label>
           <%= f.text_field :amount,id: 'amount',maxlength: 3, size: 3, class: 'only_numbers'  %>
           <label>Peso (kg):</label>
-          <%= f.text_field :weight, id: 'weight',maxlength: 3, size: 3, class: 'only_numbers' %>
+          <%= f.text_field :weight, id: 'weight',maxlength: 3, size: 3, class: 'only_decimals' %>
           <label>Costo Unitario:</label>
           <%= f.text_field :unit_cost, id: 'unit_cost',maxlength:10, size: 10%>
           <%= link_to '', add_detail_product_transport_guides_path, {id: 'add_product', class: 'add', remote: 'true', method: 'post'} %>
@@ -73,8 +73,8 @@
         }else {
           href= href_temp;
         }
-        if(isNaN(weight)|| isNaN(amount) || isNaN(unit_cost)){
-          alert("Solo numero en los campos Cantidad , Peso y Costo")
+        if(isNaN(amount) || isNaN(unit_cost)){
+          alert("Solo numero en los campos Cantidad y Costo")
         }else {
           $(this).attr("href",href +
             "?weight="+weight +
