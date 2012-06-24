@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Courier" company="tripodevs" webLink="" view-date="2012-03-19" view-index="0" gantt-divider-location="488" resource-divider-location="301" version="2.0">
+<project name="Courier" company="tripodevs" webLink="" view-date="2012-03-05" view-index="0" gantt-divider-location="488" resource-divider-location="301" version="2.0">
     <description><![CDATA[Proyecto de Ingenieria de Software II]]></description>
-    <view zooming-state="default:4" id="gantt-chart"/>
+    <view zooming-state="default:2" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Nombre" width="55" order="0"/>
         <field id="1" name="Función" width="44" order="1"/>
@@ -159,7 +159,7 @@
                     <depend id="106" type="2" difference="0" hardness="Strong"/>
                 </task>
                 <task id="18" name="Linkear el menu a sus respectivas vistas auto generadas por el scaffold_20" color="#66ff66" meeting="false" start="2012-03-15" duration="1" complete="0" priority="1" expand="true"/>
-                <task id="120" name="Diseño de Interfaces" color="#8cb6ce" meeting="false" start="2012-03-09" duration="120" complete="0" priority="1" expand="true">
+                <task id="120" name="Diseño de Interfaces" color="#8cb6ce" meeting="false" start="2012-03-13" duration="116" complete="0" priority="1" expand="true">
                     <task id="107" name="Empleado: Crear Interfaz_" color="#8cb6ce" meeting="false" start="2012-03-09" duration="10" complete="0" priority="1" expand="true">
                         <depend id="22" type="2" difference="0" hardness="Strong"/>
                         <depend id="35" type="2" difference="0" hardness="Strong"/>

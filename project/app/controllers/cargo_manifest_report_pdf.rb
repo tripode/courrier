@@ -15,8 +15,6 @@ class CargoManifestReportPdf < Prawn::Document
     destiny_city= City.find(cargo_manifest.destiny_city_id).name
     text "  Trayecto: #{origin_city} - #{destiny_city}"
     text "  Fecha de creacion: #{create_date}"
-    move_down 20
-    text "A continuacion se listan todos los detalles.."
     move_down 10
     cargo_manifest_detail = CargoManifestDetail.where(cargo_manifest_id: cargo_manifest.id);
     cont =0

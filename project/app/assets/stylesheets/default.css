@@ -399,6 +399,9 @@ table.ui-datepicker-calendar .ui-state-highlight{
 
 /*Cambios a una tabla local, se usa en manifiesto 
         de carga */
+.sorting_asc{
+    min-width: 20px;
+}
 
 /*Pequeña tabla local, se usa en manifiesto de carga*/
 #content div#tablaLocal_wrapper tabla tbody tr.odd td{
