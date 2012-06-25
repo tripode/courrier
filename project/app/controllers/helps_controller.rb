@@ -2,10 +2,12 @@ class HelpsController < ApplicationController
   
   def index
     @helps = [
-      "Usuarios","Perfiles","Cambiar datos de la cuenta","Login","Logout",
-      "Areas","Ciudades","Clientes","Clientes por empresa","Destinatarios","Empleados","Crear nota de retiro","Buscar notas de retiro",
-              "Registrar producto","Buscar producto","Crear hoja de ruta","Buscar hoja de ruta","Cargar informe del repartidor",
-              "Crear guia de transporte","Buscar guia de transporte","Crear manifiesto de carga","Listar manifiesto de carga"
+      "Como crear Usuarios?","Manejo Perfiles","Como cambiar datos de la cuenta?","Login","Logout",
+      "Como crear Areas?","Como cargar Ciudades?","Como crear Clientes por Persona?","Como crear Clientes por empresa?",
+      "Como crear Destinatarios?","Como crear Empleados?","Como crear nota de retiro", "Buscar notas de retiro",
+      "Como Registrar productos?","Buscar productos","Como Crear hoja de ruta?","Buscar hoja de ruta","Cargar informe del repartidor",
+      "Como Crear guia de transporte?","Buscar guia de transporte",
+      "Como Crear manifiesto de carga?","Listar manifiesto de carga"
     ]
   end
   
