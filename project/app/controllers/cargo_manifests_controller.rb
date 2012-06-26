@@ -127,7 +127,7 @@ class CargoManifestsController < ApplicationController
             employee= Employee.find(cargo_manifest.employee_id)
             pdf = CargoManifestReportPdf.new(create_date,employee,cargo_manifest)#,new_cargo_manifest_url, root_url, @file_path)
             begin
-              pdf.render_file(@file_path)
+              pdf.render_file(@file_path, flash[:notice]= "Guardado Correctamente")
            
             rescue
               #no se guardo el archivo
@@ -135,6 +135,7 @@ class CargoManifestsController < ApplicationController
             send_data pdf.render, filename: "manifiesto_carga_#{cargo_manifest.manifest_num}_#{create_date}.pdf",
              type: "application/pdf",
               disposition: "inline"
+            
 #            redirect_to new_cargo_manifest_path, notice: "Guardado  Correctamente y se genero Correctamente el PDF!"
           end
         end

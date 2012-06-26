@@ -3,10 +3,9 @@
     <fieldset>
       <legend>Crear Manifiesto de Carga</legend>
       <div class="msg" >
-        <label class="msg-input">
-          <%=  notice %>
-        </label>
-
+        <div id="form_notice">
+        <input id="notice" size="100" value="<%= notice %>"  disabled="disabled" style="background:none; border:none; color: green; font-weight: bold" />
+      </div>
       </div>
 
       <div class="clear"></div>
@@ -88,6 +87,9 @@
              // f3.add( Validate.Presence, { failureMessage: " " } );
 
               $(function() {
+                $("input").focus(function () {
+                    $("#notice").val("");
+                  })
         //        $('#save_button').click(function(){
           //        alert("Se generara el pdf del manifiesto");
             //    });
