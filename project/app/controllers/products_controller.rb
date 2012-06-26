@@ -369,9 +369,10 @@ class ProductsController < ApplicationController
     @product=Product.new
     @details=Array.new
     @customers=Customer.all
+    @retire_notes= RetireNote.where("date between current_date-31 and current_date and retire_note_state_id = 1")
     respond_to do |format|
       format.html # products_by_customer.html.erb
-      format.json { render json: @products }
+      format.json { render json: @product }
     end
   end
   
@@ -380,70 +381,41 @@ class ProductsController < ApplicationController
   def generate_delivery_report
   
     
-    @customer_id=params[:customer_id]
-    @inited_at = params[:inited_at]
-    @finished_at = params[:finished_at]
+    @customer_id = params[:customer_id]
+    @report_date = params[:report_date]
+    @retire_note_number = params[:retire_note_number]
+    @retire_note_id = params[:retire_note_id]
     @details= Array.new
     @products= Array.new
-    valid_customer_id=/^\d+$/.match(@customer_id)
-    valid_inited_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@inited_at)
-    valid_finished_at=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@finished_at)
-    if(!valid_customer_id.nil? and !valid_inited_at.nil? and !valid_finished_at.nil?) 
-      #Obtengo todas las hojas de rutas cuya fecha de registro esta entre @inited_at y finished_at
-      # y cuyo estado de hoja de ruta sea procesado ordenado de menor a mayor por fecha de creacion
-  
-      @routing_sheets=RoutingSheet.find(:all, :order => "id ASC", :conditions =>["date between ? and ? and routing_sheet_state_id=? ", @inited_at,@finished_at, 2]) #id 2 Procesado
-      if(!@routing_sheets.empty? ) 
-        #Por cada hoja de ruta obtengo obtengo los detalles
-        @routing_sheets.each do |r|
-           @details_by_routing_sheet = RoutingSheetDetail.where(routing_sheet_id: r.id)
-           if(!@details_by_routing_sheet.empty?) 
-              @details_by_routing_sheet.each do |detail|
-                #obtengo el producto del detalle
-                @product=Product.where(id: detail.product_id).first
-                #obtengo la nota de retiro  a la cual pertenece este producto
-                @retire_note= RetireNote.where(id: @product.retire_note_id).first
-                #obtengo el cliente que hace referencia a esta nota de retiro
-                @get_customer_id = @retire_note.customer_id
-                 # Si pertenece al cliente requerido al informe, agrego 
-                if (@get_customer_id.to_i == @customer_id.to_i)
-                  # si ya la lista de productos agregados ya contiene este mismo producto
-                  # quiere decir que el producto se ruteo dos veces, entonces
-                  # debo agregar solamente a los detalles el ultmimo detalle creado
-                  if @products.include?(@product)
-                    # elimino de los detalles el detalle cuyo producto ya ha sido agregado
-                    @details = @details.delete_if{|d| d.product_id.to_i == @product.id.to_i} 
-                    @products = @products.delete_if{|p| p.id.to_i == @product.id.to_i}
-                    # agrego el detalle mas actual par que aparesca en el informe
-                    @details << detail
-                    @products << @product
-                  else
-                    @details << detail
-                    @products << @product
-                  end
-                  ##En caso de que se olvidaron de rutear un producto con estado = "Pendiente"(pendiente es cuando este producto puede volver a rutearse)
-                  ## que ya figura en una hoja de ruta
-                  if @product.product_state_id.to_i == ProductState.pendiente.to_i
-                    #Actualizo el estado del producto pendiente a "No Recibido", este producto ya esta agregado 
-                    #en los detalles que tendra el informe
-                    begin
-                      Product.transaction do
-                        @product.update_attribute(:product_state_id, ProductState.no_recibido)
-                        logger.info("Se actualiza el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
-                      end
-                    rescue
-                      logger.error("Error al actualizar el producto de pendiente a no recibido: #{@product.inspect}, usuario: #{current_user.username}, #{Time.now}")
-                      flash[:notice]="Ocurrio un error intentando actualizar el producto de pendiente a no recibido"
-                    end
-                  end
-                end
-                
+    valid_retire_note_number=/^\d+$/.match(@retire_note_number)
+    valid_report_date=/[0-9]{2}-[0-9]{2}-[0-9]{4}/.match(@report_date)
+    if( !valid_retire_note_number.nil? and !valid_report_date.nil?) 
+      
+      ## Obtengo todos los productos de esa nota de retiro cuyo id es el pasado por parametro
+      @products = Product.where(retire_note_id: @retire_note_id)
+      if(!@products.empty?)
+        ## Busco el detalle de hoja de ruta de cada producto
+        @products.each do |product|
+          ##Si tiene detalle, quiere decir que el producto ha sido ruteado, obtengo el ultimo
+          ## detalle del producto por si se ruteo mas de una ves.
+          @routing_sheet_detail = RoutingSheetDetail.where(product_id: product.id).last
+          #Si exite un detalle para ese producto, este producto ha sido ruteado
+          if(!@routing_sheet_detail.nil?)
+              # si ya no se agrego el detalle, lo agrego
+              if !@details.include?(@routing_sheet_detail)
+                @details << @routing_sheet_detail
               end
-           end
+          else
+           #Creo un detalle para un producto no ruteado solo para mostrar en el informe
+           #como "No Ruteado" 
+              @detalle_product_no_routed = RoutingSheetDetail.new
+              @detalle_product_no_routed.product_id = product.id
+              @details << @detalle_product_no_routed
+          end
         end
-       
       end
-    
+      @product_type_id = RetireNote.where(id: @retire_note_id).first.product_type_id
+      @product_type = ProductType.where(id: @product_type_id).first.description
       @customer=Customer.where(id: @customer_id).first
       @employee=current_user.employee
     end
@@ -453,7 +425,7 @@ class ProductsController < ApplicationController
             format.csv do
               create_date=Date.today
               create_date.strftime("%d-%m-%Y") if create_date
-              csv_report = DeliveryReportCsv.new(@inited_at,@finished_at,@customer,@employee,@details,@file_path)
+              csv_report = DeliveryReportCsv.new(@product_type,@customer,@employee,@details,@file_path,getMonth(Date.parse(@report_date).month),Date.parse(@report_date).year)
               csv_string = csv_report.getCSV
                 # envia al browser
               send_data csv_string, 
@@ -466,8 +438,8 @@ class ProductsController < ApplicationController
               format.pdf do
                 create_date=Date.today
                 create_date.strftime("%d-%m-%Y") if create_date
-                @file_path = "#{Rails.root}/app/views/reports/informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
-                pdf = DeliveryReportPdf.new(@inited_at,@finished_at,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path, create_date.strftime("%d-%m-%Y"))
+                @file_path = "#{Rails.root}/app/views/reports/informe_Nota#{@retire_note_number}_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
+                pdf = DeliveryReportPdf.new(@product_type,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path, getMonth(Date.parse(@report_date).month),Date.parse(@report_date).year )
                 begin
                   pdf.render_file(@file_path)
                 rescue
@@ -528,4 +500,10 @@ class ProductsController < ApplicationController
     
   end
   
+  
+  private
+  def getMonth(month_number)
+    months = %w("Enero Febrero Marzo Abril Mayo Junio Julio Agosto Setiembre Octubre Noviembre Diciembre")
+    return months[month_number - 1] 
+  end
 end

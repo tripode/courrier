@@ -1,5 +1,5 @@
 class DeliveryReportPdf< Prawn::Document
-  def initialize(inited_at,finished_at,customer,employee,details,url_new, root_url, file_path, create_date)
+  def initialize(product_type,customer,employee,details,url_new, root_url, file_path, month, year)
     super()
     stroke_color '0B3861'
     line_width 2
@@ -10,30 +10,30 @@ class DeliveryReportPdf< Prawn::Document
     draw_text "   Informe de Entrega" ,:at => [180  , 730]
     move_down 20
     
+    text "DS Representaciones"
     text "Cliente: #{customer.company_name + ' ' + customer.last_name + ' ' + customer.name}"
     text "Elaborado por: #{employee.last_name + ' ' + employee.name}"
-    text "Fecha de Elaboracion: #{create_date}"
-    text "Servicio: desde el #{inited_at} hasta el #{finished_at}"
+    text "Tipo de Producto: #{product_type}"
+    text "Mes de: #{month.to_s} de #{year.to_s}"
     move_down 20
-    text "A continuacion se listan todos los detalles del informe.."
-    
+   
+   
     @routing_sheets_details=details.collect{|detail| 
       [details.index(detail) + 1,
       detail.product.bar_code,
-      detail.product.product_type.description,
       if !detail.product.receiver_id.nil? then detail.product.receiver.receiver_name end,
       if !detail.product.receiver_address_id.nil? then detail.product.receiver_address.address end,
       detail.who_received,
-      if !detail.reason_id.nil? then detail.reason.description end]
+      if !detail.reason_id.nil? then detail.reason.description end,
+      if !detail.product.received_at.nil? then detail.product.received_at.strftime("%d-%m-%Y") else if !RoutingSheet.where(id: detail.routing_sheet_id).first.nil? then RoutingSheet.where(id: detail.routing_sheet_id).first.date.strftime("%d-%m-%Y") end end ]
     }
-    header_data=[["Item","Codigo","Tipo Producto","Destinatario","Direccion","Recibio","Motivo no entrega"]]
-    t=header_data.concat(@routing_sheets_details)
-    t=make_table(header_data,:cell_style => { :font => "Times-Roman", :font_style => :italic, :size => 10}) #:underline_header
-    move_down 30
+    header_data=[["Item","Codigo","Destinatario","Direccion","Recibido por","Devuelto por motivo", "Fecha"]]
+    t_header = make_table(header_data,:cell_style => { :font => "Helvetica",:font_style => :bold,:size => 10,:border_width => 0},:column_widths => { 0 => 35, 1 => 85, 2 => 85, 3 => 85, 4 => 80, 5 => 80, 6 => 85, 7 => 80})
+    t_header.draw
+    t=make_table(@routing_sheets_details,:cell_style => { :font => "Helvetica", :size => 10,:border_width => 0},:column_widths => { 0 => 35, 1 => 85, 2 => 85, 3 => 85, 4 => 80, 5 => 80, 6 => 85, 7 => 80})  
     t.draw
     move_down 30
-    text "DS Representaciones agradece la preferencia. Gracias por confiar en nuestros servicios."
-    move_down 30
+    
     text "<u><a href='#{root_url}products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
     
     number_pages "<page> de <total>", 
