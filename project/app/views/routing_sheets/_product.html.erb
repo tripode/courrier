@@ -4,13 +4,13 @@
 	<ul>
 		<li>
 			<label>Codigo de Barra:</label>
-			<%= text_field_tag :bar_code,nil, id: 'bar_code',size: '20', :maxlength => 25%>
+			<%= text_field_tag :bar_code,nil, id: 'bar_code',size: 20, :maxlength => 25%>
 			<%= submit_tag '',id: 'button_add_detail',class:"add"%>
 		</li>
 		
 	</ul>
 	<% end %>
-	<div id="div_routing_sheet_detail">
+	<div id="div_routing_sheet_detail" class="span-22 left">
 		<%= render 'detail'%>
 	</div>
 </fieldset>

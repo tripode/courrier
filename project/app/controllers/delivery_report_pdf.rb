@@ -36,11 +36,11 @@ class DeliveryReportPdf< Prawn::Document
     
     text "<u><a href='#{root_url}products/send_email?customer_id=#{customer.id}&file_path=#{file_path}' method='post'>Enviar</a></u>   <u><link href='#{url_new}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ", :inline_format => true
     
-    number_pages "<page> de <total>", 
+    number_pages "Pag:<page>", 
                                          {:start_count_at => 1,
                                           :page_filter => lambda{ |pg| pg != 0 },
                                           :at => [bounds.right - 50, 0],
                                           :align => :right,
-                                          :size => 14}
+                                          :size => 10}
   end
 end
