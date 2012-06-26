@@ -10,12 +10,12 @@
   <div class="span-17 last">
     <section class="ac-container">
       <%i=0%>
-      <% @helps.each do |help| %>
+      <% @link.each do |help| %>
       <div>
         <input id="<%= "ac-#{i}" %>" name="accordion-1" type="radio" checked />
         <label for="<%= "ac-#{i}" %>" ><%=help  %></label>
-        <article class="ac-small">
-          <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
+        <article class="ac-large">
+          <p><%= @link_helps[i] %></p>
         </article>
       </div>
       <%i+=1%>

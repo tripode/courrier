@@ -111,7 +111,7 @@ class TransportGuidesController < ApplicationController
     rescue
       respond_to do |format|
         format.html { redirect_to new_transport_guide_path,
-          notice: "Error en la transaccion, no se guardo la Guia de Transporte"}
+          notice: "Error en la transaccion, no se guardo la Guia de Transporte. Verifique que halla ingresado algun Producto"}
         format.json { head :no_content}
       end
 
