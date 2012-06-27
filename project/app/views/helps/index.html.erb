@@ -1,5 +1,5 @@
 <div>
-	
+
 </div>
 
 
@@ -8,11 +8,25 @@
     <%= image_tag ("courier.jpg") %>
   </div>
   <div class="span-17 last">
-    <% @helps.each do |help| %>
-    <div class="span-14 " style="margin-bottom: 6px;">
-         <%= link_to help, '#', :class => 'info-link' %>
+    <section class="ac-container">
+      <%i=0%>
+      <% @helps.each do |help| %>
+      <div>
+        <input id="<%= "ac-#{i}" %>" name="accordion-1" type="radio" checked />
+        <label for="<%= "ac-#{i}" %>" ><%=help  %></label>
+        <article class="ac-small">
+          <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
+        </article>
       </div>
-    <% end %>
+      <%i+=1%>
+      <% end %>
+
+    </section>
+<%# @helps.each do |help| %>
+<%#*<div class="span-14 " style="margin-bottom: 6px;">%>
+<%#= link_to help, '#', :class => 'info-link' %>
+<%#*</div>%>
+<%# end %>
   </div>
-  
+
 </div>

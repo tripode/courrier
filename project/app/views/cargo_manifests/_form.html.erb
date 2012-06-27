@@ -22,78 +22,60 @@
         </div>
       <% end %>
 
-      <ul>
-        <li>
-          <label>* N&#176;:</label>
-          <input maxlength="10"  size="10" disabled="disabled" id="manifest_num_input" type="text"></input>
-          <%= f.hidden_field :manifest_num, id: 'manifest_num_hidden' %>
-        </li>
-        <li>
-          <label>* Fecha:</label>
-          <%= f.text_field :created_at,{value: @cargo_manifest.format_date, class:'i_fecha', maxlength: 12, size: 12}%>
-
+      <ul style="padding-left: 0;">
+          <li>
+            <label>* N&#176;:</label>
+            <input maxlength="10"  size="10" disabled="disabled" id="manifest_num_input" type="text"></input>
+            <%= f.hidden_field :manifest_num, id: 'manifest_num_hidden' %>
+          </li>
+          <li>
+            <label>* Fecha:</label>
+            <%= f.text_field :created_at,{value: @cargo_manifest.format_date, class:'i_fecha', maxlength: 12, size: 12}%>
           </li>
           <div class="clear"></div>
           <li>
             <%= f.hidden_field :employee_id, {value: current_user.employee.id} %>
           </li>
-
-
           <li>
             <label>* Origen: </label>
             <input id="origin_city" type="text" class="i_autocomplit" />
             <%= f.hidden_field :origin_city_id, id: 'origin_city_id_hidden', name: 'lista[origin]'  %>
-
           </li>
-
           <li>
             <label>* Destino:</label>
             <input id="destination_city" type="text" class="i_autocomplit" />
             <%= f.hidden_field :destiny_city_id, id: 'destination_city_id_hidden', name: 'lista[destino]' %>
-
-
           </li>
           <div class="clear"></div>
+          <div  class="span-11 center last">
+               <%=link_to 'Generar',get_transport_guides_cargo_manifests_path, id: 'button_generate_manifests', remote: 'true',method: 'post', class: 'button' %>
+          </div>
+          <div class="clear"></div>
+          <br/>
           <li>
-            <%=link_to 'Generar',get_transport_guides_cargo_manifests_path, id: 'button_generate_manifests', remote: 'true',method: 'post', class: 'button' %>
-
-            </li>
-
-            <div class="clear"></div>
-            <br/>
-            <li>
-              <div id="table_transport_guides"><%=render 'list_transport_guides'%></div>
-
-            </li>
-            <li style="width:100%">
+          <div id="table_transport_guides"><%=render 'list_transport_guides'%></div>
+          </li>
+          <li style="width:100%" class="span-11 prepend-3 last">
               <label>Total de Guias:</label>
               <%= f.text_field :total_guides, maxlength: 5, size: 5, disabled: 'disabled' %>
-
               <label>Total de Piezas:</label>
               <%= f.text_field :total_products, maxlength: 5, size: 5, disabled: 'disabled' %>
-
               <label> Total Peso (Kg):</label>
               <%= f.text_field :total_weight, maxlength: 5, size: 5, disabled: 'disabled' %>
-            </li>
-
-
-
+          </li>
           </ul>
-              <input type="hidden" id="hidden_print" value="not" name="data[print]"></input>
-                
-                <div class="span-11 center prepend-top las">
-                   
-                    <%= f.submit @btt_guardar, id:'save_button'%>
-                    <%= link_to 'Limpiar',new_cargo_manifest_path, class: 'limpiar button'%>
-                  <%if @option_print==true%>
-                    <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id: @cargo_manifest.id, format: 'pdf'), class: 'button', method: 'post'%>
-                  <%end%>
-                    <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
-                    </div>
-                </fieldset>
-              <% end %>
-
-            </div>
+          <input type="hidden" id="hidden_print" value="not" name="data[print]"></input>
+          <div class="span-11 center prepend-top las">
+                <%= f.submit @btt_guardar, id:'save_button'%>
+                <%= link_to 'Limpiar',new_cargo_manifest_path, class: 'limpiar button'%>
+              <%if @option_print==true%>
+                <%= link_to 'Imprimir',generate_cargo_manifest_pdf_cargo_manifests_path(id: @cargo_manifest.id, format: 'pdf'), class: 'button', method: 'post'%>
+              <%end%>
+                <%= link_to 'Cancelar','../main_page/index' ,class: 'button'%>
+          </div>
+      </fieldset>
+      <% end %>
+</div>
             <script type="text/javascript">
               var f1 = new LiveValidation('origin_city', { validMessage: " ",onlyOnSubmit: true , wait: 500 });
               f1.add( Validate.Presence, { failureMessage: " " } );
@@ -106,9 +88,9 @@
              // f3.add( Validate.Presence, { failureMessage: " " } );
 
               $(function() {
-                $('#save_button').click(function(){
-                  alert("Se generara el pdf del manifiesto");
-                });
+        //        $('#save_button').click(function(){
+          //        alert("Se generara el pdf del manifiesto");
+            //    });
                 $('#manifest_num_input').val($('#manifest_num_hidden').val());
 
 
