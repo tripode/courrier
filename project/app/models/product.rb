@@ -12,7 +12,13 @@ class Product < ActiveRecord::Base
   def format_admission_date
     admission_date=Date.today
     admission_date.strftime("%d-%m-%Y") if admission_date
-    
-    
   end
+  
+  def months
+    months = {
+      'Enero' => 1, 'Febrero' => 2, 'Marzo' => 3, 'Abril' => 4,
+      'Mayo' => 5,  'Junio' => 6, 'Julio' => 7, 'Agosto' => 8,
+      'Septiembre' => 9, 'Octubre' => 10, 'Noviembre' => 11, 'Diciembre' => 12}
+  end
+  
 end
