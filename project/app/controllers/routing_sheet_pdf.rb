@@ -23,8 +23,8 @@ class RoutingSheetPdf< Prawn::Document
       detail.product.bar_code,
       if !detail.product.receiver_id.nil? then detail.product.receiver.receiver_name end  + "\n  " +
       if !detail.product.receiver_address_id.nil? then detail.product.receiver_address.address end,
-      "________________",
-      "_____________________________"]
+      "               " + "\n" + "________________",
+      "                    " + "\n" + "_____________________________"]
     }
     move_down 15
     header_data=[["CODIGO","DATOS DE USUARIO","FIRMA","ACLARACION"]]
