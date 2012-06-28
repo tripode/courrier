@@ -24,13 +24,13 @@
         <tbody id="details">
 	<% $routing_sheets_details.each do |detail| %>
 	  <tr>
-	  	<td><%= $routing_sheets_details.index(detail) + 1 %></td>
-	  	<td><%= detail.product.bar_code%></td>
-	  	<td><%= detail.product.product_type.description %></td>
-	  	<td><%= detail.product.receiver.receiver_name %></td>
-	  	<td><%= detail.product.receiver_address.address %></td>
-	  	<td><%= text_field_tag 'who_received_' + ($routing_sheets_details.index(detail) + 1).to_s%> </td>
-		<td><%= select_tag 'reason_id_'+ ($routing_sheets_details.index(detail) + 1).to_s, options_from_collection_for_select(Reason.all,"id","description"), prompt: "--Motivo--"%></td>
+	  	<td style="width: 15px"><%= $routing_sheets_details.index(detail) + 1 %></td>
+	  	<td style="width: 35px"><%= detail.product.bar_code%></td>
+	  	<td style="width: 120px"><%= detail.product.product_type.description %></td>
+	  	<td style="width: 200px"><%= detail.product.receiver.receiver_name %></td>
+	  	<td style="width: 300px"><%= detail.product.receiver_address.address %></td>
+	  	<td><%= text_field_tag 'who_received_' + ($routing_sheets_details.index(detail) + 1).to_s,nil, size: 30, maxlength: 30%> </td>
+		<td><%= select_tag 'reason_id_'+ ($routing_sheets_details.index(detail) + 1).to_s, options_from_collection_for_select(Reason.all,"id","description"), prompt: "--Motivo--", style: "width: 150px" %></td>
 		<td><%= select_tag 'to_route_'+ ($routing_sheets_details.index(detail) + 1).to_s, options_for_select(["no","si"])%></td>
 	  </tr>
 	<% end %>
