@@ -125,12 +125,7 @@
                       <li><%= link_to 'Destinatario', new_receiver_path %></li>
                     <% end %>
                     <% if can? :manage, Employee %>
-                      <li><a href="#">Empleados</a>
-                        <ul>
-                          <li><%= link_to 'Crear Empleado', new_employee_path %></li>
-                         
-                        </ul>
-                      </li>
+                       <li><%= link_to 'Funcionario', new_employee_path %></li>
                     <% end %>
                     <% if can? :manage, Area %>
                       <li><%= link_to 'Zonas', new_area_path %></li>
