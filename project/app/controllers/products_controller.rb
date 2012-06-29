@@ -441,11 +441,14 @@ class ProductsController < ApplicationController
                 @file_path = "#{Rails.root}/app/views/reports/informe_Nota#{@retire_note_number}_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf"
                 pdf = DeliveryReportPdf.new(@product_type,@customer,@employee,@details,delivery_report_products_url,root_url,@file_path, getMonth(Date.parse(@report_date).month),Date.parse(@report_date).year )
                 begin
+                
                   pdf.render_file(@file_path)
                 rescue
                   #no se guardo el archivo
                   logger.info("Error al crear pdf: #{pdf.inspect}, usuario: #{current_user.username}, #{Time.now}")
                 end
+                pdf.move_cursor_to 40
+                pdf.text("<u><a href='#{root_url}products/send_email?customer_id=#{@customer.id}&file_path=#{@file_path}' method='post'>Enviar</a></u>   <u><link href='#{delivery_report_products_url}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ",:inline_format => true, :page_number => "1")
                 send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                                       type: "application/pdf",
                                       disposition: "inline"
