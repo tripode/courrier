@@ -28,10 +28,9 @@ class RoutingSheetPdf< Prawn::Document
     }
     move_down 15
     header_data=[["CODIGO","DATOS DE USUARIO","FIRMA","ACLARACION"]]
-    t_header = make_table(header_data,:cell_style => { :font => "Helvetica",:font_style => :bold,:size => 10,:border_width => 0},:column_widths => { 0 => 80, 1 => 150, 2 => 100, 3 => 180},:header => true)
-    t_header.draw
-    t=make_table(@routing_sheets_details,:cell_style => { :font => "Helvetica", :size => 10, :border_width => 0 },:column_widths => { 0 => 80, 1 => 150,2 => 100, 3 => 180})
-    t.draw
+    table(header_data.concat(@routing_sheets_details), :header=> true,:cell_style => { :font => "Helvetica", :size => 10, :border_width => 0 },:column_widths => { 0 => 80, 1 => 150,2 => 100, 3 => 180}) do
+     row(0).font_style = :bold
+    end
     move_down 10
     text "Total: #{details.length}"
     move_down 30
