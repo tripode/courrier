@@ -6,7 +6,7 @@ class RoutingSheetPdf< Prawn::Document
     super()
     
     @routing_sheet = routing_sheet
-     number_pages "Pag:<page>", 
+    number_pages "Pag:<page>", 
                                          {:start_count_at => 1,
                                           :page_filter => lambda{ |pg| pg != 0 },
                                           :at => [bounds.right - 50, 678],
@@ -35,7 +35,12 @@ class RoutingSheetPdf< Prawn::Document
     text "Total: #{details.length}"
     move_down 30
     text "Firma Mensajero:____________________"
-   
+    number_pages "Pag:<page>", 
+                                         {:start_count_at => 2,
+                                          :page_filter => lambda{ |pg| pg != 1 },
+                                          :at => [bounds.right - 50, 714],
+                                          :align => :right,
+                                          :size => 10}
    
     
    
