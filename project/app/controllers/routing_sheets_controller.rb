@@ -59,6 +59,7 @@ class RoutingSheetsController < ApplicationController
   # GET /routing_sheets/new
   # GET /routing_sheets/new.json
   def new
+    flash[:notice]=""
     @routing_sheet = RoutingSheet.new
     $products= Array.new
     @area= Area.new
