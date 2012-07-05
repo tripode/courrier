@@ -45,6 +45,6 @@
 </div>
 <div class="span-24 center last" >
 		<%= link_to 'Regresar', routing_sheets_path,  class: 'button' %>
-		<%= if @routing_sheet.routing_sheet_state_id == 1 then link_to 'Vistar para imprimir',routing_sheet_path(@routing_sheet, :format => "pdf"), class: 'button'  end %>
+		<%=  link_to 'Ver para imprimir',routing_sheet_path(@routing_sheet, :format => "pdf"), class: 'button'   %>
 </div>
 

@@ -23,12 +23,12 @@ class RoutingSheetPdf< Prawn::Document
       detail.product.bar_code,
       if !detail.product.receiver_id.nil? then detail.product.receiver.receiver_name end  + "\n  " +
       if !detail.product.receiver_address_id.nil? then detail.product.receiver_address.address end,
-      "               " + "\n" + "________________",
-      "                    " + "\n" + "_____________________________"]
+      "               " + "\n" + "___________",
+      "                    " + "\n" + "_______________________"]
     }
     move_down 15
     header_data=[["CODIGO","DATOS DE USUARIO","FIRMA","ACLARACION"]]
-    table(header_data.concat(@routing_sheets_details), :header=> true,:cell_style => { :font => "Helvetica", :size => 10, :border_width => 0 },:column_widths => { 0 => 80, 1 => 150,2 => 100, 3 => 180}) do
+    table(header_data.concat(@routing_sheets_details), :header=> true,:cell_style => { :font => "Helvetica", :size => 10, :border_width => 0 },:column_widths => { 0 => 80, 1 => 220,2 => 75, 3 => 140}) do
      row(0).font_style = :bold
     end
     move_down 10
