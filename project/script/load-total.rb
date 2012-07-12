@@ -131,6 +131,8 @@ Reason.transaction do
     Reason.create(:description=>"No trabaja mas en el lugar de visita")
     Reason.create(:description=>"Numero inexistente")
     Reason.create(:description=>"Retira de entidad emisora")
+    Reason.create(:description=>"Producto extraviado en el reparto")
+    Reason.create(:description=>"Producto cancelado a pedido del cliente")
     Reason.create(:description=>"Retira del courier")
     Reason.create(:description=>"Se mudo")
     Reason.create(:description=>"Sin cobertura")
