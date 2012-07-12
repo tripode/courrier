@@ -13,34 +13,10 @@ FunctionType.transaction do
 end
 CustomerType.transaction do
   CustomerType.create(:type_name=>"Empresa")
-  CustomerType.create(:type_name=>"Individual")
-  CustomerType.create(:type_name=>"Currier Externa")
+  CustomerType.create(:type_name=>"Persona")
 
 end
-Customer.transaction do
-    #Customer: Companies
-    Customer.create(:name=>"", :last_name=>"",:company_name=>"Banco Continental",:ruc=>"123456-0",
-                    :address=>"Direccion A",:num_identify=>100, :mobile_number=>"",:phone_number=>"071-201010",
-                    :email=>"continental@gmail.com", :customer_type_id=>1)
-    Customer.create(:name=>"", :last_name=>"",:company_name=>"Banco Itapua",:ruc=>"123456-1",
-                    :address=>"Direccion B",:num_identify=>101, :mobile_number=>"",:phone_number=>"071-201011",
-                    :email=>"itapua@gmail.com", :customer_type_id=>1)
-    Customer.create(:name=>"", :last_name=>"",:company_name=>"Banco Itau",:ruc=>"123456-2",
-                    :address=>"Direccion C",:num_identify=>102, :mobile_number=>"",:phone_number=>"071-201012",
-                    :email=>"itau@gmail.com", :customer_type_id=>1)
-    Customer.create(:name=>"", :last_name=>"",:company_name=>"Banco BBVA",:ruc=>"123456-3",
-                    :address=>"Direccion D",:num_identify=>103, :mobile_number=>"",:phone_number=>"071-201013",
-                    :email=>"bbva@gmail.com", :customer_type_id=>1)
 
-   #Customer: Personal
-   Customer.create(:name=>"Juan", :last_name=>"Perez",:company_name=>"",:ruc=>"3539111-0",
-                    :address=>"Direccion Quiteria",:num_identify=>200, :mobile_number=>"",:phone_number=>"071-201515",
-                    :email=>"juan@gmail.com", :customer_type_id=>2)
-   Customer.create(:name=>"Guillermo", :last_name=>"Gonzalez",:company_name=>"",:ruc=>"3539144-1",
-                    :address=>"Direccion Kennedy",:num_identify=>201, :mobile_number=>"",:phone_number=>"071-201516",
-                    :email=>"guillermo@gmail.com", :customer_type_id=>2)
-
-end
 require 'date'
 Employee.transaction do
     date= Time.now 
@@ -68,7 +44,7 @@ Employee.transaction do
         :salary=>0,
         :mobile_number=>"(0985)163420",
         :phone_number=>"(071)207865",
-        :function_type_id=>2
+        :function_type_id=>1
      )
     Employee.create(
         :email=>"diego.courier@gmail.com",
@@ -81,7 +57,7 @@ Employee.transaction do
         :salary=>1650000,
         :mobile_number=>"(0985)741172",
         :phone_number=>nil,
-        :function_type_id=>3
+        :function_type_id=>1
       )
 end
 
@@ -169,6 +145,7 @@ Country.transaction do
   Country.create(:name => "Brasil", :description => "Su capital es Brasilia")
   Country.create(:name => "Argentina", :description => "Su capital es Buenos Aires")
   Country.create(:name => "Uruguay", :description => "Su capital es Montevideo")
+  Country.create(:name => "Bolivia", :description => "Su capital es La Paz")
 end
 Province.transaction do
    ## Provincias de Paraguay
@@ -193,37 +170,8 @@ Province.transaction do
   ##Provincias de Argentina
   Province.create(:name => "Misiones Arg", :description => "Su capital es Posadas", :country_id=> 3)
 end
-City.transaction do
-  City.create(:name => "Encarnacion", :province_id => 1 )
-  City.create(:name => "Coronel Bogado", :province_id => 1)
-  City.create(:name => "Cambyreta", :province_id => 1)
-end
-Area.transaction do
 
-    Area.create(:area_name=>"ENC-CALLE-PRIN", :description=>"xxxxx", :city_id => 1)
-    Area.create(:area_name=>"ENC-Z-CIRCUITO", :description=>"xxxx", :city_id => 1)
-    Area.create(:area_name=>"ENC-Z-QUITERIA", :description=>"xxxx", :city_id => 1)
 
-end
-Receiver.transaction do
-  Receiver.create(:receiver_name => "Villalba Teresa",:document=> "3539120")
-  Receiver.create(:receiver_name => "Ocampo Rober",  :document=> "4500632")
-  Receiver.create(:receiver_name => "Monges Karla",  :document=> "3539456")
-  Receiver.create(:receiver_name => "Espinoza Jose", :document=> "3120000")
-  Receiver.create(:receiver_name => "Garcete Sofia", :document=> "4258966")
-end
-ReceiverAddress.transaction do
-  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 1, :receiver_id => 1)
-  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 1)
-  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 2, :receiver_id => 2)
-  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 2)
-  ReceiverAddress.create(:label => "Facultad", :address=> "direccion facultad", :city_id => 3, :receiver_id => 3)
-  ReceiverAddress.create(:label => "Casa", :address => "direccion casa", :city_id => 1, :receiver_id => 3)
-  ReceiverAddress.create(:label => "Oficina", :address => "direccion oficina", :city_id => 1, :receiver_id => 3)
-  ReceiverAddress.create(:label => "Casa 1", :address => "direccion casa 1", :city_id => 1, :receiver_id => 4)
-  ReceiverAddress.create(:label  => "Casa 2", :address => "direccion casa 2", :city_id => 1, :receiver_id => 4)
-  ReceiverAddress.create(:label => "Casa 3", :address => "direccion casa 3", :city_id => 1, :receiver_id => 4)
-end
 RetireNoteState.transaction do
   RetireNoteState.create(:state_name => "Procesado")
   RetireNoteState.create(:state_name => "En Proceso")
@@ -240,7 +188,7 @@ User.transaction do
     ## User por defecto para entrar al sistema
     User.create(:username     => 'tripodevs',
                 :email        => 'tripodevs@googletroups.com',
-                :password     => 'tripodevsSA',
+                :password     => 'tripodevs',
                 :employee_id  => 1,
                 :role_ids     => Role.where(:name => 'Administrador').first.id
                )
