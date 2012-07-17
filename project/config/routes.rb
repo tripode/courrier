@@ -1,7 +1,7 @@
 Project::Application.routes.draw do
   
   resources :helps
-  resources :receiver_addresses
+  #resources :receiver_addresses
 
   #match 'users/:id' => 'registrations#delete_user', :as => :delete_user, :via => :delete
 
@@ -22,7 +22,7 @@ Project::Application.routes.draw do
   
   get 'main_page/index'
 
-  resources :routing_sheet_details
+  #resources :routing_sheet_details
 
   resources :transport_guide_details do
     member do
@@ -55,7 +55,6 @@ Project::Application.routes.draw do
     end
   end
 
-  resources :foreign_companies
 
   resources :employees
 
