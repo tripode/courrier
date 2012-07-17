@@ -448,7 +448,7 @@ class ProductsController < ApplicationController
                   logger.info("Error al crear pdf: #{pdf.inspect}, usuario: #{current_user.username}, #{Time.now}")
                 end
                 pdf.move_cursor_to 40
-                pdf.text("<u><a href='#{root_url}products/send_email?customer_id=#{@customer.id}&file_path=#{@file_path}' method='post'>Enviar</a></u>   <u><link href='#{delivery_report_products_url}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ",:inline_format => true, :page_number => "1")
+                pdf.text("<u><a href='#{root_url}products/send_email?customer_id=#{@customer.id}&file_path=#{@file_path}&report_date=#{@report_date}' method='post'>Enviar</a></u>   <u><link href='#{delivery_report_products_url}'>Nuevo reporte</link></u>  <u><link href='#{root_url}main_page/index'>Cancelar</link></u> ",:inline_format => true, :page_number => "1")
                 send_data pdf.render, filename: "informe_#{@customer.company_name  + @customer.last_name  + @customer.name}_#{create_date}.pdf",
                                       type: "application/pdf",
                                       disposition: "inline"
@@ -464,8 +464,9 @@ class ProductsController < ApplicationController
   def send_email
     @costumer_id = params[:customer_id]
     @file_path = params[:file_path]
+    @report_date=params[:report_date]
     @costumer = Customer.find(@costumer_id)
-    EmailSender.eemail(@costumer.email, @file_path).deliver
+    EmailSender.eemail(@costumer.email, @file_path, @report_date).deliver
     logger.info("Se envia email a: #{@customer.inspect}, usuario: #{current_user.username}, #{Time.now}")
     respond_to do |format|
       format.html {redirect_to  delivery_report_products_path}

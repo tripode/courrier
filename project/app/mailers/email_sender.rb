@@ -4,11 +4,11 @@ class EmailSender < ActionMailer::Base
   ##
   # Este metodo es el encargado de preparar los destinatarios, asunto y adjuntos.
   #
-  def eemail(email, file_path) 
+  def eemail(email, file_path, report_date) 
     file_name = file_path.split("/").last
-    time = Time.new
-    month_number = time.month
-    year = time.year
+    
+    month_number = Date.parse(report_date).month
+    year = Date.parse(report_date).year
     months = {
       1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
       5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
